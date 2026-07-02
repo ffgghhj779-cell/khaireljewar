@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import BrandLogo from '@/components/ui/BrandLogo'
 import PremiumImage from '@/components/ui/PremiumImage'
 import { useRouter } from 'next/navigation'
@@ -9,6 +9,7 @@ import { ArrowRight, Globe2, Package, ShieldCheck, TrendingUp } from 'lucide-rea
 import { BRAND } from '@/lib/constants/brand'
 import { SECTION_IMAGES } from '@/lib/constants/images'
 import { TAP_SCALE } from '@/lib/constants/motion'
+import { useIsMobile } from '@/hooks/useIsMobile'
 import { cn } from '@/lib/utils/cn'
 import AnimatedCounter from '@/components/ui/AnimatedCounter'
 import MagneticButton from '@/components/ui/MagneticButton'
@@ -59,8 +60,12 @@ const fadeUp = {
 
 export default function HeroPremium({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
+  const isMobile = useIsMobile()
+  const reduceMotion = useReducedMotion()
   const router = useRouter()
+  const sectionRef = useRef<HTMLElement>(null)
   const [activeSlide, setActiveSlide] = useState(0)
+  const [isVisible, setIsVisible] = useState(true)
 
   const goToSlide = useCallback((index: number) => {
     setActiveSlide(index % HERO_SLIDES.length)
@@ -71,9 +76,21 @@ export default function HeroPremium({ lang }: { lang: string }) {
   }, [])
 
   useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.15 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!isVisible || reduceMotion) return
     const timer = window.setInterval(nextSlide, SLIDE_INTERVAL_MS)
     return () => window.clearInterval(timer)
-  }, [nextSlide])
+  }, [nextSlide, isVisible, reduceMotion])
 
   const current = HERO_SLIDES[activeSlide]
 
@@ -105,15 +122,16 @@ export default function HeroPremium({ lang }: { lang: string }) {
   ]
 
   return (
-    <section className="relative w-full pt-6 pb-10 md:pt-8 md:pb-16 md:min-h-[calc(100vh-76px)] md:flex md:items-center overflow-x-clip">
+    <section ref={sectionRef} className="relative w-full pt-6 pb-10 md:pt-8 md:pb-16 md:min-h-[calc(100vh-76px)] md:flex md:items-center overflow-x-clip">
       <div className="absolute inset-0 industrial-grid opacity-50 pointer-events-none" />
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <PremiumImage
           src={SECTION_IMAGES.heroBg}
-          alt="KHAIR ALJAAR FOODS — Premium Egyptian Agricultural Export"
+          alt=""
           fill
           className="object-cover opacity-20"
-          priority
+          loading="lazy"
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-white/92 via-white/75 to-gray-50" />
       </div>
@@ -205,10 +223,10 @@ export default function HeroPremium({ lang }: { lang: string }) {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={current.src}
-                  initial={{ opacity: 0, scale: 1.04 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: reduceMotion ? 0 : isMobile ? 0.3 : 0.45, ease: [0.22, 1, 0.36, 1] }}
                   className="absolute inset-0"
                 >
                   <PremiumImage

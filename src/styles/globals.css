@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -42,6 +40,15 @@
       radial-gradient(rgba(13, 27, 42, 0.035) 1px, transparent 1px);
     background-size: 100% 100%, 100% 100%, 24px 24px;
     background-attachment: scroll;
+  }
+
+  @media (max-width: 1023px) {
+    body {
+      background-image:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0, 201, 215, 0.06), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(13, 27, 42, 0.03), transparent 50%);
+      background-size: 100% 100%, 100% 100%;
+    }
   }
 
   [dir='rtl'] body {
@@ -125,7 +132,13 @@
   }
 
   .glass-panel {
-    @apply bg-white/70 backdrop-blur-2xl border border-gray-200 shadow-glass;
+    @apply bg-white/80 border border-gray-200 shadow-glass;
+  }
+
+  @media (min-width: 1024px) {
+    .glass-panel {
+      @apply backdrop-blur-2xl bg-white/70;
+    }
   }
 
   .glass-badge {
@@ -189,7 +202,43 @@
   }
 
   .magnetic-btn {
-    @apply will-change-transform;
+    touch-action: manipulation;
+  }
+
+  @keyframes marquee-ltr {
+    from { transform: translate3d(-50%, 0, 0); }
+    to { transform: translate3d(0%, 0, 0); }
+  }
+
+  @keyframes marquee-rtl {
+    from { transform: translate3d(0%, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+
+  @keyframes ticker-ltr {
+    from { transform: translate3d(-33.33%, 0, 0); }
+    to { transform: translate3d(0%, 0, 0); }
+  }
+
+  @keyframes ticker-rtl {
+    from { transform: translate3d(0%, 0, 0); }
+    to { transform: translate3d(-33.33%, 0, 0); }
+  }
+
+  .marquee-track-ltr {
+    animation: marquee-ltr 25s linear infinite;
+  }
+
+  .marquee-track-rtl {
+    animation: marquee-rtl 25s linear infinite;
+  }
+
+  .marquee-ticker-ltr {
+    animation: ticker-ltr 50s linear infinite;
+  }
+
+  .marquee-ticker-rtl {
+    animation: ticker-rtl 50s linear infinite;
   }
 }
 
@@ -200,7 +249,6 @@
 
   .gpu-accelerated {
     transform: translateZ(0);
-    will-change: transform, opacity;
   }
 
   .touch-manipulation {
@@ -241,7 +289,29 @@
   }
 
   .mobile-overlay {
-    @apply gpu-accelerated will-change-transform;
+    @apply gpu-accelerated;
     transform: translateZ(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .marquee-track-ltr,
+    .marquee-track-rtl,
+    .marquee-ticker-ltr,
+    .marquee-ticker-rtl {
+      animation: none !important;
+    }
   }
 }

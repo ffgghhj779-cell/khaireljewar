@@ -111,7 +111,6 @@ export default function GlobalFootprint({ lang }: { lang: string }) {
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeDasharray="6 4"
-                  filter="url(#glow)"
                   initial={{ pathLength: 0, opacity: 0 }}
                   animate={isInView ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
                   transition={{ duration: 1.4, delay: 0.2 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
@@ -139,8 +138,8 @@ export default function GlobalFootprint({ lang }: { lang: string }) {
                       stroke="#00C9D7"
                       strokeWidth="1"
                       initial={{ scale: 0.5, opacity: 0 }}
-                      animate={isInView ? { scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] } : {}}
-                      transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+                      animate={isInView ? { scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] } : { scale: 1, opacity: 0 }}
+                      transition={{ duration: 2.5, repeat: isInView ? Infinity : 0, ease: 'easeInOut' }}
                     />
                   )}
                   <text
@@ -166,7 +165,7 @@ export default function GlobalFootprint({ lang }: { lang: string }) {
                 viewport={SCROLL_VIEWPORT}
                 transition={{ duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ y: -4, transition: SPRING_HOVER }}
-                className="glass-panel rounded-2xl p-6 border border-gray-200 will-change-transform"
+                className="glass-panel rounded-2xl p-6 border border-gray-200"
               >
                 <Anchor className="w-5 h-5 text-primary mb-3 opacity-80" />
                 <AnimatedCounter

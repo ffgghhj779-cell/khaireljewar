@@ -88,8 +88,8 @@ export function normalizeProductImage(
 /** Official brand logo — high-res PNG */
 export const BRAND_LOGO = '/images/branding/logo-official.png'
 
-/** Max quality for brand photography (local assets served unoptimized) */
-export const IMAGE_QUALITY = 95
+/** Balanced quality — Next.js serves AVIF/WebP at responsive sizes */
+export const IMAGE_QUALITY = 85
 
 export function isLocalBrandImage(src: string): boolean {
   return src.startsWith('/images/')

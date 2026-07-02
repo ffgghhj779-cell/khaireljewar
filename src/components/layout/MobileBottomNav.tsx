@@ -46,7 +46,7 @@ export default function MobileBottomNav({ lang }: { lang: string }) {
 
   return (
     <nav
-      className="lg:hidden fixed inset-x-0 bottom-0 z-[100] border-t border-gray-200/80 bg-white/92 backdrop-blur-2xl pb-[env(safe-area-inset-bottom,0px)] shadow-[0_-4px_24px_rgba(13,27,42,0.08)]"
+      className="lg:hidden fixed inset-x-0 bottom-0 z-[100] border-t border-gray-200/80 bg-white/95 backdrop-blur-md pb-[env(safe-area-inset-bottom,0px)] shadow-[0_-4px_24px_rgba(13,27,42,0.08)]"
       aria-label={isAr ? 'التنقل الرئيسي' : 'Main navigation'}
     >
       <ul className="flex items-end justify-around max-w-lg mx-auto px-2 pt-1.5 pb-2">

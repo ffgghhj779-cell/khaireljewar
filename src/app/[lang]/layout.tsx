@@ -1,18 +1,18 @@
 import type { Metadata, Viewport } from 'next'
 import '@/styles/globals.css'
 import { BRAND } from '@/lib/constants/brand'
+import { fontVariables } from '@/lib/fonts'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import MobileAppChrome from '@/components/layout/MobileAppChrome'
 import FloatingWhatsApp from '@/components/shared/FloatingWhatsApp'
-import QuoteDrawer from '@/components/ecom/QuoteDrawer'
-import QuoteCheckoutModal from '@/components/ecom/QuoteCheckoutModal'
+import ClientQuoteShell from '@/components/ecom/ClientQuoteShell'
+import { cn } from '@/lib/utils/cn'
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  viewportFit: 'cover',
 }
 
 export const metadata: Metadata = {
@@ -38,17 +38,20 @@ export default function RootLayout({
   const isAr = lang === 'ar'
 
   return (
-    <html lang={lang} dir={isAr ? 'rtl' : 'ltr'}>
+    <html lang={lang} dir={isAr ? 'rtl' : 'ltr'} className={fontVariables}>
       <body
-        className={`${isAr ? 'font-ibm-arabic' : 'font-inter'} antialiased text-dark min-h-screen`}
+        className={cn(
+          fontVariables,
+          isAr ? 'font-ibm-arabic' : 'font-inter',
+          'antialiased text-dark min-h-screen'
+        )}
       >
         <Header lang={lang} />
         <main className="min-h-screen pt-[56px] md:pt-[76px] mobile-safe-bottom">{children}</main>
         <Footer lang={lang} />
         <MobileAppChrome lang={lang} />
         <FloatingWhatsApp lang={lang} />
-        <QuoteDrawer lang={lang} />
-        <QuoteCheckoutModal lang={lang} />
+        <ClientQuoteShell lang={lang} />
       </body>
     </html>
   )

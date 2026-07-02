@@ -60,9 +60,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        inter: ['Inter', 'system-ui', 'sans-serif'],
-        manrope: ['Manrope', 'system-ui', 'sans-serif'],
-        'ibm-arabic': ['IBM Plex Sans Arabic', 'system-ui', 'sans-serif'],
+        inter: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        manrope: ['var(--font-manrope)', 'system-ui', 'sans-serif'],
+        'ibm-arabic': ['var(--font-ibm-arabic)', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         'display-xl': ['4.5rem', { lineHeight: '1.05', letterSpacing: '-0.03em', fontWeight: '800' }],

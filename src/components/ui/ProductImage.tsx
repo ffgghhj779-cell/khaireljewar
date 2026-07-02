@@ -10,7 +10,6 @@ import {
   isProductImagePending,
   getCategoryFallback,
   IMAGE_QUALITY,
-  isLocalBrandImage,
 } from '@/lib/constants/images'
 
 type ProductImageVariant = 'card' | 'detail' | 'thumb'
@@ -119,11 +118,10 @@ export default function ProductImage({
           sizes={sizes ?? styles.sizes}
           priority={priority}
           quality={IMAGE_QUALITY}
-          unoptimized={isLocalBrandImage(displaySrc)}
           placeholder="blur"
           blurDataURL={IMAGE_BLUR_DATA_URL}
           onError={handleError}
-          className={cn(styles.image, 'will-change-transform')}
+          className={cn(styles.image)}
         />
       )}
       {showPendingOverlay && <PendingOverlay lang={lang} variant={variant} />}

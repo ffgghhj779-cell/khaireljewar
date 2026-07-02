@@ -24,7 +24,6 @@ export default function BrandLogo({ variant = 'header', className, priority = fa
       width={560}
       height={160}
       quality={IMAGE_QUALITY}
-      unoptimized
       priority={priority}
       className={cn('w-auto object-contain shrink-0', VARIANT_CLASS[variant], className)}
     />

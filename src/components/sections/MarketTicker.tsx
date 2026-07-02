@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { memo, useEffect, useState } from 'react'
 import { buildTickerItems, type Product } from '@/lib/data/products'
 import Sparkline from '@/components/ui/Sparkline'
 import { cn } from '@/lib/utils/cn'
@@ -21,10 +20,7 @@ const SPARK_DATA: Record<string, number[]> = {
   'Kent Mangoes': [1050, 1060, 1070, 1080, 1090, 1100, 1100],
 }
 
-export default function MarketTicker({ lang, products }: { lang: string; products: Product[] }) {
-  const isAr = lang === 'ar'
-  const items = buildTickerItems(products)
-  const duplicated = [...items, ...items, ...items]
+const TickerClock = memo(function TickerClock({ isAr }: { isAr: boolean }) {
   const [liveTime, setLiveTime] = useState<string | null>(null)
 
   useEffect(() => {
@@ -41,6 +37,18 @@ export default function MarketTicker({ lang, products }: { lang: string; product
   }, [isAr])
 
   return (
+    <span className="text-[9px] font-mono text-gray-400 hidden sm:inline tabular-nums">
+      {liveTime ?? (isAr ? '--:--:--' : '--:--:-- --')}
+    </span>
+  )
+})
+
+export default function MarketTicker({ lang, products }: { lang: string; products: Product[] }) {
+  const isAr = lang === 'ar'
+  const items = buildTickerItems(products)
+  const duplicated = [...items, ...items, ...items]
+
+  return (
     <div className="w-full bg-white border-y border-gray-200 overflow-hidden py-3 relative">
       <div className="absolute inset-y-0 start-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-y-0 end-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
@@ -50,16 +58,15 @@ export default function MarketTicker({ lang, products }: { lang: string; product
           <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
           {isAr ? 'مؤشر السلع المباشر' : 'Live Commodity Index'}
         </span>
-        <span className="text-[9px] font-mono text-gray-400 hidden sm:inline tabular-nums">
-          {liveTime ?? (isAr ? '--:--:--' : '--:--:-- --')}
-        </span>
+        <TickerClock isAr={isAr} />
       </div>
 
-      <div className="flex whitespace-nowrap relative gpu-accelerated">
-        <motion.div
-          animate={{ x: isAr ? ['0%', '-33.33%'] : ['-33.33%', '0%'] }}
-          transition={{ repeat: Infinity, duration: 50, ease: 'linear' }}
-          className="flex gap-8 px-6 items-center"
+      <div className="flex whitespace-nowrap relative overflow-hidden">
+        <div
+          className={cn(
+            'marquee-ticker flex gap-8 px-6 items-center',
+            isAr ? 'marquee-ticker-rtl' : 'marquee-ticker-ltr'
+          )}
         >
           {duplicated.map((item, idx) => {
             const sparkData = SPARK_DATA[item.name] ?? [100, 102, 101, 103, 105, 104, 106]
@@ -67,7 +74,7 @@ export default function MarketTicker({ lang, products }: { lang: string; product
             return (
               <div
                 key={idx}
-                className="flex items-center gap-3 text-xs font-mono font-bold tracking-wider shrink-0 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-200"
+                className="flex items-center gap-3 text-xs font-mono font-bold tracking-wider shrink-0 px-3 py-1.5 rounded-lg border border-transparent"
               >
                 <Sparkline data={sparkData} positive={isPositive} width={48} height={20} />
                 <span className="text-dark">{item.name}</span>
@@ -87,7 +94,7 @@ export default function MarketTicker({ lang, products }: { lang: string; product
               </div>
             )
           })}
-        </motion.div>
+        </div>
       </div>
     </div>
   )

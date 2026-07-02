@@ -2,6 +2,7 @@
 
 import { useRef, useState, type ReactNode, type MouseEvent } from 'react'
 import { motion } from 'framer-motion'
+import { useIsMobile } from '@/hooks/useIsMobile'
 import { cn } from '@/lib/utils/cn'
 
 interface MagneticButtonProps {
@@ -23,11 +24,12 @@ export default function MagneticButton({
   disabled,
   'aria-label': ariaLabel,
 }: MagneticButtonProps) {
+  const isMobile = useIsMobile()
   const ref = useRef<HTMLButtonElement>(null)
   const [offset, setOffset] = useState({ x: 0, y: 0 })
 
   const handleMove = (e: MouseEvent<HTMLButtonElement>) => {
-    if (!ref.current || disabled) return
+    if (isMobile || !ref.current || disabled) return
     const rect = ref.current.getBoundingClientRect()
     const x = (e.clientX - rect.left - rect.width / 2) * strength
     const y = (e.clientY - rect.top - rect.height / 2) * strength
@@ -35,6 +37,21 @@ export default function MagneticButton({
   }
 
   const handleLeave = () => setOffset({ x: 0, y: 0 })
+
+  if (isMobile) {
+    return (
+      <button
+        ref={ref}
+        type={type}
+        disabled={disabled}
+        aria-label={ariaLabel}
+        onClick={onClick}
+        className={cn('magnetic-btn touch-manipulation active:scale-[0.97] transition-transform duration-150', className)}
+      >
+        {children}
+      </button>
+    )
+  }
 
   return (
     <motion.button
