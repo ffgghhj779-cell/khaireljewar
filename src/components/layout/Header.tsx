@@ -34,7 +34,7 @@ export default function Header({ lang }: { lang: string }) {
   const navItems = navigation[lang as keyof typeof navigation] || navigation.en
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[100] bg-dark shadow-2xl border-b border-white/5 py-4">
+    <header className="fixed top-0 left-0 right-0 z-[100] backdrop-blur-2xl bg-dark/85 border-b border-white/10 shadow-2xl py-3.5 will-change-opacity">
       <Container>
         <nav className="flex items-center justify-between relative z-[101]">
           <Link
@@ -90,7 +90,7 @@ export default function Header({ lang }: { lang: string }) {
         </nav>
 
         {mobileMenuOpen && (
-          <div className="lg:hidden relative z-[102] mt-4 rounded-2xl border border-white/10 bg-dark-800/95 backdrop-blur-xl shadow-2xl pointer-events-auto">
+          <div className="lg:hidden relative z-[102] mt-4 rounded-2xl border border-white/15 bg-dark/70 backdrop-blur-2xl shadow-2xl pointer-events-auto">
             {navItems.map((item) => (
               <Link
                 key={item.name}

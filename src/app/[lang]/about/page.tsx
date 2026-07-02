@@ -1,3 +1,4 @@
+import { ABOUT_HERO_IMAGE } from '@/lib/constants/images'
 import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import { cn } from '@/lib/utils/cn'
@@ -20,17 +21,18 @@ export default function AboutPage({ params: { lang } }: { params: { lang: string
           <div className="flex-1 w-full relative">
             <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full" />
             <div className="relative h-[600px] w-full rounded-[3rem] overflow-hidden shadow-2xl">
-              <Image 
-                src="https://images.unsplash.com/photo-1595856454519-75508a54c60a?q=80&w=2070&auto=format&fit=crop" 
-                alt="Farm" 
-                fill 
+              <Image
+                src={ABOUT_HERO_IMAGE}
+                alt={isAr ? 'مزارع وشبكة تصدير عالمية' : 'Premium agricultural export network'}
+                fill
                 className="object-cover"
-                referrerPolicy="no-referrer"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
               />
             </div>
           </div>
           <div className="flex-1">
-            <h1 className={cn("text-5xl md:text-7xl font-black text-dark tracking-tight mb-6", isAr ? 'font-ibm-arabic' : 'font-manrope')}>
+            <h1 className={cn('text-5xl md:text-7xl font-black text-dark editorial-heading mb-6', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
               {isAr ? 'عن خير الجوار' : 'About Khair Aljewar'}
             </h1>
             <p className={cn("text-xl text-gray-500 leading-relaxed mb-8", isAr ? 'font-ibm-arabic' : 'font-inter')}>

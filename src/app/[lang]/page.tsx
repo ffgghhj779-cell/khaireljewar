@@ -2,6 +2,7 @@ import HeroPremium from '@/components/sections/HeroPremium'
 import MarketTicker from '@/components/sections/MarketTicker'
 import PremiumBentoGrid from '@/components/sections/PremiumBentoGrid'
 import FeaturedProductsGrid from '@/components/sections/FeaturedProductsGrid'
+import GlobalFootprint from '@/components/sections/GlobalFootprint'
 import LogisticsTerminal from '@/components/sections/LogisticsTerminal'
 import CertificationsBanner from '@/components/sections/CertificationsBanner'
 import { getProducts } from '@/lib/actions/products'
@@ -19,6 +20,7 @@ export default async function Home({
       <MarketTicker lang={lang} products={products} />
       <PremiumBentoGrid lang={lang} />
       <FeaturedProductsGrid lang={lang} products={products.slice(0, 6)} />
+      <GlobalFootprint lang={lang} />
       <LogisticsTerminal lang={lang} />
       <CertificationsBanner lang={lang} />
     </div>

@@ -95,11 +95,12 @@ export default function QuoteDrawer({ lang }: { lang: string }) {
               exit={{ x: isAr ? '-100%' : '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 250 }}
               className={cn(
-                'fixed top-0 bottom-0 w-full max-w-lg bg-white z-[111] shadow-2xl flex flex-col border-gray-200',
+                'fixed top-0 bottom-0 w-full max-w-lg z-[111] shadow-2xl flex flex-col',
+                'backdrop-blur-2xl bg-white/75 border-gray-200/80',
                 isAr ? 'left-0 border-e' : 'right-0 border-s'
               )}
             >
-              <div className="p-5 border-b border-gray-200 flex items-center justify-between bg-gray-50/80 backdrop-blur-sm">
+              <div className="p-5 border-b border-gray-200/80 flex items-center justify-between bg-white/50 backdrop-blur-xl">
                 <div>
                   <h2 className={cn('text-lg font-bold tracking-tight text-dark', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
                     {isAr ? 'محطة التسعير B2B' : 'B2B Quote Terminal'}
@@ -212,7 +213,7 @@ export default function QuoteDrawer({ lang }: { lang: string }) {
               </div>
 
               {items.length > 0 && (
-                <div className="p-5 bg-gray-50/80 backdrop-blur-sm border-t border-gray-200 space-y-2">
+                <div className="p-5 bg-white/40 backdrop-blur-xl border-t border-gray-200/80 space-y-2">
                   <button
                     onClick={handleDownloadPdf}
                     className="w-full bg-white text-dark border border-gray-200 hover:border-primary py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all text-sm"

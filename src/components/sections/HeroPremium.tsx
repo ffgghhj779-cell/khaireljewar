@@ -2,10 +2,12 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ArrowRight, Globe2, Package, ShieldCheck, TrendingUp } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 import AnimatedCounter from '@/components/ui/AnimatedCounter'
+import MagneticButton from '@/components/ui/MagneticButton'
+import { SCROLL_VIEWPORT } from '@/lib/constants/motion'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -18,6 +20,7 @@ const fadeUp = {
 
 export default function HeroPremium({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
+  const router = useRouter()
 
   const stats = [
     {
@@ -76,7 +79,7 @@ export default function HeroPremium({ lang }: { lang: string }) {
               animate="visible"
               variants={fadeUp}
               className={cn(
-                'text-5xl md:text-6xl lg:text-7xl font-black text-dark leading-[1.05] mb-6 tracking-tight',
+                'text-5xl md:text-6xl lg:text-7xl font-black text-dark editorial-heading mb-6',
                 isAr ? 'font-ibm-arabic' : 'font-manrope'
               )}
             >
@@ -100,19 +103,21 @@ export default function HeroPremium({ lang }: { lang: string }) {
             </motion.p>
 
             <motion.div custom={3} initial="hidden" animate="visible" variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href={`/${lang}/products`}
-                className="bg-dark text-white px-8 py-4 rounded-xl font-bold text-base hover:bg-primary transition-all flex items-center justify-center gap-2 group border border-dark"
+              <MagneticButton
+                onClick={() => router.push(`/${lang}/products`)}
+                strength={0.22}
+                className="bg-dark text-white px-8 py-4 rounded-xl font-bold text-base hover:bg-primary transition-all flex items-center justify-center gap-2 border border-dark will-change-transform"
               >
                 {isAr ? 'تصفح الكتالوج' : 'Browse Catalog'}
-                <ArrowRight className={cn('w-5 h-5 transition-transform', isAr ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1')} />
-              </Link>
-              <Link
-                href={`/${lang}/portal`}
-                className="bg-white text-dark px-8 py-4 rounded-xl font-bold text-base border border-gray-200 hover:border-primary hover:text-primary transition-all flex items-center justify-center"
+                <ArrowRight className={cn('w-5 h-5', isAr && 'rotate-180')} />
+              </MagneticButton>
+              <MagneticButton
+                onClick={() => router.push(`/${lang}/portal`)}
+                strength={0.18}
+                className="bg-white/80 backdrop-blur-xl text-dark px-8 py-4 rounded-xl font-bold text-base border border-gray-200 hover:border-primary hover:text-primary transition-all flex items-center justify-center will-change-transform"
               >
                 {isAr ? 'بوابة العملاء' : 'Client Portal'}
-              </Link>
+              </MagneticButton>
             </motion.div>
           </div>
 

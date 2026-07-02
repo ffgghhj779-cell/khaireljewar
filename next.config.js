@@ -19,6 +19,11 @@ const nextConfig = {
         hostname: 'images.unsplash.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'wmjfvijkgsjqlpfjcioy.supabase.co',
+        pathname: '/**',
+      },
     ],
   },
   webpack: (config, { dev }) => {
