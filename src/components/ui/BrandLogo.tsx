@@ -7,7 +7,7 @@ type BrandLogoVariant = 'header' | 'footer' | 'hero'
 const VARIANT_CLASS: Record<BrandLogoVariant, string> = {
   header: 'h-8 sm:h-9 lg:h-10 max-w-[150px] sm:max-w-[180px]',
   footer: 'h-14 max-w-[220px]',
-  hero: 'h-5 max-w-[120px]',
+  hero: 'h-7 sm:h-8 max-w-[170px]',
 }
 
 interface BrandLogoProps {

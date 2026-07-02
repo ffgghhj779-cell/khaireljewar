@@ -1,15 +1,52 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import BrandLogo from '@/components/ui/BrandLogo'
 import PremiumImage from '@/components/ui/PremiumImage'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, Globe2, Package, ShieldCheck, TrendingUp } from 'lucide-react'
 import { BRAND } from '@/lib/constants/brand'
 import { SECTION_IMAGES } from '@/lib/constants/images'
+import { TAP_SCALE } from '@/lib/constants/motion'
 import { cn } from '@/lib/utils/cn'
 import AnimatedCounter from '@/components/ui/AnimatedCounter'
 import MagneticButton from '@/components/ui/MagneticButton'
+
+const HERO_SLIDES = [
+  {
+    src: SECTION_IMAGES.heroFeature,
+    labelEn: 'Kent Mangoes',
+    labelAr: 'مانجو كينت',
+  },
+  {
+    src: '/images/products/dates-luxury-display.jpeg',
+    labelEn: 'Premium Dates',
+    labelAr: 'تمور فاخرة',
+  },
+  {
+    src: '/images/products/chicken-fresh-ice.jpeg',
+    labelEn: 'Fresh Poultry',
+    labelAr: 'دواجن طازجة',
+  },
+  {
+    src: '/images/products/olive-oil-lifestyle.jpeg',
+    labelEn: 'Olive Oil',
+    labelAr: 'زيت زيتون',
+  },
+  {
+    src: '/images/products/cold-shelf-display.jpeg',
+    labelEn: 'Cold Chain Range',
+    labelAr: 'تشكيلة مبردة',
+  },
+  {
+    src: '/images/products/strawberries-banner.jpeg',
+    labelEn: 'Fresh Berries',
+    labelAr: 'توت طازج',
+  },
+] as const
+
+const SLIDE_INTERVAL_MS = 4500
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -23,6 +60,22 @@ const fadeUp = {
 export default function HeroPremium({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
   const router = useRouter()
+  const [activeSlide, setActiveSlide] = useState(0)
+
+  const goToSlide = useCallback((index: number) => {
+    setActiveSlide(index % HERO_SLIDES.length)
+  }, [])
+
+  const nextSlide = useCallback(() => {
+    setActiveSlide((prev) => (prev + 1) % HERO_SLIDES.length)
+  }, [])
+
+  useEffect(() => {
+    const timer = window.setInterval(nextSlide, SLIDE_INTERVAL_MS)
+    return () => window.clearInterval(timer)
+  }, [nextSlide])
+
+  const current = HERO_SLIDES[activeSlide]
 
   const stats = [
     {
@@ -147,30 +200,74 @@ export default function HeroPremium({ lang }: { lang: string }) {
             variants={fadeUp}
             className="lg:col-span-5 hidden sm:block"
           >
-            {/* Brand photography showcase */}
+            {/* Brand photography showcase — auto-rotating */}
             <div className="relative mb-3 rounded-2xl overflow-hidden border border-gray-200 shadow-sm aspect-[16/9]">
-              <PremiumImage
-                src={SECTION_IMAGES.heroFeature}
-                alt="KA Foods — Premium Export Produce"
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 1024px) 0vw, 45vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
-              <div className="absolute bottom-3 start-3 flex items-center gap-2 bg-white/95 rounded-lg px-2 py-1">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={current.src}
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute inset-0"
+                >
+                  <PremiumImage
+                    src={current.src}
+                    alt={isAr ? current.labelAr : current.labelEn}
+                    fill
+                    className="object-cover"
+                    priority={activeSlide === 0}
+                    sizes="(max-width: 1024px) 0vw, 45vw"
+                  />
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent pointer-events-none" />
+
+              <div className="absolute bottom-3 start-3 flex items-center gap-2 bg-white rounded-xl px-3 py-1.5 shadow-lg z-10">
                 <BrandLogo variant="hero" />
               </div>
-              <div className="absolute top-3 end-3 flex gap-2">
-                <div className="relative w-12 h-12 rounded-xl overflow-hidden border-2 border-white/50">
-                  <PremiumImage src="/images/products/dates-luxury-display.jpeg" alt="Dates" fill className="object-cover" sizes="48px" />
-                </div>
-                <div className="relative w-12 h-12 rounded-xl overflow-hidden border-2 border-white/50">
-                  <PremiumImage src="/images/products/chicken-fresh-ice.jpeg" alt="Chicken" fill className="object-cover" sizes="48px" />
-                </div>
-                <div className="relative w-12 h-12 rounded-xl overflow-hidden border-2 border-white/50">
-                  <PremiumImage src="/images/products/olive-oil-lifestyle.jpeg" alt="Oils" fill className="object-cover" sizes="48px" />
-                </div>
+
+              <div className="absolute bottom-3 end-3 z-10">
+                <span className={cn(
+                  'inline-block px-2.5 py-1 rounded-lg bg-primary/90 text-dark text-[10px] font-bold',
+                  isAr ? 'font-ibm-arabic' : 'font-manrope'
+                )}>
+                  {isAr ? current.labelAr : current.labelEn}
+                </span>
+              </div>
+
+              <div className="absolute top-3 end-3 flex gap-1.5 z-10 max-w-[58%] overflow-x-auto scrollbar-none">
+                {HERO_SLIDES.map((slide, i) => (
+                  <motion.button
+                    key={slide.src}
+                    type="button"
+                    whileTap={TAP_SCALE}
+                    onClick={() => goToSlide(i)}
+                    aria-label={isAr ? slide.labelAr : slide.labelEn}
+                    aria-current={activeSlide === i}
+                    className={cn(
+                      'relative w-10 h-10 shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-300',
+                      activeSlide === i
+                        ? 'border-primary ring-2 ring-primary/40 scale-105'
+                        : 'border-white/50 opacity-80 hover:opacity-100'
+                    )}
+                  >
+                    <PremiumImage src={slide.src} alt={slide.labelEn} fill className="object-cover" sizes="40px" />
+                  </motion.button>
+                ))}
+              </div>
+
+              <div className="absolute bottom-11 inset-x-0 flex justify-center gap-1.5 z-10 pointer-events-none">
+                {HERO_SLIDES.map((_, i) => (
+                  <span
+                    key={i}
+                    className={cn(
+                      'h-1 rounded-full transition-all duration-300',
+                      activeSlide === i ? 'w-5 bg-primary' : 'w-1.5 bg-white/60'
+                    )}
+                  />
+                ))}
               </div>
             </div>
             {/* Stats grid */}
