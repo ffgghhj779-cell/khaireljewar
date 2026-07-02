@@ -28,16 +28,14 @@ export default function Footer({ lang }: { lang: string }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-4 mb-6">
-              <div className="relative w-14 h-14 rounded-xl overflow-hidden ring-2 ring-gray-200">
-                <Image src="/images/logo/khair-aljaar-logo.svg" alt="Logo" fill className="object-cover" />
-              </div>
-              <div>
-                <span className={cn('text-2xl font-black tracking-tight block', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
-                  {isAr ? 'خير الجار فودز' : 'KHAIR ALJAAR FOODS'}
-                </span>
-                <span className="text-[10px] font-bold text-gray-500 tracking-[0.2em] uppercase">
-                  {isAr ? 'شركة تصدير زراعي متميزة' : 'Premium Agricultural Export Corp'}
-                </span>
+              <div className="relative h-12 w-auto min-w-[140px]">
+                <Image
+                  src="/images/branding/logo-full.jpeg"
+                  alt="KHAIR ALJAAR FOODS"
+                  width={180}
+                  height={48}
+                  className="h-12 w-auto object-contain"
+                />
               </div>
             </div>
             <p className={cn('text-gray-600 leading-relaxed max-w-sm mb-6', isAr ? 'font-ibm-arabic' : 'font-inter')}>

@@ -57,17 +57,19 @@ export default function Header({ lang }: { lang: string }) {
             className="relative z-[102] flex items-center gap-3 shrink-0 min-w-0"
             onClick={() => setMobileMenuOpen(false)}
           >
-            <Image
-              src="/images/logo/khair-aljaar-logo-white.svg"
-              alt="KHAIR ALJAAR FOODS"
-              width={180}
-              height={48}
-              className={cn(
-                'w-auto max-w-[140px] sm:max-w-none transition-all duration-200 ease-out',
-                isCompact ? 'h-7 sm:h-8 lg:h-11' : 'h-8 sm:h-9 lg:h-11'
-              )}
-              priority
-            />
+            <span className="bg-white rounded-lg px-2 py-1 shrink-0">
+              <Image
+                src="/images/branding/logo-full.jpeg"
+                alt="KHAIR ALJAAR FOODS"
+                width={180}
+                height={48}
+                className={cn(
+                  'w-auto max-w-[120px] sm:max-w-[160px] transition-all duration-200 ease-out object-contain',
+                  isCompact ? 'h-6 sm:h-7 lg:h-8' : 'h-7 sm:h-8 lg:h-9'
+                )}
+                priority
+              />
+            </span>
           </Link>
 
           <div className="hidden lg:flex items-center gap-1 xl:gap-2 relative z-[102]">

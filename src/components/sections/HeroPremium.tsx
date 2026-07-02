@@ -157,11 +157,11 @@ export default function HeroPremium({ lang }: { lang: string }) {
               <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
               <div className="absolute bottom-3 start-3 flex items-center gap-2">
                 <Image
-                  src="/images/logo/khair-aljaar-logo-white.svg"
+                  src="/images/branding/logo-full.jpeg"
                   alt="KA Foods"
-                  width={80}
-                  height={22}
-                  className="h-5 w-auto opacity-90"
+                  width={100}
+                  height={28}
+                  className="h-5 w-auto object-contain"
                 />
               </div>
               <div className="absolute top-3 end-3 flex gap-2">
