@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import Image from 'next/image'
+import PremiumImage from '@/components/ui/PremiumImage'
 import { SECTION_IMAGES } from '@/lib/constants/images'
 import Container from '@/components/ui/Container'
 import { cn } from '@/lib/utils/cn'
@@ -30,7 +30,7 @@ export default function PremiumBentoGrid({ lang }: { lang: string }) {
             whileHover={{ scale: 0.995 }}
             className="md:col-span-2 md:row-span-2 relative rounded-2xl overflow-hidden border border-gray-200 group cursor-pointer"
           >
-            <Image
+            <PremiumImage
               alt="Farming Excellence"
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               fill
@@ -84,7 +84,7 @@ export default function PremiumBentoGrid({ lang }: { lang: string }) {
           </motion.button>
 
           <motion.div className="md:col-span-1 relative rounded-2xl overflow-hidden border border-gray-200 group">
-            <Image
+            <PremiumImage
               alt="Fresh Produce"
               className="object-cover transition-transform duration-700 group-hover:scale-110"
               fill

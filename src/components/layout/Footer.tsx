@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import Image from 'next/image'
-import { BRAND_LOGO } from '@/lib/constants/images'
+import BrandLogo from '@/components/ui/BrandLogo'
+import { BRAND } from '@/lib/constants/brand'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
@@ -28,21 +28,16 @@ export default function Footer({ lang }: { lang: string }) {
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="relative h-12 w-auto min-w-[140px]">
-                <Image
-                  src={BRAND_LOGO}
-                  alt="KHAIR ALJAAR FOODS"
-                  width={180}
-                  height={48}
-                  className="h-12 w-auto object-contain"
-                />
-              </div>
+            <div className="mb-6">
+              <BrandLogo variant="footer" />
             </div>
+            <p className={cn('text-primary font-bold text-sm mb-2', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
+              {isAr ? BRAND.tagline.ar : BRAND.tagline.en}
+            </p>
             <p className={cn('text-gray-600 leading-relaxed max-w-sm mb-6', isAr ? 'font-ibm-arabic' : 'font-inter')}>
               {isAr
-                ? 'شريكك الموثوق في تصدير أجود المحاصيل الزراعية المصرية إلى أسواق الخليج وأوروبا وأفريقيا بمعايير جودة لا تقبل المساومة.'
-                : 'Your trusted B2B partner exporting premium Egyptian agricultural produce to GCC, European, and African markets with uncompromising quality standards.'}
+                ? `${BRAND.name.ar} — شريكك الموثوق في توريد وتصدير المنتجات الغذائية بمعايير جودة لا تقبل المساومة.`
+                : `${BRAND.name.en} — your trusted partner for food supply and export with uncompromising quality standards.`}
             </p>
           </div>
 
@@ -86,25 +81,29 @@ export default function Footer({ lang }: { lang: string }) {
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                 <span className={cn('text-gray-600 text-sm', isAr ? 'font-ibm-arabic' : 'font-inter')}>
-                  {isAr ? 'المنطقة الصناعية، الإسكندرية، مصر' : 'Industrial Zone, Alexandria, Egypt'}
+                  {isAr ? BRAND.contact.address.ar : BRAND.contact.address.en}
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-primary shrink-0" />
-                <span className="text-gray-600 text-sm" dir="ltr">+20 100 000 0000</span>
+                <a href={`tel:${BRAND.contact.phoneTel}`} className="text-gray-600 text-sm hover:text-primary transition-colors" dir="ltr">
+                  {BRAND.contact.phone}
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-primary shrink-0" />
-                <span className="text-gray-600 text-sm">export@khairaljaar.com</span>
+                <a href={`mailto:${BRAND.contact.email}`} className="text-gray-600 text-sm hover:text-primary transition-colors">
+                  {BRAND.contact.email}
+                </a>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-gray-500 text-sm">
+          <p className={cn('text-gray-500 text-sm', isAr ? 'font-ibm-arabic' : 'font-inter')}>
             &copy; {new Date().getFullYear()}{' '}
-            {isAr ? 'خير الجار فودز. جميع الحقوق محفوظة.' : 'KHAIR ALJAAR FOODS. All rights reserved.'}
+            {isAr ? `${BRAND.name.ar}. جميع الحقوق محفوظة.` : `${BRAND.name.en}. All rights reserved.`}
           </p>
           <div className="flex items-center gap-6 text-sm text-gray-500">
             <Link href="#" className="hover:text-primary transition-colors">

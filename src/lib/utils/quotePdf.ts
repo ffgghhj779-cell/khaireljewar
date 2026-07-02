@@ -1,6 +1,7 @@
 import type { QuoteItem } from '@/store/useQuoteStore'
 import type { CurrencyCode } from './currency'
 import { formatCurrency, parsePricePerMt } from './currency'
+import { BRAND } from '@/lib/constants/brand'
 
 interface QuotePdfOptions {
   items: QuoteItem[]
@@ -48,7 +49,7 @@ export function downloadQuoteSheet({ items, currency, lang, companyName }: Quote
 <html dir="${isAr ? 'rtl' : 'ltr'}">
 <head>
   <meta charset="utf-8"/>
-  <title>KHAIR ALJAAR FOODS — B2B Quote</title>
+  <title>${BRAND.name.en} — B2B Quote</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family: 'Segoe UI', system-ui, sans-serif; color:#0D1B2A; padding:48px; background:#fff; }
@@ -71,7 +72,8 @@ export function downloadQuoteSheet({ items, currency, lang, companyName }: Quote
 <body>
   <div class="header">
     <div>
-      <div class="brand">KHAIR ALJAAR FOODS</div>
+      <div class="brand">${BRAND.name.en}</div>
+      <div class="sub">${BRAND.tagline.en}</div>
       <div class="tagline">${isAr ? 'تصدير زراعي متميز' : 'Premium Agricultural Export Corp'}</div>
     </div>
     <div class="meta">
@@ -105,7 +107,7 @@ export function downloadQuoteSheet({ items, currency, lang, companyName }: Quote
 
   <div class="footer">
     ${isAr ? 'هذا المستند تقديري ولا يُعتبر عرض سعر ملزم. الأسعار الفعلية تخضع للتوفر والموسم وشروط الشحن.' : 'This document is indicative and not a binding offer. Final pricing subject to availability, seasonality, and shipping terms.'}
-    <br/>export@khairaljaar.com · +20 100 000 0000 · Alexandria, Egypt
+    <br/>${BRAND.contact.email} · ${BRAND.contact.phone} · ${BRAND.contact.address.en}
   </div>
   <script>window.onload = () => { window.print(); }</script>
 </body>

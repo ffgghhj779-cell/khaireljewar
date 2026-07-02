@@ -85,8 +85,15 @@ export function normalizeProductImage(
   return resolveProductImage(trimmed, categoryEn, slug)
 }
 
-/** Brand logo paths */
-export const BRAND_LOGO = '/images/branding/logo-full.jpeg'
+/** Official brand logo — high-res PNG */
+export const BRAND_LOGO = '/images/branding/logo-official.png'
+
+/** Max quality for brand photography (local assets served unoptimized) */
+export const IMAGE_QUALITY = 95
+
+export function isLocalBrandImage(src: string): boolean {
+  return src.startsWith('/images/')
+}
 
 /** Section hero images */
 export const SECTION_IMAGES = {

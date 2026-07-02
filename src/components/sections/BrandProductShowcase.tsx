@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
+import PremiumImage from '@/components/ui/PremiumImage'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
@@ -118,7 +118,7 @@ function GalleryTile({
         wide ? 'col-span-2 aspect-[16/9]' : 'col-span-1 aspect-[4/5] md:aspect-[3/4]'
       )}
     >
-      <Image
+      <PremiumImage
         src={item.src}
         alt={item.titleEn}
         fill

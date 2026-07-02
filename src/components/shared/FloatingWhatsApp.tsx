@@ -2,10 +2,12 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { BRAND } from '@/lib/constants/brand'
 import { TAP_SCALE } from '@/lib/constants/motion'
 
 export default function FloatingWhatsApp({ lang }: { lang: string }) {
   const [isHovered, setIsHovered] = useState(false)
+  const waUrl = `https://wa.me/${BRAND.contact.phoneWa}?text=${encodeURIComponent(`Hello ${BRAND.name.en}`)}`
 
   return (
     <div className="hidden lg:flex fixed z-50 bottom-8 end-8 flex-col items-end gap-3">
@@ -19,7 +21,7 @@ export default function FloatingWhatsApp({ lang }: { lang: string }) {
         {lang === 'ar' ? 'تحدث معنا واتساب' : 'Chat with us on WhatsApp'}
       </div>
       <motion.a
-        href="https://wa.me/201000000000?text=Hello%20KHAIR%20ALJAAR%20FOODS"
+        href={waUrl}
         target="_blank"
         rel="noopener noreferrer"
         whileTap={TAP_SCALE}

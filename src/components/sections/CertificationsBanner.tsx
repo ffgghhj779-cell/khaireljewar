@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+import PremiumImage from '@/components/ui/PremiumImage'
 import Link from 'next/link'
 import { Award, ShieldCheck } from 'lucide-react'
 import { COMPLIANCE_CERTIFICATES } from '@/lib/constants/brandAssets'
@@ -54,7 +54,7 @@ export default function CertificationsBanner({ lang }: { lang: string }) {
                   className="group relative overflow-hidden rounded-2xl border-2 border-green-200 bg-white shadow-soft hover:border-primary/40 transition-all"
                 >
                   <div className="relative h-36 overflow-hidden bg-gray-50">
-                    <Image
+                    <PremiumImage
                       src={doc.imageSrc}
                       alt={doc.nameEn}
                       fill

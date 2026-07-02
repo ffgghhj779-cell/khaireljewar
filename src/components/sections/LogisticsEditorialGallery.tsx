@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
+import PremiumImage from '@/components/ui/PremiumImage'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, MapPin, Tag } from 'lucide-react'
 import { LOGISTICS_GALLERY, type LogisticsPhoto } from '@/lib/constants/brandAssets'
@@ -99,7 +99,7 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
                   photo.span === 2 ? 'aspect-[16/7]' : 'aspect-[4/3]'
                 )}
               >
-                <Image
+                <PremiumImage
                   src={photo.src}
                   alt={photo.titleEn}
                   fill
@@ -155,7 +155,7 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
               transition={{ type: 'spring', stiffness: 360, damping: 30 }}
               className="fixed inset-4 sm:inset-8 md:inset-12 z-[151] rounded-3xl overflow-hidden shadow-2xl will-change-transform"
             >
-              <Image
+              <PremiumImage
                 src={lightbox.src}
                 alt={lightbox.titleEn}
                 fill

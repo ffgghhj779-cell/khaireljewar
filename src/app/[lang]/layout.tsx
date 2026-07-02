@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import '@/styles/globals.css'
+import { BRAND } from '@/lib/constants/brand'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import MobileAppChrome from '@/components/layout/MobileAppChrome'
@@ -15,10 +16,12 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'KHAIR ALJAAR FOODS | Reliable Food Supply Without Compromise',
-  description:
-    'Premium Egyptian food exporter serving GCC, Europe, and Africa. Fresh fruits, vegetables, frozen foods, and more.',
-  keywords: 'food export, egyptian food, frozen vegetables, fresh fruits, khair aljaar, B2B food supplier',
+  title: `${BRAND.name.en} | ${BRAND.tagline.en}`,
+  description: `${BRAND.name.en} — ${BRAND.tagline.en}. Premium food export serving GCC, Europe, and Africa.`,
+  icons: {
+    icon: '/images/branding/logo-official.png',
+    apple: '/images/branding/logo-official.png',
+  },
 }
 
 export async function generateStaticParams() {

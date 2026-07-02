@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
+import PremiumImage from '@/components/ui/PremiumImage'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   ShieldCheck, Download, ExternalLink, CheckCircle2, Clock, X
@@ -93,14 +93,14 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
             >
               {/* Document thumbnail */}
               <div className="relative h-44 overflow-hidden bg-gray-50">
-                <Image
+                <PremiumImage
                   src={cert.imageSrc}
                   alt={cert.nameEn}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   placeholder="blur"
                   blurDataURL={IMAGE_BLUR_DATA_URL}
-                  className="object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-500 will-change-transform"
+                  className="object-cover object-top group-hover:scale-[1.04] transition-all duration-500 will-change-transform"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
 
@@ -190,7 +190,7 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
               className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-[151] max-w-lg mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden will-change-transform"
             >
               <div className="relative h-56 bg-gray-50">
-                <Image
+                <PremiumImage
                   src={active.imageSrc}
                   alt={active.nameEn}
                   fill

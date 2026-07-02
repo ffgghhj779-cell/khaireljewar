@@ -1,5 +1,5 @@
 import { SECTION_IMAGES } from '@/lib/constants/images'
-import Image from 'next/image'
+import PremiumImage from '@/components/ui/PremiumImage'
 import Container from '@/components/ui/Container'
 import ColdChainStepper from '@/components/logistics/ColdChainStepper'
 import RouteMap from '@/components/logistics/RouteMap'
@@ -31,7 +31,7 @@ export default function LogisticsPage({ params: { lang } }: { params: { lang: st
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
           <RouteMap lang={lang} />
           <div className="relative h-[400px] lg:h-auto rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
-            <Image
+            <PremiumImage
               src={SECTION_IMAGES.logisticsHub}
               alt="Logistics"
               fill

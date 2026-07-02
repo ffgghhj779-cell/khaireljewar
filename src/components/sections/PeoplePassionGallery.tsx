@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
+import PremiumImage from '@/components/ui/PremiumImage'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Quote } from 'lucide-react'
 import { TEAM_GALLERY, type TeamPhoto } from '@/lib/constants/brandAssets'
@@ -93,7 +93,7 @@ export default function PeoplePassionGallery({ lang }: { lang: string }) {
                     : 'col-span-1 aspect-[3/4] md:min-h-[210px]'
                 )}
               >
-                <Image
+                <PremiumImage
                   src={photo.src}
                   alt={photo.captionEn}
                   fill
@@ -140,7 +140,7 @@ export default function PeoplePassionGallery({ lang }: { lang: string }) {
               className="fixed inset-x-4 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 top-1/2 -translate-y-1/2 z-[151] w-full sm:max-w-md rounded-3xl overflow-hidden shadow-2xl will-change-transform"
             >
               <div className="relative aspect-[4/3]">
-                <Image
+                <PremiumImage
                   src={lightbox.src}
                   alt={lightbox.captionEn}
                   fill

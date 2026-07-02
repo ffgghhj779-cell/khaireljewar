@@ -1,5 +1,6 @@
 import { ABOUT_HERO_IMAGE } from '@/lib/constants/images'
-import Image from 'next/image'
+import { BRAND } from '@/lib/constants/brand'
+import PremiumImage from '@/components/ui/PremiumImage'
 import Container from '@/components/ui/Container'
 import PeoplePassionGallery from '@/components/sections/PeoplePassionGallery'
 import { cn } from '@/lib/utils/cn'
@@ -22,7 +23,7 @@ export default function AboutPage({ params: { lang } }: { params: { lang: string
           <div className="flex-1 w-full relative">
             <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full" />
             <div className="relative h-[600px] w-full rounded-[3rem] overflow-hidden shadow-2xl">
-              <Image
+              <PremiumImage
                 src={ABOUT_HERO_IMAGE}
                 alt={isAr ? 'مزارع وشبكة تصدير عالمية' : 'Premium agricultural export network'}
                 fill
@@ -34,7 +35,7 @@ export default function AboutPage({ params: { lang } }: { params: { lang: string
           </div>
           <div className="flex-1">
             <h1 className={cn('text-5xl md:text-7xl font-black text-dark editorial-heading mb-6', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
-              {isAr ? 'عن خير الجوار' : 'About Khair Aljewar'}
+              {isAr ? `عن ${BRAND.name.ar}` : `About ${BRAND.name.en}`}
             </h1>
             <p className={cn("text-xl text-gray-500 leading-relaxed mb-8", isAr ? 'font-ibm-arabic' : 'font-inter')}>
               {isAr 

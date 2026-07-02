@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+import PremiumImage from '@/components/ui/PremiumImage'
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
 import { LOGISTICS_GALLERY } from '@/lib/constants/brandAssets'
@@ -74,7 +74,7 @@ export default function LogisticsTerminal({ lang }: { lang: string }) {
               transition={{ delay: i * 0.06 }}
               className="relative aspect-[4/3] rounded-xl overflow-hidden border border-gray-200 group"
             >
-              <Image
+              <PremiumImage
                 src={photo.src}
                 alt={photo.titleEn}
                 fill

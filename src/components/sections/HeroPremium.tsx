@@ -1,10 +1,12 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+import BrandLogo from '@/components/ui/BrandLogo'
+import PremiumImage from '@/components/ui/PremiumImage'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, Globe2, Package, ShieldCheck, TrendingUp } from 'lucide-react'
-import { BRAND_LOGO, SECTION_IMAGES } from '@/lib/constants/images'
+import { BRAND } from '@/lib/constants/brand'
+import { SECTION_IMAGES } from '@/lib/constants/images'
 import { cn } from '@/lib/utils/cn'
 import AnimatedCounter from '@/components/ui/AnimatedCounter'
 import MagneticButton from '@/components/ui/MagneticButton'
@@ -53,11 +55,11 @@ export default function HeroPremium({ lang }: { lang: string }) {
     <section className="relative w-full pt-6 pb-10 md:pt-8 md:pb-16 md:min-h-[calc(100vh-76px)] md:flex md:items-center overflow-x-clip">
       <div className="absolute inset-0 industrial-grid opacity-50 pointer-events-none" />
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <Image
+        <PremiumImage
           src={SECTION_IMAGES.heroBg}
-          alt="Khair Aljaar Foods — Premium Egyptian Agricultural Export"
+          alt="KHAIR ALJAAR FOODS — Premium Egyptian Agricultural Export"
           fill
-          className="object-cover opacity-15"
+          className="object-cover opacity-20"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-white/92 via-white/75 to-gray-50" />
@@ -108,8 +110,8 @@ export default function HeroPremium({ lang }: { lang: string }) {
               </span>
               <span className="hidden md:inline">
                 {isAr
-                  ? 'خير الجار فودز — شركة تصدير زراعي متميزة تخدم أسواق الخليج وأوروبا وأفريقيا. منصة B2B متكاملة لطلبات التسعير بالجملة، اللوجستيات، وضمان الجودة.'
-                  : 'KHAIR ALJAAR FOODS — a premium Egyptian agricultural export corporation serving GCC, Europe, and Africa. An integrated B2B platform for wholesale quotes, logistics, and quality assurance.'}
+                  ? `${BRAND.name.ar} — شركة تصدير غذائي متميزة تخدم أسواق الخليج وأوروبا وأفريقيا. منصة B2B متكاملة لطلبات التسعير بالجملة، اللوجستيات، وضمان الجودة.`
+                  : `${BRAND.name.en} — a premium food export corporation serving GCC, Europe, and Africa. An integrated B2B platform for wholesale quotes, logistics, and quality assurance.`}
               </span>
             </motion.p>
 
@@ -147,7 +149,7 @@ export default function HeroPremium({ lang }: { lang: string }) {
           >
             {/* Brand photography showcase */}
             <div className="relative mb-3 rounded-2xl overflow-hidden border border-gray-200 shadow-sm aspect-[16/9]">
-              <Image
+              <PremiumImage
                 src={SECTION_IMAGES.heroFeature}
                 alt="KA Foods — Premium Export Produce"
                 fill
@@ -156,24 +158,18 @@ export default function HeroPremium({ lang }: { lang: string }) {
                 sizes="(max-width: 1024px) 0vw, 45vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
-              <div className="absolute bottom-3 start-3 flex items-center gap-2">
-                <Image
-                  src={BRAND_LOGO}
-                  alt="KA Foods"
-                  width={100}
-                  height={28}
-                  className="h-5 w-auto object-contain"
-                />
+              <div className="absolute bottom-3 start-3 flex items-center gap-2 bg-white/95 rounded-lg px-2 py-1">
+                <BrandLogo variant="hero" />
               </div>
               <div className="absolute top-3 end-3 flex gap-2">
                 <div className="relative w-12 h-12 rounded-xl overflow-hidden border-2 border-white/50">
-                  <Image src="/images/products/dates-luxury-display.jpeg" alt="Dates" fill className="object-cover" sizes="48px" />
+                  <PremiumImage src="/images/products/dates-luxury-display.jpeg" alt="Dates" fill className="object-cover" sizes="48px" />
                 </div>
                 <div className="relative w-12 h-12 rounded-xl overflow-hidden border-2 border-white/50">
-                  <Image src="/images/products/chicken-fresh-ice.jpeg" alt="Chicken" fill className="object-cover" sizes="48px" />
+                  <PremiumImage src="/images/products/chicken-fresh-ice.jpeg" alt="Chicken" fill className="object-cover" sizes="48px" />
                 </div>
                 <div className="relative w-12 h-12 rounded-xl overflow-hidden border-2 border-white/50">
-                  <Image src="/images/products/olive-oil-lifestyle.jpeg" alt="Oils" fill className="object-cover" sizes="48px" />
+                  <PremiumImage src="/images/products/olive-oil-lifestyle.jpeg" alt="Oils" fill className="object-cover" sizes="48px" />
                 </div>
               </div>
             </div>

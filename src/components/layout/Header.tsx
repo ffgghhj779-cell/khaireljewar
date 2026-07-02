@@ -2,15 +2,14 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingBag } from 'lucide-react'
 import Container from '@/components/ui/Container'
+import BrandLogo from '@/components/ui/BrandLogo'
 import LanguageSwitch from './LanguageSwitch'
 import { useQuoteItems, useQuoteStore } from '@/store/useQuoteStore'
 import { useScrollCompact } from '@/hooks/useScrollCompact'
 import { cn } from '@/lib/utils/cn'
-import { BRAND_LOGO } from '@/lib/constants/images'
 import { MOBILE_EASE_OUT, TAP_SCALE } from '@/lib/constants/motion'
 
 const navigation = {
@@ -58,19 +57,7 @@ export default function Header({ lang }: { lang: string }) {
             className="relative z-[102] flex items-center gap-3 shrink-0 min-w-0"
             onClick={() => setMobileMenuOpen(false)}
           >
-            <span className="bg-white rounded-lg px-2 py-1 shrink-0">
-              <Image
-                src={BRAND_LOGO}
-                alt="KHAIR ALJAAR FOODS"
-                width={180}
-                height={48}
-                className={cn(
-                  'w-auto max-w-[120px] sm:max-w-[160px] transition-all duration-200 ease-out object-contain',
-                  isCompact ? 'h-6 sm:h-7 lg:h-8' : 'h-7 sm:h-8 lg:h-9'
-                )}
-                priority
-              />
-            </span>
+            <BrandLogo variant="header" priority className={isCompact ? '!h-7 sm:!h-8' : undefined} />
           </Link>
 
           <div className="hidden lg:flex items-center gap-1 xl:gap-2 relative z-[102]">
