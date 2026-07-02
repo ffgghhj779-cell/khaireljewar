@@ -47,7 +47,7 @@ export default function MagneticButton({
       onMouseLeave={handleLeave}
       animate={{ x: offset.x, y: offset.y }}
       transition={{ type: 'spring', stiffness: 300, damping: 20, mass: 0.6 }}
-      whileTap={{ scale: 0.96 }}
+      whileTap={{ scale: 0.95 }}
       className={cn('magnetic-btn', className)}
     >
       {children}

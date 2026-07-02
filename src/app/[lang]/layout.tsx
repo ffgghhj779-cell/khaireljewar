@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import '@/styles/globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import MobileAppChrome from '@/components/layout/MobileAppChrome'
 import FloatingWhatsApp from '@/components/shared/FloatingWhatsApp'
 import QuoteDrawer from '@/components/ecom/QuoteDrawer'
 import QuoteCheckoutModal from '@/components/ecom/QuoteCheckoutModal'
@@ -29,11 +30,12 @@ export default function RootLayout({
   return (
     <html lang={lang} dir={isAr ? 'rtl' : 'ltr'}>
       <body
-        className={`${isAr ? 'font-ibm-arabic' : 'font-inter'} antialiased text-dark overflow-x-hidden`}
+        className={`${isAr ? 'font-ibm-arabic' : 'font-inter'} antialiased text-dark overflow-x-hidden touch-manipulation`}
       >
         <Header lang={lang} />
-        <main className="min-h-screen pt-[76px]">{children}</main>
+        <main className="min-h-screen pt-[60px] md:pt-[76px] mobile-safe-bottom">{children}</main>
         <Footer lang={lang} />
+        <MobileAppChrome lang={lang} />
         <FloatingWhatsApp lang={lang} />
         <QuoteDrawer lang={lang} />
         <QuoteCheckoutModal lang={lang} />

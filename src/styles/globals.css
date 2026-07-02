@@ -18,11 +18,17 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+    touch-action: manipulation;
   }
 
   /* Premium enterprise canvas — breaks stark white */
   body {
     @apply text-dark overflow-x-hidden relative font-inter;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: contain;
     background-color: #f8f9fa;
     background-image:
       radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0, 201, 215, 0.06), transparent 55%),
@@ -179,5 +185,43 @@
   .gpu-accelerated {
     transform: translateZ(0);
     will-change: transform, opacity;
+  }
+
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .snap-carousel {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .snap-carousel > * {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  .mobile-safe-bottom {
+    padding-bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  @media (min-width: 1024px) {
+    .mobile-safe-bottom {
+      padding-bottom: 0;
+    }
+  }
+
+  .mobile-overlay {
+    @apply gpu-accelerated will-change-transform;
+    transform: translateZ(0);
   }
 }

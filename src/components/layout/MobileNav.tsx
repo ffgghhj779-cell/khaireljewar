@@ -1,1 +1,1 @@
-export default function MobileNav() { return null; }
+export { default } from './MobileBottomNav'
