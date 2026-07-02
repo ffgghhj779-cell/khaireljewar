@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import '@/styles/globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -6,6 +6,13 @@ import MobileAppChrome from '@/components/layout/MobileAppChrome'
 import FloatingWhatsApp from '@/components/shared/FloatingWhatsApp'
 import QuoteDrawer from '@/components/ecom/QuoteDrawer'
 import QuoteCheckoutModal from '@/components/ecom/QuoteCheckoutModal'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
 
 export const metadata: Metadata = {
   title: 'KHAIR ALJAAR FOODS | Reliable Food Supply Without Compromise',
@@ -30,10 +37,10 @@ export default function RootLayout({
   return (
     <html lang={lang} dir={isAr ? 'rtl' : 'ltr'}>
       <body
-        className={`${isAr ? 'font-ibm-arabic' : 'font-inter'} antialiased text-dark overflow-x-hidden touch-manipulation`}
+        className={`${isAr ? 'font-ibm-arabic' : 'font-inter'} antialiased text-dark min-h-screen`}
       >
         <Header lang={lang} />
-        <main className="min-h-screen pt-[60px] md:pt-[76px] mobile-safe-bottom">{children}</main>
+        <main className="min-h-screen pt-[56px] md:pt-[76px] mobile-safe-bottom">{children}</main>
         <Footer lang={lang} />
         <MobileAppChrome lang={lang} />
         <FloatingWhatsApp lang={lang} />

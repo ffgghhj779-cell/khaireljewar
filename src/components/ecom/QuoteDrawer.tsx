@@ -36,11 +36,26 @@ export default function QuoteDrawer({ lang }: { lang: string }) {
   }, [notification, clearNotification])
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-      return () => {
-        document.body.style.overflow = ''
-      }
+    if (!isOpen) return
+
+    const scrollY = window.scrollY
+    const { style } = document.body
+    const prevOverflow = style.overflow
+    const prevPosition = style.position
+    const prevTop = style.top
+    const prevWidth = style.width
+
+    style.overflow = 'hidden'
+    style.position = 'fixed'
+    style.top = `-${scrollY}px`
+    style.width = '100%'
+
+    return () => {
+      style.overflow = prevOverflow
+      style.position = prevPosition
+      style.top = prevTop
+      style.width = prevWidth
+      window.scrollTo(0, scrollY)
     }
   }, [isOpen])
 

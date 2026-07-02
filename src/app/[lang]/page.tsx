@@ -15,7 +15,7 @@ export default async function Home({
   const products = await getProducts()
 
   return (
-    <div className="relative overflow-x-hidden selection:bg-primary selection:text-white">
+    <div className="relative overflow-x-clip selection:bg-primary selection:text-white">
       <HeroPremium lang={lang} />
       <MarketTicker lang={lang} products={products} />
       <PremiumBentoGrid lang={lang} />
