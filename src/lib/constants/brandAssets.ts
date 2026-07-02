@@ -219,6 +219,10 @@ export interface ProductGalleryItem {
   id: string
   titleEn: string
   titleAr: string
+  descEn: string
+  descAr: string
+  detailEn: string
+  detailAr: string
   categoryEn: string
   categoryAr: string
   src: string
@@ -226,27 +230,27 @@ export interface ProductGalleryItem {
 }
 
 export const PRODUCT_GALLERY: ProductGalleryItem[] = [
-  { id: 'pg-01', titleEn: 'Premium Strawberries', titleAr: 'فراولة فاخرة', categoryEn: 'Fruits', categoryAr: 'فواكه', src: '/images/products/strawberries-banner.jpeg', span: 2 },
-  { id: 'pg-02', titleEn: 'Kent Mangoes — Export Display', titleAr: 'مانجو كينت — عرض تصدير', categoryEn: 'Fruits', categoryAr: 'فواكه', src: '/images/products/mangoes-display.jpeg', span: 2 },
-  { id: 'pg-03', titleEn: 'Luxury Medjool Dates', titleAr: 'تمر مجدول فاخر', categoryEn: 'Dates', categoryAr: 'تمور', src: '/images/products/dates-luxury-display.jpeg' },
-  { id: 'pg-04', titleEn: 'Fresh Chicken on Ice', titleAr: 'دجاج طازج على الثلج', categoryEn: 'Poultry', categoryAr: 'دواجن', src: '/images/products/chicken-fresh-ice.jpeg' },
-  { id: 'pg-05', titleEn: 'Packed Chicken Trays', titleAr: 'صواني دجاج معبأة', categoryEn: 'Poultry', categoryAr: 'دواجن', src: '/images/products/chicken-packed-trays.jpeg' },
-  { id: 'pg-06', titleEn: 'Chilled Chicken Box', titleAr: 'صندوق دجاج مبرد', categoryEn: 'Poultry', categoryAr: 'دواجن', src: '/images/products/chilled-chicken-box.jpeg' },
-  { id: 'pg-07', titleEn: 'Frozen Proteins', titleAr: 'بروتينات مجمدة', categoryEn: 'Frozen', categoryAr: 'مجمدات', src: '/images/products/frozen-proteins-box.jpeg' },
-  { id: 'pg-08', titleEn: 'Premium Meats Display', titleAr: 'عرض لحوم فاخرة', categoryEn: 'Meats', categoryAr: 'لحوم', src: '/images/products/meats-display.jpeg' },
-  { id: 'pg-09', titleEn: 'Cold Shelf — Full Range', titleAr: 'رف مبرد — تشكيلة كاملة', categoryEn: 'Retail', categoryAr: 'تجزئة', src: '/images/products/cold-shelf-display.jpeg', span: 2 },
-  { id: 'pg-10', titleEn: 'Olive Oil — Lifestyle', titleAr: 'زيت زيتون', categoryEn: 'Oils', categoryAr: 'زيوت', src: '/images/products/olive-oil-lifestyle.jpeg' },
-  { id: 'pg-11', titleEn: 'Sunflower Oil Bottle', titleAr: 'زيت عباد الشمس', categoryEn: 'Oils', categoryAr: 'زيوت', src: '/images/products/sunflower-oil-bottle.jpeg' },
-  { id: 'pg-12', titleEn: 'Sunflower Oil Gift Box', titleAr: 'علبة هدايا زيت', categoryEn: 'Oils', categoryAr: 'زيوت', src: '/images/products/sunflower-oil-giftbox.jpeg' },
-  { id: 'pg-13', titleEn: 'Spunta Potatoes — Retail', titleAr: 'بطاطس سبونتا', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/potatoes-retail.jpeg' },
-  { id: 'pg-14', titleEn: 'Potatoes Display Stand', titleAr: 'ستاند عرض بطاطس', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/potatoes-display-stand.jpeg' },
-  { id: 'pg-15', titleEn: 'Seasoned Fries Pack', titleAr: 'بطاطس مقلية متبلة', categoryEn: 'Frozen', categoryAr: 'مجمدات', src: '/images/products/seasoned-fries-pack.jpeg' },
-  { id: 'pg-16', titleEn: 'Fresh Okra Box', titleAr: 'بامية طازجة', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/okra-box.jpeg' },
-  { id: 'pg-17', titleEn: 'Herbs & Greens', titleAr: 'أعشاب وخضروات ورقية', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/herbs-greens-packed.jpeg' },
-  { id: 'pg-18', titleEn: 'Premium Rice Bags', titleAr: 'أرز فاخر', categoryEn: 'Grains', categoryAr: 'حبوب', src: '/images/products/rice-bags-display.jpeg' },
-  { id: 'pg-19', titleEn: 'Grains Shelf Display', titleAr: 'عرض حبوب', categoryEn: 'Grains', categoryAr: 'حبوب', src: '/images/products/grains-shelf-display.jpeg' },
-  { id: 'pg-20', titleEn: 'Mixed Fruits Cart', titleAr: 'سلة فواكه مشكلة', categoryEn: 'Fruits', categoryAr: 'فواكه', src: '/images/products/fruits-shopping-cart.jpeg' },
-  { id: 'pg-21', titleEn: 'Supermarket Kiosk', titleAr: 'كشك سوبرماركت', categoryEn: 'Retail', categoryAr: 'تجزئة', src: '/images/products/supermarket-kiosk.jpeg', span: 2 },
+  { id: 'pg-01', titleEn: 'Premium Strawberries', titleAr: 'فراولة فاخرة', descEn: 'IQF-grade berries — GCC & EU cold-chain ready.', descAr: 'توت IQF فاخر — جاهز للتبريد لأسواق الخليج وأوروبا.', detailEn: 'Export Grade A', detailAr: 'درجة تصدير A', categoryEn: 'Fruits', categoryAr: 'فواكه', src: '/images/products/strawberries-banner.jpeg', span: 2 },
+  { id: 'pg-02', titleEn: 'Kent Mangoes — Export Display', titleAr: 'مانجو كينت — عرض تصدير', descEn: 'Premium Kent mangoes — retail & wholesale B2B.', descAr: 'مانجو كينت فاخر — جملة وتجزئة للتصدير.', detailEn: 'Seasonal Harvest', detailAr: 'حصاد موسمي', categoryEn: 'Fruits', categoryAr: 'فواكه', src: '/images/products/mangoes-display.jpeg', span: 2 },
+  { id: 'pg-03', titleEn: 'Luxury Medjool Dates', titleAr: 'تمر مجدول فاخر', descEn: 'Premium Medjool — gift & bulk export lines.', descAr: 'تمور مجدول فاخرة — خطوط هدايا وتصدير بالجملة.', detailEn: 'GCC Premium', detailAr: 'فاخر للخليج', categoryEn: 'Dates', categoryAr: 'تمور', src: '/images/products/dates-luxury-display.jpeg' },
+  { id: 'pg-04', titleEn: 'Fresh Chicken on Ice', titleAr: 'دجاج طازج على الثلج', descEn: 'Halal-certified poultry — chilled export specs.', descAr: 'دواجن حلال معتمدة — مواصفات تصدير مبردة.', detailEn: 'Halal Certified', detailAr: 'حلال معتمد', categoryEn: 'Poultry', categoryAr: 'دواجن', src: '/images/products/chicken-fresh-ice.jpeg' },
+  { id: 'pg-05', titleEn: 'Packed Chicken Trays', titleAr: 'صواني دجاج معبأة', descEn: 'Retail-ready trays — private label available.', descAr: 'صواني جاهزة للتجزئة — علامة خاصة متاحة.', detailEn: 'MOQ 20 MT', detailAr: 'حد أدنى 20 طن', categoryEn: 'Poultry', categoryAr: 'دواجن', src: '/images/products/chicken-packed-trays.jpeg' },
+  { id: 'pg-06', titleEn: 'Chilled Chicken Box', titleAr: 'صندوق دجاج مبرد', descEn: 'Cold-chain boxed poultry for regional distribution.', descAr: 'دواجن مبردة في صناديق لسلاسل التوزيع الإقليمية.', detailEn: '-2°C Chain', detailAr: 'سلسلة -2°م', categoryEn: 'Poultry', categoryAr: 'دواجن', src: '/images/products/chilled-chicken-box.jpeg' },
+  { id: 'pg-07', titleEn: 'Frozen Proteins', titleAr: 'بروتينات مجمدة', descEn: 'IQF frozen proteins — long shelf-life export.', descAr: 'بروتينات مجمدة IQF — صلاحية طويلة للتصدير.', detailEn: 'IQF Standard', detailAr: 'معيار IQF', categoryEn: 'Frozen', categoryAr: 'مجمدات', src: '/images/products/frozen-proteins-box.jpeg' },
+  { id: 'pg-08', titleEn: 'Premium Meats Display', titleAr: 'عرض لحوم فاخرة', descEn: 'Chilled & frozen meat lines for retail partners.', descAr: 'خطوط لحوم مبردة ومجمدة لشركاء التجزئة.', detailEn: 'B2B Retail', detailAr: 'جملة وتجزئة', categoryEn: 'Meats', categoryAr: 'لحوم', src: '/images/products/meats-display.jpeg' },
+  { id: 'pg-09', titleEn: 'Cold Shelf — Full Range', titleAr: 'رف مبرد — تشكيلة كاملة', descEn: 'Full chilled assortment — supermarket ready.', descAr: 'تشكيلة مبردة كاملة — جاهزة للسوبرماركت.', detailEn: 'Retail Ready', detailAr: 'جاهز للتجزئة', categoryEn: 'Retail', categoryAr: 'تجزئة', src: '/images/products/cold-shelf-display.jpeg', span: 2 },
+  { id: 'pg-10', titleEn: 'Olive Oil — Lifestyle', titleAr: 'زيت زيتون', descEn: 'Extra virgin olive oil — bulk & branded export.', descAr: 'زيت زيتون بكر ممتاز — تصدير بالجملة وبعلامة تجارية.', detailEn: 'EV Olive Oil', detailAr: 'زيت بكر ممتاز', categoryEn: 'Oils', categoryAr: 'زيوت', src: '/images/products/olive-oil-lifestyle.jpeg' },
+  { id: 'pg-11', titleEn: 'Sunflower Oil Bottle', titleAr: 'زيت عباد الشمس', descEn: 'Refined sunflower oil — PET & tin packaging.', descAr: 'زيت عباد شمس مكرر — تعبئة PET وعلب معدنية.', detailEn: '1L–20L Formats', detailAr: 'أحجام 1–20 لتر', categoryEn: 'Oils', categoryAr: 'زيوت', src: '/images/products/sunflower-oil-bottle.jpeg' },
+  { id: 'pg-12', titleEn: 'Sunflower Oil Gift Box', titleAr: 'علبة هدايا زيت', descEn: 'Premium gift packaging for GCC retail channels.', descAr: 'تعبئة هدايا فاخرة لقنوات التجزئة الخليجية.', detailEn: 'Gift Line', detailAr: 'خط الهدايا', categoryEn: 'Oils', categoryAr: 'زيوت', src: '/images/products/sunflower-oil-giftbox.jpeg' },
+  { id: 'pg-13', titleEn: 'Spunta Potatoes — Retail', titleAr: 'بطاطس سبونتا', descEn: 'Table potatoes — mesh bags & cartons for export.', descAr: 'بطاطس مائدة — أكياس شبك وكراتين للتصدير.', detailEn: 'Egypt Origin', detailAr: 'منشأ مصر', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/potatoes-retail.jpeg' },
+  { id: 'pg-14', titleEn: 'Potatoes Display Stand', titleAr: 'ستاند عرض بطاطس', descEn: 'In-store display formats — EU caliber sorted.', descAr: 'تنسيقات عرض داخل المتجر — فرز معاير أوروبية.', detailEn: 'Caliber Sorted', detailAr: 'فرز معاير', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/potatoes-display-stand.jpeg' },
+  { id: 'pg-15', titleEn: 'Seasoned Fries Pack', titleAr: 'بطاطس مقلية متبلة', descEn: 'Frozen seasoned fries — foodservice & retail.', descAr: 'بطاطس مجمدة متبلة — خدمات الطعام والتجزئة.', detailEn: 'IQF Fries', detailAr: 'بطاطس IQF', categoryEn: 'Frozen', categoryAr: 'مجمدات', src: '/images/products/seasoned-fries-pack.jpeg' },
+  { id: 'pg-16', titleEn: 'Fresh Okra Box', titleAr: 'بامية طازجة', descEn: 'Fresh okra — ventilated export cartons.', descAr: 'بامية طازجة — كراتين تصدير مهواة.', detailEn: 'Air-Freight OK', detailAr: 'مناسب للشحن الجوي', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/okra-box.jpeg' },
+  { id: 'pg-17', titleEn: 'Herbs & Greens', titleAr: 'أعشاب وخضروات ورقية', descEn: 'Packed herbs & leafy greens — cold-chain fresh.', descAr: 'أعشاب وخضروات ورقية معبأة — طازجة بسلسلة تبريد.', detailEn: 'Fresh Packed', detailAr: 'تعبئة طازجة', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/herbs-greens-packed.jpeg' },
+  { id: 'pg-18', titleEn: 'Premium Rice Bags', titleAr: 'أرز فاخر', descEn: 'Long-grain rice — 5–50 kg export sacks.', descAr: 'أرز حبة طويلة — أكياس تصدير 5–50 كجم.', detailEn: 'Bulk Sacks', detailAr: 'أكياس جملة', categoryEn: 'Grains', categoryAr: 'حبوب', src: '/images/products/rice-bags-display.jpeg' },
+  { id: 'pg-19', titleEn: 'Grains Shelf Display', titleAr: 'عرض حبوب', descEn: 'Pulses & grains assortment for retail partners.', descAr: 'تشكيلة بقوليات وحبوب لشركاء التجزئة.', detailEn: 'Mixed Grains', detailAr: 'حبوب مشكلة', categoryEn: 'Grains', categoryAr: 'حبوب', src: '/images/products/grains-shelf-display.jpeg' },
+  { id: 'pg-20', titleEn: 'Mixed Fruits Cart', titleAr: 'سلة فواكه مشكلة', descEn: 'Seasonal fruit mix — wholesale & catering.', descAr: 'مزيج فواكه موسمي — جملة وتموين.', detailEn: 'Seasonal Mix', detailAr: 'مزيج موسمي', categoryEn: 'Fruits', categoryAr: 'فواكه', src: '/images/products/fruits-shopping-cart.jpeg' },
+  { id: 'pg-21', titleEn: 'Supermarket Kiosk', titleAr: 'كشك سوبرماركت', descEn: 'Full KA brand kiosk — turnkey retail solution.', descAr: 'كشك KA كامل — حل تجزئة متكامل.', detailEn: 'Turnkey Retail', detailAr: 'تجزئة متكاملة', categoryEn: 'Retail', categoryAr: 'تجزئة', src: '/images/products/supermarket-kiosk.jpeg', span: 2 },
 ]
 
 /** ─── ASSET PLACEMENT MAP ────────────────────────────────────────────────── */

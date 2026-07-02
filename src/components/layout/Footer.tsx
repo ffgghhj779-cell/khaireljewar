@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import BrandLogo from '@/components/ui/BrandLogo'
+import BrandLockup from '@/components/ui/BrandLockup'
 import { BRAND } from '@/lib/constants/brand'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
@@ -30,7 +30,7 @@ export default function Footer({ lang }: { lang: string }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           <div className="lg:col-span-2">
             <div className="mb-6">
-              <BrandLogo variant="footer" />
+              <BrandLockup lang={lang} variant="footer" />
             </div>
             <p className={cn('text-primary font-bold text-sm mb-2', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
               {isAr ? BRAND.tagline.ar : BRAND.tagline.en}

@@ -109,11 +109,10 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
                   className="object-cover will-change-transform"
                 />
 
-                {/* Dark overlay — appears on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-400" />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark/85 via-dark/35 to-transparent opacity-100 md:opacity-60 md:group-hover:opacity-90 transition-opacity duration-400" />
 
-                {/* Content */}
-                <div className="absolute inset-0 p-4 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {/* Content — always visible on mobile */}
+                <div className="absolute inset-0 p-3 md:p-4 flex flex-col justify-end opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
                   <span
                     className={cn(
                       'self-start mb-2 px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest border',

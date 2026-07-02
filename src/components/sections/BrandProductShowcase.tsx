@@ -126,13 +126,21 @@ function GalleryTile({
           isMobile ? '' : 'transition-transform duration-500 group-hover:scale-[1.04]'
         )}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-dark/75 via-dark/15 to-transparent opacity-80 md:group-hover:opacity-95 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/40 to-transparent" />
       <div className="absolute bottom-0 inset-x-0 p-3 md:p-4">
-        <span className="inline-block mb-1 px-2 py-0.5 rounded-md bg-primary/90 text-dark text-[9px] font-bold uppercase tracking-wider">
-          {isAr ? item.categoryAr : item.categoryEn}
-        </span>
-        <p className={cn('text-white font-bold text-xs md:text-sm leading-snug', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
+        <div className="flex flex-wrap gap-1 mb-1.5">
+          <span className="inline-block px-2 py-0.5 rounded-md bg-primary/90 text-dark text-[9px] font-bold uppercase tracking-wider">
+            {isAr ? item.categoryAr : item.categoryEn}
+          </span>
+          <span className="inline-block px-2 py-0.5 rounded-md bg-white/20 text-white text-[9px] font-bold border border-white/20">
+            {isAr ? item.detailAr : item.detailEn}
+          </span>
+        </div>
+        <p className={cn('text-white font-bold text-sm md:text-base leading-snug mb-1', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
           {isAr ? item.titleAr : item.titleEn}
+        </p>
+        <p className={cn('text-white/75 text-[10px] md:text-xs leading-relaxed line-clamp-2', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+          {isAr ? item.descAr : item.descEn}
         </p>
       </div>
       <Link

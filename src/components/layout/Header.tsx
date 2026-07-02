@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingBag } from 'lucide-react'
 import Container from '@/components/ui/Container'
-import BrandLogo from '@/components/ui/BrandLogo'
+import BrandLockup from '@/components/ui/BrandLockup'
 import LanguageSwitch from './LanguageSwitch'
 import { useQuoteItems, useQuoteStore } from '@/store/useQuoteStore'
 import { useScrollCompact } from '@/hooks/useScrollCompact'
@@ -54,10 +54,10 @@ export default function Header({ lang }: { lang: string }) {
         <nav className="flex items-center justify-between relative z-[101] gap-2">
           <Link
             href={`/${lang}`}
-            className="relative z-[102] flex items-center gap-3 shrink min-w-0 max-w-[58%] sm:max-w-none"
+            className="relative z-[102] flex items-center gap-2 sm:gap-3 shrink min-w-0 max-w-[72%] sm:max-w-[65%] lg:max-w-none"
             onClick={() => setMobileMenuOpen(false)}
           >
-            <BrandLogo variant="header" priority className={isCompact ? '!h-7 sm:!h-8' : undefined} />
+            <BrandLockup lang={lang} priority compact={isCompact} />
           </Link>
 
           <div className="hidden lg:flex items-center gap-1 xl:gap-2 relative z-[102]">

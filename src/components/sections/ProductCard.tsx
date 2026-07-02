@@ -74,6 +74,12 @@ export default function ProductCard({ product, lang, index = 0, compact = false,
   const title = isAr ? product.title.ar : product.title.en
   const category = isAr ? product.category.ar : product.category.en
   const origin = isAr ? product.origin.ar : product.origin.en
+  const desc = isAr ? product.desc.ar : product.desc.en
+  const commodity = isAr ? product.commodityClass.ar : product.commodityClass.en
+  const packaging = isAr ? product.packaging.ar : product.packaging.en
+  const season = isAr ? product.harvestSeason.ar : product.harvestSeason.en
+  const sizes = isAr ? product.sizes.ar : product.sizes.en
+  const availability = isAr ? product.availability.ar : product.availability.en
   const isPositive = (product.trend ?? '0').startsWith('+')
 
   const addButtonClasses = cn(
@@ -123,12 +129,10 @@ export default function ProductCard({ product, lang, index = 0, compact = false,
 
             <div className="absolute top-3 start-3 flex flex-wrap gap-1.5 z-10 max-w-[70%] pointer-events-none">
               <span className="glass-badge px-2.5 py-1 text-micro text-dark rounded-lg">{category}</span>
-              {!isCompact && (
-                <span className="glass-badge px-2.5 py-1 text-micro text-dark-500 rounded-lg flex items-center gap-1">
-                  <MapPin className="w-3 h-3 text-primary shrink-0" />
-                  {origin}
-                </span>
-              )}
+              <span className="glass-badge px-2.5 py-1 text-micro text-dark-500 rounded-lg flex items-center gap-1">
+                <MapPin className="w-3 h-3 text-primary shrink-0" />
+                {origin}
+              </span>
             </div>
 
             <div className="absolute top-3 end-3 z-10 pointer-events-none">
@@ -200,21 +204,21 @@ export default function ProductCard({ product, lang, index = 0, compact = false,
             {!isCompact && (
               <>
                 <p className={cn('text-body-md text-gray-600 line-clamp-2 mb-5 flex-1 leading-relaxed', isAr ? 'font-ibm-arabic' : 'font-inter')}>
-                  {isAr ? product.desc.ar : product.desc.en}
+                  {desc}
                 </p>
 
                 <div className="spec-grid mb-5">
                   <div className="spec-cell">
                     <span className="text-micro text-gray-500 block mb-0.5">{isAr ? 'المعايرة' : 'Caliber'}</span>
-                    <span className="text-xs font-bold text-dark font-mono">{isAr ? product.sizes.ar : product.sizes.en}</span>
+                    <span className="text-xs font-bold text-dark font-mono">{sizes}</span>
                   </div>
                   <div className="spec-cell">
                     <span className="text-micro text-gray-500 block mb-0.5">{isAr ? 'الموسم' : 'Season'}</span>
-                    <span className="text-xs font-bold text-dark">{isAr ? product.harvestSeason.ar : product.harvestSeason.en}</span>
+                    <span className="text-xs font-bold text-dark">{season}</span>
                   </div>
                   <div className="spec-cell">
                     <span className="text-micro text-gray-500 block mb-0.5">{isAr ? 'التعبئة' : 'Packaging'}</span>
-                    <span className="text-xs font-bold text-dark truncate block">{isAr ? product.packaging.ar : product.packaging.en}</span>
+                    <span className="text-xs font-bold text-dark truncate block">{packaging}</span>
                   </div>
                   <div className="spec-cell">
                     <span className="text-micro text-gray-500 block mb-0.5">{isAr ? 'التوفر' : 'Status'}</span>
@@ -224,7 +228,35 @@ export default function ProductCard({ product, lang, index = 0, compact = false,
                         product.availability.en === 'In Stock' ? 'text-green-600' : 'text-secondary'
                       )}
                     >
-                      {isAr ? product.availability.ar : product.availability.en}
+                      {availability}
+                    </span>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {isCompact && (
+              <>
+                <p className={cn('text-xs text-gray-600 line-clamp-2 mb-3 leading-relaxed', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+                  {desc}
+                </p>
+                <div className="grid grid-cols-2 gap-2 mb-3 text-[10px]">
+                  <div className="bg-gray-50 rounded-lg px-2 py-1.5 border border-gray-100">
+                    <span className="text-gray-400 block">{isAr ? 'الفئة' : 'Class'}</span>
+                    <span className="font-bold text-dark truncate block">{commodity}</span>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg px-2 py-1.5 border border-gray-100">
+                    <span className="text-gray-400 block">{isAr ? 'الموسم' : 'Season'}</span>
+                    <span className="font-bold text-dark truncate block">{season}</span>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg px-2 py-1.5 border border-gray-100">
+                    <span className="text-gray-400 block">{isAr ? 'التعبئة' : 'Pack'}</span>
+                    <span className="font-bold text-dark truncate block">{packaging}</span>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg px-2 py-1.5 border border-gray-100">
+                    <span className="text-gray-400 block">{isAr ? 'التوفر' : 'Status'}</span>
+                    <span className={cn('font-bold truncate block', product.availability.en === 'In Stock' ? 'text-green-600' : 'text-secondary')}>
+                      {availability}
                     </span>
                   </div>
                 </div>
@@ -232,11 +264,9 @@ export default function ProductCard({ product, lang, index = 0, compact = false,
             )}
 
             {isCompact ? (
-              <div className="mt-auto flex items-center gap-2">
-                <span className="text-micro text-gray-500 flex items-center gap-1 truncate">
-                  <MapPin className="w-3 h-3 text-primary shrink-0" />
-                  {origin}
-                </span>
+              <div className="mt-auto flex items-center justify-between gap-2 pt-2 border-t border-gray-100">
+                <span className="text-[10px] text-gray-500 font-mono truncate">{product.indexPrice}</span>
+                <span className="text-[10px] text-primary font-bold shrink-0">MOQ {product.minOrder} {product.unit}</span>
               </div>
             ) : (
               <div className="flex items-center justify-between pt-4 border-t border-gray-200">
