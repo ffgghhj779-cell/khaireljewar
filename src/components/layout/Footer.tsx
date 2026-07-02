@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { BRAND_LOGO } from '@/lib/constants/images'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
@@ -30,7 +31,7 @@ export default function Footer({ lang }: { lang: string }) {
             <div className="flex items-center gap-4 mb-6">
               <div className="relative h-12 w-auto min-w-[140px]">
                 <Image
-                  src="/images/branding/logo-full.jpeg"
+                  src={BRAND_LOGO}
                   alt="KHAIR ALJAAR FOODS"
                   width={180}
                   height={48}

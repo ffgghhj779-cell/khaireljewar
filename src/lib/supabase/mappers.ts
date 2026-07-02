@@ -1,5 +1,6 @@
 import type { Product } from '@/lib/data/products'
 import type { ProductRow } from '@/lib/supabase/types'
+import { normalizeProductImage } from '@/lib/constants/images'
 
 /** Maps a Supabase `products` row to the front-end `Product` shape. */
 export function mapProductRow(row: ProductRow): Product {
@@ -10,7 +11,7 @@ export function mapProductRow(row: ProductRow): Product {
     title: { en: row.title_en, ar: row.title_ar },
     desc: { en: row.desc_en, ar: row.desc_ar },
     specs: { en: row.specs_en, ar: row.specs_ar },
-    image: row.image?.trim() ?? '',
+    image: normalizeProductImage(row.image, row.category_en, row.slug),
     minOrder: Number(row.min_order),
     unit: row.unit,
     availability: { en: row.availability_en, ar: row.availability_ar },

@@ -214,6 +214,41 @@ export const TEAM_GALLERY: TeamPhoto[] = [
   },
 ]
 
+/** ─── PRODUCT SHOWCASE GALLERY (all brand photography) ───────────────────── */
+export interface ProductGalleryItem {
+  id: string
+  titleEn: string
+  titleAr: string
+  categoryEn: string
+  categoryAr: string
+  src: string
+  span?: 1 | 2
+}
+
+export const PRODUCT_GALLERY: ProductGalleryItem[] = [
+  { id: 'pg-01', titleEn: 'Premium Strawberries', titleAr: 'فراولة فاخرة', categoryEn: 'Fruits', categoryAr: 'فواكه', src: '/images/products/strawberries-banner.jpeg', span: 2 },
+  { id: 'pg-02', titleEn: 'Kent Mangoes — Export Display', titleAr: 'مانجو كينت — عرض تصدير', categoryEn: 'Fruits', categoryAr: 'فواكه', src: '/images/products/mangoes-display.jpeg', span: 2 },
+  { id: 'pg-03', titleEn: 'Luxury Medjool Dates', titleAr: 'تمر مجدول فاخر', categoryEn: 'Dates', categoryAr: 'تمور', src: '/images/products/dates-luxury-display.jpeg' },
+  { id: 'pg-04', titleEn: 'Fresh Chicken on Ice', titleAr: 'دجاج طازج على الثلج', categoryEn: 'Poultry', categoryAr: 'دواجن', src: '/images/products/chicken-fresh-ice.jpeg' },
+  { id: 'pg-05', titleEn: 'Packed Chicken Trays', titleAr: 'صواني دجاج معبأة', categoryEn: 'Poultry', categoryAr: 'دواجن', src: '/images/products/chicken-packed-trays.jpeg' },
+  { id: 'pg-06', titleEn: 'Chilled Chicken Box', titleAr: 'صندوق دجاج مبرد', categoryEn: 'Poultry', categoryAr: 'دواجن', src: '/images/products/chilled-chicken-box.jpeg' },
+  { id: 'pg-07', titleEn: 'Frozen Proteins', titleAr: 'بروتينات مجمدة', categoryEn: 'Frozen', categoryAr: 'مجمدات', src: '/images/products/frozen-proteins-box.jpeg' },
+  { id: 'pg-08', titleEn: 'Premium Meats Display', titleAr: 'عرض لحوم فاخرة', categoryEn: 'Meats', categoryAr: 'لحوم', src: '/images/products/meats-display.jpeg' },
+  { id: 'pg-09', titleEn: 'Cold Shelf — Full Range', titleAr: 'رف مبرد — تشكيلة كاملة', categoryEn: 'Retail', categoryAr: 'تجزئة', src: '/images/products/cold-shelf-display.jpeg', span: 2 },
+  { id: 'pg-10', titleEn: 'Olive Oil — Lifestyle', titleAr: 'زيت زيتون', categoryEn: 'Oils', categoryAr: 'زيوت', src: '/images/products/olive-oil-lifestyle.jpeg' },
+  { id: 'pg-11', titleEn: 'Sunflower Oil Bottle', titleAr: 'زيت عباد الشمس', categoryEn: 'Oils', categoryAr: 'زيوت', src: '/images/products/sunflower-oil-bottle.jpeg' },
+  { id: 'pg-12', titleEn: 'Sunflower Oil Gift Box', titleAr: 'علبة هدايا زيت', categoryEn: 'Oils', categoryAr: 'زيوت', src: '/images/products/sunflower-oil-giftbox.jpeg' },
+  { id: 'pg-13', titleEn: 'Spunta Potatoes — Retail', titleAr: 'بطاطس سبونتا', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/potatoes-retail.jpeg' },
+  { id: 'pg-14', titleEn: 'Potatoes Display Stand', titleAr: 'ستاند عرض بطاطس', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/potatoes-display-stand.jpeg' },
+  { id: 'pg-15', titleEn: 'Seasoned Fries Pack', titleAr: 'بطاطس مقلية متبلة', categoryEn: 'Frozen', categoryAr: 'مجمدات', src: '/images/products/seasoned-fries-pack.jpeg' },
+  { id: 'pg-16', titleEn: 'Fresh Okra Box', titleAr: 'بامية طازجة', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/okra-box.jpeg' },
+  { id: 'pg-17', titleEn: 'Herbs & Greens', titleAr: 'أعشاب وخضروات ورقية', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/herbs-greens-packed.jpeg' },
+  { id: 'pg-18', titleEn: 'Premium Rice Bags', titleAr: 'أرز فاخر', categoryEn: 'Grains', categoryAr: 'حبوب', src: '/images/products/rice-bags-display.jpeg' },
+  { id: 'pg-19', titleEn: 'Grains Shelf Display', titleAr: 'عرض حبوب', categoryEn: 'Grains', categoryAr: 'حبوب', src: '/images/products/grains-shelf-display.jpeg' },
+  { id: 'pg-20', titleEn: 'Mixed Fruits Cart', titleAr: 'سلة فواكه مشكلة', categoryEn: 'Fruits', categoryAr: 'فواكه', src: '/images/products/fruits-shopping-cart.jpeg' },
+  { id: 'pg-21', titleEn: 'Supermarket Kiosk', titleAr: 'كشك سوبرماركت', categoryEn: 'Retail', categoryAr: 'تجزئة', src: '/images/products/supermarket-kiosk.jpeg', span: 2 },
+]
+
 /** ─── ASSET PLACEMENT MAP ────────────────────────────────────────────────── */
 export const SITEMAP_PLACEMENT = {
   'TrustComplianceHub': '/quality (after metrics)',

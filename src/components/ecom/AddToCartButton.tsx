@@ -17,7 +17,7 @@ export default function AddToCartButton({ product, lang }: { product: Product; l
         id: product.id,
         slug: product.slug,
         title: product.title,
-        image: resolveProductImage(product.image, product.category.en),
+        image: resolveProductImage(product.image, product.category.en, product.slug),
         quantity: product.minOrder,
         packaging: isAr ? product.packaging.ar : product.packaging.en,
         unit: product.unit,

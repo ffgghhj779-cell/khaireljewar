@@ -15,13 +15,14 @@ interface ProductDetailImageProps {
   src?: string | null
   alt: string
   categoryEn?: string
+  slug?: string
   lang: string
 }
 
-export default function ProductDetailImage({ src, alt, categoryEn, lang }: ProductDetailImageProps) {
+export default function ProductDetailImage({ src, alt, categoryEn, slug, lang }: ProductDetailImageProps) {
   const isAr = lang === 'ar'
-  const pending = isProductImagePending(src)
-  const initialSrc = pending ? getCategoryFallback(categoryEn) : resolveProductImage(src, categoryEn)
+  const pending = isProductImagePending(src, slug)
+  const initialSrc = resolveProductImage(src, categoryEn, slug)
   const [displaySrc, setDisplaySrc] = useState(initialSrc)
   const [failed, setFailed] = useState(false)
 

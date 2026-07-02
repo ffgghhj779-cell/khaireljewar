@@ -17,6 +17,7 @@ interface ProductImageProps {
   src?: string | null
   alt: string
   categoryEn?: string
+  slug?: string
   priority?: boolean
   sizes?: string
   variant?: ProductImageVariant
@@ -74,14 +75,15 @@ export default function ProductImage({
   src,
   alt,
   categoryEn,
+  slug,
   priority = false,
   sizes,
   variant = 'card',
   className,
   lang = 'en',
 }: ProductImageProps) {
-  const pending = isProductImagePending(src)
-  const resolvedSrc = resolveProductImage(src, categoryEn)
+  const pending = isProductImagePending(src, slug)
+  const resolvedSrc = resolveProductImage(src, categoryEn, slug)
   const styles = VARIANT_STYLES[variant]
 
   const [displaySrc, setDisplaySrc] = useState(resolvedSrc)

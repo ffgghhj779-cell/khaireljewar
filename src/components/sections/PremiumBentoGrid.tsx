@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
+import { SECTION_IMAGES } from '@/lib/constants/images'
 import Container from '@/components/ui/Container'
 import { cn } from '@/lib/utils/cn'
 import { useQuoteStore } from '@/store/useQuoteStore'
@@ -34,7 +35,7 @@ export default function PremiumBentoGrid({ lang }: { lang: string }) {
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=2000&auto=format&fit=crop"
+              src={SECTION_IMAGES.farm}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent" />
             <div className="absolute bottom-8 start-8 end-8">
@@ -88,7 +89,7 @@ export default function PremiumBentoGrid({ lang }: { lang: string }) {
               className="object-cover transition-transform duration-700 group-hover:scale-110"
               fill
               sizes="25vw"
-              src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop"
+              src={SECTION_IMAGES.logisticsPort}
             />
             <Link href={`/${lang}/logistics`} className="absolute inset-0 flex items-end p-4">
               <span className="bg-white/90 backdrop-blur-sm text-dark text-xs font-bold px-3 py-1.5 rounded-lg border border-gray-200">

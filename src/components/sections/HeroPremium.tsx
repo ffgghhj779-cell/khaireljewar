@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, Globe2, Package, ShieldCheck, TrendingUp } from 'lucide-react'
+import { BRAND_LOGO, SECTION_IMAGES } from '@/lib/constants/images'
 import { cn } from '@/lib/utils/cn'
 import AnimatedCounter from '@/components/ui/AnimatedCounter'
 import MagneticButton from '@/components/ui/MagneticButton'
@@ -53,7 +54,7 @@ export default function HeroPremium({ lang }: { lang: string }) {
       <div className="absolute inset-0 industrial-grid opacity-50 pointer-events-none" />
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <Image
-          src="/images/products/strawberries-banner.jpeg"
+          src={SECTION_IMAGES.heroBg}
           alt="Khair Aljaar Foods — Premium Egyptian Agricultural Export"
           fill
           className="object-cover opacity-15"
@@ -147,7 +148,7 @@ export default function HeroPremium({ lang }: { lang: string }) {
             {/* Brand photography showcase */}
             <div className="relative mb-3 rounded-2xl overflow-hidden border border-gray-200 shadow-sm aspect-[16/9]">
               <Image
-                src="/images/products/mangoes-display.jpeg"
+                src={SECTION_IMAGES.heroFeature}
                 alt="KA Foods — Premium Export Produce"
                 fill
                 className="object-cover"
@@ -157,7 +158,7 @@ export default function HeroPremium({ lang }: { lang: string }) {
               <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
               <div className="absolute bottom-3 start-3 flex items-center gap-2">
                 <Image
-                  src="/images/branding/logo-full.jpeg"
+                  src={BRAND_LOGO}
                   alt="KA Foods"
                   width={100}
                   height={28}

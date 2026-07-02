@@ -10,6 +10,7 @@ import LanguageSwitch from './LanguageSwitch'
 import { useQuoteItems, useQuoteStore } from '@/store/useQuoteStore'
 import { useScrollCompact } from '@/hooks/useScrollCompact'
 import { cn } from '@/lib/utils/cn'
+import { BRAND_LOGO } from '@/lib/constants/images'
 import { MOBILE_EASE_OUT, TAP_SCALE } from '@/lib/constants/motion'
 
 const navigation = {
@@ -59,7 +60,7 @@ export default function Header({ lang }: { lang: string }) {
           >
             <span className="bg-white rounded-lg px-2 py-1 shrink-0">
               <Image
-                src="/images/branding/logo-full.jpeg"
+                src={BRAND_LOGO}
                 alt="KHAIR ALJAAR FOODS"
                 width={180}
                 height={48}

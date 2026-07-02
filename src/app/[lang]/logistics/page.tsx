@@ -1,3 +1,4 @@
+import { SECTION_IMAGES } from '@/lib/constants/images'
 import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import ColdChainStepper from '@/components/logistics/ColdChainStepper'
@@ -31,7 +32,7 @@ export default function LogisticsPage({ params: { lang } }: { params: { lang: st
           <RouteMap lang={lang} />
           <div className="relative h-[400px] lg:h-auto rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
             <Image
-              src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop"
+              src={SECTION_IMAGES.logisticsHub}
               alt="Logistics"
               fill
               className="object-cover"

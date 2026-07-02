@@ -32,6 +32,7 @@ export default async function SingleProductPage({
             src={product.image}
             alt={isAr ? product.title.ar : product.title.en}
             categoryEn={product.category.en}
+            slug={product.slug}
             lang={lang}
           />
           <div className="absolute top-6 start-6 z-10">

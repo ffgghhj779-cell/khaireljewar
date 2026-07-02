@@ -1,8 +1,11 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
+import { LOGISTICS_GALLERY } from '@/lib/constants/brandAssets'
+import { IMAGE_BLUR_DATA_URL } from '@/lib/constants/images'
 import { cn } from '@/lib/utils/cn'
 import { ThermometerSnowflake, ShieldCheck, Activity, Globe2 } from 'lucide-react'
 
@@ -59,6 +62,33 @@ export default function LogisticsTerminal({ lang }: { lang: string }) {
           >
             {isAr ? 'عرض التفاصيل الكاملة ←' : 'View Full Details →'}
           </Link>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+          {LOGISTICS_GALLERY.slice(0, 4).map((photo, i) => (
+            <motion.div
+              key={photo.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.06 }}
+              className="relative aspect-[4/3] rounded-xl overflow-hidden border border-gray-200 group"
+            >
+              <Image
+                src={photo.src}
+                alt={photo.titleEn}
+                fill
+                sizes="(max-width: 768px) 50vw, 25vw"
+                placeholder="blur"
+                blurDataURL={IMAGE_BLUR_DATA_URL}
+                className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent" />
+              <p className={cn('absolute bottom-2 start-2 end-2 text-white text-[10px] font-bold leading-tight', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
+                {isAr ? photo.titleAr : photo.titleEn}
+              </p>
+            </motion.div>
+          ))}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

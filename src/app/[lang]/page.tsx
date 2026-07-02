@@ -8,6 +8,10 @@ const PremiumBentoGrid = dynamic(() => import('@/components/sections/PremiumBent
   loading: () => <SectionSkeleton />,
 })
 
+const BrandProductShowcase = dynamic(() => import('@/components/sections/BrandProductShowcase'), {
+  loading: () => <SectionSkeleton tall />,
+})
+
 const FeaturedProductsGrid = dynamic(() => import('@/components/sections/FeaturedProductsGrid'), {
   loading: () => <SectionSkeleton tall />,
 })
@@ -36,6 +40,7 @@ export default async function Home({
       <HeroPremium lang={lang} />
       <MarketTicker lang={lang} products={products} />
       <PremiumBentoGrid lang={lang} />
+      <BrandProductShowcase lang={lang} />
       <FeaturedProductsGrid lang={lang} products={products.slice(0, 6)} />
       <GlobalFootprint lang={lang} />
       <LogisticsTerminal lang={lang} />

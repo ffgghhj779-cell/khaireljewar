@@ -50,7 +50,7 @@ export default function ProductCard({ product, lang, index = 0, compact = false,
     (e: MouseEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      const image = resolveProductImage(product.image, product.category.en)
+      const image = resolveProductImage(product.image, product.category.en, product.slug)
       addItem(
         {
           id: product.id,
@@ -108,6 +108,7 @@ export default function ProductCard({ product, lang, index = 0, compact = false,
               src={product.image}
               alt={title}
               categoryEn={product.category.en}
+              slug={product.slug}
               lang={lang}
               priority={index < 4}
               variant="card"
