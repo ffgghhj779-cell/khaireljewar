@@ -224,7 +224,7 @@ export default function HeroPremium({ lang }: { lang: string }) {
 
               <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent pointer-events-none" />
 
-              <div className="absolute bottom-3 start-3 flex items-center gap-2 bg-white rounded-xl px-3 py-1.5 shadow-lg z-10">
+              <div className="absolute bottom-3 start-3 z-10">
                 <BrandLogo variant="hero" />
               </div>
 
