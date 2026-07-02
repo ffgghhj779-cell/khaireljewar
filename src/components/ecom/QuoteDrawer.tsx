@@ -197,6 +197,7 @@ export default function QuoteDrawer({ lang }: { lang: string }) {
                           <ProductImage
                             src={item.image}
                             alt={isAr ? item.title.ar : item.title.en}
+                            slug={item.slug}
                             variant="thumb"
                             lang={lang}
                           />
