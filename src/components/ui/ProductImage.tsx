@@ -105,7 +105,7 @@ export default function ProductImage({
   return (
     <div
       className={cn(
-        'relative overflow-hidden bg-gray-50 will-change-transform',
+        'relative overflow-hidden bg-gray-50 will-change-auto',
         variant === 'thumb' ? styles.aspect : styles.aspect,
         variant === 'thumb' && 'rounded-lg border border-gray-200 shrink-0',
         className

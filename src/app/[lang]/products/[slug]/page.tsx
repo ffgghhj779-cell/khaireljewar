@@ -1,7 +1,9 @@
+import type { Metadata } from 'next'
 import { getProductBySlug, getProductSlugs } from '@/lib/actions/products'
 import { notFound } from 'next/navigation'
 import Container from '@/components/ui/Container'
 import ProductDetailImage from '@/components/ecom/ProductDetailImage'
+import { buildPageMetadata } from '@/lib/seo'
 import { cn } from '@/lib/utils/cn'
 import AddToCartButton from '@/components/ecom/AddToCartButton'
 import { CheckCircle2, Calendar, Ruler, Package, MapPin } from 'lucide-react'
@@ -10,6 +12,24 @@ export async function generateStaticParams() {
   const langs = ['ar', 'en'] as const
   const slugs = await getProductSlugs()
   return langs.flatMap((lang) => slugs.map((slug) => ({ lang, slug })))
+}
+
+export async function generateMetadata({
+  params: { lang, slug },
+}: {
+  params: { lang: string; slug: string }
+}): Promise<Metadata> {
+  const product = await getProductBySlug(slug)
+  if (!product) return {}
+  const isAr = lang === 'ar'
+  const title = isAr ? product.title.ar : product.title.en
+  const description = isAr ? product.desc.ar : product.desc.en
+  return buildPageMetadata({
+    lang,
+    path: `/products/${slug}`,
+    title,
+    description: description.slice(0, 160),
+  })
 }
 
 export default async function SingleProductPage({

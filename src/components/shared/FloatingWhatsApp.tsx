@@ -10,7 +10,7 @@ export default function FloatingWhatsApp({ lang }: { lang: string }) {
   const waUrl = `https://wa.me/${BRAND.contact.phoneWa}?text=${encodeURIComponent(`Hello ${BRAND.name.en}`)}`
 
   return (
-    <div className="hidden lg:flex fixed z-50 bottom-8 end-8 flex-col items-end gap-3">
+    <div className="fixed z-50 bottom-24 lg:bottom-8 end-4 lg:end-8 flex flex-col items-end gap-3">
       <div
         className={`
           bg-white shadow-soft rounded-2xl px-4 py-2 text-sm font-medium text-dark

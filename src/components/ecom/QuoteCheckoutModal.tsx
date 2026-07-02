@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, Building2, MapPin, Send, CheckCircle2, Loader2 } from 'lucide-react'
 import { useQuoteStore } from '@/store/useQuoteStore'
 import { submitQuoteRequest } from '@/lib/actions/products'
+import { BRAND } from '@/lib/constants/brand'
 import { cn } from '@/lib/utils/cn'
 
 export default function QuoteCheckoutModal({ lang }: { lang: string }) {
@@ -23,7 +24,7 @@ export default function QuoteCheckoutModal({ lang }: { lang: string }) {
     destinationPort: '',
   })
 
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '201000000000'
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? BRAND.contact.phoneWa
 
   const handleSubmit = async () => {
     setSubmitting(true)

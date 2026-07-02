@@ -12,12 +12,13 @@ export default function Footer({ lang }: { lang: string }) {
     { label: isAr ? 'الجودة' : 'Quality Hub', href: `/${lang}/quality` },
     { label: isAr ? 'اللوجستيات' : 'Logistics', href: `/${lang}/logistics` },
     { label: isAr ? 'أسواق التصدير' : 'Export Markets', href: `/${lang}/export-markets` },
+    { label: isAr ? 'اتصل بنا' : 'Contact', href: `/${lang}/contact` },
   ]
 
   const productLinks = [
-    { label: isAr ? 'الموالح' : 'Fresh Citrus', href: `/${lang}/products` },
-    { label: isAr ? 'الخضروات' : 'Vegetables', href: `/${lang}/products` },
-    { label: isAr ? 'المجمدات' : 'Frozen Produce', href: `/${lang}/products` },
+    { label: isAr ? 'الكتالوج' : 'Full Catalog', href: `/${lang}/products` },
+    { label: isAr ? 'الفواكه' : 'Fresh Fruits', href: `/${lang}/products` },
+    { label: isAr ? 'التمور' : 'Premium Dates', href: `/${lang}/products` },
     { label: isAr ? 'بوابة العملاء' : 'Client Portal', href: `/${lang}/portal` },
   ]
 
@@ -106,10 +107,10 @@ export default function Footer({ lang }: { lang: string }) {
             {isAr ? `${BRAND.name.ar}. جميع الحقوق محفوظة.` : `${BRAND.name.en}. All rights reserved.`}
           </p>
           <div className="flex items-center gap-6 text-sm text-gray-500">
-            <Link href="#" className="hover:text-primary transition-colors">
+            <Link href={`/${lang}/privacy`} className="hover:text-primary transition-colors">
               {isAr ? 'سياسة الخصوصية' : 'Privacy Policy'}
             </Link>
-            <Link href="#" className="hover:text-primary transition-colors">
+            <Link href={`/${lang}/terms`} className="hover:text-primary transition-colors">
               {isAr ? 'الشروط والأحكام' : 'Terms of Service'}
             </Link>
           </div>

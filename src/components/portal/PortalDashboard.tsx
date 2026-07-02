@@ -1,12 +1,15 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { FileText, Package, Download, Clock, ShieldCheck, Truck, Inbox } from 'lucide-react'
+import { FileText, Package, Download, Clock, ShieldCheck, Truck, Inbox, Info } from 'lucide-react'
 import Container from '@/components/ui/Container'
 import { PortalSkeleton } from '@/components/ui/Skeleton'
 import EmptyState from '@/components/ui/EmptyState'
 import ProgressBar from '@/components/ui/ProgressBar'
+import { BRAND } from '@/lib/constants/brand'
 import { cn } from '@/lib/utils/cn'
 
 interface PortalDashboardProps {
@@ -15,25 +18,21 @@ interface PortalDashboardProps {
 
 export default function PortalDashboard({ lang }: PortalDashboardProps) {
   const isAr = lang === 'ar'
+  const router = useRouter()
   const [loading, setLoading] = useState(true)
-  const [showEmpty, setShowEmpty] = useState(false)
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1400)
+    const timer = setTimeout(() => setLoading(false), 800)
     return () => clearTimeout(timer)
   }, [])
 
-  const quotes = showEmpty
-    ? []
-    : [
+  const quotes = [
         { id: 'Q-2026-089', date: 'Feb 18, 2026', status: 'Pending', items: isAr ? 'برتقال نافيل (40 طن)' : 'Navel Oranges (40 MT)' },
         { id: 'Q-2026-081', date: 'Jan 12, 2026', status: 'Approved', items: isAr ? 'بطاطس (100 طن)' : 'Potatoes (100 MT)' },
         { id: 'Q-2025-972', date: 'Dec 05, 2025', status: 'Approved', items: isAr ? 'ثوم (12 طن)' : 'Garlic (12 MT)' },
       ]
 
-  const shipments = showEmpty
-    ? []
-    : [
+  const shipments = [
         { id: 'SHP-9921', destination: 'Rotterdam, NL', status: 'In Transit', eta: 'Mar 05, 2026', temp: '-2°C', progress: 72 },
         { id: 'SHP-9840', destination: 'Jebel Ali, UAE', status: 'Delivered', eta: 'Feb 10, 2026', temp: 'N/A', progress: 100 },
         { id: 'SHP-9812', destination: 'Jeddah, SA', status: 'In Transit', eta: 'Mar 12, 2026', temp: '-1°C', progress: 45 },
@@ -49,6 +48,24 @@ export default function PortalDashboard({ lang }: PortalDashboardProps) {
   return (
     <div className="min-h-screen py-12 pb-24">
       <Container size="large">
+        <div className="mb-8 rounded-2xl border border-primary/30 bg-primary/5 px-5 py-4 flex gap-3 items-start">
+          <Info className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+          <div>
+            <p className={cn('text-sm font-bold text-dark mb-1', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
+              {isAr ? 'معاينة البوابة — قريباً' : 'Portal Preview — Coming Soon'}
+            </p>
+            <p className={cn('text-sm text-gray-600', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+              {isAr
+                ? 'هذه شاشة عرض توضيحية. لطلب وصول كامل أو تسعير، '
+                : 'This is a demo workspace. For full access or quotes, '}
+              <Link href={`/${lang}/contact`} className="text-primary font-bold hover:underline">
+                {isAr ? 'تواصل معنا' : 'contact our team'}
+              </Link>
+              {isAr ? ' أو أرسل طلب تسعير من الكتالوج.' : ' or submit a quote from the catalog.'}
+            </p>
+          </div>
+        </div>
+
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
           <div>
             <span className="terminal-badge terminal-badge-live mb-4">
@@ -64,13 +81,11 @@ export default function PortalDashboard({ lang }: PortalDashboardProps) {
           </div>
           <div className="flex gap-2">
             <button
-              onClick={() => setShowEmpty(!showEmpty)}
-              className="text-[10px] font-bold text-gray-400 border border-gray-200 px-3 py-2 rounded-lg hover:bg-white transition"
+              type="button"
+              onClick={() => router.push(`/${lang}`)}
+              className="bg-white border border-gray-200 text-dark px-6 py-2.5 min-h-[48px] rounded-xl font-bold hover:bg-gray-50 transition text-sm touch-manipulation"
             >
-              {showEmpty ? (isAr ? 'عرض البيانات' : 'Show Data') : (isAr ? 'حالة فارغة' : 'Empty State')}
-            </button>
-            <button className="bg-white border border-gray-200 text-dark px-6 py-2.5 rounded-xl font-bold hover:bg-gray-50 transition text-sm">
-              {isAr ? 'تسجيل الخروج' : 'Logout'}
+              {isAr ? 'العودة للرئيسية' : 'Back to Home'}
             </button>
           </div>
         </div>
@@ -214,7 +229,11 @@ export default function PortalDashboard({ lang }: PortalDashboardProps) {
                       <p className={cn('font-bold text-dark text-sm', isAr ? 'font-ibm-arabic' : 'font-inter')}>{doc.name}</p>
                       <p className="text-xs text-gray-400 font-mono mt-0.5">{doc.ref}</p>
                     </div>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-dark text-white text-xs font-bold rounded-lg hover:bg-primary transition">
+                    <button
+                      type="button"
+                      onClick={() => window.open(`mailto:${BRAND.contact.email}?subject=${encodeURIComponent(doc.ref)}`, '_blank')}
+                      className="flex items-center gap-2 px-4 py-2 min-h-[44px] bg-dark text-white text-xs font-bold rounded-lg hover:bg-primary transition touch-manipulation"
+                    >
                       <Download className="w-3.5 h-3.5" />
                       PDF
                     </button>
