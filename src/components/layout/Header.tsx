@@ -51,10 +51,10 @@ export default function Header({ lang }: { lang: string }) {
       )}
     >
       <Container>
-        <nav className="flex items-center justify-between relative z-[101]">
+        <nav className="flex items-center justify-between relative z-[101] gap-2">
           <Link
             href={`/${lang}`}
-            className="relative z-[102] flex items-center gap-3 shrink-0 min-w-0"
+            className="relative z-[102] flex items-center gap-3 shrink min-w-0 max-w-[58%] sm:max-w-none"
             onClick={() => setMobileMenuOpen(false)}
           >
             <BrandLogo variant="header" priority className={isCompact ? '!h-7 sm:!h-8' : undefined} />
@@ -76,10 +76,8 @@ export default function Header({ lang }: { lang: string }) {
             ))}
           </div>
 
-          <div className="flex items-center gap-1 relative z-[102]">
-            <div className="hidden lg:block">
-              <LanguageSwitch lang={lang} />
-            </div>
+          <div className="flex items-center gap-1.5 relative z-[102] shrink-0">
+            <LanguageSwitch lang={lang} />
 
             <motion.button
               type="button"
@@ -97,35 +95,39 @@ export default function Header({ lang }: { lang: string }) {
               )}
             </motion.button>
 
-            {!isCompact && (
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen((open) => !open)}
-                className="lg:hidden text-white min-w-[48px] min-h-[48px] flex items-center justify-center rounded-xl hover:bg-white/10 transition-colors touch-pan-y"
-                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-                aria-expanded={mobileMenuOpen}
-              >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d={mobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
-                  />
-                </svg>
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+              className={cn(
+                'lg:hidden min-w-[48px] min-h-[48px] flex items-center justify-center rounded-xl transition-all touch-manipulation active:scale-95',
+                'bg-primary/20 border-2 border-primary text-primary',
+                'hover:bg-primary hover:text-dark',
+                'shadow-[0_0_14px_rgba(0,201,215,0.35)]',
+                mobileMenuOpen && 'bg-primary text-dark'
+              )}
+              aria-label={mobileMenuOpen ? (isAr ? 'إغلاق القائمة' : 'Close menu') : (isAr ? 'فتح القائمة' : 'Open menu')}
+              aria-expanded={mobileMenuOpen}
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.5}
+                  d={mobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
+                />
+              </svg>
+            </button>
           </div>
         </nav>
 
         <AnimatePresence>
-          {mobileMenuOpen && !isCompact && (
+          {mobileMenuOpen && (
             <motion.div
               initial={{ opacity: 0, y: -8, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={{ duration: 0.18, ease: MOBILE_EASE_OUT }}
-              className="lg:hidden relative z-[102] mt-2 rounded-2xl border border-white/15 bg-dark/90 lg:bg-dark/70 backdrop-blur-md lg:backdrop-blur-2xl shadow-2xl overflow-hidden"
+              className="lg:hidden relative z-[102] mt-2 rounded-2xl border border-primary/25 bg-dark/95 backdrop-blur-md shadow-2xl overflow-hidden"
             >
               {navItems.map((item) => (
                 <Link
@@ -133,14 +135,20 @@ export default function Header({ lang }: { lang: string }) {
                   href={`/${lang}${item.href}`}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
-                    'block px-4 py-3.5 min-h-[48px] text-sm font-semibold text-white/90 border-b border-white/5 last:border-0',
-                    'hover:text-primary hover:bg-white/5 transition-colors touch-pan-y',
-                    isAr ? 'font-ibm-arabic' : 'font-inter'
+                    'block px-4 py-3.5 min-h-[48px] text-[15px] font-semibold text-white border-b border-white/8 last:border-0',
+                    'hover:text-primary hover:bg-white/5 transition-colors touch-manipulation',
+                    isAr ? 'font-ibm-arabic font-bold' : 'font-manrope'
                   )}
                 >
                   {item.name}
                 </Link>
               ))}
+              <div className="p-3 border-t border-white/10 flex items-center justify-between gap-3 bg-white/5">
+                <span className={cn('text-xs text-white/60', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+                  {isAr ? 'اللغة' : 'Language'}
+                </span>
+                <LanguageSwitch lang={lang} />
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

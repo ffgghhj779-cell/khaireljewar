@@ -53,15 +53,35 @@
 
   [dir='rtl'] body {
     @apply font-ibm-arabic;
-    letter-spacing: 0.01em;
-    line-height: 1.75;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.8;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  [dir='ltr'] body {
+    @apply font-inter;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.65;
+  }
+
+  [dir='ltr'] h1,
+  [dir='ltr'] h2,
+  [dir='ltr'] h3,
+  [dir='ltr'] h4 {
+    @apply font-manrope;
+    font-weight: 700;
+    letter-spacing: -0.025em;
   }
 
   [dir='rtl'] h1,
   [dir='rtl'] h2,
-  [dir='rtl'] h3 {
-    letter-spacing: -0.02em;
-    line-height: 1.15;
+  [dir='rtl'] h3,
+  [dir='rtl'] h4 {
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.2;
   }
 
   h1,

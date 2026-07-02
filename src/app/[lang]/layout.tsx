@@ -42,7 +42,7 @@ export default function RootLayout({
       <body
         className={cn(
           fontVariables,
-          isAr ? 'font-ibm-arabic' : 'font-inter',
+          isAr ? 'font-ibm-arabic text-[15px] sm:text-base' : 'font-inter text-[15px] sm:text-base',
           'antialiased text-dark min-h-screen'
         )}
       >
