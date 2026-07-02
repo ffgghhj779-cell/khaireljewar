@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.vercel/
+coverage/
+.DS_Store
+*.log
+*.tsbuildinfo
+
+# Secrets — never commit
+.env*
+!.env.example
