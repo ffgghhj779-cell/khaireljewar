@@ -9,7 +9,7 @@ import {
   resolveProductImage,
   isProductImagePending,
   getCategoryFallback,
-  IMAGE_QUALITY,
+  IMAGE_QUALITY_PRODUCT,
 } from '@/lib/constants/images'
 
 interface ProductDetailImageProps {
@@ -56,7 +56,7 @@ export default function ProductDetailImage({ src, alt, categoryEn, slug, lang }:
       alt={alt}
       fill
       priority
-      quality={IMAGE_QUALITY}
+      quality={IMAGE_QUALITY_PRODUCT}
       sizes="(max-width: 1024px) 100vw, 50vw"
       placeholder="blur"
       blurDataURL={IMAGE_BLUR_DATA_URL}

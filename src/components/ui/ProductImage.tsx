@@ -9,7 +9,8 @@ import {
   resolveProductImage,
   isProductImagePending,
   getCategoryFallback,
-  IMAGE_QUALITY,
+  IMAGE_QUALITY_PRODUCT,
+  IMAGE_QUALITY_THUMB,
 } from '@/lib/constants/images'
 
 type ProductImageVariant = 'card' | 'detail' | 'thumb'
@@ -117,7 +118,7 @@ export default function ProductImage({
           fill
           sizes={sizes ?? styles.sizes}
           priority={priority}
-          quality={IMAGE_QUALITY}
+          quality={variant === 'thumb' ? IMAGE_QUALITY_THUMB : IMAGE_QUALITY_PRODUCT}
           placeholder="blur"
           blurDataURL={IMAGE_BLUR_DATA_URL}
           onError={handleError}

@@ -7,7 +7,7 @@ import PremiumImage from '@/components/ui/PremiumImage'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, Globe2, Package, ShieldCheck, TrendingUp } from 'lucide-react'
 import { BRAND } from '@/lib/constants/brand'
-import { SECTION_IMAGES } from '@/lib/constants/images'
+import { SECTION_IMAGES, IMAGE_QUALITY_THUMB } from '@/lib/constants/images'
 import { TAP_SCALE } from '@/lib/constants/motion'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import { cn } from '@/lib/utils/cn'
@@ -271,7 +271,7 @@ export default function HeroPremium({ lang }: { lang: string }) {
                         : 'border-white/50 opacity-80 hover:opacity-100'
                     )}
                   >
-                    <PremiumImage src={slide.src} alt={slide.labelEn} fill className="object-cover" sizes="40px" />
+                    <PremiumImage src={slide.src} alt={slide.labelEn} fill className="object-cover" sizes="40px" quality={IMAGE_QUALITY_THUMB} />
                   </motion.button>
                 ))}
               </div>
