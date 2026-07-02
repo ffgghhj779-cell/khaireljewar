@@ -91,6 +91,16 @@ export function ProductCardSkeleton({ compact = false }: { compact?: boolean }) 
   )
 }
 
+/** Lightweight placeholder for lazy-loaded homepage sections */
+export function SectionSkeleton({ tall = false }: { tall?: boolean }) {
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-12 md:py-20">
+      <Skeleton className="h-6 w-32 rounded-lg mb-4" />
+      <Skeleton className={cn('w-full rounded-2xl', tall ? 'h-72 md:h-96' : 'h-48 md:h-64')} />
+    </div>
+  )
+}
+
 export function PageSkeleton() {
   return (
     <div className="min-h-screen overflow-x-hidden">

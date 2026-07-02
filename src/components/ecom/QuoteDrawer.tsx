@@ -2,7 +2,8 @@
 
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion'
 import { X, Trash2, Send, ShoppingBag, FileDown, Scale } from 'lucide-react'
-import { useQuoteStore } from '@/store/useQuoteStore'
+import { useQuoteDrawer } from '@/store/useQuoteStore'
+import ProductImage from '@/components/ui/ProductImage'
 import { formatCurrency, parsePricePerMt, convertFromUsd } from '@/lib/utils/currency'
 import { downloadQuoteSheet } from '@/lib/utils/quotePdf'
 import CurrencyToggle from './CurrencyToggle'
@@ -26,7 +27,7 @@ export default function QuoteDrawer({ lang }: { lang: string }) {
     toggleCheckout,
     currency,
     getTotalMt,
-  } = useQuoteStore()
+  } = useQuoteDrawer()
 
   useEffect(() => {
     if (notification?.show) {
@@ -193,9 +194,12 @@ export default function QuoteDrawer({ lang }: { lang: string }) {
                           animate={{ opacity: 1, x: 0 }}
                           className="flex gap-3 glass-panel border border-gray-200 p-3 rounded-xl"
                         >
-                          {item.image && (
-                            <img src={item.image} alt="" className="w-16 h-16 object-cover rounded-lg bg-gray-100 shrink-0" />
-                          )}
+                          <ProductImage
+                            src={item.image}
+                            alt={isAr ? item.title.ar : item.title.en}
+                            variant="thumb"
+                            lang={lang}
+                          />
                           <div className="flex-1 min-w-0">
                             <div className="flex justify-between items-start gap-2">
                               <h4 className={cn('font-bold text-dark text-sm truncate', isAr ? 'font-ibm-arabic' : 'font-manrope')}>

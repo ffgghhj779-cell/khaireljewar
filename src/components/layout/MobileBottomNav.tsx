@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Home, Package, ShieldCheck, MessageCircle, ShoppingBag } from 'lucide-react'
-import { useQuoteStore } from '@/store/useQuoteStore'
+import { useQuoteItems, useQuoteCartOpen, useQuoteStore } from '@/store/useQuoteStore'
 import { cn } from '@/lib/utils/cn'
 import { MOBILE_EASE_OUT, TAP_SCALE } from '@/lib/constants/motion'
 
@@ -32,7 +32,9 @@ const NAV_ITEMS: Record<'en' | 'ar', NavItem[]> = {
 export default function MobileBottomNav({ lang }: { lang: string }) {
   const pathname = usePathname()
   const isAr = lang === 'ar'
-  const { items, toggleCart, isOpen } = useQuoteStore()
+  const items = useQuoteItems()
+  const isOpen = useQuoteCartOpen()
+  const toggleCart = useQuoteStore((s) => s.toggleCart)
   const cartCount = items.length
   const navItems = NAV_ITEMS[lang as keyof typeof NAV_ITEMS] || NAV_ITEMS.en
 

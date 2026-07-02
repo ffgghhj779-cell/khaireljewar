@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { useShallow } from 'zustand/react/shallow'
 import type { ProductUnit } from '@/lib/data/products'
 import type { CurrencyCode } from '@/lib/utils/currency'
 
@@ -27,7 +28,6 @@ interface QuoteStore {
   isCheckoutOpen: boolean
   currency: CurrencyCode
   notification: QuoteNotification | null
-  notificationTimer: ReturnType<typeof setTimeout> | null
   addItem: (item: QuoteItem, lang?: string) => void
   removeItem: (id: string) => void
   updateQuantity: (id: string, quantity: number) => void
@@ -39,6 +39,15 @@ interface QuoteStore {
   getTotalMt: () => number
 }
 
+let notificationTimer: ReturnType<typeof setTimeout> | null = null
+
+function clearNotificationTimer() {
+  if (notificationTimer) {
+    clearTimeout(notificationTimer)
+    notificationTimer = null
+  }
+}
+
 export const useQuoteStore = create<QuoteStore>()(
   persist(
     (set, get) => ({
@@ -47,23 +56,22 @@ export const useQuoteStore = create<QuoteStore>()(
       isCheckoutOpen: false,
       currency: 'USD',
       notification: null,
-      notificationTimer: null,
 
       addItem: (item, lang = 'ar') => {
-        const state = get()
-        const existing = state.items.find((i) => i.id === item.id)
+        const { items } = get()
+        const existing = items.find((i) => i.id === item.id)
         const updatedItems = existing
-          ? state.items.map((i) =>
+          ? items.map((i) =>
               i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
             )
-          : [...state.items, item]
+          : [...items, item]
 
         const totalCount = existing ? existing.quantity + item.quantity : item.quantity
 
-        if (state.notificationTimer) clearTimeout(state.notificationTimer)
-
-        const timer = setTimeout(() => {
-          set({ notification: null, notificationTimer: null })
+        clearNotificationTimer()
+        notificationTimer = setTimeout(() => {
+          set({ notification: null })
+          notificationTimer = null
         }, 4000)
 
         set({
@@ -74,16 +82,17 @@ export const useQuoteStore = create<QuoteStore>()(
             productName: lang === 'ar' ? item.title.ar : item.title.en,
             unit: item.unit,
           },
-          notificationTimer: timer,
         })
       },
 
-      removeItem: (id) => set((state) => ({ items: state.items.filter((i) => i.id !== id) })),
+      removeItem: (id) => set({ items: get().items.filter((i) => i.id !== id) }),
 
       updateQuantity: (id, quantity) =>
-        set((state) => ({
-          items: state.items.map((i) => (i.id === id ? { ...i, quantity: Math.max(1, quantity) } : i)),
-        })),
+        set({
+          items: get().items.map((i) =>
+            i.id === id ? { ...i, quantity: Math.max(1, quantity) } : i
+          ),
+        }),
 
       setCurrency: (currency) => set({ currency }),
 
@@ -93,19 +102,17 @@ export const useQuoteStore = create<QuoteStore>()(
         set((state) => ({ isCheckoutOpen: !state.isCheckoutOpen, isOpen: false })),
 
       clearNotification: () => {
-        const { notificationTimer } = get()
-        if (notificationTimer) clearTimeout(notificationTimer)
-        set({ notification: null, notificationTimer: null })
+        clearNotificationTimer()
+        set({ notification: null })
       },
 
       clearCart: () => set({ items: [] }),
 
-      getTotalMt: () => {
-        return get().items.reduce((sum, item) => {
+      getTotalMt: () =>
+        get().items.reduce((sum, item) => {
           const mt = item.unit === 'MT' ? item.quantity : item.quantity * 12
           return sum + mt
-        }, 0)
-      },
+        }, 0),
     }),
     {
       name: 'khair-aljaar-quote',
@@ -113,3 +120,23 @@ export const useQuoteStore = create<QuoteStore>()(
     }
   )
 )
+
+/** Narrow selectors — avoid full-store re-renders */
+export const useAddToQuote = () => useQuoteStore((s) => s.addItem)
+export const useQuoteItems = () => useQuoteStore((s) => s.items)
+export const useQuoteCartOpen = () => useQuoteStore((s) => s.isOpen)
+export const useQuoteDrawer = () =>
+  useQuoteStore(
+    useShallow((s) => ({
+      isOpen: s.isOpen,
+      items: s.items,
+      toggleCart: s.toggleCart,
+      removeItem: s.removeItem,
+      updateQuantity: s.updateQuantity,
+      notification: s.notification,
+      clearNotification: s.clearNotification,
+      toggleCheckout: s.toggleCheckout,
+      currency: s.currency,
+      getTotalMt: s.getTotalMt,
+    }))
+  )

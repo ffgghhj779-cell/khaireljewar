@@ -1,11 +1,28 @@
+import dynamic from 'next/dynamic'
 import HeroPremium from '@/components/sections/HeroPremium'
 import MarketTicker from '@/components/sections/MarketTicker'
-import PremiumBentoGrid from '@/components/sections/PremiumBentoGrid'
-import FeaturedProductsGrid from '@/components/sections/FeaturedProductsGrid'
-import GlobalFootprint from '@/components/sections/GlobalFootprint'
-import LogisticsTerminal from '@/components/sections/LogisticsTerminal'
-import CertificationsBanner from '@/components/sections/CertificationsBanner'
+import { SectionSkeleton } from '@/components/ui/Skeleton'
 import { getProducts } from '@/lib/actions/products'
+
+const PremiumBentoGrid = dynamic(() => import('@/components/sections/PremiumBentoGrid'), {
+  loading: () => <SectionSkeleton />,
+})
+
+const FeaturedProductsGrid = dynamic(() => import('@/components/sections/FeaturedProductsGrid'), {
+  loading: () => <SectionSkeleton tall />,
+})
+
+const GlobalFootprint = dynamic(() => import('@/components/sections/GlobalFootprint'), {
+  loading: () => <SectionSkeleton />,
+})
+
+const LogisticsTerminal = dynamic(() => import('@/components/sections/LogisticsTerminal'), {
+  loading: () => <SectionSkeleton tall />,
+})
+
+const CertificationsBanner = dynamic(() => import('@/components/sections/CertificationsBanner'), {
+  loading: () => <SectionSkeleton />,
+})
 
 export default async function Home({
   params: { lang },

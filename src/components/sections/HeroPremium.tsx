@@ -53,13 +53,13 @@ export default function HeroPremium({ lang }: { lang: string }) {
       <div className="absolute inset-0 industrial-grid opacity-50 pointer-events-none" />
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=2070&auto=format&fit=crop"
-          alt="Agricultural Export"
+          src="/images/products/strawberries-banner.jpeg"
+          alt="Khair Aljaar Foods — Premium Egyptian Agricultural Export"
           fill
-          className="object-cover opacity-20"
+          className="object-cover opacity-15"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-gray-50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/92 via-white/75 to-gray-50" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full box-border">
@@ -144,6 +144,39 @@ export default function HeroPremium({ lang }: { lang: string }) {
             variants={fadeUp}
             className="lg:col-span-5 hidden sm:block"
           >
+            {/* Brand photography showcase */}
+            <div className="relative mb-3 rounded-2xl overflow-hidden border border-gray-200 shadow-sm aspect-[16/9]">
+              <Image
+                src="/images/products/mangoes-display.jpeg"
+                alt="KA Foods — Premium Export Produce"
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 1024px) 0vw, 45vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
+              <div className="absolute bottom-3 start-3 flex items-center gap-2">
+                <Image
+                  src="/images/logo/khair-aljaar-logo-white.svg"
+                  alt="KA Foods"
+                  width={80}
+                  height={22}
+                  className="h-5 w-auto opacity-90"
+                />
+              </div>
+              <div className="absolute top-3 end-3 flex gap-2">
+                <div className="relative w-12 h-12 rounded-xl overflow-hidden border-2 border-white/50">
+                  <Image src="/images/products/dates-luxury-display.jpeg" alt="Dates" fill className="object-cover" sizes="48px" />
+                </div>
+                <div className="relative w-12 h-12 rounded-xl overflow-hidden border-2 border-white/50">
+                  <Image src="/images/products/chicken-fresh-ice.jpeg" alt="Chicken" fill className="object-cover" sizes="48px" />
+                </div>
+                <div className="relative w-12 h-12 rounded-xl overflow-hidden border-2 border-white/50">
+                  <Image src="/images/products/olive-oil-lifestyle.jpeg" alt="Oils" fill className="object-cover" sizes="48px" />
+                </div>
+              </div>
+            </div>
+            {/* Stats grid */}
             <div className="grid grid-cols-2 gap-3 border border-gray-200 bg-white p-3 rounded-2xl shadow-sm">
               {stats.map((stat, i) => (
                 <motion.div

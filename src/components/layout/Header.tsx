@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingBag } from 'lucide-react'
 import Container from '@/components/ui/Container'
 import LanguageSwitch from './LanguageSwitch'
-import { useQuoteStore } from '@/store/useQuoteStore'
+import { useQuoteItems, useQuoteStore } from '@/store/useQuoteStore'
 import { useScrollCompact } from '@/hooks/useScrollCompact'
 import { cn } from '@/lib/utils/cn'
 import { MOBILE_EASE_OUT, TAP_SCALE } from '@/lib/constants/motion'
@@ -36,7 +36,8 @@ const navigation = {
 export default function Header({ lang }: { lang: string }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const isCompact = useScrollCompact()
-  const { items, toggleCart } = useQuoteStore()
+  const items = useQuoteItems()
+  const toggleCart = useQuoteStore((s) => s.toggleCart)
   const isAr = lang === 'ar'
   const navItems = navigation[lang as keyof typeof navigation] || navigation.en
   const cartCount = items.length

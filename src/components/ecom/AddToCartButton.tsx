@@ -1,12 +1,14 @@
 'use client'
 
-import { useQuoteStore } from '@/store/useQuoteStore'
+import { motion } from 'framer-motion'
+import { useAddToQuote } from '@/store/useQuoteStore'
+import { resolveProductImage } from '@/lib/constants/images'
+import { TAP_SCALE } from '@/lib/constants/motion'
 import type { Product } from '@/lib/data/products'
-import { cn } from '@/lib/utils/cn'
 import { ShoppingCart } from 'lucide-react'
 
 export default function AddToCartButton({ product, lang }: { product: Product; lang: string }) {
-  const { addItem } = useQuoteStore()
+  const addItem = useAddToQuote()
   const isAr = lang === 'ar'
 
   const handleAdd = () => {
@@ -15,7 +17,7 @@ export default function AddToCartButton({ product, lang }: { product: Product; l
         id: product.id,
         slug: product.slug,
         title: product.title,
-        image: product.image,
+        image: resolveProductImage(product.image, product.category.en),
         quantity: product.minOrder,
         packaging: isAr ? product.packaging.ar : product.packaging.en,
         unit: product.unit,
@@ -26,14 +28,16 @@ export default function AddToCartButton({ product, lang }: { product: Product; l
   }
 
   return (
-    <button
+    <motion.button
+      type="button"
       onClick={handleAdd}
-      className="w-full mt-6 bg-dark hover:bg-primary text-white text-lg font-bold py-5 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 border border-dark"
+      whileTap={TAP_SCALE}
+      className="w-full mt-6 bg-dark hover:bg-primary text-white text-lg font-bold py-5 min-h-[48px] rounded-xl flex items-center justify-center gap-3 transition-colors duration-150 border border-dark will-change-transform touch-manipulation"
     >
       <ShoppingCart className="w-6 h-6" />
       <span className={isAr ? 'font-ibm-arabic' : 'font-inter'}>
         {isAr ? 'إضافة إلى طلب التسعير' : 'Add to Quote List'}
       </span>
-    </button>
+    </motion.button>
   )
 }

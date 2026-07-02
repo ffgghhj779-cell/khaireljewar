@@ -143,7 +143,7 @@
   }
 
   .luxury-card-image {
-    @apply transition-all duration-700 grayscale-[25%] group-hover:grayscale-0 group-hover:scale-[1.05];
+    @apply transition-opacity duration-500;
   }
 
   .spec-grid {

@@ -10,7 +10,7 @@ export function mapProductRow(row: ProductRow): Product {
     title: { en: row.title_en, ar: row.title_ar },
     desc: { en: row.desc_en, ar: row.desc_ar },
     specs: { en: row.specs_en, ar: row.specs_ar },
-    image: row.image,
+    image: row.image?.trim() ?? '',
     minOrder: Number(row.min_order),
     unit: row.unit,
     availability: { en: row.availability_en, ar: row.availability_ar },

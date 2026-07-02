@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import ColdChainStepper from '@/components/logistics/ColdChainStepper'
 import RouteMap from '@/components/logistics/RouteMap'
+import LogisticsEditorialGallery from '@/components/sections/LogisticsEditorialGallery'
 import { Truck } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
@@ -72,6 +73,8 @@ export default function LogisticsPage({ params: { lang } }: { params: { lang: st
           ))}
         </div>
       </Container>
+
+      <LogisticsEditorialGallery lang={lang} />
     </div>
   )
 }

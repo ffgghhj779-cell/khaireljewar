@@ -1,6 +1,7 @@
 import Container from '@/components/ui/Container'
 import CertificationMetrics from '@/components/quality/CertificationMetrics'
 import QualityStepper from '@/components/quality/QualityStepper'
+import TrustComplianceHub from '@/components/sections/TrustComplianceHub'
 import { cn } from '@/lib/utils/cn'
 
 export default function CertificationsPage({ params: { lang } }: { params: { lang: string } }) {
@@ -56,6 +57,8 @@ export default function CertificationsPage({ params: { lang } }: { params: { lan
           </div>
         </div>
       </Container>
+
+      <TrustComplianceHub lang={lang} />
     </div>
   )
 }

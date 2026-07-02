@@ -1,6 +1,7 @@
 import { ABOUT_HERO_IMAGE } from '@/lib/constants/images'
 import Image from 'next/image'
 import Container from '@/components/ui/Container'
+import PeoplePassionGallery from '@/components/sections/PeoplePassionGallery'
 import { cn } from '@/lib/utils/cn'
 import { Award, Leaf, Users, Globe2 } from 'lucide-react'
 
@@ -62,6 +63,8 @@ export default function AboutPage({ params: { lang } }: { params: { lang: string
           </div>
         </div>
       </Container>
+
+      <PeoplePassionGallery lang={lang} />
     </div>
   )
 }

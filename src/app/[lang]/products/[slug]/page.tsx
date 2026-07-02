@@ -1,7 +1,7 @@
 import { getProductBySlug, getProductSlugs } from '@/lib/actions/products'
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
 import Container from '@/components/ui/Container'
+import ProductDetailImage from '@/components/ecom/ProductDetailImage'
 import { cn } from '@/lib/utils/cn'
 import AddToCartButton from '@/components/ecom/AddToCartButton'
 import { CheckCircle2, Calendar, Ruler, Package, MapPin } from 'lucide-react'
@@ -27,8 +27,13 @@ export default async function SingleProductPage({
   return (
     <div className="min-h-screen py-12">
       <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-1/2 lg:h-screen lg:sticky top-0 bg-gray-50 relative overflow-hidden h-[50vh] border-e border-gray-200">
-          <Image alt={product.slug} className="object-cover object-center" fill priority src={product.image} />
+        <div className="lg:w-1/2 lg:h-screen lg:sticky top-0 bg-gray-50 relative overflow-hidden min-h-[45vh] aspect-[4/3] lg:aspect-auto border-e border-gray-200">
+          <ProductDetailImage
+            src={product.image}
+            alt={isAr ? product.title.ar : product.title.en}
+            categoryEn={product.category.en}
+            lang={lang}
+          />
           <div className="absolute top-6 start-6 z-10">
             <span className="terminal-badge terminal-badge-live bg-white/90">
               {isAr ? product.availability.ar : product.availability.en}
