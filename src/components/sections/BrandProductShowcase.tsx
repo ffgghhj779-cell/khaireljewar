@@ -7,8 +7,9 @@ import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { PRODUCT_GALLERY, type ProductGalleryItem } from '@/lib/constants/brandAssets'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/constants/images'
-import { SCROLL_VIEWPORT, TAP_SCALE } from '@/lib/constants/motion'
+import { SCROLL_VIEWPORT, SCROLL_VIEWPORT_INSTANT, TAP_SCALE } from '@/lib/constants/motion'
 import { useIsMobile } from '@/hooks/useIsMobile'
+import { useLightMotion } from '@/hooks/useLightMotion'
 import Container from '@/components/ui/Container'
 import { cn } from '@/lib/utils/cn'
 
@@ -17,6 +18,7 @@ const CATEGORIES = ['All', 'Fruits', 'Poultry', 'Meats', 'Frozen', 'Oils', 'Vege
 export default function BrandProductShowcase({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
   const isMobile = useIsMobile()
+  const lightMotion = useLightMotion()
   const [active, setActive] = useState<string>('All')
 
   const filtered =
@@ -28,10 +30,10 @@ export default function BrandProductShowcase({ lang }: { lang: string }) {
     <section className="py-20 md:py-28 bg-gray-50 border-y border-gray-100">
       <Container size="large">
         <motion.div
-          initial={{ opacity: 0, y: isMobile ? 12 : 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={SCROLL_VIEWPORT}
-          transition={{ duration: isMobile ? 0.35 : 0.55, ease: [0.22, 1, 0.36, 1] }}
+          initial={lightMotion ? false : { opacity: 0, y: isMobile ? 12 : 24 }}
+          whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={lightMotion ? SCROLL_VIEWPORT_INSTANT : SCROLL_VIEWPORT}
+          transition={lightMotion ? { duration: 0 } : { duration: isMobile ? 0.35 : 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 md:mb-14"
         >
           <div className="max-w-2xl">

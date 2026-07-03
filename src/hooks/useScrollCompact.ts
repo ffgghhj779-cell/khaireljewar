@@ -1,13 +1,17 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useIsMobile } from '@/hooks/useIsMobile'
 
 const COMPACT_THRESHOLD = 48
 
 export function useScrollCompact() {
+  const isMobile = useIsMobile()
   const [isCompact, setIsCompact] = useState(false)
 
   useEffect(() => {
+    if (isMobile) return
+
     let ticking = false
 
     const onScroll = () => {
@@ -22,7 +26,7 @@ export function useScrollCompact() {
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [isMobile])
 
-  return isCompact
+  return isMobile ? false : isCompact
 }

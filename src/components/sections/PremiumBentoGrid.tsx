@@ -7,9 +7,12 @@ import { SECTION_IMAGES } from '@/lib/constants/images'
 import Container from '@/components/ui/Container'
 import { cn } from '@/lib/utils/cn'
 import { useQuoteStore } from '@/store/useQuoteStore'
+import { useLightMotion } from '@/hooks/useLightMotion'
+import { SCROLL_VIEWPORT_INSTANT } from '@/lib/constants/motion'
 
 export default function PremiumBentoGrid({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
+  const lightMotion = useLightMotion()
   const toggleCart = useQuoteStore((s) => s.toggleCart)
 
   return (
@@ -49,9 +52,10 @@ export default function PremiumBentoGrid({ lang }: { lang: string }) {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial={lightMotion ? false : { opacity: 0, y: 20 }}
+            whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={SCROLL_VIEWPORT_INSTANT}
+            transition={lightMotion ? { duration: 0 } : undefined}
             className="md:col-span-2 bg-gray-50 border border-gray-200 rounded-2xl p-10 flex flex-col justify-center relative overflow-hidden"
           >
             <span className="text-8xl font-black text-primary/10 absolute end-8 bottom-4 select-none">100%</span>

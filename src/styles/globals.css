@@ -302,6 +302,13 @@
     padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
   }
 
+  @media (max-width: 1023px) {
+    .mobile-scroll-section {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 640px;
+    }
+  }
+
   @media (min-width: 1024px) {
     .mobile-safe-bottom {
       padding-bottom: 0;

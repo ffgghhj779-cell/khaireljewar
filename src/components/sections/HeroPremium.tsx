@@ -10,6 +10,7 @@ import { BRAND } from '@/lib/constants/brand'
 import { SECTION_IMAGES, IMAGE_QUALITY_THUMB } from '@/lib/constants/images'
 import { TAP_SCALE } from '@/lib/constants/motion'
 import { useIsMobile } from '@/hooks/useIsMobile'
+import { useLightMotion } from '@/hooks/useLightMotion'
 import { cn } from '@/lib/utils/cn'
 import AnimatedCounter from '@/components/ui/AnimatedCounter'
 import MagneticButton from '@/components/ui/MagneticButton'
@@ -61,6 +62,7 @@ const fadeUp = {
 export default function HeroPremium({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
   const isMobile = useIsMobile()
+  const lightMotion = useLightMotion()
   const reduceMotion = useReducedMotion()
   const router = useRouter()
   const sectionRef = useRef<HTMLElement>(null)
@@ -93,6 +95,8 @@ export default function HeroPremium({ lang }: { lang: string }) {
   }, [nextSlide, isVisible, reduceMotion])
 
   const current = HERO_SLIDES[activeSlide]
+
+  const skipHeroMotion = lightMotion || !!reduceMotion
 
   const stats = [
     {
@@ -139,6 +143,62 @@ export default function HeroPremium({ lang }: { lang: string }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full box-border">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
           <div className="lg:col-span-7 max-w-full">
+            {skipHeroMotion ? (
+              <>
+                <span className="terminal-badge terminal-badge-live mb-4 md:mb-6">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  {isAr ? 'منصة B2B للتصدير' : 'B2B Export Platform'}
+                </span>
+                <h1
+                  className={cn(
+                    'text-hero-fluid font-black text-dark editorial-heading mb-4 md:mb-6 max-w-full',
+                    isAr ? 'font-ibm-arabic' : 'font-manrope'
+                  )}
+                >
+                  <span className="block">
+                    {isAr ? 'مركز القيادة التجاري' : 'The B2B Command Center'}
+                  </span>
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mt-1">
+                    {isAr ? 'لتصدير الغذاء المصري.' : 'for Egyptian Food Export.'}
+                  </span>
+                </h1>
+                <p
+                  className={cn(
+                    'text-hero-sub-fluid text-gray-600 mb-6 md:mb-10 max-w-2xl',
+                    isAr ? 'font-ibm-arabic' : 'font-inter'
+                  )}
+                >
+                  <span className="md:hidden">
+                    {isAr
+                      ? 'منصة B2B مصرية للتصدير الزراعي — تسعير بالجملة، لوجستيات، وضمان جودة.'
+                      : 'Premium Egyptian B2B export platform — wholesale quotes, logistics, and quality assurance.'}
+                  </span>
+                  <span className="hidden md:inline">
+                    {isAr
+                      ? `${BRAND.name.ar} — شركة تصدير غذائي متميزة تخدم أسواق الخليج وأوروبا وأفريقيا. منصة B2B متكاملة لطلبات التسعير بالجملة، اللوجستيات، وضمان الجودة.`
+                      : `${BRAND.name.en} — a premium food export corporation serving GCC, Europe, and Africa. An integrated B2B platform for wholesale quotes, logistics, and quality assurance.`}
+                  </span>
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
+                  <MagneticButton
+                    onClick={() => router.push(`/${lang}/products`)}
+                    strength={0.22}
+                    className="bg-dark text-white px-6 md:px-8 py-3.5 md:py-4 min-h-[48px] rounded-xl font-bold text-sm md:text-base hover:bg-primary transition-all flex items-center justify-center gap-2 border border-dark w-full sm:w-auto"
+                  >
+                    {isAr ? 'تصفح الكتالوج' : 'Browse Catalog'}
+                    <ArrowRight className={cn('w-5 h-5', isAr && 'rotate-180')} />
+                  </MagneticButton>
+                  <MagneticButton
+                    onClick={() => router.push(`/${lang}/portal`)}
+                    strength={0.18}
+                    className="bg-white text-dark px-6 md:px-8 py-3.5 md:py-4 min-h-[48px] rounded-xl font-bold text-sm md:text-base border border-gray-200 hover:border-primary hover:text-primary transition-all flex items-center justify-center w-full sm:w-auto"
+                  >
+                    {isAr ? 'بوابة العملاء' : 'Client Portal'}
+                  </MagneticButton>
+                </div>
+              </>
+            ) : (
+              <>
             <motion.div custom={0} initial="hidden" animate="visible" variants={fadeUp}>
               <span className="terminal-badge terminal-badge-live mb-4 md:mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
@@ -209,6 +269,8 @@ export default function HeroPremium({ lang }: { lang: string }) {
                 {isAr ? 'بوابة العملاء' : 'Client Portal'}
               </MagneticButton>
             </motion.div>
+              </>
+            )}
           </div>
 
           <motion.div

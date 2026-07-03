@@ -5,7 +5,8 @@ import { motion, useInView } from 'framer-motion'
 import { Globe2, Ship, Anchor } from 'lucide-react'
 import Container from '@/components/ui/Container'
 import AnimatedCounter from '@/components/ui/AnimatedCounter'
-import { SCROLL_VIEWPORT, SPRING_HOVER } from '@/lib/constants/motion'
+import { SCROLL_VIEWPORT, SCROLL_VIEWPORT_INSTANT, SPRING_HOVER } from '@/lib/constants/motion'
+import { useLightMotion } from '@/hooks/useLightMotion'
 import { cn } from '@/lib/utils/cn'
 
 const ROUTES = [
@@ -30,23 +31,24 @@ const HUBS = [
 
 export default function GlobalFootprint({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
+  const lightMotion = useLightMotion()
   const sectionRef = useRef<HTMLElement>(null)
-  const isInView = useInView(sectionRef, SCROLL_VIEWPORT)
+  const isInView = useInView(sectionRef, lightMotion ? SCROLL_VIEWPORT_INSTANT : SCROLL_VIEWPORT)
 
   return (
     <section
       ref={sectionRef}
-      className="relative py-28 overflow-hidden border-y border-gray-200 bg-white/60 backdrop-blur-sm"
+      className="relative py-28 overflow-hidden border-y border-gray-200 bg-white max-lg:backdrop-blur-none lg:bg-white/60 lg:backdrop-blur-sm"
     >
       <div className="absolute inset-0 industrial-grid opacity-40 pointer-events-none" />
-      <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 max-lg:hidden blur-[120px] rounded-full pointer-events-none" />
 
       <Container size="large" className="relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={SCROLL_VIEWPORT}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          initial={lightMotion ? false : { opacity: 0, y: 32 }}
+          whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={lightMotion ? SCROLL_VIEWPORT_INSTANT : SCROLL_VIEWPORT}
+          transition={lightMotion ? { duration: 0 } : { duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <span className="terminal-badge terminal-badge-live mb-5">
@@ -70,11 +72,11 @@ export default function GlobalFootprint({ lang }: { lang: string }) {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={SCROLL_VIEWPORT}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-7 relative rounded-3xl border border-gray-200 bg-gradient-to-br from-gray-50 to-white p-6 md:p-10 shadow-soft overflow-hidden will-change-transform"
+            initial={lightMotion ? false : { opacity: 0, scale: 0.96 }}
+            whileInView={lightMotion ? undefined : { opacity: 1, scale: 1 }}
+            viewport={lightMotion ? SCROLL_VIEWPORT_INSTANT : SCROLL_VIEWPORT}
+            transition={lightMotion ? { duration: 0 } : { duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7 relative rounded-3xl border border-gray-200 bg-gradient-to-br from-gray-50 to-white p-6 md:p-10 shadow-soft overflow-hidden"
           >
             <div className="absolute top-4 end-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-gray-400">
               <Ship className="w-3.5 h-3.5 text-primary" />
@@ -111,9 +113,9 @@ export default function GlobalFootprint({ lang }: { lang: string }) {
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeDasharray="6 4"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={isInView ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                  transition={{ duration: 1.4, delay: 0.2 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+                  initial={lightMotion ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+                  animate={lightMotion || isInView ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+                  transition={lightMotion ? { duration: 0 } : { duration: 1.4, delay: 0.2 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
                 />
               ))}
 
@@ -124,9 +126,9 @@ export default function GlobalFootprint({ lang }: { lang: string }) {
                     cy={hub.cy}
                     r={hub.primary ? 10 : 6}
                     fill={hub.primary ? '#00C9D7' : '#0D1B2A'}
-                    initial={{ scale: 0 }}
-                    animate={isInView ? { scale: 1 } : { scale: 0 }}
-                    transition={{ ...SPRING_HOVER, delay: 0.5 + i * 0.08 }}
+                    initial={lightMotion ? { scale: 1 } : { scale: 0 }}
+                    animate={lightMotion || isInView ? { scale: 1 } : { scale: 0 }}
+                    transition={lightMotion ? { duration: 0 } : { ...SPRING_HOVER, delay: 0.5 + i * 0.08 }}
                     style={{ transformOrigin: `${hub.cx}px ${hub.cy}px` }}
                   />
                   {hub.primary && (
@@ -137,9 +139,15 @@ export default function GlobalFootprint({ lang }: { lang: string }) {
                       fill="none"
                       stroke="#00C9D7"
                       strokeWidth="1"
-                      initial={{ scale: 0.5, opacity: 0 }}
-                      animate={isInView ? { scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] } : { scale: 1, opacity: 0 }}
-                      transition={{ duration: 2.5, repeat: isInView ? Infinity : 0, ease: 'easeInOut' }}
+                      initial={lightMotion ? { scale: 1, opacity: 0 } : { scale: 0.5, opacity: 0 }}
+                      animate={
+                        lightMotion
+                          ? { scale: 1, opacity: 0 }
+                          : isInView
+                            ? { scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }
+                            : { scale: 1, opacity: 0 }
+                      }
+                      transition={lightMotion ? { duration: 0 } : { duration: 2.5, repeat: isInView ? Infinity : 0, ease: 'easeInOut' }}
                     />
                   )}
                   <text
@@ -160,11 +168,11 @@ export default function GlobalFootprint({ lang }: { lang: string }) {
             {STATS.map((stat, i) => (
               <motion.div
                 key={stat.labelEn}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={SCROLL_VIEWPORT}
-                transition={{ duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -4, transition: SPRING_HOVER }}
+                initial={lightMotion ? false : { opacity: 0, y: 24 }}
+                whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
+                viewport={lightMotion ? SCROLL_VIEWPORT_INSTANT : SCROLL_VIEWPORT}
+                transition={lightMotion ? { duration: 0 } : { duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={lightMotion ? undefined : { y: -4, transition: SPRING_HOVER }}
                 className="glass-panel rounded-2xl p-6 border border-gray-200"
               >
                 <Anchor className="w-5 h-5 text-primary mb-3 opacity-80" />

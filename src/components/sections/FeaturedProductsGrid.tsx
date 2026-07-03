@@ -57,7 +57,7 @@ export default function FeaturedProductsGrid({ lang, products }: FeaturedProduct
         </div>
 
         {/* Mobile snap carousel */}
-        <div className="md:hidden flex gap-4 overflow-x-auto snap-carousel scrollbar-hide -mx-4 px-4 pb-2 gpu-accelerated">
+        <div className="md:hidden flex gap-4 overflow-x-auto snap-carousel scrollbar-hide -mx-4 px-4 pb-2">
           {products.map((product, index) => (
             <div key={product.id} className="snap-center shrink-0 w-[85vw] max-w-sm">
               <ProductCard product={product} lang={lang} index={index} compact />

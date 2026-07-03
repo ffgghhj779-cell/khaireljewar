@@ -45,7 +45,9 @@ export default function Header({ lang }: { lang: string }) {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-[100] backdrop-blur-md lg:backdrop-blur-2xl bg-dark/92 lg:bg-dark/85 border-b border-white/10 shadow-2xl',
+        'fixed top-0 left-0 right-0 z-[100] border-b border-white/10 shadow-2xl',
+        'max-lg:bg-dark max-lg:backdrop-blur-none',
+        'lg:backdrop-blur-2xl lg:bg-dark/90',
         'transition-[padding] duration-200 ease-out touch-pan-y',
         isCompact ? 'py-2' : 'py-2.5 md:py-3.5'
       )}
@@ -95,25 +97,24 @@ export default function Header({ lang }: { lang: string }) {
               )}
             </motion.button>
 
-            <div className="lg:hidden flex items-center h-10 rounded-xl bg-white/[0.07] border border-white/12 backdrop-blur-sm overflow-hidden">
+            <div className="lg:hidden flex items-center h-10 rounded-xl overflow-hidden bg-primary shadow-[0_2px_12px_rgba(0,201,215,0.35)] border border-primary/80">
               <LanguageSwitch lang={lang} variant="toolbar" showIcon />
-              <div className="w-px h-5 bg-white/15 shrink-0" aria-hidden />
+              <div className="w-px h-5 bg-dark/15 shrink-0" aria-hidden />
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen((open) => !open)}
                 className={cn(
                   'min-w-[44px] h-10 flex items-center justify-center transition-colors touch-manipulation active:scale-95',
-                  'text-white/90 hover:bg-white/10',
-                  mobileMenuOpen && 'bg-white/15 text-white'
+                  'text-dark hover:bg-dark/10',
+                  mobileMenuOpen && 'bg-dark/15'
                 )}
                 aria-label={mobileMenuOpen ? (isAr ? 'إغلاق القائمة' : 'Close menu') : (isAr ? 'فتح القائمة' : 'Open menu')}
                 aria-expanded={mobileMenuOpen}
               >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.25} aria-hidden>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
                     d={mobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
                   />
                 </svg>

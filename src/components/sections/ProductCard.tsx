@@ -6,8 +6,9 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { MapPin, Plus, ArrowUpRight, Check } from 'lucide-react'
 import type { Product } from '@/lib/data/products'
 import { resolveProductImage } from '@/lib/constants/images'
-import { SCROLL_VIEWPORT, SPRING_HOVER, TAP_SCALE } from '@/lib/constants/motion'
+import { SCROLL_VIEWPORT, SCROLL_VIEWPORT_INSTANT, SPRING_HOVER, TAP_SCALE } from '@/lib/constants/motion'
 import { useIsMobile } from '@/hooks/useIsMobile'
+import { useLightMotion } from '@/hooks/useLightMotion'
 import { useAddToQuote } from '@/store/useQuoteStore'
 import ProductImage from '@/components/ui/ProductImage'
 import MagneticButton from '@/components/ui/MagneticButton'
@@ -24,6 +25,7 @@ interface ProductCardProps {
 export default function ProductCard({ product, lang, index = 0, compact = false, onQuickAdd }: ProductCardProps) {
   const isAr = lang === 'ar'
   const isMobile = useIsMobile()
+  const lightMotion = useLightMotion()
   const isCompact = compact || isMobile
   const cardRef = useRef<HTMLDivElement>(null)
   const [added, setAdded] = useState(false)
@@ -93,14 +95,14 @@ export default function ProductCard({ product, lang, index = 0, compact = false,
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: isCompact ? 16 : 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={SCROLL_VIEWPORT}
-      transition={{ duration: 0.45, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
+      initial={lightMotion ? false : { opacity: 0, y: isCompact ? 16 : 32 }}
+      whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={lightMotion ? SCROLL_VIEWPORT_INSTANT : SCROLL_VIEWPORT}
+      transition={lightMotion ? { duration: 0 } : { duration: 0.45, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={isCompact ? undefined : { rotateX, rotateY, transformPerspective: 1000 }}
-      className={cn('group perspective-1000 gpu-accelerated will-change-transform', isCompact && 'h-full')}
+      style={isCompact || lightMotion ? undefined : { rotateX, rotateY, transformPerspective: 1000 }}
+      className={cn('group perspective-1000', !lightMotion && 'gpu-accelerated will-change-transform', isCompact && 'h-full')}
     >
       <Link href={`/${lang}/products/${product.slug}`} className="block h-full">
         <article
