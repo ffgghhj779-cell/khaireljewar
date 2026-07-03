@@ -54,7 +54,7 @@ export default function Header({ lang }: { lang: string }) {
         <nav className="flex items-center justify-between relative z-[101] gap-2">
           <Link
             href={`/${lang}`}
-            className="relative z-[102] flex items-center gap-2 sm:gap-3 shrink min-w-0 max-w-[72%] sm:max-w-[65%] lg:max-w-none"
+            className="relative z-[102] flex items-center gap-2 sm:gap-3 shrink min-w-0 max-w-[58%] xs:max-w-[62%] sm:max-w-[65%] lg:max-w-none"
             onClick={() => setMobileMenuOpen(false)}
           >
             <BrandLockup lang={lang} priority compact={isCompact} />
@@ -76,47 +76,49 @@ export default function Header({ lang }: { lang: string }) {
             ))}
           </div>
 
-          <div className="flex items-center gap-1.5 relative z-[102] shrink-0">
-            <LanguageSwitch lang={lang} />
+          <div className="flex items-center gap-2 relative z-[102] shrink-0">
+            <LanguageSwitch lang={lang} className="hidden lg:flex" />
 
             <motion.button
               type="button"
               onClick={toggleCart}
               whileTap={TAP_SCALE}
               transition={{ duration: 0.12, ease: MOBILE_EASE_OUT }}
-              className="hidden lg:flex min-w-[48px] min-h-[48px] items-center justify-center text-white rounded-xl hover:bg-white/10 transition-colors relative"
+              className="hidden lg:flex min-w-[40px] min-h-[40px] items-center justify-center text-white rounded-lg hover:bg-white/10 transition-colors relative"
               aria-label={isAr ? 'سلة التسعير' : 'Quote cart'}
             >
               <ShoppingBag className="w-5 h-5" />
               {cartCount > 0 && (
-                <span className="absolute top-1.5 end-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-primary text-dark text-[9px] font-bold flex items-center justify-center">
+                <span className="absolute top-1 end-1 min-w-[18px] h-[18px] px-1 rounded-full bg-primary text-dark text-[9px] font-bold flex items-center justify-center">
                   {cartCount > 9 ? '9+' : cartCount}
                 </span>
               )}
             </motion.button>
 
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen((open) => !open)}
-              className={cn(
-                'lg:hidden min-w-[48px] min-h-[48px] flex items-center justify-center rounded-xl transition-all touch-manipulation active:scale-95',
-                'bg-primary/20 border-2 border-primary text-primary',
-                'hover:bg-primary hover:text-dark',
-                'shadow-[0_0_14px_rgba(0,201,215,0.35)]',
-                mobileMenuOpen && 'bg-primary text-dark'
-              )}
-              aria-label={mobileMenuOpen ? (isAr ? 'إغلاق القائمة' : 'Close menu') : (isAr ? 'فتح القائمة' : 'Open menu')}
-              aria-expanded={mobileMenuOpen}
-            >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d={mobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
-                />
-              </svg>
-            </button>
+            <div className="lg:hidden flex items-center h-10 rounded-xl bg-white/[0.07] border border-white/12 backdrop-blur-sm overflow-hidden">
+              <LanguageSwitch lang={lang} variant="toolbar" showIcon />
+              <div className="w-px h-5 bg-white/15 shrink-0" aria-hidden />
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen((open) => !open)}
+                className={cn(
+                  'min-w-[44px] h-10 flex items-center justify-center transition-colors touch-manipulation active:scale-95',
+                  'text-white/90 hover:bg-white/10',
+                  mobileMenuOpen && 'bg-white/15 text-white'
+                )}
+                aria-label={mobileMenuOpen ? (isAr ? 'إغلاق القائمة' : 'Close menu') : (isAr ? 'فتح القائمة' : 'Open menu')}
+                aria-expanded={mobileMenuOpen}
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d={mobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </nav>
 
@@ -147,7 +149,7 @@ export default function Header({ lang }: { lang: string }) {
                 <span className={cn('text-xs text-white/60', isAr ? 'font-ibm-arabic' : 'font-inter')}>
                   {isAr ? 'اللغة' : 'Language'}
                 </span>
-                <LanguageSwitch lang={lang} />
+                <LanguageSwitch lang={lang} variant="menu" />
               </div>
             </motion.div>
           )}

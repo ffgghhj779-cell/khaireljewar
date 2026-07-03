@@ -89,27 +89,43 @@ export default function QuoteDrawer({ lang }: { lang: string }) {
       <AnimatePresence>
         {notification?.show && (
           <motion.div
-            initial={{ opacity: 0, y: -50, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.18, ease: MOBILE_EASE_OUT }}
-            className="fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-[200] glass-panel text-dark px-4 md:px-6 py-4 rounded-xl shadow-2xl border border-gray-200 flex items-center gap-4 min-w-[280px] max-w-[calc(100vw-2rem)] mobile-overlay"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 12 }}
+            transition={{ duration: 0.2, ease: MOBILE_EASE_OUT }}
+            role="status"
+            aria-live="polite"
+            className={cn(
+              'fixed z-[200] pointer-events-auto',
+              'inset-x-4 max-w-md mx-auto w-[calc(100%-2rem)]',
+              'bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))]',
+              'md:bottom-auto md:top-[calc(4.25rem+env(safe-area-inset-top,0px))]',
+              'bg-white/95 backdrop-blur-xl text-dark',
+              'px-4 py-3 rounded-2xl shadow-[0_8px_32px_rgba(13,27,42,0.14)]',
+              'border border-gray-200/80 flex items-start gap-3'
+            )}
           >
-            <div className="bg-primary/10 p-2 rounded-lg text-primary shrink-0">
-              <ShoppingBag className="w-6 h-6" />
+            <div className="bg-primary/10 p-2 rounded-xl text-primary shrink-0 mt-0.5">
+              <ShoppingBag className="w-5 h-5" />
             </div>
-            <div className="min-w-0">
-              <p className={cn('font-bold text-sm', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+            <div className="flex-1 min-w-0 pe-1">
+              <p className={cn('font-bold text-sm leading-snug', isAr ? 'font-ibm-arabic' : 'font-inter')}>
                 {isAr ? 'تم تحديث طلب التسعير' : 'Quote List Updated'}
               </p>
-              <p className={cn('text-xs text-gray-500 mt-0.5 truncate', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+              <p
+                className={cn(
+                  'text-xs text-gray-600 mt-1 leading-relaxed line-clamp-2 break-words',
+                  isAr ? 'font-ibm-arabic' : 'font-inter'
+                )}
+              >
                 {notification.productName} — {unitLabel(notification.unit, notification.count)}
               </p>
             </div>
             <motion.button
               whileTap={TAP_SCALE}
               onClick={clearNotification}
-              className="ms-auto min-w-[48px] min-h-[48px] flex items-center justify-center text-gray-400 hover:text-dark touch-manipulation"
+              className="shrink-0 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-lg text-gray-400 hover:text-dark hover:bg-gray-100 touch-manipulation -me-1 -mt-0.5"
+              aria-label={isAr ? 'إغلاق' : 'Dismiss'}
             >
               <X className="w-4 h-4" />
             </motion.button>
