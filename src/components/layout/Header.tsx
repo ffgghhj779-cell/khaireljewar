@@ -56,7 +56,7 @@ export default function Header({ lang }: { lang: string }) {
         <nav className="flex items-center justify-between relative z-[101] gap-2">
           <Link
             href={`/${lang}`}
-            className="relative z-[102] flex items-center gap-2 sm:gap-3 shrink min-w-0 max-w-[58%] xs:max-w-[62%] sm:max-w-[65%] lg:max-w-none"
+            className="relative z-[102] flex items-center gap-2 sm:gap-3 shrink min-w-0 max-w-[62%] sm:max-w-[68%] lg:max-w-none text-white"
             onClick={() => setMobileMenuOpen(false)}
           >
             <BrandLockup lang={lang} priority compact={isCompact} />

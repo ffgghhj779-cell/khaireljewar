@@ -37,16 +37,17 @@ export default function BrandLockup({
   }
 
   return (
-    <div className={cn('flex items-center gap-2 sm:gap-3 min-w-0', className)}>
+    <div className={cn('flex items-center gap-2 sm:gap-2.5 min-w-0 text-white', className)}>
       <BrandLogo
         variant="header"
         priority={priority}
-        className={cn(compact ? '!h-7 sm:!h-8 !max-w-[120px] sm:!max-w-[150px]' : undefined)}
+        iconOnly
+        className={cn(compact && '!h-7 sm:!h-8 !w-[42px] sm:!w-[48px]')}
       />
-      <div className="min-w-0 hidden min-[380px]:block">
+      <div className="min-w-0 flex-1">
         <p
           className={cn(
-            'text-white font-bold leading-tight truncate',
+            'font-bold leading-tight truncate text-white',
             compact ? 'text-[10px] sm:text-xs' : 'text-[11px] sm:text-sm',
             isAr ? 'font-ibm-arabic' : 'font-manrope tracking-wide'
           )}
@@ -55,8 +56,8 @@ export default function BrandLockup({
         </p>
         <p
           className={cn(
-            'text-primary/90 font-semibold leading-snug truncate',
-            compact ? 'text-[8px] sm:text-[10px] max-w-[140px] sm:max-w-[200px]' : 'text-[9px] sm:text-xs max-w-[160px] sm:max-w-[240px]',
+            'font-semibold leading-snug truncate text-primary',
+            compact ? 'text-[8px] sm:text-[10px]' : 'text-[9px] sm:text-xs',
             isAr ? 'font-ibm-arabic' : 'font-inter'
           )}
         >
