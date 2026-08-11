@@ -25,7 +25,7 @@ export default function Footer({ lang }: { lang: string }) {
   ]
 
   return (
-    <footer className="relative bg-dark text-white pt-20 pb-10 overflow-hidden">
+    <footer className="relative z-10 bg-dark text-white pt-12 pb-[calc(6.25rem+env(safe-area-inset-bottom,0px))] md:pt-20 md:pb-10 overflow-hidden">
       <div
         className="pointer-events-none absolute inset-0 opacity-40"
         style={{
@@ -35,7 +35,7 @@ export default function Footer({ lang }: { lang: string }) {
       />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12 mb-10 md:mb-16">
           <div className="lg:col-span-2">
             <div className="mb-6">
               <BrandLockup lang={lang} variant="footer" />

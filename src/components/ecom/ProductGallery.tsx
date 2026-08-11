@@ -25,7 +25,7 @@ export default function ProductGallery({
 
   return (
     <div className="flex h-full flex-col">
-      <div className="relative flex-1 min-h-[45vh] lg:min-h-[calc(100dvh-76px)] bg-cream overflow-hidden">
+      <div className="relative flex-1 min-h-[38vh] lg:min-h-[calc(100dvh-76px)] bg-cream overflow-hidden">
         <PremiumImage
           key={current.src}
           src={current.src}
@@ -36,7 +36,7 @@ export default function ProductGallery({
           quality={92}
           className={cn(
             'transition-opacity duration-300',
-            (current.fit ?? 'cover') === 'cover' ? 'object-cover' : 'object-contain p-8 md:p-12'
+            (current.fit ?? 'contain') === 'cover' ? 'object-cover' : 'object-contain p-4 md:p-10'
           )}
         />
       </div>

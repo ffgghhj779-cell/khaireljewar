@@ -69,8 +69,8 @@ export default function BrandMarquee({ lang }: { lang: string }) {
   const items = PILLARS[isAr ? 'ar' : 'en']
 
   return (
-    <section className="relative overflow-hidden bg-primary py-20 md:py-28">
-      <BotanicalCorners tone="cream" className="opacity-40" />
+    <section className="relative z-0 overflow-hidden bg-primary py-12 md:py-28 border-t border-primary">
+      <BotanicalCorners tone="cream" className="opacity-40 hidden md:block" />
 
       <Container size="large" className="relative z-10">
         <motion.h2
@@ -79,7 +79,7 @@ export default function BrandMarquee({ lang }: { lang: string }) {
           viewport={SCROLL_VIEWPORT_INSTANT}
           transition={{ duration: 0.5, ease: BRAND_EASE }}
           className={cn(
-            'mx-auto mb-14 max-w-3xl text-center text-[clamp(1.85rem,4vw,3rem)] font-medium text-cream leading-[1.15]',
+            'mx-auto mb-8 max-w-3xl text-center text-[clamp(1.5rem,6vw,3rem)] font-medium text-cream leading-[1.2] text-balance md:mb-14',
             isAr ? 'font-arabic' : 'font-display'
           )}
         >

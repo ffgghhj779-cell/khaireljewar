@@ -17,7 +17,7 @@ export default function OriginStory({ lang }: { lang: string }) {
   const lightMotion = useLightMotion()
 
   return (
-    <section className="relative overflow-hidden bg-cream py-16 md:py-36">
+    <section className="relative z-0 overflow-hidden bg-cream py-12 md:py-36">
       <BotanicalMotif
         kind="stem"
         className="absolute start-[8%] bottom-[12%] hidden w-10 h-24 opacity-20 md:block soft-float-slow"

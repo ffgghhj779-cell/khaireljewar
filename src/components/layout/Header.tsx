@@ -55,9 +55,9 @@ export default function Header({ lang }: { lang: string }) {
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-[100] touch-pan-y',
-        'bg-cream/98 lg:bg-cream/95 lg:backdrop-blur-md border-b border-primary/8',
+        'bg-cream border-b border-primary/10',
         'transition-[padding,box-shadow] duration-300 ease-luxury',
-        isCompact ? 'py-2 shadow-header' : 'py-3 md:py-4'
+        isCompact ? 'py-2 shadow-header' : 'py-2.5 md:py-4'
       )}
     >
       <Container>

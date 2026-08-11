@@ -67,7 +67,7 @@ export default function BrandLockup({
         </p>
         <p
           className={cn(
-            'leading-snug truncate font-medium',
+            'leading-snug truncate font-medium hidden sm:block',
             compact ? 'text-[10px] sm:text-xs' : 'text-xs sm:text-sm',
             isAr ? 'font-arabic' : 'font-sans',
             onDark ? 'text-secondary' : 'text-primary'

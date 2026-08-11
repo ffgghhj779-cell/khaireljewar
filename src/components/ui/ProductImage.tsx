@@ -102,7 +102,10 @@ export default function ProductImage({
   }, [displaySrc, categoryEn])
 
   const showPendingOverlay = pending || failed
-  const objectFit = fit === 'cover' ? 'object-cover object-center' : 'object-contain object-center p-3 md:p-4'
+  const objectFit =
+    fit === 'cover'
+      ? 'object-cover object-center'
+      : 'object-contain object-center p-2 sm:p-3 md:p-4'
 
   return (
     <div

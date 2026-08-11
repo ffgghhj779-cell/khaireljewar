@@ -13,7 +13,7 @@ export default function HomeCloser({ lang }: { lang: string }) {
   const lightMotion = useLightMotion()
 
   return (
-    <section className="relative overflow-hidden bg-primary py-16 md:py-40">
+    <section className="relative z-0 overflow-hidden bg-primary py-12 md:py-40 border-t border-cream/10">
       <div
         className="pointer-events-none absolute -top-16 start-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-cream/10 blur-3xl soft-breathe hidden md:block"
         aria-hidden

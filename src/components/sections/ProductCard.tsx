@@ -15,7 +15,7 @@ interface ProductCardProps {
   compact?: boolean
 }
 
-/** Compact card — branded packaging photo is the identity (no floating seal) */
+/** Product card — full packaging in frame (contain), no crop of brand label */
 export default function ProductCard({ product, lang, index = 0, compact = false }: ProductCardProps) {
   const isAr = lang === 'ar'
   const lightMotion = useLightMotion()
@@ -34,10 +34,10 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
       }
       className="group h-full"
     >
-      <article className="card-lift relative h-full flex flex-col overflow-hidden rounded-xl shadow-[0_8px_28px_rgba(26,51,42,0.07)]">
+      <article className="relative h-full flex flex-col overflow-hidden rounded-2xl border border-primary/8 bg-cream shadow-[0_6px_20px_rgba(26,51,42,0.06)]">
         <Link
           href={`/${lang}/products/${product.slug}`}
-          className="relative block aspect-[1/1] bg-cream overflow-hidden"
+          className="relative block aspect-square bg-cream overflow-hidden"
         >
           <ProductImage
             src={product.image}
@@ -47,19 +47,19 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
             lang={lang}
             priority={index < 1}
             variant="card"
-            fit="cover"
-            className="!aspect-auto absolute inset-0 rounded-none border-0 !bg-transparent transition-transform duration-600 ease-out group-hover:scale-[1.03]"
+            fit="contain"
+            className="!aspect-auto absolute inset-0 rounded-none border-0 !bg-cream"
             sizes={compact ? '220px' : '(max-width: 768px) 45vw, (max-width: 1200px) 30vw, 240px'}
           />
         </Link>
 
         <Link
           href={`/${lang}/products/${product.slug}`}
-          className="bg-primary px-4 py-3.5 md:px-5 md:py-4 flex flex-col justify-center min-h-[4.75rem]"
+          className="bg-primary px-3.5 py-3 md:px-5 md:py-4 flex flex-col justify-center min-h-[4.25rem]"
         >
           <p
             className={cn(
-              'text-[10px] uppercase tracking-[0.14em] text-cream/55 mb-1',
+              'text-[10px] uppercase tracking-[0.12em] text-cream/55 mb-0.5',
               isAr ? 'font-arabic normal-case tracking-normal text-[11px]' : 'font-sans'
             )}
           >
@@ -67,7 +67,7 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
           </p>
           <h3
             className={cn(
-              'text-sm md:text-[15px] font-semibold text-cream leading-snug line-clamp-2',
+              'text-[13px] md:text-[15px] font-semibold text-cream leading-snug line-clamp-2',
               isAr ? 'font-arabic' : 'font-display'
             )}
           >

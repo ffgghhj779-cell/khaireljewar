@@ -17,7 +17,7 @@ export default function PartnerStrip({ lang }: { lang: string }) {
   const marks = MARKS[isAr ? 'ar' : 'en']
 
   return (
-    <section className="border-y border-primary/8 bg-cream py-7 md:py-12 overflow-hidden">
+    <section className="relative z-0 border-y border-primary/8 bg-cream py-6 md:py-12 overflow-hidden">
       <motion.div
         initial={lightMotion ? false : { opacity: 0, y: 10 }}
         whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}

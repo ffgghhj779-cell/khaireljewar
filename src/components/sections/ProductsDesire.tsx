@@ -23,7 +23,7 @@ export default function ProductsDesire({ lang, products }: ProductsDesireProps) 
   const mobileItems = products.slice(0, 8)
 
   return (
-    <section className="relative overflow-hidden bg-cream-soft py-16 md:py-32">
+    <section className="relative z-0 overflow-hidden bg-cream-soft py-12 md:py-32">
       <BotanicalMotif
         kind="orange"
         tone="soft"
@@ -59,9 +59,9 @@ export default function ProductsDesire({ lang, products }: ProductsDesireProps) 
           </h2>
         </motion.div>
 
-        <div className="md:hidden flex gap-3 overflow-x-auto snap-carousel scrollbar-hide -mx-4 px-4 pb-1">
+        <div className="md:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-4 px-4 pb-1">
           {mobileItems.map((product, index) => (
-            <div key={product.id} className="snap-center shrink-0 w-[68vw] max-w-[220px]">
+            <div key={product.id} className="snap-start shrink-0 w-[72vw] max-w-[240px]">
               <ProductCard product={product} lang={lang} index={index} compact />
             </div>
           ))}

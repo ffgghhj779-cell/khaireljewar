@@ -47,7 +47,7 @@ export default function RootLayout({
         )}
       >
         <Header lang={lang} />
-        <main className="min-h-screen pt-[60px] md:pt-[76px] mobile-safe-bottom">{children}</main>
+        <main className="relative z-0 min-h-screen pt-[56px] md:pt-[76px]">{children}</main>
         <Footer lang={lang} />
         <MobileAppChrome lang={lang} />
         <FloatingWhatsApp lang={lang} />

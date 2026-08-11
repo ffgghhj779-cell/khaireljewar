@@ -16,27 +16,15 @@ export default async function Home({
   const products = await getProducts()
 
   return (
-    <div className="relative overflow-x-clip selection:bg-secondary/40 selection:text-primary">
+    <div className="relative bg-cream selection:bg-secondary/40 selection:text-primary">
       <HeroBrand lang={lang} />
       <PartnerStrip lang={lang} />
-      <div className="mobile-scroll-section">
-        <OriginStory lang={lang} />
-      </div>
-      <div className="mobile-scroll-section">
-        <ProductsDesire lang={lang} products={products} />
-      </div>
-      <div className="mobile-scroll-section">
-        <TrustQuiet lang={lang} />
-      </div>
-      <div className="mobile-scroll-section">
-        <TrustProofStrip lang={lang} />
-      </div>
-      <div className="mobile-scroll-section">
-        <BrandMarquee lang={lang} />
-      </div>
-      <div className="mobile-scroll-section">
-        <HomeCloser lang={lang} />
-      </div>
+      <OriginStory lang={lang} />
+      <ProductsDesire lang={lang} products={products} />
+      <TrustQuiet lang={lang} />
+      <TrustProofStrip lang={lang} />
+      <BrandMarquee lang={lang} />
+      <HomeCloser lang={lang} />
     </div>
   )
 }

@@ -70,7 +70,7 @@ export default function TrustQuiet({ lang }: { lang: string }) {
   const next = () => setIndex((i) => (i + 1) % slides.length)
 
   return (
-    <section className="relative overflow-hidden bg-cream py-16 md:py-32">
+    <section className="relative z-0 overflow-hidden bg-cream py-12 md:py-32">
       <BotanicalMotif
         kind="palm"
         tone="soft"
@@ -120,7 +120,7 @@ export default function TrustQuiet({ lang }: { lang: string }) {
             transition={{ duration: 0.4, ease: BRAND_EASE }}
             className="card-lift w-full overflow-hidden rounded-2xl shadow-[0_20px_50px_rgba(26,51,42,0.12)]"
           >
-            <div className="relative aspect-[4/5] bg-cream overflow-hidden">
+            <div className="relative aspect-[5/4] sm:aspect-[4/5] bg-cream overflow-hidden">
               <PremiumImage
                 src={slide.image}
                 alt={slide.title}
@@ -128,8 +128,8 @@ export default function TrustQuiet({ lang }: { lang: string }) {
                 sizes="(max-width: 768px) 90vw, 420px"
                 quality={90}
                 className={cn(
-                  'transition-transform duration-700 ease-out hover:scale-[1.03]',
-                  slide.image.includes('/brand/products/') ? 'object-contain p-6' : 'object-cover'
+                  'transition-transform duration-700 ease-out',
+                  'object-contain p-4 md:p-6'
                 )}
               />
             </div>

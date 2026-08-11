@@ -24,7 +24,7 @@ export default function TrustProofStrip({ lang }: { lang: string }) {
   const items = PROOFS[isAr ? 'ar' : 'en']
 
   return (
-    <section className="border-y border-primary/8 bg-cream-soft py-10 md:py-16">
+    <section className="relative z-0 border-y border-primary/8 bg-cream-soft py-10 md:py-16">
       <Container>
         <div className="mb-10 flex flex-col items-start justify-between gap-4 md:mb-12 md:flex-row md:items-end">
           <div className="max-w-xl">
