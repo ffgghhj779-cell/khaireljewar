@@ -82,26 +82,26 @@ export default function HeroBrand({ lang }: { lang: string }) {
           transition={{ duration: 0.4, delay: 0.16, ease: BRAND_EASE }}
           className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3"
         >
-          <Link
-            href={`/${lang}/products`}
-            className={cn(
-              'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl px-7 touch-manipulation',
-              'bg-secondary text-primary font-semibold shadow-[0_10px_28px_-12px_rgba(229,184,74,0.55)] active:opacity-90',
-              isAr ? 'font-arabic' : 'font-sans'
-            )}
-          >
-            {isAr ? 'المنتجات' : 'Products'}
-          </Link>
-          <Link
-            href={`/${lang}/about`}
-            className={cn(
-              'inline-flex min-h-[48px] items-center justify-center rounded-xl border border-cream/35 px-7 touch-manipulation',
-              'text-cream font-semibold active:bg-cream/10',
-              isAr ? 'font-arabic' : 'font-sans'
-            )}
-          >
-            {isAr ? 'قصتنا' : 'Our story'}
-          </Link>
+            <Link
+              href={`/${lang}/contact`}
+              className={cn(
+                'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl px-7 touch-manipulation',
+                'bg-secondary text-primary font-semibold shadow-[0_10px_28px_-12px_rgba(229,184,74,0.55)] active:opacity-90',
+                isAr ? 'font-arabic' : 'font-sans'
+              )}
+            >
+              {isAr ? 'اطلب عرض سعر' : 'Request a quote'}
+            </Link>
+            <Link
+              href={`/${lang}/products`}
+              className={cn(
+                'inline-flex min-h-[48px] items-center justify-center rounded-xl border border-cream/35 px-7 touch-manipulation',
+                'text-cream font-semibold active:bg-cream/10',
+                isAr ? 'font-arabic' : 'font-sans'
+              )}
+            >
+              {isAr ? 'المنتجات' : 'Products'}
+            </Link>
         </motion.div>
       </div>
     </section>

@@ -61,11 +61,14 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
           {price && (
             <span
               className={cn(
-                'absolute top-2.5 end-2.5 z-[1] rounded-full bg-secondary px-2.5 py-1 text-[11px] font-bold text-primary shadow-sm',
+                'absolute top-2.5 end-2.5 z-[1] max-w-[70%] rounded-full bg-secondary px-2.5 py-1 text-[10px] font-bold leading-tight text-primary shadow-sm',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >
               {price}
+              <span className="mt-0.5 block text-[8px] font-semibold uppercase tracking-wide opacity-80">
+                {isAr ? 'استرشادي' : 'Indicative'}
+              </span>
             </span>
           )}
         </Link>
@@ -98,14 +101,18 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
                 {isAr ? `من ${moq}` : `From ${moq}`}
               </span>
             </li>
-            <li className="flex items-center gap-1.5 text-cream/70">
-              <Package className="h-3 w-3 shrink-0 opacity-80" strokeWidth={2} aria-hidden />
-              <span className={cn('text-[10px] truncate', isAr ? 'font-arabic' : 'font-sans')}>{packaging}</span>
-            </li>
-            <li className="flex items-center gap-1.5 text-cream/70">
-              <CalendarDays className="h-3 w-3 shrink-0 opacity-80" strokeWidth={2} aria-hidden />
-              <span className={cn('text-[10px] truncate', isAr ? 'font-arabic' : 'font-sans')}>{season}</span>
-            </li>
+            {!compact && (
+              <li className="flex items-center gap-1.5 text-cream/70">
+                <Package className="h-3 w-3 shrink-0 opacity-80" strokeWidth={2} aria-hidden />
+                <span className={cn('text-[10px] truncate', isAr ? 'font-arabic' : 'font-sans')}>{packaging}</span>
+              </li>
+            )}
+            {!compact && (
+              <li className="flex items-center gap-1.5 text-cream/70">
+                <CalendarDays className="h-3 w-3 shrink-0 opacity-80" strokeWidth={2} aria-hidden />
+                <span className={cn('text-[10px] truncate', isAr ? 'font-arabic' : 'font-sans')}>{season}</span>
+              </li>
+            )}
           </ul>
         </Link>
       </article>

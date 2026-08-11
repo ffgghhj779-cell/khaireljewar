@@ -6,52 +6,57 @@
 {% endblock %}
 
 {% block content %}
-{# ── Hero (Chobani-stage) ── #}
+{# ── Cinematic hero (v1.5) ── #}
 <section class="ka-hero">
-  <div class="ka-hero__stage" aria-hidden="true"></div>
-  <div class="ka-hero__glow ka-breathe" aria-hidden="true"></div>
-  <svg class="ka-motif ka-motif--leaf ka-float-slow" viewBox="0 0 90 90" fill="none" aria-hidden="true">
-    <path d="M45 78V42M45 48c-14-6-22-18-24-30M45 52c14-6 22-18 24-30M45 56c-10-2-18-10-22-20M45 56c10-2 18-10 22-20" stroke="#1A332A" stroke-width="1.55" stroke-linecap="round"/>
-    <circle cx="45" cy="40" r="3" fill="#1A332A" fill-opacity=".35"/>
-  </svg>
-  <svg class="ka-motif ka-motif--berry ka-float-delay" viewBox="0 0 64 80" fill="none" aria-hidden="true">
-    <ellipse cx="32" cy="46" rx="14" ry="22" fill="#1A332A" fill-opacity=".14" stroke="#1A332A" stroke-width="1.5"/>
-    <path d="M32 24v-8M28 18c2-4 6-6 10-4" stroke="#1A332A" stroke-width="1.4" stroke-linecap="round"/>
-  </svg>
+  <video
+    class="ka-hero__video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster="{{ 'images/brand/hero-reel/warehouse.png'|asset_url }}"
+  >
+    <source src="{{ 'videos/hero.webm'|asset_url }}" type="video/webm" />
+    <source src="{{ 'videos/hero.mp4'|asset_url }}" type="video/mp4" />
+  </video>
+  <img
+    class="ka-hero__poster"
+    src="{{ 'images/brand/hero-reel/warehouse.png'|asset_url }}"
+    alt=""
+    width="1280"
+    height="720"
+    hidden
+  />
+  <div class="ka-hero__wash" aria-hidden="true"></div>
+  <div class="ka-hero__edge" aria-hidden="true"></div>
 
-  <div class="ka-container ka-hero__grid">
-    <div class="ka-reveal">
+  <div class="ka-hero__grid ka-reveal">
+    <div>
       <p class="ka-hero__eyebrow">{% if en %}From Jeddah{% else %}من جدة{% endif %}</p>
       <h1 class="ka-hero__title">
-        {% if en %}Neighborly<br />goodness starts here{% else %}خير الجوار<br />يبدأ هنا{% endif %}
+        {% if en %}Khair Aljaar{% else %}خير الجوار{% endif %}
       </h1>
+      <p class="ka-hero__tagline">
+        {% if en %}Neighborly goodness starts here{% else %}خير الجوار يبدأ هنا{% endif %}
+      </p>
       <p class="ka-hero__lead">
         {% if en %}
-          Premium produce from the Jeddah hub — fresh, frozen, and export-ready.
+          Premium produce from Jeddah — fresh, frozen, export-ready.
         {% else %}
-          منتجات مميزة من مركز جدة — طازجة ومجمدة وجاهزة للتصدير.
+          منتجات مميزة من جدة — طازجة ومجمدة وجاهزة للتصدير.
         {% endif %}
       </p>
       <div class="ka-hero__actions">
         <a class="ka-btn ka-btn--primary" href="/products">
-          {% if en %}Explore products{% else %}اكتشف المنتجات{% endif %}
+          {% if en %}Request a quote{% else %}اطلب عرض سعر{% endif %}
         </a>
-        <a class="ka-btn ka-btn--outline" href="/page/about">
-          {% if en %}Our story{% else %}قصتنا{% endif %}
+        <a class="ka-btn ka-btn--outline" href="/products">
+          {% if en %}Products{% else %}المنتجات{% endif %}
         </a>
       </div>
     </div>
-    <div class="ka-hero__media ka-float-slow ka-reveal ka-reveal-2">
-      <img
-        src="{{ 'images/brand/hero-stage.webp'|asset_url }}"
-        alt="{% if en %}Khair Aljaar fresh produce{% else %}منتجات خير الجوار{% endif %}"
-        width="960"
-        height="600"
-        fetchpriority="high"
-      />
-    </div>
   </div>
-  <div class="ka-hero__bars" aria-hidden="true"><span></span><span></span></div>
 </section>
 
 {# ── Standards strip ── #}
@@ -270,6 +275,60 @@
   </div>
 </section>
 
+{# ── Export docs ── #}
+<section class="ka-docs" id="export-docs">
+  <div class="ka-container">
+    <div class="ka-section__center" style="margin-bottom:1.5rem">
+      <p class="ka-section__label">{% if en %}Export readiness{% else %}جاهزية التصدير{% endif %}</p>
+      <h2 class="ka-section__title" style="font-size:clamp(1.4rem,3vw,2rem)">
+        {% if en %}Documents and support importers expect.{% else %}وثائق ودعم يحتاجه المستورد.{% endif %}
+      </h2>
+    </div>
+    <div class="ka-docs__grid">
+      <article class="ka-docs__card">
+        <strong>{% if en %}Commercial docs{% else %}وثائق تجارية{% endif %}</strong>
+        <p>{% if en %}Invoice, packing list, and Certificate of Origin as required.{% else %}فاتورة وقائمة تعبئة وشهادة منشأ حسب الطلب.{% endif %}</p>
+      </article>
+      <article class="ka-docs__card">
+        <strong>{% if en %}Quality pack{% else %}حزمة الجودة{% endif %}</strong>
+        <p>{% if en %}Grade specs, lot notes, and partner-ready paperwork.{% else %}مواصفات الدرجة وملاحظات الدفعات وأوراق جاهزة للشريك.{% endif %}</p>
+      </article>
+      <article class="ka-docs__card">
+        <strong>{% if en %}Cold-chain notes{% else %}ملاحظات التبريد{% endif %}</strong>
+        <p>{% if en %}Temperature-minded handling for chilled and frozen lines.{% else %}مناولة تراعي الحرارة للخطوط المبردة والمجمدة.{% endif %}</p>
+      </article>
+      <article class="ka-docs__card">
+        <strong>{% if en %}Shipping support{% else %}دعم الشحن{% endif %}</strong>
+        <p>{% if en %}FOB Jeddah by default; CIF/CFR by lane and volume.{% else %}FOB جدة افتراضيًا؛ CIF/CFR حسب المسار والحجم.{% endif %}</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{# ── FAQ ── #}
+<section class="ka-faq" id="faq">
+  <div class="ka-container" style="max-width:760px">
+    <div class="ka-section__center" style="margin-bottom:1.25rem">
+      <p class="ka-section__label">{% if en %}FAQ{% else %}أسئلة شائعة{% endif %}</p>
+      <h2 class="ka-section__title" style="font-size:clamp(1.4rem,3vw,2rem)">
+        {% if en %}Quick answers for trading partners.{% else %}إجابات سريعة للشركاء.{% endif %}
+      </h2>
+    </div>
+    <details open>
+      <summary>{% if en %}What is the minimum order?{% else %}ما الحد الأدنى للطلب؟{% endif %}</summary>
+      <p>{% if en %}Most lines start from 1 MT or 1 container. Exact MOQ is confirmed on quote.{% else %}معظم الخطوط تبدأ من طن أو حاوية. الحد الأدنى يُؤكد في عرض السعر.{% endif %}</p>
+    </details>
+    <details>
+      <summary>{% if en %}Which Incoterms do you offer?{% else %}ما شروط الشحن المتوفرة؟{% endif %}</summary>
+      <p>{% if en %}FOB Jeddah is default. CIF, CFR, EXW, and DAP can be quoted by destination.{% else %}FOB جدة افتراضي. يمكن تسعير CIF وCFR وEXW وDAP حسب الوجهة.{% endif %}</p>
+    </details>
+    <details>
+      <summary>{% if en %}Are listed prices final?{% else %}هل الأسعار المعروضة نهائية؟{% endif %}</summary>
+      <p>{% if en %}No — index prices are indicative and subject to confirmation.{% else %}لا — الأسعار استرشادية وتخضع للتأكيد.{% endif %}</p>
+    </details>
+  </div>
+</section>
+
 {# ── Pillars ── #}
 <section class="ka-section ka-section--green" id="pillars">
   <div class="ka-container">
@@ -323,7 +382,7 @@
       {% endif %}
     </p>
     <div class="ka-closer__actions">
-      <a class="ka-btn ka-btn--cream" href="/products">{% if en %}Shop now{% else %}تسوق الآن{% endif %}</a>
+      <a class="ka-btn ka-btn--primary" href="/products">{% if en %}Shop now{% else %}تسوق الآن{% endif %}</a>
       <a class="ka-btn ka-btn--ghost" href="/page/contact">{% if en %}Request a quote{% else %}اطلب عرض سعر{% endif %}</a>
     </div>
   </div>

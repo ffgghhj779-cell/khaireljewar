@@ -8,6 +8,7 @@ const STATIC_PATHS = [
   '/products',
   '/logistics',
   '/quality',
+  '/certifications',
   '/export-markets',
   '/contact',
   '/privacy',

@@ -2,7 +2,7 @@
 
 import { useMemo, useState, type FormEvent } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { BRAND } from '@/lib/constants/brand'
+import { BRAND, INCOTERMS } from '@/lib/constants/brand'
 import { cn } from '@/lib/utils/cn'
 import { CheckCircle2, Loader2, MessageCircle } from 'lucide-react'
 
@@ -38,6 +38,12 @@ export default function ContactForm({ lang }: ContactFormProps) {
     const email = String(data.get('email') ?? '').trim()
     const phone = String(data.get('phone') ?? '').trim()
     const message = String(data.get('message') ?? '').trim()
+    const destinationCountry = String(data.get('destinationCountry') ?? '').trim()
+    const destinationPort = String(data.get('destinationPort') ?? '').trim()
+    const quantity = String(data.get('quantity') ?? '').trim()
+    const unit = String(data.get('unit') ?? '').trim()
+    const incoterm = String(data.get('incoterm') ?? '').trim()
+    const shipWindow = String(data.get('shipWindow') ?? '').trim()
 
     if (!name || !email || !message) {
       setError(isAr ? 'يرجى تعبئة الاسم والبريد والرسالة.' : 'Please fill in name, email, and message.')
@@ -47,8 +53,8 @@ export default function ContactForm({ lang }: ContactFormProps) {
     setStatus('sending')
 
     const subject = isAr
-      ? `استفسار من ${name} — ${BRAND.name.ar}`
-      : `Inquiry from ${name} — ${BRAND.name.en}`
+      ? `طلب عرض سعر من ${name} — ${BRAND.name.ar}`
+      : `RFQ from ${name} — ${BRAND.name.en}`
 
     const body = [
       isAr ? `الاسم: ${name}` : `Name: ${name}`,
@@ -56,6 +62,23 @@ export default function ContactForm({ lang }: ContactFormProps) {
       isAr ? `البريد: ${email}` : `Email: ${email}`,
       phone ? (isAr ? `الهاتف: ${phone}` : `Phone: ${phone}`) : null,
       productSlug ? (isAr ? `المنتج: ${productSlug}` : `Product: ${productSlug}`) : null,
+      destinationCountry
+        ? isAr
+          ? `بلد الوجهة: ${destinationCountry}`
+          : `Destination country: ${destinationCountry}`
+        : null,
+      destinationPort
+        ? isAr
+          ? `ميناء الوجهة: ${destinationPort}`
+          : `Destination port: ${destinationPort}`
+        : null,
+      quantity
+        ? isAr
+          ? `الكمية: ${quantity} ${unit}`
+          : `Quantity: ${quantity} ${unit}`
+        : null,
+      incoterm ? (isAr ? `شرط الشحن: ${incoterm}` : `Incoterm: ${incoterm}`) : null,
+      shipWindow ? (isAr ? `نافذة الشحن: ${shipWindow}` : `Ship window: ${shipWindow}`) : null,
       '',
       message,
     ]
@@ -66,7 +89,21 @@ export default function ContactForm({ lang }: ContactFormProps) {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, company, email, phone, message, product: productSlug, lang }),
+        body: JSON.stringify({
+          name,
+          company,
+          email,
+          phone,
+          message,
+          product: productSlug,
+          destinationCountry,
+          destinationPort,
+          quantity,
+          unit,
+          incoterm,
+          shipWindow,
+          lang,
+        }),
       })
 
       if (!res.ok) throw new Error('send_failed')
@@ -80,30 +117,33 @@ export default function ContactForm({ lang }: ContactFormProps) {
     }
   }
 
-  const waText = productSlug
-    ? isAr
-      ? `مرحباً ${BRAND.name.ar}، أود عرض سعر لـ ${productSlug}.`
-      : `Hello ${BRAND.name.en}, I would like a quote for ${productSlug}.`
-    : isAr
-      ? `مرحباً ${BRAND.name.ar}، أود الاستفسار عن التصدير.`
-      : `Hello ${BRAND.name.en}, I would like to inquire about food export.`
+  const waText = [
+    isAr ? `مرحباً ${BRAND.name.ar}` : `Hello ${BRAND.name.en}`,
+    productSlug
+      ? isAr
+        ? `أود عرض سعر لـ ${productSlug}.`
+        : `I would like a quote for ${productSlug}.`
+      : isAr
+        ? 'أود الاستفسار عن التصدير.'
+        : 'I would like to inquire about food export.',
+  ].join(' — ')
 
   if (status === 'sent') {
     return (
       <div className="text-center py-8">
         <CheckCircle2 className="w-14 h-14 text-primary mx-auto mb-4" strokeWidth={1.5} />
         <h3 className={cn('text-xl font-bold text-dark mb-2', isAr ? 'font-arabic' : 'font-display')}>
-          {isAr ? 'تم إرسال رسالتك' : 'Message sent'}
+          {isAr ? 'تم إرسال طلبك' : 'Request sent'}
         </h3>
         <p className={cn('text-gray-500 mb-6', isAr ? 'font-arabic' : 'font-sans')}>
-          {isAr ? 'سنتواصل معك قريباً.' : 'We will get back to you shortly.'}
+          {isAr ? 'فريق المبيعات سيتواصل معك قريباً.' : 'Our sales team will get back to you shortly.'}
         </p>
         <button
           type="button"
           onClick={() => setStatus('idle')}
           className={cn('text-primary font-semibold text-sm hover:underline touch-manipulation', isAr ? 'font-arabic' : 'font-sans')}
         >
-          {isAr ? 'إرسال رسالة أخرى' : 'Send another message'}
+          {isAr ? 'إرسال طلب آخر' : 'Send another request'}
         </button>
       </div>
     )
@@ -126,6 +166,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
             <input id="contact-company" name="company" type="text" autoComplete="organization" className={cn(inputClass, isAr ? 'font-arabic' : 'font-sans')} />
           </div>
         </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
             <label htmlFor="contact-email" className={labelClass}>
@@ -140,6 +181,69 @@ export default function ContactForm({ lang }: ContactFormProps) {
             <input id="contact-phone" name="phone" type="tel" autoComplete="tel" dir="ltr" className={cn(inputClass, 'font-sans')} />
           </div>
         </div>
+
+        <div className="rounded-2xl border border-secondary/30 bg-secondary/10 p-4 space-y-4">
+          <p className={cn('text-sm font-semibold text-primary', isAr ? 'font-arabic' : 'font-sans')}>
+            {isAr ? 'تفاصيل عرض السعر (اختياري)' : 'Quote details (optional)'}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="destination-country" className={labelClass}>
+                {isAr ? 'بلد الوجهة' : 'Destination country'}
+              </label>
+              <input id="destination-country" name="destinationCountry" type="text" className={cn(inputClass, isAr ? 'font-arabic' : 'font-sans')} />
+            </div>
+            <div>
+              <label htmlFor="destination-port" className={labelClass}>
+                {isAr ? 'ميناء الوجهة' : 'Destination port'}
+              </label>
+              <input id="destination-port" name="destinationPort" type="text" className={cn(inputClass, isAr ? 'font-arabic' : 'font-sans')} />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="col-span-1">
+              <label htmlFor="quantity" className={labelClass}>
+                {isAr ? 'الكمية' : 'Quantity'}
+              </label>
+              <input id="quantity" name="quantity" type="text" inputMode="decimal" className={cn(inputClass, 'font-sans')} />
+            </div>
+            <div className="col-span-1">
+              <label htmlFor="unit" className={labelClass}>
+                {isAr ? 'الوحدة' : 'Unit'}
+              </label>
+              <select id="unit" name="unit" defaultValue="MT" className={cn(inputClass, isAr ? 'font-arabic' : 'font-sans')}>
+                <option value="MT">{isAr ? 'طن' : 'MT'}</option>
+                <option value="Containers">{isAr ? 'حاوية' : 'Containers'}</option>
+                <option value="KG">{isAr ? 'كجم' : 'KG'}</option>
+              </select>
+            </div>
+            <div className="col-span-2 md:col-span-1">
+              <label htmlFor="incoterm" className={labelClass}>
+                {isAr ? 'شرط الشحن' : 'Incoterm'}
+              </label>
+              <select id="incoterm" name="incoterm" defaultValue="FOB" className={cn(inputClass, 'font-sans')}>
+                {INCOTERMS.map((term) => (
+                  <option key={term} value={term}>
+                    {term}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="col-span-2 md:col-span-1">
+              <label htmlFor="ship-window" className={labelClass}>
+                {isAr ? 'نافذة الشحن' : 'Ship window'}
+              </label>
+              <input
+                id="ship-window"
+                name="shipWindow"
+                type="text"
+                placeholder={isAr ? 'مثلاً: خلال 3 أسابيع' : 'e.g. within 3 weeks'}
+                className={cn(inputClass, isAr ? 'font-arabic' : 'font-sans')}
+              />
+            </div>
+          </div>
+        </div>
+
         <div>
           <label htmlFor="contact-message" className={labelClass}>
             {isAr ? 'الرسالة' : 'Message'} *
@@ -162,12 +266,12 @@ export default function ContactForm({ lang }: ContactFormProps) {
           type="submit"
           disabled={status === 'sending'}
           className={cn(
-            'w-full bg-dark hover:bg-primary disabled:opacity-60 text-white py-4 min-h-[52px] rounded-full font-semibold transition-colors touch-manipulation flex items-center justify-center gap-2',
+            'w-full bg-secondary hover:bg-secondary-400 disabled:opacity-60 text-primary py-4 min-h-[52px] rounded-full font-semibold transition-colors touch-manipulation flex items-center justify-center gap-2',
             isAr ? 'font-arabic' : 'font-sans'
           )}
         >
           {status === 'sending' && <Loader2 className="w-5 h-5 animate-spin" />}
-          {isAr ? 'إرسال الرسالة' : 'Send message'}
+          {isAr ? 'إرسال طلب العرض' : 'Submit RFQ'}
         </button>
       </form>
 

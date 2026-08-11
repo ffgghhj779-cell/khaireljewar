@@ -1,4 +1,18 @@
 /** KHAIR ALJAAR FOODS — Jeddah, Saudi Arabia */
+
+function envOr(key: string, fallback: string): string {
+  const value = process.env[key]?.trim()
+  return value || fallback
+}
+
+function digitsOnly(value: string): string {
+  return value.replace(/\D/g, '')
+}
+
+const phoneDisplay = envOr('NEXT_PUBLIC_CONTACT_PHONE', '+966 12 000 0000')
+const phoneWa = digitsOnly(envOr('NEXT_PUBLIC_WHATSAPP_NUMBER', '966120000000'))
+const phoneTel = phoneDisplay.startsWith('+') ? phoneDisplay.replace(/\s/g, '') : `+${phoneWa}`
+
 export const BRAND = {
   name: {
     en: 'Khair Aljaar',
@@ -32,7 +46,7 @@ export const BRAND = {
     ar: 'المملكة العربية السعودية',
   },
   /**
-   * Contact defaults (KSA). Override at go-live via:
+   * Contact — override at go-live:
    * NEXT_PUBLIC_CONTACT_PHONE / NEXT_PUBLIC_WHATSAPP_NUMBER / NEXT_PUBLIC_CONTACT_EMAIL
    */
   contact: {
@@ -40,10 +54,10 @@ export const BRAND = {
       en: 'Jeddah Islamic Port area · Jeddah 21483, Saudi Arabia',
       ar: 'منطقة ميناء جدة الإسلامي · جدة 21483، المملكة العربية السعودية',
     },
-    phone: '+966 12 000 0000',
-    phoneTel: '+966120000000',
-    phoneWa: '966120000000',
-    email: 'info@khairaljaarfoods.com',
+    phone: phoneDisplay,
+    phoneTel,
+    phoneWa,
+    email: envOr('NEXT_PUBLIC_CONTACT_EMAIL', 'info@khairaljaarfoods.com'),
     hours: {
       en: 'Sun – Thu · 9:00 – 17:00 (AST)',
       ar: 'الأحد – الخميس · 9:00 – 17:00 (توقيت السعودية)',
@@ -56,3 +70,6 @@ export const BRAND = {
     },
   },
 } as const
+
+export const INCOTERMS = ['FOB', 'CIF', 'CFR', 'EXW', 'DAP'] as const
+export type Incoterm = (typeof INCOTERMS)[number]

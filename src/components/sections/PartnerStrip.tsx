@@ -48,6 +48,7 @@ export default function PartnerStrip({ lang }: { lang: string }) {
               className={cn(
                 'inline-flex shrink-0 items-center gap-1.5 min-h-[34px] rounded-full border border-secondary/35 bg-white px-3 py-1.5',
                 'text-[11px] font-semibold text-primary/85 md:min-h-[40px] md:gap-2 md:px-4 md:text-xs',
+                i >= 4 && 'hidden md:inline-flex',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >

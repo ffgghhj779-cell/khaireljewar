@@ -5,6 +5,8 @@ import TrustQuiet from '@/components/sections/TrustQuiet'
 import TrustProofStrip from '@/components/sections/TrustProofStrip'
 import PartnerStrip from '@/components/sections/PartnerStrip'
 import BrandMarquee from '@/components/sections/BrandMarquee'
+import ExportDocsStrip from '@/components/sections/ExportDocsStrip'
+import HomeFaq from '@/components/sections/HomeFaq'
 import HomeCloser from '@/components/sections/HomeCloser'
 import { getProducts } from '@/lib/actions/products'
 
@@ -21,8 +23,10 @@ export default async function Home({
       <PartnerStrip lang={lang} />
       <OriginStory lang={lang} />
       <ProductsDesire lang={lang} products={products} />
+      <ExportDocsStrip lang={lang} />
       <TrustQuiet lang={lang} />
       <TrustProofStrip lang={lang} />
+      <HomeFaq lang={lang} />
       <BrandMarquee lang={lang} />
       <HomeCloser lang={lang} />
     </div>
