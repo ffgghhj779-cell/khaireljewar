@@ -6,7 +6,7 @@ import { BRAND_EASE, SCROLL_VIEWPORT_INSTANT } from '@/lib/constants/motion'
 import { useLightMotion } from '@/hooks/useLightMotion'
 import { cn } from '@/lib/utils/cn'
 
-/** Soft scroll reveal — opacity + slight rise only (fast, no blur/3D) */
+/** Soft scroll reveal — light one-shot on mobile, fuller on desktop */
 export default function SoftReveal({
   children,
   className,
@@ -20,15 +20,18 @@ export default function SoftReveal({
 }) {
   const light = useLightMotion()
   const reduce = useReducedMotion()
-  const skip = light || !!reduce
+
+  if (reduce) {
+    return <div className={cn(className)}>{children}</div>
+  }
 
   return (
     <motion.div
       className={cn(className)}
-      initial={skip ? false : { opacity: 0, y }}
-      whileInView={skip ? undefined : { opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: light ? 10 : y }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={SCROLL_VIEWPORT_INSTANT}
-      transition={{ duration: 0.55, delay, ease: BRAND_EASE }}
+      transition={{ duration: light ? 0.35 : 0.55, delay, ease: BRAND_EASE }}
     >
       {children}
     </motion.div>

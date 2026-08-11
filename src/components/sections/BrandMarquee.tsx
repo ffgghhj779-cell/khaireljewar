@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import BotanicalMotif, { BotanicalCorners } from '@/components/graphics/BotanicalMotif'
 import Container from '@/components/ui/Container'
 import { BRAND_EASE, SCROLL_VIEWPORT_INSTANT } from '@/lib/constants/motion'
-import { useLightMotion } from '@/hooks/useLightMotion'
 import { cn } from '@/lib/utils/cn'
 
 const PILLARS = {
@@ -65,7 +64,6 @@ const PILLARS = {
 
 export default function BrandMarquee({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
-  const lightMotion = useLightMotion()
   const items = PILLARS[isAr ? 'ar' : 'en']
 
   return (
@@ -74,10 +72,10 @@ export default function BrandMarquee({ lang }: { lang: string }) {
 
       <Container size="large" className="relative z-10">
         <motion.h2
-          initial={lightMotion ? false : { opacity: 0, y: 12 }}
-          whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={SCROLL_VIEWPORT_INSTANT}
-          transition={{ duration: 0.5, ease: BRAND_EASE }}
+          transition={{ duration: 0.4, ease: BRAND_EASE }}
           className={cn(
             'mx-auto mb-8 max-w-3xl text-center text-[clamp(1.5rem,6vw,3rem)] font-medium text-cream leading-[1.2] text-balance md:mb-14',
             isAr ? 'font-arabic' : 'font-display'
@@ -88,45 +86,51 @@ export default function BrandMarquee({ lang }: { lang: string }) {
             : 'Khair Aljaar is shaping trusted food trade.'}
         </motion.h2>
 
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <div className="grid grid-cols-2 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {items.map((item, i) => (
             <motion.div
               key={item.title}
-              initial={lightMotion ? false : { opacity: 0, y: 14 }}
-              whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={SCROLL_VIEWPORT_INSTANT}
-              transition={{ duration: 0.45, delay: i * 0.06, ease: BRAND_EASE }}
+              transition={{ duration: 0.35, delay: i * 0.05, ease: BRAND_EASE }}
               className="group text-center"
             >
-              <div className="mb-4 flex justify-center">
+              <div className="mb-3 flex justify-center md:mb-4">
                 <BotanicalMotif
                   kind={item.motif}
                   tone="cream"
                   className={cn(
-                    'h-14 w-14 opacity-70 transition-transform duration-500 group-hover:scale-110 group-hover:opacity-100',
-                    i % 2 === 0 ? 'soft-float' : 'soft-float-delay'
+                    'h-10 w-10 opacity-80 md:h-14 md:w-14 md:opacity-70 transition-transform duration-500 group-hover:scale-110 group-hover:opacity-100',
+                    'md:soft-float'
                   )}
                 />
               </div>
               <h3
                 className={cn(
-                  'mb-3 text-xl md:text-2xl text-cream font-medium',
+                  'mb-2 text-base md:mb-3 md:text-2xl text-cream font-medium',
                   isAr ? 'font-arabic' : 'font-display'
                 )}
               >
                 {item.title}
               </h3>
-              <p className={cn('mb-5 text-sm text-cream/65 leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+              <p
+                className={cn(
+                  'mb-3 text-[11px] leading-snug text-cream/65 md:mb-5 md:text-sm md:leading-relaxed line-clamp-3 md:line-clamp-none',
+                  isAr ? 'font-arabic' : 'font-sans'
+                )}
+              >
                 {item.desc}
               </p>
               <Link
                 href={`/${lang}${item.href}`}
                 className={cn(
-                  'inline-flex min-h-[40px] items-center justify-center rounded-lg border border-cream/35 px-4 text-sm font-semibold text-cream transition-all duration-300 hover:bg-cream hover:text-primary hover:-translate-y-0.5',
+                  'inline-flex min-h-[36px] items-center justify-center rounded-lg border border-cream/35 px-3 text-[11px] font-semibold text-cream md:min-h-[40px] md:px-4 md:text-sm',
+                  'active:bg-cream active:text-primary',
                   isAr ? 'font-arabic' : 'font-sans'
                 )}
               >
-                {isAr ? 'اقرأ المزيد' : 'Read more'}
+                {isAr ? 'المزيد' : 'More'}
               </Link>
             </motion.div>
           ))}

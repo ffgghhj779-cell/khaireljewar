@@ -107,23 +107,41 @@ export default function OriginStory({ lang }: { lang: string }) {
           </motion.h2>
 
           <motion.p
-            initial={lightMotion ? false : { opacity: 0, y: 10 }}
-            whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={SCROLL_VIEWPORT_INSTANT}
-            transition={{ duration: 0.45, delay: 0.08, ease: BRAND_EASE }}
+            transition={{ duration: 0.4, delay: 0.08, ease: BRAND_EASE }}
             className={cn(
-              'mx-auto mb-10 max-w-md text-base md:text-lg text-primary/65 leading-relaxed',
+              'mx-auto mb-6 max-w-md text-sm md:mb-10 md:text-lg text-primary/65 leading-relaxed',
               isAr ? 'font-arabic' : 'font-sans'
             )}
           >
             {isAr ? BRAND.sourcing.ar : BRAND.sourcing.en}
           </motion.p>
 
+          <div className="mb-8 flex flex-wrap items-center justify-center gap-2 md:hidden">
+            {[
+              { en: 'Partner farms', ar: 'مزارع شريكة' },
+              { en: 'Jeddah hub', ar: 'مركز جدة' },
+              { en: 'Export ready', ar: 'جاهز للتصدير' },
+            ].map((chip) => (
+              <span
+                key={chip.en}
+                className={cn(
+                  'inline-flex items-center rounded-full border border-primary/15 bg-white px-3 py-1.5 text-[11px] font-semibold text-primary/75',
+                  isAr ? 'font-arabic' : 'font-sans'
+                )}
+              >
+                {isAr ? chip.ar : chip.en}
+              </span>
+            ))}
+          </div>
+
           <Link
             href={`/${lang}/about`}
             className={cn(
-              'magnetic-cta inline-flex items-center justify-center min-h-[48px] px-7 rounded-xl',
-              'bg-primary text-cream font-semibold hover:bg-primary-700',
+              'inline-flex items-center justify-center min-h-[48px] px-7 rounded-xl touch-manipulation',
+              'bg-primary text-cream font-semibold active:opacity-90',
               isAr ? 'font-arabic' : 'font-sans'
             )}
           >
@@ -131,27 +149,39 @@ export default function OriginStory({ lang }: { lang: string }) {
           </Link>
         </div>
 
-        <div className="mt-10 flex justify-center gap-5 md:hidden">
-          <div className="relative h-24 w-24">
+        <div className="mt-8 flex justify-center gap-4 md:hidden">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={SCROLL_VIEWPORT_INSTANT}
+            transition={{ duration: 0.35, delay: 0.1, ease: BRAND_EASE }}
+            className="relative h-28 w-28"
+          >
             <PremiumImage
               src={SECTION_IMAGES.datesIsolated}
               alt={isAr ? 'تمر' : 'Dates'}
               fill
-              sizes="96px"
+              sizes="112px"
               quality={75}
               className="object-contain"
             />
-          </div>
-          <div className="relative h-24 w-24">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={SCROLL_VIEWPORT_INSTANT}
+            transition={{ duration: 0.35, delay: 0.16, ease: BRAND_EASE }}
+            className="relative h-28 w-28"
+          >
             <PremiumImage
               src={SECTION_IMAGES.orangesIsolated}
               alt={isAr ? 'برتقال' : 'Oranges'}
               fill
-              sizes="96px"
+              sizes="112px"
               quality={75}
               className="object-contain"
             />
-          </div>
+          </motion.div>
         </div>
       </Container>
     </section>

@@ -5,12 +5,10 @@ import { motion } from 'framer-motion'
 import BotanicalMotif from '@/components/graphics/BotanicalMotif'
 import Container from '@/components/ui/Container'
 import { BRAND_EASE, SCROLL_VIEWPORT_INSTANT } from '@/lib/constants/motion'
-import { useLightMotion } from '@/hooks/useLightMotion'
 import { cn } from '@/lib/utils/cn'
 
 export default function HomeCloser({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
-  const lightMotion = useLightMotion()
 
   return (
     <section className="relative z-0 overflow-hidden bg-primary py-12 md:py-40 border-t border-cream/10">
@@ -31,12 +29,13 @@ export default function HomeCloser({ lang }: { lang: string }) {
 
       <Container size="large" className="relative z-10">
         <motion.div
-          initial={lightMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={SCROLL_VIEWPORT_INSTANT}
-          transition={{ duration: 0.55, ease: BRAND_EASE }}
+          transition={{ duration: 0.4, ease: BRAND_EASE }}
           className="mx-auto max-w-2xl text-center"
         >
+          <BotanicalMotif kind="leaf" tone="cream" className="mx-auto mb-4 h-8 w-7 opacity-50 md:hidden" />
           <p
             className={cn(
               'mb-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-cream/55 md:mb-3',

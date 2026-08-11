@@ -59,9 +59,9 @@ export default function ProductsDesire({ lang, products }: ProductsDesireProps) 
           </h2>
         </motion.div>
 
-        <div className="md:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-4 px-4 pb-1">
+        <div className="md:hidden flex gap-3.5 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-4 px-4 pb-1">
           {mobileItems.map((product, index) => (
-            <div key={product.id} className="snap-start shrink-0 w-[72vw] max-w-[240px]">
+            <div key={product.id} className="snap-start shrink-0 w-[78vw] max-w-[280px]">
               <ProductCard product={product} lang={lang} index={index} compact />
             </div>
           ))}
