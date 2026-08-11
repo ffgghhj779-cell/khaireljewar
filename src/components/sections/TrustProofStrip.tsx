@@ -29,11 +29,12 @@ export default function TrustProofStrip({ lang }: { lang: string }) {
   const items = PROOFS[isAr ? 'ar' : 'en']
 
   return (
-    <section className="relative z-0 border-y border-primary/8 bg-cream-soft py-10 md:py-16">
+    <section className="relative z-0 overflow-hidden border-y border-secondary/20 bg-cream-soft py-10 md:py-16">
+      <div className="absolute inset-x-0 top-0 h-0.5 bg-secondary/80" aria-hidden />
       <Container>
         <div className="mb-6 flex flex-col items-start justify-between gap-3 md:mb-12 md:flex-row md:items-end">
           <div className="max-w-xl">
-            <p className={cn('mb-2 text-sm font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>
+            <p className={cn('mb-2 text-sm font-semibold text-secondary-600', isAr ? 'font-arabic' : 'font-display')}>
               {isAr ? 'ثقة بهدوء' : 'Quiet confidence'}
             </p>
             <h2
@@ -65,9 +66,9 @@ export default function TrustProofStrip({ lang }: { lang: string }) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={SCROLL_VIEWPORT_INSTANT}
               transition={{ duration: 0.35, delay: i * 0.05, ease: BRAND_EASE }}
-              className="w-[70vw] max-w-[240px] shrink-0 rounded-2xl border border-primary/10 bg-cream p-4 shadow-soft"
+              className="w-[70vw] max-w-[240px] shrink-0 rounded-2xl border border-secondary/30 bg-cream p-4 shadow-soft"
             >
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/80 text-primary">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-primary">
                 <Icon className="h-5 w-5" strokeWidth={1.75} />
               </div>
               <h3 className={cn('mb-1.5 text-base font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>
@@ -90,7 +91,7 @@ export default function TrustProofStrip({ lang }: { lang: string }) {
               transition={{ duration: 0.4, delay: i * 0.05, ease: BRAND_EASE }}
               className="group"
             >
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/8 text-primary transition-colors group-hover:bg-primary group-hover:text-cream">
+              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-secondary/90 text-primary transition-colors group-hover:bg-secondary">
                 <Icon className="h-5 w-5" strokeWidth={1.75} />
               </div>
               <h3 className={cn('mb-2 text-lg font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>

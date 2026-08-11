@@ -141,7 +141,7 @@ export default function OriginStory({ lang }: { lang: string }) {
             href={`/${lang}/about`}
             className={cn(
               'inline-flex items-center justify-center min-h-[48px] px-7 rounded-xl touch-manipulation',
-              'bg-primary text-cream font-semibold active:opacity-90',
+              'bg-secondary text-primary font-semibold active:opacity-90',
               isAr ? 'font-arabic' : 'font-sans'
             )}
           >

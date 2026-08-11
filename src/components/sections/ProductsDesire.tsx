@@ -79,7 +79,7 @@ export default function ProductsDesire({ lang, products }: ProductsDesireProps) 
               whileTap={TAP_SCALE}
               className={cn(
                 'magnetic-cta inline-flex items-center justify-center gap-2 min-h-[52px] px-8 rounded-xl font-semibold',
-                'bg-primary text-cream hover:bg-primary-700',
+                'bg-secondary text-primary hover:bg-secondary-400',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >

@@ -13,3 +13,9 @@ coverage/
 # Local Zid theme export zip
 zid-theme/*.zip
 
+
+# Local stock/video worktemps
+tmp-stock-src/
+tmp-stock-thumbs/
+tmp-hero-*/
+

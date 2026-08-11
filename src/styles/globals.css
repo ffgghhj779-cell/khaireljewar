@@ -6,6 +6,7 @@
   :root {
     --color-primary: #1a332a;
     --color-secondary: #e5b84a;
+    --color-accent-action: #e5b84a;
     --color-dark: #1a332a;
     --color-canvas: #f7f4ec;
     --color-mist: #f0ebe0;
@@ -435,6 +436,13 @@
       opacity: 1;
       transform: none;
     }
+
+    .ka-ken-burns-a,
+    .ka-ken-burns-b {
+      animation: none !important;
+      transform: none !important;
+      will-change: auto !important;
+    }
   }
 
   @media (min-width: 1024px) {
@@ -477,6 +485,31 @@
   .ka-mustard-wipe {
     transform-origin: bottom;
     animation: ka-mustard-wipe 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Hero living backdrop — slow Ken Burns */
+  @keyframes ka-ken-burns-a {
+    from { transform: scale(1) translate3d(0, 0, 0); }
+    to { transform: scale(1.08) translate3d(-1.5%, -1%, 0); }
+  }
+
+  @keyframes ka-ken-burns-b {
+    from { transform: scale(1.06) translate3d(1%, 0, 0); }
+    to { transform: scale(1) translate3d(-1%, 1%, 0); }
+  }
+
+  .ka-ken-burns-a,
+  .ka-ken-burns-b {
+    will-change: transform;
+    transform-origin: center;
+  }
+
+  .ka-ken-burns-a {
+    animation: ka-ken-burns-a 5.2s ease-out both;
+  }
+
+  .ka-ken-burns-b {
+    animation: ka-ken-burns-b 5.2s ease-out both;
   }
 
   /* Signature: export route draw */

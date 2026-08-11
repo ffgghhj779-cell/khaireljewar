@@ -201,7 +201,7 @@ export default function TrustQuiet({ lang }: { lang: string }) {
             <Link
               href={`/${lang}/quality`}
               className={cn(
-                'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl bg-primary px-7 font-semibold text-cream hover:bg-primary-700',
+                'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl bg-secondary px-7 font-semibold text-primary hover:bg-secondary-400',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >
@@ -210,7 +210,7 @@ export default function TrustQuiet({ lang }: { lang: string }) {
             <Link
               href={`/${lang}/contact`}
               className={cn(
-                'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl border border-primary/20 px-7 font-semibold text-primary hover:bg-primary hover:text-cream',
+                'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl border border-secondary/40 px-7 font-semibold text-primary hover:bg-secondary hover:text-primary',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >

@@ -20,7 +20,8 @@ export default function PartnerStrip({ lang }: { lang: string }) {
   const lightMotion = useLightMotion()
 
   return (
-    <section className="relative z-0 border-y border-primary/8 bg-cream py-5 md:py-12 overflow-hidden">
+    <section className="relative z-0 overflow-hidden border-y border-secondary/25 bg-cream py-5 md:py-12">
+      <div className="absolute inset-x-0 top-0 h-0.5 bg-secondary" aria-hidden />
       <motion.div
         initial={lightMotion ? { opacity: 0, y: 8 } : { opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -30,7 +31,7 @@ export default function PartnerStrip({ lang }: { lang: string }) {
       >
         <p
           className={cn(
-            'mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-primary/45 md:mb-6 md:text-[11px]',
+            'mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-secondary-600 md:mb-6 md:text-[11px]',
             isAr ? 'font-arabic normal-case tracking-normal text-xs' : 'font-sans'
           )}
         >
@@ -45,12 +46,12 @@ export default function PartnerStrip({ lang }: { lang: string }) {
               viewport={SCROLL_VIEWPORT_INSTANT}
               transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.2), ease: BRAND_EASE }}
               className={cn(
-                'inline-flex shrink-0 items-center gap-1.5 min-h-[34px] rounded-full border border-primary/12 bg-white px-3 py-1.5',
-                'text-[11px] font-semibold text-primary/80 md:min-h-[40px] md:gap-2 md:px-4 md:text-xs',
+                'inline-flex shrink-0 items-center gap-1.5 min-h-[34px] rounded-full border border-secondary/35 bg-white px-3 py-1.5',
+                'text-[11px] font-semibold text-primary/85 md:min-h-[40px] md:gap-2 md:px-4 md:text-xs',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >
-              <Icon className="h-3.5 w-3.5 text-secondary shrink-0" strokeWidth={2} aria-hidden />
+              <Icon className="h-3.5 w-3.5 shrink-0 text-secondary" strokeWidth={2} aria-hidden />
               {isAr ? ar : en}
             </motion.span>
           ))}
