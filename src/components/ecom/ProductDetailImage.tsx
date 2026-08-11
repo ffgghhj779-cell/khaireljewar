@@ -1,11 +1,10 @@
 'use client'
 
-import { useState, useCallback } from 'react'
 import Image from 'next/image'
+import { useState, useCallback, useEffect } from 'react'
 import { ImageIcon } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 import {
-  IMAGE_BLUR_DATA_URL,
   resolveProductImage,
   isProductImagePending,
   getCategoryFallback,
@@ -24,8 +23,14 @@ export default function ProductDetailImage({ src, alt, categoryEn, slug, lang }:
   const isAr = lang === 'ar'
   const pending = isProductImagePending(src, slug)
   const initialSrc = resolveProductImage(src, categoryEn, slug)
+  const isBrandWebp = initialSrc.includes('/images/brand/') && initialSrc.endsWith('.webp')
   const [displaySrc, setDisplaySrc] = useState(initialSrc)
   const [failed, setFailed] = useState(false)
+
+  useEffect(() => {
+    setDisplaySrc(initialSrc)
+    setFailed(false)
+  }, [initialSrc])
 
   const handleError = useCallback(() => {
     if (!failed) {
@@ -36,15 +41,12 @@ export default function ProductDetailImage({ src, alt, categoryEn, slug, lang }:
 
   if (pending) {
     return (
-      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 via-white to-primary/5">
-        <div className="w-20 h-20 rounded-2xl bg-dark/5 border border-gray-200 flex items-center justify-center mb-4">
-          <ImageIcon className="w-10 h-10 text-dark/30" />
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-cream">
+        <div className="w-20 h-20 rounded-2xl bg-primary/5 border border-primary/10 flex items-center justify-center mb-4">
+          <ImageIcon className="w-10 h-10 text-primary/30" />
         </div>
-        <span className={cn('text-xs font-bold uppercase tracking-widest text-dark/50', isAr && 'font-ibm-arabic')}>
-          {isAr ? 'صورة عالية الدقة قريباً' : 'High-Res Coming Soon'}
-        </span>
-        <span className={cn('text-sm text-gray-400 mt-2 px-6 text-center', isAr && 'font-ibm-arabic')}>
-          {isAr ? 'منتج معتمد — التصوير الاحترافي قيد الإعداد' : 'Certified product — professional imaging in progress'}
+        <span className={cn('text-xs font-semibold tracking-wide text-primary/50', isAr && 'font-arabic')}>
+          {isAr ? 'صورة عالية الدقة قريباً' : 'High-res coming soon'}
         </span>
       </div>
     )
@@ -57,11 +59,10 @@ export default function ProductDetailImage({ src, alt, categoryEn, slug, lang }:
       fill
       priority
       quality={IMAGE_QUALITY_PRODUCT}
+      unoptimized={isBrandWebp}
       sizes="(max-width: 1024px) 100vw, 50vw"
-      placeholder="blur"
-      blurDataURL={IMAGE_BLUR_DATA_URL}
       onError={handleError}
-      className="object-contain object-center p-6 sm:p-10 lg:p-12"
+      className="object-contain object-center p-8 md:p-12 bg-cream"
     />
   )
 }

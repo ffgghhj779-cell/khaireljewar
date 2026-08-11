@@ -25,10 +25,10 @@ export function buildPageMetadata({ lang, title, description, path = '' }: PageM
       },
     },
     openGraph: {
-      title: `${title} | ${BRAND.name.en}`,
+      title: `${title} | ${BRAND.nameFull.en}`,
       description,
       url: canonical,
-      siteName: BRAND.name.en,
+      siteName: BRAND.nameFull.en,
       locale: lang === 'ar' ? 'ar_EG' : 'en_US',
       type: 'website',
     },

@@ -1,0 +1,65 @@
+{% extends 'layout.jinja' %}
+{% set en = store.language == 'en' %}
+
+{% block title %}{% if en %}Products{% else %}المنتجات{% endif %} — {{ store.name }}{% endblock %}
+
+{% block content %}
+<section class="ka-page-hero">
+  <div class="ka-container ka-section__center">
+    <p class="ka-section__label">{% if en %}Catalog{% else %}الكتالوج{% endif %}</p>
+    <h1 class="ka-section__title">{% if en %}Made to be wanted.{% else %}منتجات تُطلب.{% endif %}</h1>
+    <p class="ka-section__text">
+      {% if en %}
+        Export-ready produce from the Jeddah hub — clear specs, wholesale quantities.
+      {% else %}
+        منتجات جاهزة للتصدير من مركز جدة — مواصفات واضحة وكميات جملة.
+      {% endif %}
+    </p>
+  </div>
+</section>
+
+<section class="ka-section ka-section--soft" style="padding-top:2rem">
+  <div class="ka-container">
+    <div class="ka-products ka-products--wide">
+      {% if products and products|length > 0 %}
+        {% for product in products %}
+          <a class="ka-card" href="{{ product.html_url|default('/products/' ~ product.slug|default(product.id)) }}">
+            <div class="ka-card__media">
+              <img
+                src="{{ product.images[0].image.full_size|default(product.images[0].src|default(product.image)) }}"
+                alt="{{ product.name }}"
+                width="640"
+                height="640"
+                loading="lazy"
+              />
+            </div>
+            <div class="ka-card__body">
+              <p class="ka-card__cat">{{ product.categories[0].name if product.categories else '' }}</p>
+              <h3 class="ka-card__title">{{ product.name }}</h3>
+              {% if product.formatted_sale_price or product.formatted_price or product.price %}
+                <p class="ka-card__meta">{{ product.formatted_sale_price|default(product.formatted_price|default(product.price)) }}</p>
+              {% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      {% else %}
+        <div class="ka-empty">
+          <p>{% if en %}Products will appear here after import.{% else %}ستظهر المنتجات هنا بعد الاستيراد.{% endif %}</p>
+          <a class="ka-btn ka-btn--primary" href="/">{% if en %}Back home{% else %}العودة للرئيسية{% endif %}</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="ka-section ka-section--green ka-closer" style="padding:4.5rem 0">
+  <div class="ka-container" style="position:relative;z-index:2;text-align:center">
+    <h2 class="ka-section__title" style="font-size:clamp(1.8rem,3.5vw,2.6rem)">
+      {% if en %}Need a wholesale quote?{% else %}تحتاج عرض سعر جملة؟{% endif %}
+    </h2>
+    <div class="ka-closer__actions" style="margin-top:1.5rem">
+      <a class="ka-btn ka-btn--cream" href="/page/contact">{% if en %}Contact us{% else %}تواصل معنا{% endif %}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

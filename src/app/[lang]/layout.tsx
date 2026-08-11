@@ -6,21 +6,21 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import MobileAppChrome from '@/components/layout/MobileAppChrome'
 import FloatingWhatsApp from '@/components/shared/FloatingWhatsApp'
-import ClientQuoteShell from '@/components/ecom/ClientQuoteShell'
 import { cn } from '@/lib/utils/cn'
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
+  themeColor: '#F7F4EC',
 }
 
 export const metadata: Metadata = {
-  title: `${BRAND.name.en} | ${BRAND.tagline.en}`,
-  description: `${BRAND.name.en} — ${BRAND.tagline.en}. Premium food export serving GCC, Europe, and Africa.`,
+  title: `${BRAND.nameFull.en} | ${BRAND.tagline.en}`,
+  description: `${BRAND.nameFull.en} — ${BRAND.tagline.en}. ${BRAND.positioning.en}`,
   icons: {
-    icon: '/images/branding/logo-official.png',
-    apple: '/images/branding/logo-official.png',
+    icon: '/images/logo/khair-aljaar-mark.svg',
+    apple: '/images/logo/khair-aljaar-mark.svg',
   },
 }
 
@@ -42,16 +42,15 @@ export default function RootLayout({
       <body
         className={cn(
           fontVariables,
-          isAr ? 'font-ibm-arabic text-[15px] sm:text-base' : 'font-inter text-[15px] sm:text-base',
-          'antialiased text-dark min-h-screen'
+          isAr ? 'font-arabic text-[15px] sm:text-base' : 'font-sans text-[15px] sm:text-base',
+          'antialiased text-dark min-h-screen bg-canvas'
         )}
       >
         <Header lang={lang} />
-        <main className="min-h-screen pt-[56px] md:pt-[76px] mobile-safe-bottom">{children}</main>
+        <main className="min-h-screen pt-[60px] md:pt-[76px] mobile-safe-bottom">{children}</main>
         <Footer lang={lang} />
         <MobileAppChrome lang={lang} />
         <FloatingWhatsApp lang={lang} />
-        <ClientQuoteShell lang={lang} />
       </body>
     </html>
   )

@@ -71,21 +71,11 @@ export function PortalSkeleton() {
 
 export function ProductCardSkeleton({ compact = false }: { compact?: boolean }) {
   return (
-    <div className={cn('bg-white border border-gray-200 overflow-hidden', compact ? 'rounded-2xl' : 'rounded-3xl')}>
-      <Skeleton className={cn('w-full rounded-none', compact ? 'aspect-[16/11]' : 'aspect-[4/3]')} />
-      <div className={cn('space-y-3', compact ? 'p-4' : 'p-6')}>
-        <Skeleton className="h-5 w-3/4" />
-        {!compact && (
-          <>
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-5/6" />
-            <div className="grid grid-cols-2 gap-2 pt-2">
-              <Skeleton className="h-12 rounded-lg" />
-              <Skeleton className="h-12 rounded-lg" />
-            </div>
-          </>
-        )}
-        <Skeleton className="h-10 w-full rounded-xl" />
+    <div className={cn('overflow-hidden rounded-xl shadow-soft', compact && 'rounded-xl')}>
+      <Skeleton className="aspect-square w-full rounded-none" />
+      <div className="bg-primary px-4 py-3.5 space-y-2">
+        <Skeleton className="h-2 w-16 bg-cream/20" />
+        <Skeleton className="h-4 w-28 bg-cream/25" />
       </div>
     </div>
   )
@@ -95,35 +85,28 @@ export function ProductCardSkeleton({ compact = false }: { compact?: boolean }) 
 export function SectionSkeleton({ tall = false }: { tall?: boolean }) {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 md:py-20">
-      <Skeleton className="h-6 w-32 rounded-lg mb-4" />
-      <Skeleton className={cn('w-full rounded-2xl', tall ? 'h-72 md:h-96' : 'h-48 md:h-64')} />
+      <Skeleton className="h-4 w-24 rounded-full mb-4" />
+      <Skeleton className="h-10 w-64 rounded-xl mb-6" />
+      <Skeleton className={cn('w-full rounded-[2rem]', tall ? 'h-72 md:h-96' : 'h-48 md:h-64')} />
     </div>
   )
 }
 
 export function PageSkeleton() {
   return (
-    <div className="min-h-screen overflow-x-hidden">
-      <div className="h-[52vh] md:h-[70vh] bg-gray-200/60 animate-pulse" />
-      <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
-        <div className="flex gap-3 overflow-hidden">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Skeleton key={i} className="h-8 w-24 rounded-lg shrink-0" />
-          ))}
+    <div className="min-h-screen overflow-x-hidden bg-canvas-soft">
+      <div className="h-[52vh] md:h-[70vh] bg-dark/10 animate-pulse" />
+      <div className="max-w-7xl mx-auto px-4 py-12 space-y-10">
+        <div className="space-y-3 max-w-xl">
+          <Skeleton className="h-4 w-20 rounded-full" />
+          <Skeleton className="h-10 w-72 rounded-xl" />
+          <Skeleton className="h-4 w-full rounded-lg" />
         </div>
-        <div className="md:hidden flex gap-4 overflow-hidden">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="shrink-0 w-[85vw] max-w-sm">
-              <ProductCardSkeleton compact />
-            </div>
-          ))}
-        </div>
-        <div className="hidden md:grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
           {Array.from({ length: 3 }).map((_, i) => (
             <ProductCardSkeleton key={i} />
           ))}
         </div>
-        <Skeleton className="h-40 w-full rounded-2xl" />
       </div>
     </div>
   )

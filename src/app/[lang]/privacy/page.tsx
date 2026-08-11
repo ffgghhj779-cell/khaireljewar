@@ -10,7 +10,7 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
     lang,
     path: '/privacy',
     title: isAr ? 'سياسة الخصوصية' : 'Privacy Policy',
-    description: isAr ? `سياسة خصوصية ${BRAND.name.ar}` : `Privacy policy for ${BRAND.name.en}`,
+    description: isAr ? `سياسة خصوصية ${BRAND.nameFull.ar}` : `Privacy policy for ${BRAND.nameFull.en}`,
   })
 }
 
@@ -18,21 +18,29 @@ export default function PrivacyPage({ params: { lang } }: { params: { lang: stri
   const isAr = lang === 'ar'
 
   return (
-    <div className="min-h-screen py-12 pb-24">
+    <div className="min-h-screen py-14 md:py-20 pb-24 bg-canvas-soft">
       <Container size="small">
-        <h1 className={cn('text-3xl md:text-4xl font-black text-dark mb-6', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
-          {isAr ? 'سياسة الخصوصية' : 'Privacy Policy'}
+        <p className={cn('text-primary font-semibold text-sm mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+          {isAr ? 'قانوني' : 'Legal'}
+        </p>
+        <h1
+          className={cn(
+            'text-3xl md:text-5xl font-bold text-dark mb-8 editorial-heading',
+            isAr ? 'font-arabic' : 'font-display'
+          )}
+        >
+          {isAr ? 'سياسة الخصوصية' : 'Privacy policy'}
         </h1>
-        <div className={cn('text-gray-600 space-y-4 leading-relaxed', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+        <div className={cn('text-gray-600 space-y-5 leading-relaxed text-[15px] md:text-base', isAr ? 'font-arabic' : 'font-sans')}>
           <p>
             {isAr
-              ? `${BRAND.name.ar} تحترم خصوصيتك. نجمع فقط البيانات اللازمة لمعالجة طلبات التسعير والتواصل التجاري (الاسم، الشركة، البريد، الهاتف).`
-              : `${BRAND.name.en} respects your privacy. We collect only data required to process B2B quote requests and commercial inquiries (name, company, email, phone).`}
+              ? `${BRAND.nameFull.ar} تحترم خصوصيتك. نجمع فقط البيانات اللازمة لمعالجة طلبات التسعير والتواصل التجاري (الاسم، الشركة، البريد، الهاتف).`
+              : `${BRAND.nameFull.en} respects your privacy. We collect only data needed to process quote requests and commercial inquiries (name, company, email, phone).`}
           </p>
           <p>
             {isAr
               ? 'لا نبيع بياناتك لأطراف ثالثة. يمكنك طلب حذف بياناتك عبر التواصل معنا.'
-              : 'We do not sell your data to third parties. You may request data deletion by contacting us.'}
+              : 'We do not sell your data to third parties. You may request deletion by contacting us.'}
           </p>
         </div>
       </Container>

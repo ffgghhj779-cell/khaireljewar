@@ -29,7 +29,7 @@ export default function PeoplePassionGallery({ lang }: { lang: string }) {
   const quotes = isAr ? QUOTES.ar : QUOTES.en
 
   return (
-    <section className="py-20 md:py-28 bg-gray-50 border-t border-gray-100">
+    <section className="py-20 md:py-28 bg-canvas-mist border-t border-dark/5">
       <Container size="large">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -38,16 +38,16 @@ export default function PeoplePassionGallery({ lang }: { lang: string }) {
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="mb-12 md:mb-16"
         >
-          <span className="terminal-badge mb-4">
-            {isAr ? 'الناس والشغف' : 'People & Passion'}
-          </span>
-          <h2 className={cn('text-3xl md:text-5xl font-black text-dark tracking-tight mb-4 editorial-heading', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
-            {isAr ? 'وجوه خلف الشحنة' : 'The Faces Behind Every Shipment'}
+          <p className={cn('text-primary font-semibold text-sm mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+            {isAr ? 'الناس' : 'People'}
+          </p>
+          <h2 className={cn('text-3xl md:text-5xl font-bold text-dark tracking-tight mb-4 editorial-heading', isAr ? 'font-arabic' : 'font-display')}>
+            {isAr ? 'الوجوه خلف الشحنة' : 'The people behind every shipment'}
           </h2>
-          <p className={cn('text-base md:text-lg text-gray-500 max-w-xl leading-relaxed', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+          <p className={cn('text-base md:text-lg text-gray-500 max-w-xl leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
             {isAr
-              ? 'من الحقل إلى الميناء — العاملون والمزارعون الذين يمثلون وعدنا للجودة.'
-              : 'From field to port — the workers and agronomists who embody our promise of quality.'}
+              ? 'من الحقل إلى الميناء — من يعملون على وعد الجودة كل يوم.'
+              : 'From field to port — the people who keep our quality promise every day.'}
           </p>
         </motion.div>
 
@@ -60,10 +60,10 @@ export default function PeoplePassionGallery({ lang }: { lang: string }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={SCROLL_VIEWPORT}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="glass-panel rounded-2xl border border-gray-200 p-5 relative overflow-hidden"
+              className="bg-white rounded-2xl border border-dark/5 p-5 relative overflow-hidden shadow-soft"
             >
               <Quote className="w-8 h-8 text-primary/15 absolute top-4 start-4" />
-              <p className={cn('text-sm text-gray-600 leading-relaxed ps-6', isAr ? 'font-ibm-arabic text-right' : 'font-inter')}>
+              <p className={cn('text-sm text-gray-600 leading-relaxed ps-6', isAr ? 'font-arabic text-right' : 'font-sans')}>
                 {q}
               </p>
               <div className="w-8 h-0.5 bg-primary rounded-full mt-4" />

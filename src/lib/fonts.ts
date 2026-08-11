@@ -1,27 +1,39 @@
-import { IBM_Plex_Sans_Arabic, Inter, Manrope } from 'next/font/google'
+import { Cairo, DM_Sans, Fraunces, IBM_Plex_Sans_Arabic } from 'next/font/google'
 
-export const inter = Inter({
+/** Editorial serif — headlines & brand (EN) */
+export const display = Fraunces({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-display',
   preload: true,
   weight: ['400', '500', '600', '700'],
 })
 
-export const manrope = Manrope({
+/** Clean body — UI + paragraphs (EN) */
+export const sans = DM_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-manrope',
-  preload: true,
-  weight: ['500', '600', '700', '800'],
-})
-
-export const ibmArabic = IBM_Plex_Sans_Arabic({
-  subsets: ['arabic'],
-  display: 'swap',
-  variable: '--font-ibm-arabic',
+  variable: '--font-sans',
   preload: true,
   weight: ['400', '500', '600', '700'],
 })
 
-export const fontVariables = `${inter.variable} ${manrope.variable} ${ibmArabic.variable}`
+/** Arabic body + UI */
+export const arabic = Cairo({
+  subsets: ['arabic', 'latin'],
+  display: 'swap',
+  variable: '--font-arabic',
+  preload: true,
+  weight: ['400', '500', '600', '700'],
+})
+
+/** Arabic display — headlines with editorial weight */
+export const arabicDisplay = IBM_Plex_Sans_Arabic({
+  subsets: ['arabic', 'latin'],
+  display: 'swap',
+  variable: '--font-arabic-display',
+  preload: true,
+  weight: ['500', '600', '700'],
+})
+
+export const fontVariables = `${display.variable} ${sans.variable} ${arabic.variable} ${arabicDisplay.variable}`

@@ -1,0 +1,70 @@
+{% extends 'layout.jinja' %}
+{% set en = store.language == 'en' %}
+
+{% block title %}{{ product.name }} — {{ store.name }}{% endblock %}
+
+{% block content %}
+<section class="ka-section ka-pdp-section">
+  <div class="ka-container">
+    <nav class="ka-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">{% if en %}Home{% else %}الرئيسية{% endif %}</a>
+      <span>/</span>
+      <a href="/products">{% if en %}Products{% else %}المنتجات{% endif %}</a>
+      <span>/</span>
+      <span>{{ product.name }}</span>
+    </nav>
+
+    <div class="ka-pdp">
+      <div class="ka-pdp__media">
+        <img
+          src="{{ product.images[0].image.full_size|default(product.images[0].src|default(product.image)) }}"
+          alt="{{ product.name }}"
+          width="900"
+          height="900"
+        />
+      </div>
+      <div class="ka-pdp__copy">
+        <p class="ka-section__label">{{ product.categories[0].name if product.categories else '' }}</p>
+        <p class="ka-pdp__origin">Jeddah, Saudi Arabia</p>
+        <h1 class="ka-pdp__title">{{ product.name }}</h1>
+        <div class="ka-pdp__desc">{{ product.description|safe }}</div>
+        <div class="ka-pdp__price">
+          {{ product.formatted_sale_price|default(product.formatted_price|default(product.price)) }}
+        </div>
+        <form class="ka-pdp__form" action="/cart/add" method="post">
+          <input type="hidden" name="product_id" value="{{ product.id }}" />
+          <label class="ka-qty">
+            <span>{% if en %}Qty{% else %}الكمية{% endif %}</span>
+            <input type="number" name="quantity" value="1" min="1" />
+          </label>
+          <button class="ka-btn ka-btn--primary" type="submit">
+            {% if en %}Add to cart{% else %}أضف للسلة{% endif %}
+          </button>
+        </form>
+        <p class="ka-pdp__note">
+          {% if en %}
+            B2B partners: ask for packing specs, caliber, and cold-chain options.
+          {% else %}
+            لشركاء الجملة: اسأل عن التعبئة والمعايرة وخيارات سلسلة التبريد.
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ka-section ka-section--green ka-closer" style="padding:4.5rem 0">
+  <div class="ka-container" style="position:relative;z-index:2;text-align:center">
+    <h2 class="ka-section__title" style="font-size:clamp(1.8rem,3.5vw,2.6rem)">
+      {% if en %}Neighborly Batch{% else %}دفعة الجوار{% endif %}
+    </h2>
+    <p class="ka-section__text" style="margin-inline:auto;max-width:26rem">
+      {% if en %}Clear answers from Jeddah — trusted care in every shipment.{% else %}إجابات واضحة من جدة — عناية موثوقة في كل شحنة.{% endif %}
+    </p>
+    <div class="ka-closer__actions">
+      <a class="ka-btn ka-btn--cream" href="/products">{% if en %}More products{% else %}المزيد من المنتجات{% endif %}</a>
+      <a class="ka-btn ka-btn--ghost" href="/page/contact">{% if en %}Contact{% else %}تواصل{% endif %}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

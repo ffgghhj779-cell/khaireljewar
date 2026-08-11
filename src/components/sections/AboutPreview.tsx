@@ -13,7 +13,7 @@ export default function AboutPreview({ lang }: { lang: string }) {
     en: {
       tagline: 'The Artisan Approach',
       title: 'Rooted in Quality, Growing Globally',
-      subtitle: 'Decades of agricultural expertise bringing the best of Egyptian soil to the world.',
+      subtitle: 'Decades of agricultural expertise bringing trusted partner harvests to the world from Jeddah.',
       text1: 'Khair Aljewar Foods is a premier export company specializing in top-tier agricultural products. We bridge the gap between local farms and global markets with uncompromising standards.',
       text2: 'Our commitment to sustainable farming, rigorous quality control, and efficient logistics ensures that every product reaching your business is remarkably fresh and safe.',
       stats: [
@@ -25,7 +25,7 @@ export default function AboutPreview({ lang }: { lang: string }) {
     ar: {
       tagline: 'نهجنا الحرفي',
       title: 'جذور في الجودة، ونمو عالمي',
-      subtitle: 'عقود من الخبرة الزراعية لنقل أفضل ما تجود به الأراضي المصرية إلى العالم.',
+      subtitle: 'عقود من الخبرة الزراعية لنقل خير المزارع الشريكة إلى العالم من جدة.',
       text1: 'خير الجوار للأغذية هي شركة تصدير رائدة متخصصة في المنتجات الزراعية عالية الجودة. نحن نسد الفجوة بين المزارع المحلية والأسواق العالمية بمعايير لا تقبل المساومة.',
       text2: 'التزامنا بالزراعة المستدامة، ومراقبة الجودة الصارمة، واللوجستيات الفعالة يضمن أن كل منتج يصل إلى أعمالك طازج وآمن تماماً.',
       stats: [

@@ -1,33 +1,15 @@
 /**
- * KHAIR ALJAAR FOODS — Brand Asset Manifest
- *
- * FOLDER STRUCTURE (drop real files here):
- *   /public/images/products/     — product photography (hi-res, 1600px+ wide)
- *   /public/images/legal/        — ISO, Halal, FDA, GLOBALGAP certificates (PDF or HQ scan)
- *   /public/images/logistics/    — port, cold-chain, truck, warehouse operations
- *   /public/images/team/         — field staff, management, farm visits
- *   /public/images/branding/     — official logos, brand marks, icon variants
- *
- * NAMING CONVENTION:
- *   products/  → {slug}-hero.jpg, {slug}-detail-1.jpg, {slug}-detail-2.jpg
- *   legal/     → cert-{body}-{year}.jpg   e.g. cert-iso22000-2024.jpg
- *   logistics/ → ops-{location}-{n}.jpg   e.g. ops-damietta-01.jpg
- *   team/      → team-{role}-{n}.jpg      e.g. team-fieldagro-01.jpg
- *   branding/  → logo-{variant}.svg       e.g. logo-white.svg, logo-dark.svg
+ * KHAIR ALJAAR FOODS — Brand Asset Manifest (Jeddah hub)
  */
 
-/** ─── LEGAL & COMPLIANCE ─────────────────────────────────────────────────── */
 export interface ComplianceCertificate {
   id: string
   nameEn: string
   nameAr: string
   body: string
   year: number
-  /** /public/images/legal/ or external scan URL */
   imageSrc: string
-  /** PDF download link once available */
   downloadUrl?: string
-  /** Verification authority URL */
   verifyUrl?: string
   color: string
   status: 'Active' | 'Pending Renewal' | 'Archived'
@@ -36,26 +18,28 @@ export interface ComplianceCertificate {
 
 export const COMPLIANCE_CERTIFICATES: ComplianceCertificate[] = [
   {
-    id: 'tax-registration',
-    nameEn: 'Tax Registration Card',
-    nameAr: 'بطاقة التسجيل الضريبي',
-    body: 'Egyptian Tax Authority — Ministry of Finance',
+    id: 'cr',
+    nameEn: 'Commercial Registration',
+    nameAr: 'السجل التجاري',
+    body: 'Ministry of Commerce — Kingdom of Saudi Arabia',
     year: 2024,
     imageSrc: '/images/legal/tax-registration-card.jpeg',
-    color: '#B45309',
+    downloadUrl: '/docs/certs/cr.pdf',
+    color: '#2A6B5C',
     status: 'Active',
-    scope: 'خير الجوار جروب للتصدير — مسؤولية محدودة | Activity Code 4610',
+    scope: 'Khair Aljaar Foods — Jeddah',
   },
   {
-    id: 'export-registry',
-    nameEn: 'Exporters Registry Card',
-    nameAr: 'بطاقة قيد المصدرين',
-    body: 'General Authority for Export & Import Control — Egypt',
+    id: 'sfda',
+    nameEn: 'Food Safety Alignment',
+    nameAr: 'امتثال سلامة الغذاء',
+    body: 'Saudi Food & Drug Authority (SFDA) — aligned practices',
     year: 2025,
     imageSrc: '/images/legal/export-registry-card.jpeg',
+    downloadUrl: '/docs/certs/sfda.pdf',
     color: '#007A3D',
     status: 'Active',
-    scope: 'KHAIR EL JEWAR GROUP — رأس المال 50,000 | Valid until 2030',
+    scope: 'Export food handling · Jeddah operations',
   },
   {
     id: 'globalgap',
@@ -63,48 +47,51 @@ export const COMPLIANCE_CERTIFICATES: ComplianceCertificate[] = [
     nameAr: 'جلوبال جاب',
     body: 'GLOBALG.A.P. Control Body',
     year: 2024,
-    imageSrc: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=90&w=1200&auto=format&fit=crop',
+    imageSrc: '/images/brand/sections/farm.webp',
+    downloadUrl: '/docs/certs/globalgap.pdf',
     verifyUrl: 'https://www.globalgap.org',
     color: '#5A2D82',
     status: 'Active',
-    scope: 'Good Agricultural Practice — Farm Level',
+    scope: 'Good Agricultural Practice — partner farm level',
   },
   {
     id: 'halal',
     nameEn: 'Halal Certified',
     nameAr: 'شهادة الحلال',
-    body: 'Egyptian Export Council',
+    body: 'Recognized Halal certification bodies',
     year: 2024,
-    imageSrc: 'https://images.unsplash.com/photo-1609840113703-57a2b2107834?q=90&w=1200&auto=format&fit=crop',
+    imageSrc: '/images/brand/sections/hospitality.webp',
+    downloadUrl: '/docs/certs/halal.pdf',
     color: '#15803D',
     status: 'Active',
-    scope: 'All vegetable, fruit, and frozen produce lines',
+    scope: 'Fruit, vegetable, and frozen produce lines',
   },
   {
-    id: 'phyto',
-    nameEn: 'Phytosanitary Certificate',
-    nameAr: 'شهادة صحة النبات',
-    body: 'MAFI Egypt',
+    id: 'iso',
+    nameEn: 'ISO 22000 / HACCP',
+    nameAr: 'آيزو 22000 / هاسب',
+    body: 'Food safety management — supply chain',
     year: 2024,
-    imageSrc: 'https://images.unsplash.com/photo-1574484995002-28a0c77a4e0d?q=90&w=1200&auto=format&fit=crop',
+    imageSrc: '/images/brand/sections/logistics.webp',
+    downloadUrl: '/docs/certs/iso.pdf',
     color: '#00875A',
     status: 'Active',
-    scope: 'Per shipment — all destinations',
+    scope: 'Handling, packing, and cold-chain control',
   },
   {
     id: 'origin',
     nameEn: 'Certificate of Origin',
     nameAr: 'شهادة المنشأ',
-    body: 'Egyptian Chamber of Commerce',
+    body: 'Jeddah Chamber of Commerce',
     year: 2024,
-    imageSrc: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=90&w=1200&auto=format&fit=crop',
-    color: '#0052CC',
+    imageSrc: '/images/brand/sections/people.webp',
+    downloadUrl: '/docs/certs/origin.pdf',
+    color: '#D4AE4A',
     status: 'Active',
-    scope: 'All export shipments — per invoice',
+    scope: 'Issued per shipment as required',
   },
 ]
 
-/** ─── LOGISTICS GALLERY ──────────────────────────────────────────────────── */
 export interface LogisticsPhoto {
   id: string
   titleEn: string
@@ -112,68 +99,66 @@ export interface LogisticsPhoto {
   src: string
   location: string
   tag: 'Cold Chain' | 'Port Ops' | 'Warehouse' | 'Transport' | 'Farm Gate'
-  /** Grid span hint for masonry: 1 or 2 */
   span?: 1 | 2
 }
 
 export const LOGISTICS_GALLERY: LogisticsPhoto[] = [
   {
     id: 'lg-01',
-    titleEn: 'KA Fleet — Live Loading at Distribution Hub',
-    titleAr: 'أسطول KA — التحميل المباشر في مركز التوزيع',
+    titleEn: 'Loading at the distribution hub',
+    titleAr: 'التحميل في مركز التوزيع',
     src: '/images/logistics/warehouse-trucks-loading.jpeg',
-    location: 'KA Foods Warehouse, Egypt',
+    location: 'Khair Aljaar Hub, Jeddah',
     tag: 'Transport',
     span: 2,
   },
   {
     id: 'lg-02',
-    titleEn: 'Refrigerated Export Truck — Port Operations',
-    titleAr: 'شاحنة مبردة للتصدير — عمليات الميناء',
+    titleEn: 'Refrigerated export truck',
+    titleAr: 'شاحنة مبردة للتصدير',
     src: '/images/logistics/refrigerated-truck-port.jpeg',
-    location: 'Egyptian Export Port',
+    location: 'Jeddah Islamic Port corridor',
     tag: 'Port Ops',
     span: 1,
   },
   {
     id: 'lg-03',
-    titleEn: 'KA Foods Facility — Regional Distribution Center',
-    titleAr: 'مرفق KA للأغذية — مركز التوزيع الإقليمي',
+    titleEn: 'Regional distribution facility',
+    titleAr: 'مرفق التوزيع الإقليمي',
     src: '/images/logistics/warehouse-exterior.jpeg',
-    location: 'KA Foods HQ, Egypt',
+    location: 'Jeddah, Saudi Arabia',
     tag: 'Warehouse',
     span: 1,
   },
   {
     id: 'lg-04',
-    titleEn: 'Export-Grade Carton Packaging',
+    titleEn: 'Export-grade carton packing',
     titleAr: 'تعبئة كرتونية للتصدير',
     src: '/images/logistics/shipping-boxes.jpeg',
-    location: 'KA Foods Packhouse',
+    location: 'Khair Aljaar packhouse',
     tag: 'Warehouse',
     span: 1,
   },
   {
     id: 'lg-05',
-    titleEn: 'Premium Cold Chain Delivery Van — GCC Routes',
-    titleAr: 'شاحنة توصيل متبردة للمسارات الخليجية',
+    titleEn: 'Cold-chain delivery — GCC routes',
+    titleAr: 'توصيل سلسلة تبريد — مسارات الخليج',
     src: '/images/logistics/cold-chain-van.jpeg',
-    location: 'GCC Delivery Network',
+    location: 'GCC delivery network',
     tag: 'Cold Chain',
     span: 1,
   },
   {
     id: 'lg-06',
-    titleEn: 'KA Branded Truck — Desert Highway Transport',
-    titleAr: 'شاحنة KA — نقل عبر الطريق الصحراوي',
+    titleEn: 'Long-haul transport',
+    titleAr: 'نقل لمسافات طويلة',
     src: '/images/logistics/truck-desert.jpeg',
-    location: 'Desert Highway, Egypt',
+    location: 'Western Region highways',
     tag: 'Transport',
     span: 2,
   },
 ]
 
-/** ─── TEAM & CULTURE ─────────────────────────────────────────────────────── */
 export interface TeamPhoto {
   id: string
   captionEn: string
@@ -187,34 +172,33 @@ export interface TeamPhoto {
 export const TEAM_GALLERY: TeamPhoto[] = [
   {
     id: 'tm-01',
-    captionEn: 'KA farm workers — fresh harvest, ready for export',
-    captionAr: 'عمال مزارع KA — حصاد طازج جاهز للتصدير',
-    roleEn: 'Farm Harvest Team',
-    roleAr: 'فريق حصاد المزرعة',
+    captionEn: 'Partner farm harvest — ready for export coordination',
+    captionAr: 'حصاد المزارع الشريكة — جاهز لتنسيق التصدير',
+    roleEn: 'Harvest partners',
+    roleAr: 'شركاء الحصاد',
     src: '/images/team/farm-workers.jpeg',
-    location: 'Khair Aljaar Farms, Egypt',
+    location: 'Partner farms · via Jeddah',
   },
   {
     id: 'tm-02',
-    captionEn: 'KA warehouse operations specialist',
-    captionAr: 'متخصص عمليات مستودعات KA',
-    roleEn: 'Warehouse Operations',
+    captionEn: 'Warehouse operations specialist',
+    captionAr: 'متخصص عمليات المستودع',
+    roleEn: 'Warehouse operations',
     roleAr: 'عمليات المستودع',
     src: '/images/team/warehouse-worker.jpeg',
-    location: 'KA Foods Facility, Egypt',
+    location: 'Khair Aljaar Hub, Jeddah',
   },
   {
     id: 'tm-03',
-    captionEn: 'Khair Aljaar Farms — modern agricultural facility',
-    captionAr: 'مزارع خير الجوار — مرفق زراعي حديث',
-    roleEn: 'Farm Facility',
-    roleAr: 'مرفق المزرعة',
+    captionEn: 'Modern agricultural partnership facility',
+    captionAr: 'مرفق شراكة زراعية حديث',
+    roleEn: 'Farm partnership',
+    roleAr: 'شراكة المزرعة',
     src: '/images/team/farm-facility.jpeg',
-    location: 'Khair Aljaar Farms, Egypt',
+    location: 'Partner network · Jeddah coordinated',
   },
 ]
 
-/** ─── PRODUCT SHOWCASE GALLERY (all brand photography) ───────────────────── */
 export interface ProductGalleryItem {
   id: string
   titleEn: string
@@ -229,33 +213,5 @@ export interface ProductGalleryItem {
   span?: 1 | 2
 }
 
-export const PRODUCT_GALLERY: ProductGalleryItem[] = [
-  { id: 'pg-01', titleEn: 'Premium Strawberries', titleAr: 'فراولة فاخرة', descEn: 'IQF-grade berries — GCC & EU cold-chain ready.', descAr: 'توت IQF فاخر — جاهز للتبريد لأسواق الخليج وأوروبا.', detailEn: 'Export Grade A', detailAr: 'درجة تصدير A', categoryEn: 'Fruits', categoryAr: 'فواكه', src: '/images/products/strawberries-banner.jpeg', span: 2 },
-  { id: 'pg-02', titleEn: 'Kent Mangoes — Export Display', titleAr: 'مانجو كينت — عرض تصدير', descEn: 'Premium Kent mangoes — retail & wholesale B2B.', descAr: 'مانجو كينت فاخر — جملة وتجزئة للتصدير.', detailEn: 'Seasonal Harvest', detailAr: 'حصاد موسمي', categoryEn: 'Fruits', categoryAr: 'فواكه', src: '/images/products/mangoes-display.jpeg', span: 2 },
-  { id: 'pg-03', titleEn: 'Luxury Medjool Dates', titleAr: 'تمر مجدول فاخر', descEn: 'Premium Medjool — gift & bulk export lines.', descAr: 'تمور مجدول فاخرة — خطوط هدايا وتصدير بالجملة.', detailEn: 'GCC Premium', detailAr: 'فاخر للخليج', categoryEn: 'Dates', categoryAr: 'تمور', src: '/images/products/dates-luxury-display.jpeg' },
-  { id: 'pg-04', titleEn: 'Fresh Chicken on Ice', titleAr: 'دجاج طازج على الثلج', descEn: 'Halal-certified poultry — chilled export specs.', descAr: 'دواجن حلال معتمدة — مواصفات تصدير مبردة.', detailEn: 'Halal Certified', detailAr: 'حلال معتمد', categoryEn: 'Poultry', categoryAr: 'دواجن', src: '/images/products/chicken-fresh-ice.jpeg' },
-  { id: 'pg-05', titleEn: 'Packed Chicken Trays', titleAr: 'صواني دجاج معبأة', descEn: 'Retail-ready trays — private label available.', descAr: 'صواني جاهزة للتجزئة — علامة خاصة متاحة.', detailEn: 'MOQ 20 MT', detailAr: 'حد أدنى 20 طن', categoryEn: 'Poultry', categoryAr: 'دواجن', src: '/images/products/chicken-packed-trays.jpeg' },
-  { id: 'pg-06', titleEn: 'Chilled Chicken Box', titleAr: 'صندوق دجاج مبرد', descEn: 'Cold-chain boxed poultry for regional distribution.', descAr: 'دواجن مبردة في صناديق لسلاسل التوزيع الإقليمية.', detailEn: '-2°C Chain', detailAr: 'سلسلة -2°م', categoryEn: 'Poultry', categoryAr: 'دواجن', src: '/images/products/chilled-chicken-box.jpeg' },
-  { id: 'pg-07', titleEn: 'Frozen Proteins', titleAr: 'بروتينات مجمدة', descEn: 'IQF frozen proteins — long shelf-life export.', descAr: 'بروتينات مجمدة IQF — صلاحية طويلة للتصدير.', detailEn: 'IQF Standard', detailAr: 'معيار IQF', categoryEn: 'Frozen', categoryAr: 'مجمدات', src: '/images/products/frozen-proteins-box.jpeg' },
-  { id: 'pg-08', titleEn: 'Premium Meats Display', titleAr: 'عرض لحوم فاخرة', descEn: 'Chilled & frozen meat lines for retail partners.', descAr: 'خطوط لحوم مبردة ومجمدة لشركاء التجزئة.', detailEn: 'B2B Retail', detailAr: 'جملة وتجزئة', categoryEn: 'Meats', categoryAr: 'لحوم', src: '/images/products/meats-display.jpeg' },
-  { id: 'pg-09', titleEn: 'Cold Shelf — Full Range', titleAr: 'رف مبرد — تشكيلة كاملة', descEn: 'Full chilled assortment — supermarket ready.', descAr: 'تشكيلة مبردة كاملة — جاهزة للسوبرماركت.', detailEn: 'Retail Ready', detailAr: 'جاهز للتجزئة', categoryEn: 'Retail', categoryAr: 'تجزئة', src: '/images/products/cold-shelf-display.jpeg', span: 2 },
-  { id: 'pg-10', titleEn: 'Olive Oil — Lifestyle', titleAr: 'زيت زيتون', descEn: 'Extra virgin olive oil — bulk & branded export.', descAr: 'زيت زيتون بكر ممتاز — تصدير بالجملة وبعلامة تجارية.', detailEn: 'EV Olive Oil', detailAr: 'زيت بكر ممتاز', categoryEn: 'Oils', categoryAr: 'زيوت', src: '/images/products/olive-oil-lifestyle.jpeg' },
-  { id: 'pg-11', titleEn: 'Sunflower Oil Bottle', titleAr: 'زيت عباد الشمس', descEn: 'Refined sunflower oil — PET & tin packaging.', descAr: 'زيت عباد شمس مكرر — تعبئة PET وعلب معدنية.', detailEn: '1L–20L Formats', detailAr: 'أحجام 1–20 لتر', categoryEn: 'Oils', categoryAr: 'زيوت', src: '/images/products/sunflower-oil-bottle.jpeg' },
-  { id: 'pg-12', titleEn: 'Sunflower Oil Gift Box', titleAr: 'علبة هدايا زيت', descEn: 'Premium gift packaging for GCC retail channels.', descAr: 'تعبئة هدايا فاخرة لقنوات التجزئة الخليجية.', detailEn: 'Gift Line', detailAr: 'خط الهدايا', categoryEn: 'Oils', categoryAr: 'زيوت', src: '/images/products/sunflower-oil-giftbox.jpeg' },
-  { id: 'pg-13', titleEn: 'Spunta Potatoes — Retail', titleAr: 'بطاطس سبونتا', descEn: 'Table potatoes — mesh bags & cartons for export.', descAr: 'بطاطس مائدة — أكياس شبك وكراتين للتصدير.', detailEn: 'Egypt Origin', detailAr: 'منشأ مصر', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/potatoes-retail.jpeg' },
-  { id: 'pg-14', titleEn: 'Potatoes Display Stand', titleAr: 'ستاند عرض بطاطس', descEn: 'In-store display formats — EU caliber sorted.', descAr: 'تنسيقات عرض داخل المتجر — فرز معاير أوروبية.', detailEn: 'Caliber Sorted', detailAr: 'فرز معاير', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/potatoes-display-stand.jpeg' },
-  { id: 'pg-15', titleEn: 'Seasoned Fries Pack', titleAr: 'بطاطس مقلية متبلة', descEn: 'Frozen seasoned fries — foodservice & retail.', descAr: 'بطاطس مجمدة متبلة — خدمات الطعام والتجزئة.', detailEn: 'IQF Fries', detailAr: 'بطاطس IQF', categoryEn: 'Frozen', categoryAr: 'مجمدات', src: '/images/products/seasoned-fries-pack.jpeg' },
-  { id: 'pg-16', titleEn: 'Fresh Okra Box', titleAr: 'بامية طازجة', descEn: 'Fresh okra — ventilated export cartons.', descAr: 'بامية طازجة — كراتين تصدير مهواة.', detailEn: 'Air-Freight OK', detailAr: 'مناسب للشحن الجوي', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/okra-box.jpeg' },
-  { id: 'pg-17', titleEn: 'Herbs & Greens', titleAr: 'أعشاب وخضروات ورقية', descEn: 'Packed herbs & leafy greens — cold-chain fresh.', descAr: 'أعشاب وخضروات ورقية معبأة — طازجة بسلسلة تبريد.', detailEn: 'Fresh Packed', detailAr: 'تعبئة طازجة', categoryEn: 'Vegetables', categoryAr: 'خضروات', src: '/images/products/herbs-greens-packed.jpeg' },
-  { id: 'pg-18', titleEn: 'Premium Rice Bags', titleAr: 'أرز فاخر', descEn: 'Long-grain rice — 5–50 kg export sacks.', descAr: 'أرز حبة طويلة — أكياس تصدير 5–50 كجم.', detailEn: 'Bulk Sacks', detailAr: 'أكياس جملة', categoryEn: 'Grains', categoryAr: 'حبوب', src: '/images/products/rice-bags-display.jpeg' },
-  { id: 'pg-19', titleEn: 'Grains Shelf Display', titleAr: 'عرض حبوب', descEn: 'Pulses & grains assortment for retail partners.', descAr: 'تشكيلة بقوليات وحبوب لشركاء التجزئة.', detailEn: 'Mixed Grains', detailAr: 'حبوب مشكلة', categoryEn: 'Grains', categoryAr: 'حبوب', src: '/images/products/grains-shelf-display.jpeg' },
-  { id: 'pg-20', titleEn: 'Mixed Fruits Cart', titleAr: 'سلة فواكه مشكلة', descEn: 'Seasonal fruit mix — wholesale & catering.', descAr: 'مزيج فواكه موسمي — جملة وتموين.', detailEn: 'Seasonal Mix', detailAr: 'مزيج موسمي', categoryEn: 'Fruits', categoryAr: 'فواكه', src: '/images/products/fruits-shopping-cart.jpeg' },
-  { id: 'pg-21', titleEn: 'Supermarket Kiosk', titleAr: 'كشك سوبرماركت', descEn: 'Full KA brand kiosk — turnkey retail solution.', descAr: 'كشك KA كامل — حل تجزئة متكامل.', detailEn: 'Turnkey Retail', detailAr: 'تجزئة متكاملة', categoryEn: 'Retail', categoryAr: 'تجزئة', src: '/images/products/supermarket-kiosk.jpeg', span: 2 },
-]
-
-/** ─── ASSET PLACEMENT MAP ────────────────────────────────────────────────── */
-export const SITEMAP_PLACEMENT = {
-  'TrustComplianceHub': '/quality (after metrics)',
-  'LogisticsEditorialGallery': '/logistics (after cold chain stepper)',
-  'PeoplePassionGallery': '/about (after stats grid)',
-}
+/** Legacy showcase — keep catalog on /images/products via PRODUCT_SLUG_IMAGES */
+export const PRODUCT_GALLERY: ProductGalleryItem[] = []

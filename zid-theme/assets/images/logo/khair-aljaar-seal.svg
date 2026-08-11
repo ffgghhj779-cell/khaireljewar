@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-hidden="true">
+  <!-- Soft brand seal for product photography -->
+  <circle cx="24" cy="24" r="22" fill="#1A332A" fill-opacity="0.92"/>
+  <circle cx="24" cy="24" r="19.5" stroke="#E5B84A" stroke-opacity="0.5" stroke-width="1" fill="none"/>
+  <path d="M22.5 34C17 30 13 24.5 13.5 18C16.5 20.5 20 24.5 22.5 30C22.5 26 21 21.5 18.5 17C21 21 23 26.5 22.5 34Z" fill="#F7F4EC"/>
+  <path d="M25.5 34C31 30 35 24.5 34.5 18C31.5 20.5 28 24.5 25.5 30C25.5 26 27 21.5 29.5 17C27 21 25 26.5 25.5 34Z" fill="#F7F4EC"/>
+  <circle cx="24" cy="21" r="2.4" fill="#E5B84A"/>
+</svg>

@@ -1,0 +1,40 @@
+{% set en = store.language == 'en' %}
+<footer class="ka-footer">
+  <div class="ka-container">
+    <div class="ka-footer__grid">
+      <div>
+        <a class="ka-footer__brand" href="/">
+          <img src="{{ 'images/khair-aljaar-mark.svg'|asset_url }}" alt="" width="36" height="36" />
+          <strong>{% if en %}Khair Aljaar Foods{% else %}خير الجوار للأغذية{% endif %}</strong>
+        </a>
+        <p>
+          {% if en %}
+            A Jeddah food house — hospitality, trust, and export-ready quality.
+          {% else %}
+            بيت غذائي من جدة — ضيافة، ثقة، وجودة جاهزة للتصدير.
+          {% endif %}
+        </p>
+        <p class="ka-footer__place">Jeddah, Saudi Arabia</p>
+      </div>
+      <div>
+        <strong>{% if en %}Explore{% else %}استكشف{% endif %}</strong>
+        <p><a href="/products">{% if en %}Products{% else %}المنتجات{% endif %}</a></p>
+        <p><a href="/page/about">{% if en %}About{% else %}من نحن{% endif %}</a></p>
+        <p><a href="/page/quality">{% if en %}Quality{% else %}الجودة{% endif %}</a></p>
+        <p><a href="/page/logistics">{% if en %}Logistics{% else %}اللوجستيات{% endif %}</a></p>
+      </div>
+      <div>
+        <strong>{% if en %}Contact{% else %}تواصل{% endif %}</strong>
+        <p><a href="mailto:info@khairaljaarfoods.com">info@khairaljaarfoods.com</a></p>
+        <p><a href="/page/contact">{% if en %}Contact page{% else %}صفحة التواصل{% endif %}</a></p>
+        <p><a href="/products">{% if en %}Request a quote{% else %}اطلب عرض سعر{% endif %}</a></p>
+      </div>
+    </div>
+    <div class="ka-footer__copy">
+      <span>© {{ store.name|default('Khair Aljaar Foods') }} — Jeddah, Saudi Arabia</span>
+      <span class="ka-footer__langs">
+        {% if en %}EN · AR{% else %}ع · EN{% endif %}
+      </span>
+    </div>
+  </div>
+</footer>

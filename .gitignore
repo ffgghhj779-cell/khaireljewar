@@ -9,3 +9,7 @@ coverage/
 # Secrets — never commit
 .env*
 !.env.example
+
+# Local Zid theme export zip
+zid-theme/*.zip
+

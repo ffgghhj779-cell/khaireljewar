@@ -1,11 +1,11 @@
-import HeroPremium from '@/components/sections/HeroPremium'
-import MarketTicker from '@/components/sections/MarketTicker'
-import PremiumBentoGrid from '@/components/sections/PremiumBentoGrid'
-import BrandProductShowcase from '@/components/sections/BrandProductShowcase'
-import FeaturedProductsGrid from '@/components/sections/FeaturedProductsGrid'
-import GlobalFootprint from '@/components/sections/GlobalFootprint'
-import LogisticsTerminal from '@/components/sections/LogisticsTerminal'
-import CertificationsBanner from '@/components/sections/CertificationsBanner'
+import HeroBrand from '@/components/sections/HeroBrand'
+import OriginStory from '@/components/sections/OriginStory'
+import ProductsDesire from '@/components/sections/ProductsDesire'
+import TrustQuiet from '@/components/sections/TrustQuiet'
+import TrustProofStrip from '@/components/sections/TrustProofStrip'
+import PartnerStrip from '@/components/sections/PartnerStrip'
+import BrandMarquee from '@/components/sections/BrandMarquee'
+import HomeCloser from '@/components/sections/HomeCloser'
 import { getProducts } from '@/lib/actions/products'
 
 export default async function Home({
@@ -16,26 +16,26 @@ export default async function Home({
   const products = await getProducts()
 
   return (
-    <div className="relative overflow-x-clip selection:bg-primary selection:text-white">
-      <HeroPremium lang={lang} />
-      <MarketTicker lang={lang} products={products} />
+    <div className="relative overflow-x-clip selection:bg-secondary/40 selection:text-primary">
+      <HeroBrand lang={lang} />
+      <PartnerStrip lang={lang} />
       <div className="mobile-scroll-section">
-        <PremiumBentoGrid lang={lang} />
+        <OriginStory lang={lang} />
       </div>
       <div className="mobile-scroll-section">
-        <BrandProductShowcase lang={lang} />
+        <ProductsDesire lang={lang} products={products} />
       </div>
       <div className="mobile-scroll-section">
-        <FeaturedProductsGrid lang={lang} products={products.slice(0, 6)} />
+        <TrustQuiet lang={lang} />
       </div>
       <div className="mobile-scroll-section">
-        <GlobalFootprint lang={lang} />
+        <TrustProofStrip lang={lang} />
       </div>
       <div className="mobile-scroll-section">
-        <LogisticsTerminal lang={lang} />
+        <BrandMarquee lang={lang} />
       </div>
       <div className="mobile-scroll-section">
-        <CertificationsBanner lang={lang} />
+        <HomeCloser lang={lang} />
       </div>
     </div>
   )

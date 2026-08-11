@@ -33,9 +33,6 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
 
   return (
     <section className="py-20 md:py-28 bg-dark relative overflow-x-clip">
-      {/* Subtle grid overlay */}
-      <div className="absolute inset-0 industrial-grid opacity-10 pointer-events-none" />
-
       <Container size="large">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -44,17 +41,16 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10 md:mb-14"
         >
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold uppercase tracking-widest border border-white/15 rounded-md bg-white/5 text-white/60 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            {isAr ? 'محطة العمليات' : 'Operations Terminal'}
-          </span>
-          <h2 className={cn('text-3xl md:text-5xl font-black text-white tracking-tight mb-4 editorial-heading', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
-            {isAr ? 'اللوجستيات في الميدان' : 'Logistics in the Field'}
+          <p className={cn('text-secondary text-sm font-semibold mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+            {isAr ? 'الميدان' : 'In the field'}
+          </p>
+          <h2 className={cn('text-3xl md:text-5xl font-bold text-white tracking-tight mb-4 editorial-heading', isAr ? 'font-arabic' : 'font-display')}>
+            {isAr ? 'اللوجستيات كما هي.' : 'Logistics, as it happens.'}
           </h2>
-          <p className={cn('text-base text-white/55 max-w-xl leading-relaxed', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+          <p className={cn('text-base text-white/55 max-w-xl leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
             {isAr
-              ? 'لحظات حقيقية من عمليات التصدير — الموانئ، الحاويات، المستودعات، والطريق.'
-              : 'Real moments from our export operations — ports, containers, packhouses, and the road.'}
+              ? 'لحظات حقيقية من عمليات التصدير — الموانئ، المستودعات، والطريق.'
+              : 'Real moments from export operations — ports, warehouses, and the road.'}
           </p>
         </motion.div>
 

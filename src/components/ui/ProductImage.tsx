@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import Image from 'next/image'
 import { ImageIcon } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
@@ -25,23 +25,22 @@ interface ProductImageProps {
   variant?: ProductImageVariant
   className?: string
   lang?: string
+  /** Studio shots look best contained on cream; lifestyle can cover */
+  fit?: 'cover' | 'contain'
 }
 
-const VARIANT_STYLES: Record<ProductImageVariant, { aspect: string; image: string; sizes: string }> = {
+const VARIANT_STYLES: Record<ProductImageVariant, { aspect: string; sizes: string }> = {
   card: {
-    aspect: 'aspect-[4/3]',
-    image: 'object-contain object-center p-3 sm:p-4',
-    sizes: '(max-width: 768px) 85vw, (max-width: 1200px) 50vw, 33vw',
+    aspect: 'aspect-square',
+    sizes: '(max-width: 768px) 45vw, (max-width: 1200px) 30vw, 240px',
   },
   detail: {
     aspect: 'aspect-[4/3] lg:aspect-auto lg:absolute lg:inset-0',
-    image: 'object-contain object-center p-6 sm:p-10 lg:p-12',
     sizes: '(max-width: 1024px) 100vw, 50vw',
   },
   thumb: {
-    aspect: 'w-16 h-16',
-    image: 'object-contain object-center p-1',
-    sizes: '64px',
+    aspect: 'w-14 h-14',
+    sizes: '56px',
   },
 }
 
@@ -50,24 +49,19 @@ function PendingOverlay({ lang, variant }: { lang: string; variant: ProductImage
   const compact = variant === 'thumb'
 
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 via-white to-primary/5 border border-gray-100">
+    <div className="absolute inset-0 flex flex-col items-center justify-center bg-cream">
       <div
         className={cn(
-          'rounded-xl bg-dark/5 border border-gray-200 flex items-center justify-center',
-          compact ? 'w-8 h-8' : 'w-14 h-14 mb-2'
+          'rounded-lg bg-primary/5 border border-primary/10 flex items-center justify-center',
+          compact ? 'w-7 h-7' : 'w-12 h-12 mb-2'
         )}
       >
-        <ImageIcon className={cn('text-dark/35', compact ? 'w-4 h-4' : 'w-7 h-7')} />
+        <ImageIcon className={cn('text-primary/35', compact ? 'w-3.5 h-3.5' : 'w-6 h-6')} />
       </div>
       {!compact && (
-        <>
-          <span className={cn('text-[10px] font-bold uppercase tracking-widest text-dark/45', isAr && 'font-ibm-arabic')}>
-            {isAr ? 'صورة قيد التجهيز' : 'High-Res Coming Soon'}
-          </span>
-          <span className={cn('text-[9px] text-gray-400 mt-1 px-4 text-center', isAr && 'font-ibm-arabic')}>
-            {isAr ? 'منتج معتمد — تصوير احترافي قريباً' : 'Certified product — professional imaging pending'}
-          </span>
-        </>
+        <span className={cn('text-[10px] font-semibold tracking-wide text-primary/45', isAr && 'font-arabic')}>
+          {isAr ? 'صورة قيد التجهيز' : 'Image coming soon'}
+        </span>
       )}
     </div>
   )
@@ -83,13 +77,20 @@ export default function ProductImage({
   variant = 'card',
   className,
   lang = 'en',
+  fit = 'contain',
 }: ProductImageProps) {
   const pending = isProductImagePending(src, slug)
   const resolvedSrc = resolveProductImage(src, categoryEn, slug)
   const styles = VARIANT_STYLES[variant]
+  const isBrandWebp = resolvedSrc.includes('/images/brand/') && resolvedSrc.endsWith('.webp')
 
   const [displaySrc, setDisplaySrc] = useState(resolvedSrc)
   const [failed, setFailed] = useState(false)
+
+  useEffect(() => {
+    setDisplaySrc(resolvedSrc)
+    setFailed(false)
+  }, [resolvedSrc])
 
   const handleError = useCallback(() => {
     const fallback = getCategoryFallback(categoryEn)
@@ -101,13 +102,15 @@ export default function ProductImage({
   }, [displaySrc, categoryEn])
 
   const showPendingOverlay = pending || failed
+  const objectFit = fit === 'cover' ? 'object-cover object-center' : 'object-contain object-center p-3 md:p-4'
 
   return (
     <div
       className={cn(
-        'relative overflow-hidden bg-gray-50 will-change-auto',
-        variant === 'thumb' ? styles.aspect : styles.aspect,
-        variant === 'thumb' && 'rounded-lg border border-gray-200 shrink-0',
+        'relative overflow-hidden will-change-auto',
+        variant === 'card' || variant === 'detail' ? 'bg-cream' : 'bg-cream-deep',
+        styles.aspect,
+        variant === 'thumb' && 'rounded-lg border border-primary/8 shrink-0',
         className
       )}
     >
@@ -118,11 +121,12 @@ export default function ProductImage({
           fill
           sizes={sizes ?? styles.sizes}
           priority={priority}
-          quality={variant === 'thumb' ? IMAGE_QUALITY_THUMB : IMAGE_QUALITY_PRODUCT}
-          placeholder="blur"
-          blurDataURL={IMAGE_BLUR_DATA_URL}
+          quality={variant === 'thumb' ? IMAGE_QUALITY_THUMB : variant === 'card' ? 78 : IMAGE_QUALITY_PRODUCT}
+          unoptimized={isBrandWebp}
+          placeholder={isBrandWebp ? 'empty' : 'blur'}
+          blurDataURL={isBrandWebp ? undefined : IMAGE_BLUR_DATA_URL}
           onError={handleError}
-          className={cn(styles.image)}
+          className={cn(objectFit)}
         />
       )}
       {showPendingOverlay && <PendingOverlay lang={lang} variant={variant} />}

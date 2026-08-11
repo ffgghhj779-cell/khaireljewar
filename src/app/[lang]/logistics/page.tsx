@@ -1,79 +1,113 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
 import { SECTION_IMAGES } from '@/lib/constants/images'
-import PremiumImage from '@/components/ui/PremiumImage'
+import { buildPageMetadata } from '@/lib/seo'
 import Container from '@/components/ui/Container'
 import ColdChainStepper from '@/components/logistics/ColdChainStepper'
-import RouteMap from '@/components/logistics/RouteMap'
 import LogisticsEditorialGallery from '@/components/sections/LogisticsEditorialGallery'
-import { Truck } from 'lucide-react'
+import DepthHero from '@/components/graphics/DepthHero'
 import { cn } from '@/lib/utils/cn'
+import { Snowflake, Ship, MapPinned } from 'lucide-react'
+
+export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
+  const isAr = lang === 'ar'
+  return buildPageMetadata({
+    lang,
+    path: '/logistics',
+    title: isAr ? 'اللوجستيات' : 'Logistics',
+    description: isAr
+      ? 'من المزرعة إلى ميناء جدة — سلسلة تبريد وتوصيل موثوق.'
+      : 'From farm to Jeddah port — cold chain and reliable delivery.',
+  })
+}
 
 export default function LogisticsPage({ params: { lang } }: { params: { lang: string } }) {
   const isAr = lang === 'ar'
 
+  const pillars = [
+    {
+      icon: Snowflake,
+      title: isAr ? 'سلسلة تبريد' : 'Cold chain',
+      desc: isAr ? 'مناولة مضبوطة الحرارة من التعبئة حتى الميناء.' : 'Temperature-controlled handling from packing to port.',
+    },
+    {
+      icon: Ship,
+      title: isAr ? 'موانئ وشحن' : 'Ports & shipping',
+      desc: isAr ? 'شبكة تصدير من جدة تغطي الخليج وأوروبا وأفريقيا.' : 'An export network from Jeddah covering GCC, Europe, and Africa.',
+    },
+    {
+      icon: MapPinned,
+      title: isAr ? 'تتبع واضح' : 'Clear tracking',
+      desc: isAr ? 'متابعة الشحنات ومواعيد الوصول بشفافية.' : 'Transparent shipment follow-up and arrival timing.',
+    },
+  ]
+
   return (
-    <div className="min-h-screen py-12 pb-24">
-      <Container size="large">
-        <div className="mb-16">
-          <span className="terminal-badge terminal-badge-live mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            {isAr ? 'محطة اللوجستيات' : 'Logistics Terminal'}
-          </span>
-          <h1 className={cn('text-4xl md:text-6xl font-black text-dark tracking-tight mb-4', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
-            {isAr ? 'من المزرعة إلى الميناء' : 'Farm to Port Infrastructure'}
-          </h1>
-          <p className={cn('text-lg text-gray-500 max-w-2xl', isAr ? 'font-ibm-arabic' : 'font-inter')}>
-            {isAr
-              ? 'سلسلة تبريد متكاملة، تتبع GPS مباشر، وشبكة موانئ تغطي 40+ وجهة عالمية.'
-              : 'Integrated cold chain, live GPS tracking, and a port network covering 40+ global destinations.'}
-          </p>
-        </div>
+    <div className="min-h-screen pb-0">
+      <DepthHero
+        lang={lang}
+        src={SECTION_IMAGES.logisticsHub}
+        alt={isAr ? 'عمليات اللوجستيات' : 'Logistics operations'}
+        eyebrow={isAr ? 'اللوجستيات' : 'Logistics'}
+        title={isAr ? 'من المزرعة إلى جدة… ثم العالم.' : 'From farm to Jeddah — then the world.'}
+        subtitle={
+          isAr
+            ? 'تبريد دقيق، شحن منظم من جدة، ووصول موثوق لشركائنا حول العالم.'
+            : 'Careful cold chain, organized shipping from Jeddah, and reliable arrival for partners worldwide.'
+        }
+      />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
-          <RouteMap lang={lang} />
-          <div className="relative h-[400px] lg:h-auto rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
-            <PremiumImage
-              src={SECTION_IMAGES.logisticsHub}
-              alt="Logistics"
-              fill
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent" />
-            <div className="absolute bottom-6 start-6 end-6 glass-panel rounded-xl p-4 border border-white/20">
-              <div className="flex items-center gap-2 mb-2">
-                <Truck className="w-4 h-4 text-primary" />
-                <span className="text-white text-sm font-bold">{isAr ? 'شحنة نشطة' : 'Active Shipment'}</span>
-              </div>
-              <div className="text-white/80 text-xs font-mono">SHP-9921 → Rotterdam · ETA 14d · -2°C</div>
-            </div>
+      <section className="py-16 md:py-24 bg-canvas-soft">
+        <Container size="large">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16 md:mb-20">
+            {pillars.map((item) => {
+              const Icon = item.icon
+              return (
+                <div key={item.title}>
+                  <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-primary shadow-soft">
+                    <Icon className="w-5 h-5" strokeWidth={1.75} />
+                  </div>
+                  <h2 className={cn('text-xl font-bold text-dark mb-2', isAr ? 'font-arabic' : 'font-display')}>
+                    {item.title}
+                  </h2>
+                  <p className={cn('text-gray-600 text-[15px] leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+                    {item.desc}
+                  </p>
+                </div>
+              )
+            })}
           </div>
-        </div>
 
-        <div className="mb-12">
-          <h2 className={cn('text-2xl font-black text-dark mb-2', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
-            {isAr ? 'مسار سلسلة التبريد' : 'Cold Chain Journey'}
-          </h2>
-          <p className={cn('text-sm text-gray-500 mb-8', isAr ? 'font-ibm-arabic' : 'font-inter')}>
-            {isAr ? 'مراقبة حرارة مستمرة في كل مرحلة من التعبئة إلى التسليم.' : 'Continuous temperature monitoring at every stage from packing to delivery.'}
-          </p>
+          <div className="mb-4">
+            <h2
+              className={cn(
+                'text-2xl md:text-4xl font-bold text-dark tracking-tight mb-3 editorial-heading',
+                isAr ? 'font-arabic' : 'font-display'
+              )}
+            >
+              {isAr ? 'رحلة التبريد' : 'The cold chain journey'}
+            </h2>
+            <p className={cn('text-gray-600 mb-8 max-w-xl', isAr ? 'font-arabic' : 'font-sans')}>
+              {isAr
+                ? 'مراقبة مستمرة في كل مرحلة من التعبئة إلى التسليم.'
+                : 'Continuous care at every stage from packing to delivery.'}
+            </p>
+          </div>
           <ColdChainStepper lang={lang} activeStep={3} />
-        </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { value: '40+', label: isAr ? 'دولة وجهة' : 'Destinations' },
-            { value: '98.4%', label: isAr ? 'التسليم في الوقت' : 'On-Time Delivery' },
-            { value: '-18°C', label: isAr ? 'مجمدات IQF' : 'IQF Frozen' },
-            { value: '24/7', label: isAr ? 'مراقبة GPS' : 'GPS Monitoring' },
-          ].map((stat) => (
-            <div key={stat.label} className="glass-panel rounded-xl p-6 border border-gray-200 text-center">
-              <div className="text-3xl font-black text-primary font-mono mb-1">{stat.value}</div>
-              <div className={cn('text-[10px] font-bold text-gray-500 uppercase', isAr ? 'font-ibm-arabic' : 'font-inter')}>
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </Container>
+          <div className="mt-12">
+            <Link
+              href={`/${lang}/export-markets`}
+              className={cn(
+                'inline-flex text-sm font-semibold text-primary hover:text-dark transition-colors',
+                isAr ? 'font-arabic' : 'font-sans'
+              )}
+            >
+              {isAr ? 'أسواق التصدير ←' : 'Export markets →'}
+            </Link>
+          </div>
+        </Container>
+      </section>
 
       <LogisticsEditorialGallery lang={lang} />
     </div>

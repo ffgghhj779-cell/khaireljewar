@@ -16,18 +16,31 @@ interface TrustComplianceHubProps {
   lang: string
 }
 
-function StatusBadge({ status }: { status: ComplianceCertificate['status'] }) {
+function StatusBadge({ status, isAr }: { status: ComplianceCertificate['status']; isAr: boolean }) {
+  const label =
+    status === 'Active'
+      ? isAr
+        ? 'ساري'
+        : 'Active'
+      : status === 'Pending Renewal'
+        ? isAr
+          ? 'تجديد قريب'
+          : 'Renewal soon'
+        : isAr
+          ? 'أرشيف'
+          : 'Archived'
+
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider',
-        status === 'Active' && 'bg-green-50 text-green-700 border border-green-200',
-        status === 'Pending Renewal' && 'bg-amber-50 text-amber-700 border border-amber-200',
-        status === 'Archived' && 'bg-gray-100 text-gray-500 border border-gray-200'
+        'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold',
+        status === 'Active' && 'bg-primary/10 text-primary',
+        status === 'Pending Renewal' && 'bg-secondary/15 text-[#A67E28]',
+        status === 'Archived' && 'bg-gray-100 text-gray-500'
       )}
     >
-      {status === 'Active' ? <CheckCircle2 className="w-2.5 h-2.5" /> : <Clock className="w-2.5 h-2.5" />}
-      {status}
+      {status === 'Active' ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
+      {label}
     </span>
   )
 }
@@ -35,10 +48,8 @@ function StatusBadge({ status }: { status: ComplianceCertificate['status'] }) {
 function VerificationStamp({ color }: { color: string }) {
   return (
     <svg viewBox="0 0 80 80" className="w-16 h-16 opacity-10" aria-hidden>
-      <circle cx="40" cy="40" r="36" fill="none" stroke={color} strokeWidth="2" strokeDasharray="6 3" />
-      <circle cx="40" cy="40" r="28" fill="none" stroke={color} strokeWidth="1" />
-      <text x="40" y="37" textAnchor="middle" dominantBaseline="middle" fill={color} fontSize="6" fontWeight="bold" fontFamily="sans-serif">VERIFIED</text>
-      <text x="40" y="46" textAnchor="middle" dominantBaseline="middle" fill={color} fontSize="5" fontFamily="sans-serif">EXPORT GRADE</text>
+      <circle cx="40" cy="40" r="36" fill="none" stroke={color} strokeWidth="1.5" />
+      <path d="M22 48C28 36 34 36 40 48C46 36 52 36 58 48" stroke={color} strokeWidth="1.5" fill="none" strokeLinecap="round" />
     </svg>
   )
 }
@@ -57,22 +68,21 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="mb-12 md:mb-16"
         >
-          <span className="terminal-badge mb-4">
-            <ShieldCheck className="w-3 h-3 text-primary" />
-            {isAr ? 'مركز الثقة والامتثال' : 'Trust & Compliance Hub'}
-          </span>
+          <p className={cn('text-primary font-semibold text-sm mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+            {isAr ? 'الاعتمادات' : 'Certifications'}
+          </p>
           <h2
             className={cn(
-              'text-3xl md:text-5xl font-black text-dark tracking-tight mb-4 editorial-heading',
-              isAr ? 'font-ibm-arabic' : 'font-manrope'
+              'text-3xl md:text-5xl font-bold text-dark tracking-tight mb-4 editorial-heading',
+              isAr ? 'font-arabic' : 'font-display'
             )}
           >
-            {isAr ? 'الاعتمادات الرسمية' : 'Official Certifications'}
+            {isAr ? 'وثائق رسمية' : 'Official documents'}
           </h2>
-          <p className={cn('text-base md:text-lg text-gray-500 max-w-2xl leading-relaxed', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+          <p className={cn('text-base md:text-lg text-gray-500 max-w-2xl leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
             {isAr
-              ? 'كل شحنة مدعومة بسلسلة توثيق دولية كاملة — من الحقل إلى الميناء. انقر على أي شهادة للتحقق.'
-              : 'Every shipment is backed by a complete international documentation chain — from field to port. Click any certificate to verify.'}
+              ? 'كل شحنة مدعومة بسلسلة توثيق واضحة — من الحقل إلى الميناء.'
+              : 'Every shipment is backed by a clear documentation chain — from field to port.'}
           </p>
         </motion.div>
 
@@ -121,7 +131,7 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
                   <h3 className={cn('font-black text-dark text-base leading-tight', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
                     {isAr ? cert.nameAr : cert.nameEn}
                   </h3>
-                  <StatusBadge status={cert.status} />
+                  <StatusBadge status={cert.status} isAr={isAr} />
                 </div>
                 <p className={cn('text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1', isAr ? 'font-ibm-arabic' : 'font-inter')}>
                   {cert.body} · {cert.year}
@@ -161,8 +171,10 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
             <div className="w-10 h-10 rounded-xl bg-green-50 border border-green-200 flex items-center justify-center shrink-0">
               <CheckCircle2 className="w-5 h-5 text-green-600" />
             </div>
-            <p className={cn('text-sm font-bold text-dark', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
-              {isAr ? 'جميع الاعتمادات محدّثة — آخر مراجعة يناير 2025' : 'All certifications current — last audit January 2025'}
+            <p className={cn('text-sm font-bold text-dark', isAr ? 'font-arabic' : 'font-display')}>
+              {isAr
+                ? 'شهادات جاهزة للتحميل — استُبدل الملفات النهائية عند الإطلاق'
+                : 'Downloadable certificates — replace with final scans at go-live'}
             </p>
           </div>
           <span className={cn('text-[10px] font-bold text-gray-400 uppercase tracking-widest shrink-0', isAr ? 'font-ibm-arabic' : 'font-inter')}>
@@ -215,10 +227,10 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
 
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <StatusBadge status={active.status} />
-                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{active.year}</span>
+                  <StatusBadge status={active.status} isAr={isAr} />
+                  <span className="text-[10px] font-semibold text-gray-400 tracking-wider">{active.year}</span>
                 </div>
-                <p className={cn('text-sm text-gray-600 leading-relaxed mb-6', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+                <p className={cn('text-sm text-gray-600 leading-relaxed mb-6', isAr ? 'font-arabic' : 'font-sans')}>
                   {active.scope}
                 </p>
                 <div className="flex gap-3">

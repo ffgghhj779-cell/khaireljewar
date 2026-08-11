@@ -1,43 +1,43 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useAddToQuote } from '@/store/useQuoteStore'
-import { resolveProductImage } from '@/lib/constants/images'
-import { TAP_SCALE } from '@/lib/constants/motion'
+import Link from 'next/link'
+import { MessageCircle } from 'lucide-react'
 import type { Product } from '@/lib/data/products'
-import { ShoppingCart } from 'lucide-react'
+import { TAP_SCALE } from '@/lib/constants/motion'
+import { motion } from 'framer-motion'
+import { cn } from '@/lib/utils/cn'
 
-export default function AddToCartButton({ product, lang }: { product: Product; lang: string }) {
-  const addItem = useAddToQuote()
+/** CTA to contact — cart/checkout live on Zid store */
+export default function AddToCartButton({
+  product,
+  lang,
+  variant = 'default',
+}: {
+  product: Product
+  lang: string
+  variant?: 'default' | 'onDark'
+}) {
   const isAr = lang === 'ar'
-
-  const handleAdd = () => {
-    addItem(
-      {
-        id: product.id,
-        slug: product.slug,
-        title: product.title,
-        image: resolveProductImage(product.image, product.category.en, product.slug),
-        quantity: product.minOrder,
-        packaging: isAr ? product.packaging.ar : product.packaging.en,
-        unit: product.unit,
-        indexPrice: product.indexPrice,
-      },
-      lang
-    )
-  }
+  const title = isAr ? product.title.ar : product.title.en
 
   return (
-    <motion.button
-      type="button"
-      onClick={handleAdd}
-      whileTap={TAP_SCALE}
-      className="w-full mt-6 bg-dark hover:bg-primary text-white text-lg font-bold py-5 min-h-[48px] rounded-xl flex items-center justify-center gap-3 transition-colors duration-150 border border-dark will-change-transform touch-manipulation"
-    >
-      <ShoppingCart className="w-6 h-6" />
-      <span className={isAr ? 'font-ibm-arabic' : 'font-inter'}>
-        {isAr ? 'إضافة إلى طلب التسعير' : 'Add to Quote List'}
-      </span>
-    </motion.button>
+    <motion.div whileTap={TAP_SCALE}>
+      <Link
+        href={`/${lang}/contact?product=${encodeURIComponent(product.slug)}`}
+        className={cn(
+          'w-full mt-6 text-base font-semibold',
+          'py-4 min-h-[52px] rounded-xl flex items-center justify-center gap-3',
+          'transition-colors duration-300 touch-manipulation',
+          variant === 'onDark'
+            ? 'bg-cream text-primary hover:bg-white'
+            : 'bg-primary hover:bg-primary-700 text-cream',
+          isAr ? 'font-arabic' : 'font-sans'
+        )}
+        aria-label={isAr ? `اطلب عرض سعر لـ ${title}` : `Request quote for ${title}`}
+      >
+        <MessageCircle className="w-5 h-5" strokeWidth={1.75} />
+        {isAr ? 'اطلب عرض سعر' : 'Request a quote'}
+      </Link>
+    </motion.div>
   )
 }

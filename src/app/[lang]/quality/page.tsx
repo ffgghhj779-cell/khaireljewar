@@ -1,3 +1,1 @@
-import CertificationsPage from '../certifications/page'
-
-export default CertificationsPage
+export { default, generateMetadata } from '../certifications/page'

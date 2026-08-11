@@ -18,7 +18,7 @@ export default function SectionHeading({
       <h2 className={`
         text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6
         ${light ? 'text-white' : 'text-dark'}
-        ${lang === 'ar' ? 'font-ibm-arabic' : 'font-manrope'}
+        ${lang === 'ar' ? 'font-arabic' : 'font-display'}
       `}>
         {title}
       </h2>

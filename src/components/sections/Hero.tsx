@@ -11,7 +11,7 @@ export default function Hero({ lang }: { lang: string }) {
       badge: 'Premium B2B Food Export',
       title: 'Reliable Food Supply',
       titleHighlight: 'Without Compromise',
-      desc: 'Connecting global markets with the finest Egyptian fresh produce, frozen foods, and dry goods. Exceptional quality from our farms directly to your business.',
+      desc: 'Connecting global markets with the finest fresh produce, frozen foods, and dry goods. Exceptional quality coordinated from Jeddah directly to your business.',
       primaryBtn: 'Explore Products',
       secondaryBtn: 'Contact Sales',
     },
@@ -19,7 +19,7 @@ export default function Hero({ lang }: { lang: string }) {
       badge: 'تصدير غذائي متميز (B2B)',
       title: 'إمدادات غذائية موثوقة',
       titleHighlight: 'بدون مساومات',
-      desc: 'نربط الأسواق العالمية بأجود المحاصيل الزراعية المصرية الطازجة والمجمدة. جودة استثنائية من مزارعنا مباشرة إلى أعمالك.',
+      desc: 'نربط الأسواق العالمية بأجود المحاصيل الطازجة والمجمدة. جودة استثنائية بتنسيق من جدة مباشرة إلى أعمالك.',
       primaryBtn: 'استكشف منتجاتنا',
       secondaryBtn: 'تواصل مع المبيعات',
     }

@@ -5,8 +5,8 @@ import { cn } from '@/lib/utils/cn'
 export default function InfiniteMarquee({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
   const text = isAr
-    ? ' • تصدير عالمي موثوق • جودة مصرية فاخرة • محاصيل عضوية معتمدة • لوجستيات متكاملة بدون مساومات '
-    : ' • GLOBAL EXPORT EXCELLENCE • UNMATCHED EGYPTIAN QUALITY • PREMIUM ORGANIC HARVEST • TRUSTED SUPPLY CHAIN '
+    ? ' • تصدير عالمي موثوق • جودة فاخرة من جدة • محاصيل معتمدة • لوجستيات متكاملة بدون مساومات '
+    : ' • GLOBAL EXPORT EXCELLENCE • PREMIUM QUALITY FROM JEDDAH • TRUSTED SUPPLY CHAIN • NEIGHBORLY CARE '
 
   return (
     <div className="bg-gradient-to-r from-primary to-cyan-400 py-5 overflow-hidden flex whitespace-nowrap relative z-10 skew-y-1 origin-bottom-left -mt-6 shadow-xl">

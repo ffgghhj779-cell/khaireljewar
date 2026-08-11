@@ -1,0 +1,43 @@
+{% set en = store.language == 'en' %}
+<header class="ka-header">
+  <div class="ka-container ka-header__inner">
+    <nav class="ka-nav" aria-label="{% if en %}Primary{% else %}رئيسي{% endif %}">
+      <a href="/products">{% if en %}Products{% else %}المنتجات{% endif %}</a>
+      <a href="/page/about">{% if en %}About{% else %}من نحن{% endif %}</a>
+    </nav>
+
+    <a class="ka-brand" href="/">
+      <img
+        src="{{ 'images/khair-aljaar-mark.svg'|asset_url }}"
+        alt="{{ store.name }}"
+        width="42"
+        height="42"
+      />
+      <span class="ka-brand__text">
+        <strong>{% if en %}Khair Aljaar{% else %}خير الجوار{% endif %}</strong>
+        <span>{% if en %}Neighborly goodness — from Jeddah{% else %}خير الجوار… من جدة إلى العالم{% endif %}</span>
+      </span>
+    </a>
+
+    <nav class="ka-nav" aria-label="{% if en %}Secondary{% else %}ثانوي{% endif %}">
+      <a href="/page/quality">{% if en %}Quality{% else %}الجودة{% endif %}</a>
+      <a href="/page/logistics">{% if en %}Logistics{% else %}اللوجستيات{% endif %}</a>
+      <a href="/page/contact">{% if en %}Contact{% else %}اتصل بنا{% endif %}</a>
+      {# Cart is Zid-native — do not rebuild #}
+      <a class="ka-nav__cta" href="/cart">{% if en %}Cart{% else %}السلة{% endif %}</a>
+    </nav>
+
+    <button class="ka-menu-toggle" type="button" aria-label="{% if en %}Menu{% else %}القائمة{% endif %}" data-ka-menu>
+      <span></span><span></span>
+    </button>
+  </div>
+
+  <div class="ka-mobile-nav" data-ka-mobile hidden>
+    <a href="/products">{% if en %}Products{% else %}المنتجات{% endif %}</a>
+    <a href="/page/about">{% if en %}About{% else %}من نحن{% endif %}</a>
+    <a href="/page/quality">{% if en %}Quality{% else %}الجودة{% endif %}</a>
+    <a href="/page/logistics">{% if en %}Logistics{% else %}اللوجستيات{% endif %}</a>
+    <a href="/page/contact">{% if en %}Contact{% else %}اتصل بنا{% endif %}</a>
+    <a href="/cart">{% if en %}Cart{% else %}السلة{% endif %}</a>
+  </div>
+</header>

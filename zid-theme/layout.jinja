@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{{ store.language|default('ar') }}" dir="{% if store.language == 'en' %}ltr{% else %}rtl{% endif %}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#1A332A" />
+  <meta name="description" content="{% if store.language == 'en' %}Khair Aljaar Foods — neighborly goodness from Jeddah. Premium produce, cold chain, export-ready.{% else %}خير الجوار للأغذية — خير الجوار من جدة. منتجات مميزة، سلسلة تبريد، جاهزة للتصدير.{% endif %}" />
+  <title>{% block title %}{{ store.name }}{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700&family=IBM+Plex+Sans+Arabic:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ 'styles.css'|asset_url }}" />
+  {% block head %}{% endblock %}
+</head>
+<body class="ka-body">
+  {% include 'header.jinja' %}
+  <main id="main">{% block content %}{% endblock %}</main>
+  {% include 'footer.jinja' %}
+  <script src="{{ 'scripts.js'|asset_url }}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

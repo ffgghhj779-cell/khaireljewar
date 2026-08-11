@@ -16,20 +16,23 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="min-h-[60vh] flex items-center py-20">
+    <div className="min-h-[60vh] flex items-center py-20 bg-canvas-soft">
       <Container>
         <div className="max-w-lg mx-auto text-center">
-          <h1 className="text-2xl font-black text-dark mb-3">Something went wrong</h1>
-          <p className="text-gray-500 mb-8">We could not load this page. Please try again.</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-dark mb-3 font-display">Something went wrong</h1>
+          <p className="text-gray-500 mb-8 font-sans">We could not load this page. Please try again.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               type="button"
               onClick={reset}
-              className="px-6 py-3 min-h-[48px] rounded-xl bg-dark text-white font-bold hover:bg-primary transition-colors touch-manipulation"
+              className="px-7 py-3.5 min-h-[52px] rounded-full bg-dark text-white font-semibold hover:bg-primary transition-colors touch-manipulation font-sans"
             >
               Try again
             </button>
-            <Link href="/en" className="px-6 py-3 min-h-[48px] rounded-xl border border-gray-200 font-bold hover:border-primary transition-colors touch-manipulation">
+            <Link
+              href="/en"
+              className="px-7 py-3.5 min-h-[52px] rounded-full border border-dark/15 font-semibold hover:border-primary hover:text-primary transition-colors touch-manipulation font-sans"
+            >
               Go home
             </Link>
           </div>
