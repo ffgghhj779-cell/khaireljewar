@@ -29,8 +29,8 @@ export default function BrandLockup({
       <div className={cn('flex flex-col gap-4', className)}>
         <BrandLogo variant="footer" priority={priority} iconOnly className="!h-12 !w-12" />
         <div>
-          <p className={cn('text-white text-xl mb-1', isAr ? 'font-arabic font-bold' : 'font-display font-bold')}>
-            {isAr ? BRAND.name.ar : BRAND.name.en}
+          <p className={cn('text-cream text-xl mb-1', isAr ? 'font-arabic font-bold' : 'font-display font-bold')}>
+            {isAr ? BRAND.nameGroup.ar : BRAND.nameGroup.en}
           </p>
           <p className={cn('text-secondary text-sm font-semibold', isAr ? 'font-arabic' : 'font-sans')}>
             {isAr ? BRAND.tagline.ar : BRAND.tagline.en}

@@ -15,6 +15,7 @@ const navigation = {
   en: [
     { name: 'Products', href: '/products' },
     { name: 'About', href: '/about' },
+    { name: 'Partners', href: '/partners' },
     { name: 'Quality', href: '/quality' },
     { name: 'Logistics', href: '/logistics' },
     { name: 'Contact', href: '/contact' },
@@ -22,6 +23,7 @@ const navigation = {
   ar: [
     { name: 'المنتجات', href: '/products' },
     { name: 'من نحن', href: '/about' },
+    { name: 'شركاؤنا', href: '/partners' },
     { name: 'الجودة', href: '/quality' },
     { name: 'اللوجستيات', href: '/logistics' },
     { name: 'اتصل بنا', href: '/contact' },
@@ -63,7 +65,7 @@ export default function Header({ lang }: { lang: string }) {
       <Container>
         <nav className="flex items-center justify-between relative z-[101] gap-3">
           <div className="hidden lg:flex items-center gap-1 relative z-[102] flex-1">
-            {navItems.slice(0, 2).map((item) => (
+            {navItems.slice(0, 3).map((item) => (
               <Link
                 key={item.name}
                 href={`/${lang}${item.href}`}
@@ -84,7 +86,7 @@ export default function Header({ lang }: { lang: string }) {
           </Link>
 
           <div className="hidden lg:flex items-center justify-end gap-0.5 relative z-[102] flex-1">
-            {navItems.slice(2).map((item) => (
+            {navItems.slice(3).map((item) => (
               <Link
                 key={item.name}
                 href={`/${lang}${item.href}`}

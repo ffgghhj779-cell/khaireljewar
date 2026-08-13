@@ -5,6 +5,7 @@ import { SITE_URL } from '@/lib/seo'
 const STATIC_PATHS = [
   '',
   '/about',
+  '/partners',
   '/products',
   '/logistics',
   '/quality',

@@ -34,6 +34,12 @@ const config: Config = {
           500: '#C49A32',
           600: '#A67E28',
         },
+        /* Deep harvest orange — footer / warm brand plane */
+        harvest: {
+          DEFAULT: '#C45E1F',
+          soft: '#D4783A',
+          deep: '#A34C18',
+        },
         /* Deep forest ink */
         dark: {
           DEFAULT: '#1A332A',

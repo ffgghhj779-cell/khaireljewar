@@ -22,6 +22,10 @@ export const BRAND = {
     en: 'Khair Aljaar Foods',
     ar: 'خير الجوار للأغذية',
   },
+  nameGroup: {
+    en: 'Khair Aljaar Group',
+    ar: 'مجموعة خير الجوار',
+  },
   /** Neighborliness / trust — core Arabic meaning of الجوار */
   tagline: {
     ar: 'خير الجوار… من جدة إلى العالم',

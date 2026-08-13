@@ -1,14 +1,24 @@
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 import BrandLockup from '@/components/ui/BrandLockup'
 import { BRAND } from '@/lib/constants/brand'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
+
+function FooterIcon({ children }: { children: ReactNode }) {
+  return (
+    <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black text-primary">
+      {children}
+    </span>
+  )
+}
 
 export default function Footer({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
 
   const companyLinks = [
     { label: isAr ? 'من نحن' : 'About', href: `/${lang}/about` },
+    { label: isAr ? 'شركاؤنا' : 'Partners', href: `/${lang}/partners` },
     { label: isAr ? 'الجودة' : 'Quality', href: `/${lang}/quality` },
     { label: isAr ? 'اللوجستيات' : 'Logistics', href: `/${lang}/logistics` },
     { label: isAr ? 'أسواق التصدير' : 'Markets', href: `/${lang}/export-markets` },
@@ -25,12 +35,12 @@ export default function Footer({ lang }: { lang: string }) {
   ]
 
   return (
-    <footer className="relative z-10 bg-dark text-white pt-12 pb-[calc(6.25rem+env(safe-area-inset-bottom,0px))] md:pt-20 md:pb-10 overflow-hidden">
+    <footer className="relative z-10 bg-harvest text-cream pt-12 pb-[calc(6.25rem+env(safe-area-inset-bottom,0px))] md:pt-20 md:pb-10 overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-0 opacity-40"
+        className="pointer-events-none absolute inset-0 opacity-50"
         style={{
           backgroundImage:
-            'radial-gradient(ellipse 60% 50% at 0% 100%, rgba(42,107,92,0.45), transparent 55%), radial-gradient(ellipse 40% 40% at 100% 0%, rgba(212,174,74,0.12), transparent 50%)',
+            'radial-gradient(ellipse 55% 45% at 0% 100%, rgba(0,0,0,0.22), transparent 55%), radial-gradient(ellipse 40% 40% at 100% 0%, rgba(229,184,74,0.18), transparent 50%)',
         }}
       />
 
@@ -40,15 +50,15 @@ export default function Footer({ lang }: { lang: string }) {
             <div className="mb-6">
               <BrandLockup lang={lang} variant="footer" />
             </div>
-            <p className={cn('text-white/55 leading-relaxed max-w-sm text-[15px]', isAr ? 'font-arabic' : 'font-sans')}>
+            <p className={cn('text-cream/75 leading-relaxed max-w-sm text-[15px]', isAr ? 'font-arabic' : 'font-sans')}>
               {isAr
-                ? `${BRAND.nameFull.ar} — من جدة، بروح الضيافة والثقة إلى شركائنا حول العالم.`
-                : `${BRAND.nameFull.en} — from Jeddah, with hospitality and trust to partners worldwide.`}
+                ? `${BRAND.nameGroup.ar} — من جدة، بروح الضيافة والثقة إلى شركائنا حول العالم.`
+                : `${BRAND.nameGroup.en} — from Jeddah, with hospitality and trust to partners worldwide.`}
             </p>
           </div>
 
           <div>
-            <h4 className={cn('font-semibold text-sm mb-5 text-white/40', isAr ? 'font-arabic' : 'font-sans')}>
+            <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', isAr ? 'font-arabic' : 'font-sans')}>
               {isAr ? 'الشركة' : 'Company'}
             </h4>
             <ul className="space-y-3">
@@ -57,7 +67,7 @@ export default function Footer({ lang }: { lang: string }) {
                   <Link
                     href={link.href}
                     className={cn(
-                      'text-white/70 hover:text-secondary transition-colors text-sm font-medium',
+                      'text-cream/85 hover:text-secondary transition-colors text-sm font-medium',
                       isAr ? 'font-arabic' : 'font-sans'
                     )}
                   >
@@ -69,7 +79,7 @@ export default function Footer({ lang }: { lang: string }) {
           </div>
 
           <div>
-            <h4 className={cn('font-semibold text-sm mb-5 text-white/40', isAr ? 'font-arabic' : 'font-sans')}>
+            <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', isAr ? 'font-arabic' : 'font-sans')}>
               {isAr ? 'المنتجات' : 'Products'}
             </h4>
             <ul className="space-y-3">
@@ -78,7 +88,7 @@ export default function Footer({ lang }: { lang: string }) {
                   <Link
                     href={link.href}
                     className={cn(
-                      'text-white/70 hover:text-secondary transition-colors text-sm font-medium',
+                      'text-cream/85 hover:text-secondary transition-colors text-sm font-medium',
                       isAr ? 'font-arabic' : 'font-sans'
                     )}
                   >
@@ -90,31 +100,37 @@ export default function Footer({ lang }: { lang: string }) {
           </div>
 
           <div>
-            <h4 className={cn('font-semibold text-sm mb-5 text-white/40', isAr ? 'font-arabic' : 'font-sans')}>
+            <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', isAr ? 'font-arabic' : 'font-sans')}>
               {isAr ? 'تواصل معنا' : 'Contact'}
             </h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-secondary shrink-0 mt-0.5" strokeWidth={1.75} />
-                <span className={cn('text-white/65 text-sm', isAr ? 'font-arabic' : 'font-sans')}>
+                <FooterIcon>
+                  <MapPin className="w-4 h-4" strokeWidth={1.75} />
+                </FooterIcon>
+                <span className={cn('text-cream/85 text-sm pt-1.5', isAr ? 'font-arabic' : 'font-sans')}>
                   {isAr ? BRAND.contact.address.ar : BRAND.contact.address.en}
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-secondary shrink-0" strokeWidth={1.75} />
+                <FooterIcon>
+                  <Phone className="w-4 h-4" strokeWidth={1.75} />
+                </FooterIcon>
                 <a
                   href={`tel:${BRAND.contact.phoneTel}`}
-                  className="text-white/65 text-sm hover:text-secondary transition-colors"
+                  className="text-cream/85 text-sm hover:text-secondary transition-colors"
                   dir="ltr"
                 >
                   {BRAND.contact.phone}
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-secondary shrink-0" strokeWidth={1.75} />
+                <FooterIcon>
+                  <Mail className="w-4 h-4" strokeWidth={1.75} />
+                </FooterIcon>
                 <a
                   href={`mailto:${BRAND.contact.email}`}
-                  className="text-white/65 text-sm hover:text-secondary transition-colors break-all"
+                  className="text-cream/85 text-sm hover:text-secondary transition-colors break-all"
                 >
                   {BRAND.contact.email}
                 </a>
@@ -123,12 +139,14 @@ export default function Footer({ lang }: { lang: string }) {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className={cn('text-white/40 text-sm', isAr ? 'font-arabic' : 'font-sans')}>
+        <div className="pt-8 border-t border-black/15 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className={cn('text-cream/60 text-sm', isAr ? 'font-arabic' : 'font-sans')}>
             &copy; {new Date().getFullYear()}{' '}
-            {isAr ? `${BRAND.nameFull.ar}. جميع الحقوق محفوظة.` : `${BRAND.nameFull.en}. All rights reserved.`}
+            {isAr
+              ? `${BRAND.nameGroup.ar}. جميع الحقوق محفوظة.`
+              : `${BRAND.nameGroup.en}. All rights reserved.`}
           </p>
-          <div className={cn('flex items-center gap-6 text-sm text-white/40', isAr ? 'font-arabic' : 'font-sans')}>
+          <div className={cn('flex items-center gap-6 text-sm text-cream/60', isAr ? 'font-arabic' : 'font-sans')}>
             <Link href={`/${lang}/privacy`} className="hover:text-secondary transition-colors">
               {isAr ? 'سياسة الخصوصية' : 'Privacy'}
             </Link>
