@@ -67,7 +67,7 @@ export default function BrandMarquee({ lang }: { lang: string }) {
   const items = PILLARS[isAr ? 'ar' : 'en']
 
   return (
-    <section className="relative z-0 overflow-hidden bg-primary py-12 md:py-28 border-t border-primary">
+    <section className="relative z-0 overflow-hidden bg-harvest py-12 md:py-28 border-t border-harvest-deep/30">
       <BotanicalCorners tone="cream" className="opacity-40 hidden md:block" />
 
       <Container size="large" className="relative z-10">

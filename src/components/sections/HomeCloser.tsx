@@ -11,10 +11,10 @@ export default function HomeCloser({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
 
   return (
-    <section className="relative z-0 overflow-hidden border-t border-secondary/30 bg-primary py-12 md:py-40">
+    <section className="relative z-0 overflow-hidden border-t border-secondary/35 bg-harvest py-12 md:py-40">
       <div className="absolute inset-x-0 top-0 h-1 bg-secondary" aria-hidden />
       <div
-        className="pointer-events-none absolute -top-16 start-1/2 hidden h-56 w-56 -translate-x-1/2 rounded-full bg-secondary/20 blur-3xl soft-breathe md:block"
+        className="pointer-events-none absolute -top-16 start-1/2 hidden h-56 w-56 -translate-x-1/2 rounded-full bg-secondary/25 blur-3xl soft-breathe md:block"
         aria-hidden
       />
       <BotanicalMotif
@@ -78,8 +78,8 @@ export default function HomeCloser({ lang }: { lang: string }) {
             <Link
               href={`/${lang}/contact`}
               className={cn(
-                'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl border border-secondary/45 px-8 touch-manipulation active:scale-[0.98]',
-                'text-cream font-semibold hover:bg-secondary/15',
+                'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl border border-cream/40 px-8 touch-manipulation active:scale-[0.98]',
+                'text-cream font-semibold hover:bg-cream/10',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >
