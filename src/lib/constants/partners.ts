@@ -6,17 +6,10 @@ export type PartnerLogo = {
   tag: { en: string; ar: string }
   logo: string
   href?: string
-  darkCard?: boolean
 }
 
-/** Display order: Ninja – noon – Tasami – Al Rehan – Thimar Ardina */
+/** Display order: noon – Tasami – Al Rehan – Thimar Ardina */
 export const PARTNER_LOGOS: PartnerLogo[] = [
-  {
-    id: 'ninja',
-    name: { en: 'Ninja', ar: 'نينجا' },
-    tag: { en: 'Retail partner', ar: 'شريك تجزئة' },
-    logo: '/images/partners/ninja-logo.svg',
-  },
   {
     id: 'noon',
     name: { en: 'noon', ar: 'نون' },
@@ -43,7 +36,6 @@ export const PARTNER_LOGOS: PartnerLogo[] = [
     tag: { en: 'Sister brand · KSA', ar: 'العلامة الشقيقة · السعودية' },
     logo: '/images/partners/thimar-ardina-logo.png',
     href: 'https://themarardena.vercel.app/',
-    darkCard: true,
   },
 ]
 

@@ -13,8 +13,8 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
     path: '/partners',
     title: isAr ? 'شركاؤنا' : 'Our Partners',
     description: isAr
-      ? 'شركاء خير الجوار — نينجا، نون، تسامي الوطنية، الرهان الماسي، وثمار أرضنا.'
-      : 'Khair Aljaar partners — Ninja, noon, Tasami, Al Rehan Al Masi, and Thimar Ardina.',
+      ? 'شركاء خير الجوار — نون، تسامي الوطنية، الرهان الماسي، وثمار أرضنا.'
+      : 'Khair Aljaar partners — noon, Tasami, Al Rehan Al Masi, and Thimar Ardina.',
   })
 }
 

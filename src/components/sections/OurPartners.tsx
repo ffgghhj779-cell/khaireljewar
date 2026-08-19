@@ -42,12 +42,7 @@ export default function OurPartners({ lang, hideTitle = false, className }: Prop
             key={partner.id}
             className="grid items-center gap-8 md:grid-cols-[minmax(11rem,15rem)_1fr] md:gap-10"
           >
-            <div
-              className={cn(
-                'mx-auto grid aspect-square w-full max-w-[15rem] place-items-center p-6 shadow-soft',
-                partner.id === 'thimar' ? 'border border-black bg-black' : 'border border-farm/30 bg-farm-mist'
-              )}
-            >
+            <div className="mx-auto grid aspect-square w-full max-w-[15rem] place-items-center border border-farm/30 bg-farm-mist p-6 shadow-soft">
               <Image
                 src={partner.logo}
                 alt={isAr ? partner.name.ar : partner.name.en}

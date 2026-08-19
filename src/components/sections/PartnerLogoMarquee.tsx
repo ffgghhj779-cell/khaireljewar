@@ -26,11 +26,9 @@ function LogoCard({
         unoptimized={!isRaster}
         className="h-[4.6rem] w-auto max-w-[10.5rem] object-contain md:h-[5.4rem] md:max-w-[11.5rem]"
       />
-      {!partner.darkCard && (
-        <span className={cn('mt-2 text-[11px] font-semibold text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
-          {isAr ? partner.name.ar : partner.name.en}
-        </span>
-      )}
+      <span className={cn('mt-2 text-[11px] font-semibold text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
+        {isAr ? partner.name.ar : partner.name.en}
+      </span>
     </>
   )
 
@@ -38,7 +36,7 @@ function LogoCard({
     'partner-logo-float flex h-[7.25rem] w-[10.5rem] shrink-0 flex-col items-center justify-center rounded-2xl',
     'px-4 shadow-soft md:h-[8rem] md:w-[12rem]',
     'transition-transform duration-500 hover:-translate-y-1',
-    partner.darkCard ? 'border border-black bg-black' : 'border border-farm/30 bg-white'
+    'border border-farm/30 bg-white'
   )
 
   if (partner.href?.startsWith('http')) {
@@ -78,7 +76,7 @@ export default function PartnerLogoMarquee({ lang }: { lang: string }) {
         {isAr ? 'شركاء المجموعة' : 'Group & retail partners'}
       </p>
 
-      <div className="relative mx-auto hidden max-w-6xl grid-cols-5 gap-4 px-4 md:grid">
+      <div className="relative mx-auto hidden max-w-6xl grid-cols-4 gap-4 px-4 md:grid">
         {PARTNER_LOGOS.map((partner, i) => (
           <LogoCard key={partner.id} partner={partner} lang={lang} delay={i * 0.35} />
         ))}
@@ -87,7 +85,7 @@ export default function PartnerLogoMarquee({ lang }: { lang: string }) {
       <div className="partner-logo-marquee relative md:hidden" dir="ltr">
         <div className="partner-logo-marquee__track flex w-max gap-3 px-4">
           {loop.map((partner, i) => (
-            <LogoCard key={`${partner.id}-${i}`} partner={partner} lang={lang} delay={(i % 5) * 0.3} />
+            <LogoCard key={`${partner.id}-${i}`} partner={partner} lang={lang} delay={(i % 4) * 0.3} />
           ))}
         </div>
       </div>
