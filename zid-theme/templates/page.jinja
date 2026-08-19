@@ -1,0 +1,143 @@
+{% extends 'layout.jinja' %}
+{% set en = store.language == 'en' %}
+{% set slug = page.slug|default('')|lower %}
+
+{% block title %}{{ page.title }} — {{ store.name }}{% endblock %}
+
+{% block content %}
+<section class="ka-page-hero">
+  <div class="ka-container ka-section__center">
+    <p class="ka-section__label">
+      {% if en %}Khair Aljaar{% else %}خير الجوار{% endif %}
+    </p>
+    <h1 class="ka-section__title">{{ page.title }}</h1>
+  </div>
+</section>
+
+<section class="ka-section ka-section--soft">
+  <div class="ka-container">
+    <div class="ka-page-body ka-reveal">
+      {% if slug == 'about' %}
+        <p class="ka-section__text">
+          {% if en %}
+            Khair Aljaar Foods is a Jeddah food house built on neighborly goodness. From the Red Sea hub we connect trusted partner farms to kitchens and partners who care about quality — citrus, dates, avocados, potatoes, mangoes, and frozen lines — with disciplined packing and cold-chain care.
+          {% else %}
+            خير الجوار للأغذية بيت غذائي من جدة مبني على معنى الجوار. من مركز البحر الأحمر نربط مزارع شريكة موثوقة بالمطابخ والشركاء الذين يهتمون بالجودة — موالح وتمور وأفوكادو وبطاطس ومانجو ومجمدات — مع تعبئة منضبطة وعناية بسلسلة التبريد.
+          {% endif %}
+        </p>
+      {% elif slug == 'quality' %}
+        <p class="ka-section__text">
+          {% if en %}
+            Every lot is selected for export readiness: caliber, Brix where relevant, packing integrity, and clear documentation. Quiet confidence — certified care in every carton, without the noise.
+          {% else %}
+            كل دفعة تُختار لتكون جاهزة للتصدير: المعايرة، ونسبة السكر حيث يلزم، وسلامة التعبئة، ووثائق واضحة. ثقة بهدوء — عناية معتمدة في كل كرتونة، بلا ضجيج.
+          {% endif %}
+        </p>
+      {% elif slug == 'logistics' %}
+        <p class="ka-section__text">
+          {% if en %}
+            Our Jeddah hub coordinates temperature-minded handling from cold rooms to port and regional lanes. Export logistics rooted in Saudi Arabia — built for partners who need reliability, not surprises.
+          {% else %}
+            مركز جدة ينسّق مناولة تراعي الحرارة من غرف التبريد إلى الميناء والمسارات الإقليمية. لوجستيات تصدير جذورها في المملكة — لشركاء يحتاجون موثوقية لا مفاجآت.
+          {% endif %}
+        </p>
+      {% elif slug == 'contact' %}
+        <p class="ka-section__text">
+          {% if en %}
+            Ready when you are. Tell us variety, volume, and packing — we will respond with a clear wholesale path from Jeddah.
+          {% else %}
+            جاهزون عندما تكون جاهزًا. أخبرنا بالصنف والكميات والتعبئة — وسنرد بمسار جملة واضح من جدة.
+          {% endif %}
+        </p>
+        <p class="ka-section__text">
+          {% if en %}Email: info@khairaljaarfoods.com<br>Location: Jeddah, Saudi Arabia
+          {% else %}البريد: info@khairaljaarfoods.com<br>الموقع: جدة، المملكة العربية السعودية
+          {% endif %}
+        </p>
+        <div class="ka-page-contact">
+          <div class="ka-page-contact__actions">
+            <a class="ka-btn ka-btn--primary" href="{{ url_for('list_products') }}">
+              {% if en %}Browse products{% else %}تصفّح المنتجات{% endif %}
+            </a>
+            <a class="ka-btn ka-btn--ghost" href="mailto:info@khairaljaarfoods.com">
+              info@khairaljaarfoods.com
+            </a>
+          </div>
+        </div>
+      {% elif slug == 'partners' %}
+        <div class="ka-section__center" style="margin-bottom:2rem">
+          <p class="ka-section__text" style="margin-inline:auto;max-width:38rem">
+            {% if en %}
+              Trusted Saudi food partners we stand beside — wholesale reliability, cold-chain discipline, and quality that reaches kitchens and markets across the Kingdom.
+            {% else %}
+              شركاء غذائيون سعوديون نثق بهم — موثوقية توريد جملة، انضباط سلسلة التبريد، وجودة تصل المطابخ والأسواق في أنحاء المملكة.
+            {% endif %}
+          </p>
+        </div>
+        <div class="ka-logo-strip" aria-label="{% if en %}Partners{% else %}الشركاء{% endif %}">
+          <div class="ka-logo-card ka-float"><img src="{{ 'images/partners/ninja-logo.svg'|asset_url }}" alt="Ninja" width="180" height="60" loading="lazy" /><span>{% if en %}Ninja{% else %}نينجا{% endif %}</span></div>
+          <div class="ka-logo-card ka-float-delay"><img src="{{ 'images/partners/noon-logo.svg'|asset_url }}" alt="noon" width="180" height="60" loading="lazy" /><span>{% if en %}noon{% else %}نون{% endif %}</span></div>
+          <div class="ka-logo-card ka-float"><img src="{{ 'images/partners/tasami-logo.png'|asset_url }}" alt="Tasami" width="180" height="60" loading="lazy" /><span>{% if en %}Tasami{% else %}تسامي الوطنية{% endif %}</span></div>
+          <div class="ka-logo-card ka-float-delay"><img src="{{ 'images/partners/alrehan-logo.png'|asset_url }}" alt="Al Rehan" width="180" height="60" loading="lazy" /><span>{% if en %}Al Rehan{% else %}الرهان الماسي{% endif %}</span></div>
+          <div class="ka-logo-card ka-float"><img src="{{ 'images/partners/thimar-ardina-logo.svg'|asset_url }}" alt="Thimar Ardina" width="180" height="60" loading="lazy" /><span>{% if en %}Thimar Ardina{% else %}ثمار أرضنا{% endif %}</span></div>
+        </div>
+        <div class="ka-partners">
+          <article class="ka-partner">
+            <div class="ka-partner__mark">
+              <img src="{{ 'images/partners/tasami-logo.png'|asset_url }}" alt="{% if en %}Tasami Al-Wataniya{% else %}تسامي الوطنية{% endif %}" width="280" height="280" loading="lazy" />
+            </div>
+            <div class="ka-partner__copy">
+              <p class="ka-partner__tag">{% if en %}Wholesale food supply{% else %}توريد أغذية بالجملة{% endif %}</p>
+              <h2 class="ka-partner__name">{% if en %}Tasami Al-Wataniya{% else %}تسامي الوطنية{% endif %}</h2>
+              <p class="ka-partner__brief">
+                {% if en %}A national wholesale house for chilled and frozen poultry, fresh eggs, produce, frozen lines, and pantry staples.
+                {% else %}مؤسسة توريد جملة وطنية للدواجن المبردة والمجمدة، والبيض الطازج، والخضار والفاكهة، والمجمدات، ومستلزمات المطبخ.
+                {% endif %}
+              </p>
+              <a class="ka-btn ka-btn--primary" href="https://tasami56taa.vercel.app/" target="_blank" rel="noopener noreferrer">{% if en %}Visit website{% else %}زيارة الموقع{% endif %}</a>
+            </div>
+          </article>
+          <article class="ka-partner">
+            <div class="ka-partner__mark">
+              <img src="{{ 'images/partners/alrehan-logo.png'|asset_url }}" alt="{% if en %}Al Rehan Al Masi{% else %}الرهان الماسي{% endif %}" width="280" height="280" loading="lazy" />
+            </div>
+            <div class="ka-partner__copy">
+              <p class="ka-partner__tag">{% if en %}Poultry · Eggs · Farm to table{% else %}دواجن · بيض · من المزرعة إلى المائدة{% endif %}</p>
+              <h2 class="ka-partner__name">{% if en %}Al Rehan Al Masi Poultry{% else %}مؤسسة الرهان الماسي للدواجن{% endif %}</h2>
+              <p class="ka-partner__brief">
+                {% if en %}A trusted poultry partner supplying chilled and frozen chicken, table eggs, and processed lines with certified Halal slaughter.
+                {% else %}شريك دواجن موثوق يورّد الدجاج المبرد والمجمد، وبيض المائدة، والمصنعات — مع ذبح حلال معتمد.
+                {% endif %}
+              </p>
+              <a class="ka-btn ka-btn--primary" href="https://alrehan-almasi.vercel.app/" target="_blank" rel="noopener noreferrer">{% if en %}Visit website{% else %}زيارة الموقع{% endif %}</a>
+            </div>
+          </article>
+        </div>
+      {% elif page.content %}
+        {{ page.content | safe }}
+      {% else %}
+        <p class="ka-section__text">
+          {% if en %}
+            This page is ready — add content from your Zid dashboard under Store → Pages.
+          {% else %}
+            الصفحة جاهزة — أضف المحتوى من لوحة زد: المتجر الإلكتروني → الصفحات.
+          {% endif %}
+        </p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="ka-section ka-section--green ka-closer" style="padding:3.5rem 0">
+  <div class="ka-container" style="position:relative;z-index:2;text-align:center">
+    <h2 class="ka-section__title" style="font-size:clamp(1.5rem,3vw,2.2rem)">
+      {% if en %}Ready for export?{% else %}جاهز للتصدير؟{% endif %}
+    </h2>
+    <div class="ka-closer__actions" style="margin-top:1.25rem">
+      <a class="ka-btn ka-btn--cream" href="{{ url_for('list_products') }}">
+        {% if en %}Request a quote{% else %}اطلب عرض سعر{% endif %}
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

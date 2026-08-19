@@ -85,7 +85,7 @@ export default function Header({ lang }: { lang: string }) {
             <BrandLockup lang={lang} priority compact={isCompact} tone="dark" />
           </Link>
 
-          <div className="hidden lg:flex items-center justify-end gap-0.5 relative z-[102] flex-1">
+          <div className="hidden lg:flex items-center justify-end gap-1 relative z-[102] flex-1">
             {navItems.slice(3).map((item) => (
               <Link
                 key={item.name}
@@ -97,26 +97,27 @@ export default function Header({ lang }: { lang: string }) {
               </Link>
             ))}
 
-            <Link
-              href={`/${lang}/contact`}
-              className={cn(
-                'ms-2 me-1 inline-flex min-h-[40px] items-center rounded-xl bg-primary px-3.5 text-[12px] font-semibold text-cream hover:bg-primary-700',
-                isAr ? 'font-arabic' : 'font-sans'
-              )}
-            >
-              {isAr ? 'اطلب عرض سعر' : 'Request quote'}
-            </Link>
-
-            <LanguageSwitch lang={lang} className="ms-1" />
+            <div className="ms-2 flex items-center gap-1.5 rounded-2xl border border-farm/30 bg-farm-mist p-1">
+              <LanguageSwitch lang={lang} />
+              <Link
+                href={`/${lang}/contact`}
+                className={cn(
+                  'inline-flex min-h-[40px] items-center rounded-xl bg-primary px-3.5 text-[12px] font-semibold text-cream hover:bg-primary-700',
+                  isAr ? 'font-arabic' : 'font-sans'
+                )}
+              >
+                {isAr ? 'اطلب عرض سعر' : 'Request quote'}
+              </Link>
+            </div>
           </div>
 
-          <div className="lg:hidden flex items-center h-10 rounded-xl overflow-hidden bg-primary shrink-0">
+          <div className="lg:hidden flex items-center h-10 rounded-xl overflow-hidden border border-farm/40 bg-farm-panel shrink-0">
             <LanguageSwitch lang={lang} variant="toolbar" showIcon />
-            <div className="w-px h-4 bg-cream/20 shrink-0" aria-hidden />
+            <div className="w-px h-4 bg-primary/20 shrink-0" aria-hidden />
             <button
               type="button"
               onClick={() => setMobileMenuOpen((open) => !open)}
-              className="min-w-[44px] h-10 flex items-center justify-center transition-colors touch-manipulation active:scale-95 text-cream hover:bg-cream/10"
+              className="min-w-[44px] h-10 flex items-center justify-center transition-colors touch-manipulation active:scale-95 text-primary hover:bg-primary/8"
               aria-label={mobileMenuOpen ? (isAr ? 'إغلاق القائمة' : 'Close menu') : (isAr ? 'فتح القائمة' : 'Open menu')}
               aria-expanded={mobileMenuOpen}
             >

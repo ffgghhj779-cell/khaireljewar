@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { ReactNode } from 'react'
 import BrandLockup from '@/components/ui/BrandLockup'
 import { BRAND } from '@/lib/constants/brand'
-import { Mail, MapPin, Phone } from 'lucide-react'
+import { Building2, Mail, MapPin, Phone } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
 function FooterIcon({ children }: { children: ReactNode }) {
@@ -45,19 +45,19 @@ export default function Footer({ lang }: { lang: string }) {
       />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12 mb-10 md:mb-16">
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-10 mb-10 md:mb-14">
+          <div className="lg:col-span-3">
             <div className="mb-6">
               <BrandLockup lang={lang} variant="footer" />
             </div>
             <p className={cn('text-cream/75 leading-relaxed max-w-sm text-[15px]', isAr ? 'font-arabic' : 'font-sans')}>
               {isAr
-                ? `${BRAND.nameGroup.ar} — من جدة، بروح الضيافة والثقة إلى شركائنا حول العالم.`
-                : `${BRAND.nameGroup.en} — from Jeddah, with hospitality and trust to partners worldwide.`}
+                ? `${BRAND.nameGroup.ar} — من مصر إلى ${BRAND.sisterBrand.ar} في المملكة، وشركات المجموعة.`
+                : `${BRAND.nameGroup.en} — from Egypt to ${BRAND.sisterBrand.en} in the Kingdom, and the group companies.`}
             </p>
           </div>
 
-          <div>
+          <div className="lg:col-span-2">
             <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', isAr ? 'font-arabic' : 'font-sans')}>
               {isAr ? 'الشركة' : 'Company'}
             </h4>
@@ -78,7 +78,7 @@ export default function Footer({ lang }: { lang: string }) {
             </ul>
           </div>
 
-          <div>
+          <div className="lg:col-span-2">
             <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', isAr ? 'font-arabic' : 'font-sans')}>
               {isAr ? 'المنتجات' : 'Products'}
             </h4>
@@ -99,48 +99,86 @@ export default function Footer({ lang }: { lang: string }) {
             </ul>
           </div>
 
-          <div>
-            <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', isAr ? 'font-arabic' : 'font-sans')}>
-              {isAr ? 'تواصل معنا' : 'Contact'}
-            </h4>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <FooterIcon>
-                  <MapPin className="w-4 h-4" strokeWidth={1.75} />
-                </FooterIcon>
-                <span className={cn('text-cream/85 text-sm pt-1.5', isAr ? 'font-arabic' : 'font-sans')}>
-                  {isAr ? BRAND.contact.address.ar : BRAND.contact.address.en}
-                </span>
-              </li>
-              <li className="flex items-center gap-3">
-                <FooterIcon>
-                  <Phone className="w-4 h-4" strokeWidth={1.75} />
-                </FooterIcon>
-                <a
-                  href={`tel:${BRAND.contact.phoneTel}`}
-                  className="text-cream/85 text-sm hover:text-secondary transition-colors"
-                  dir="ltr"
-                >
-                  {BRAND.contact.phone}
-                </a>
-              </li>
-              <li className="flex items-center gap-3">
-                <FooterIcon>
-                  <Mail className="w-4 h-4" strokeWidth={1.75} />
-                </FooterIcon>
-                <a
-                  href={`mailto:${BRAND.contact.email}`}
-                  className="text-cream/85 text-sm hover:text-secondary transition-colors break-all"
-                >
-                  {BRAND.contact.email}
-                </a>
-              </li>
-            </ul>
+          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div>
+              <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', isAr ? 'font-arabic' : 'font-sans')}>
+                {isAr ? 'السعودية' : 'Saudi Arabia'}
+              </h4>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <FooterIcon>
+                    <MapPin className="w-4 h-4" strokeWidth={1.75} />
+                  </FooterIcon>
+                  <span className={cn('text-cream/85 text-sm pt-1.5', isAr ? 'font-arabic' : 'font-sans')}>
+                    {isAr ? BRAND.contact.address.ar : BRAND.contact.address.en}
+                  </span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <FooterIcon>
+                    <Phone className="w-4 h-4" strokeWidth={1.75} />
+                  </FooterIcon>
+                  <a
+                    href={`tel:${BRAND.contact.phoneTel}`}
+                    className="text-cream/85 text-sm hover:text-secondary transition-colors"
+                    dir="ltr"
+                  >
+                    {BRAND.contact.phone}
+                  </a>
+                </li>
+                <li className="flex items-center gap-3">
+                  <FooterIcon>
+                    <Mail className="w-4 h-4" strokeWidth={1.75} />
+                  </FooterIcon>
+                  <a
+                    href={`mailto:${BRAND.contact.email}`}
+                    className="text-cream/85 text-sm hover:text-secondary transition-colors break-all"
+                  >
+                    {BRAND.contact.email}
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', isAr ? 'font-arabic' : 'font-sans')}>
+                {isAr ? 'فرع مصر' : 'Egypt branch'}
+              </h4>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <FooterIcon>
+                    <MapPin className="w-4 h-4" strokeWidth={1.75} />
+                  </FooterIcon>
+                  <span className={cn('text-cream/85 text-sm pt-1.5', isAr ? 'font-arabic' : 'font-sans')}>
+                    {isAr ? BRAND.contact.egypt.address.ar : BRAND.contact.egypt.address.en}
+                  </span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <FooterIcon>
+                    <Phone className="w-4 h-4" strokeWidth={1.75} />
+                  </FooterIcon>
+                  <a
+                    href={`tel:${BRAND.contact.egypt.phoneTel}`}
+                    className="text-cream/85 text-sm hover:text-secondary transition-colors"
+                    dir="ltr"
+                  >
+                    {BRAND.contact.egypt.phone}
+                  </a>
+                </li>
+                <li className="flex items-start gap-3">
+                  <FooterIcon>
+                    <Building2 className="w-4 h-4" strokeWidth={1.75} />
+                  </FooterIcon>
+                  <span className={cn('text-cream/85 text-sm pt-1.5', isAr ? 'font-arabic' : 'font-sans')} dir="ltr">
+                    {isAr ? BRAND.legal.line.ar : BRAND.legal.line.en}
+                  </span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
         <div className="pt-8 border-t border-black/15 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className={cn('text-cream/60 text-sm', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-cream/60 text-sm text-center md:text-start', isAr ? 'font-arabic' : 'font-sans')}>
             &copy; {new Date().getFullYear()}{' '}
             {isAr
               ? `${BRAND.nameGroup.ar}. جميع الحقوق محفوظة.`

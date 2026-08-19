@@ -1,9 +1,9 @@
 {
   "name": "Khair Aljaar",
   "name_ar": "خير الجوار",
-  "version": "1.5.0",
-  "description": "Premium bilingual Zid theme — cinematic hero reel, mustard CTAs, synced with Next site",
-  "description_ar": "ثيم زد ثنائي اللغة — هيرو سينمائي وأزرار خردل، متزامن مع الموقع",
+  "version": "1.5.18",
+  "description": "Pillars + closer harvest orange to match footer (Vercel parity)",
+  "description_ar": "الأعمدة والختام برتقالي مثل الفوتر مطابقة لفيرسيل",
   "author": "Khair Aljaar Foods",
   "support_email": "info@khairaljaarfoods.com"
 }

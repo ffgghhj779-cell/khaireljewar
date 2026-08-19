@@ -21,7 +21,7 @@ export interface Product {
   trend?: string
 }
 
-/** Matches live catalog categories: https://khaireljewar.vercel.app/en/products */
+/** Matches live catalog categories: https://khairaljewargroup.com/en/products */
 export const PRODUCT_CATEGORIES = [
   { id: 'All', en: 'All', ar: 'الكل' },
   { id: 'Citrus', en: 'Citrus', ar: 'الموالح' },
@@ -42,7 +42,7 @@ const ORIGIN_JEDDAH = {
 
 /**
  * Core B2B commodities — aligned with live site catalog
- * (khaireljewar.vercel.app) — Jeddah hub, no Egypt locations.
+ * (khairaljewargroup.com) — Jeddah hub, no Egypt locations.
  */
 export const MOCK_PRODUCTS: Product[] = [
   {

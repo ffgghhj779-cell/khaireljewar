@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 72" role="img" aria-labelledby="thimarTitle">
+  <title id="thimarTitle">+E'1 #16F'</title>
+  <rect width="280" height="72" rx="16" fill="#E8F1EA"/>
+  <g transform="translate(22 18)" fill="#7FA68A">
+    <ellipse cx="10" cy="18" rx="9" ry="16" transform="rotate(-28 10 18)"/>
+    <ellipse cx="22" cy="16" rx="8" ry="15" transform="rotate(24 22 16)"/>
+    <rect x="14" y="28" width="3" height="14" rx="1.5"/>
+  </g>
+  <text x="58" y="46" fill="#1A332A" font-family="Tahoma, 'Segoe UI', sans-serif" font-size="22" font-weight="700">+E'1 #16F'</text>
+</svg>

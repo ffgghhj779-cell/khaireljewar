@@ -42,12 +42,13 @@ export default function OurPartners({ lang, hideTitle = false, className }: Prop
             key={partner.id}
             className="grid items-center gap-8 md:grid-cols-[minmax(11rem,15rem)_1fr] md:gap-10"
           >
-            <div className="mx-auto grid aspect-square w-full max-w-[15rem] place-items-center border border-primary/10 bg-white p-6 shadow-soft">
+            <div className="mx-auto grid aspect-square w-full max-w-[15rem] place-items-center border border-farm/30 bg-farm-mist p-6 shadow-soft">
               <Image
                 src={partner.logo}
                 alt={isAr ? partner.name.ar : partner.name.en}
                 width={280}
                 height={280}
+                unoptimized={partner.logo.endsWith('.svg')}
                 className="h-full w-full object-contain"
               />
             </div>
@@ -77,7 +78,7 @@ export default function OurPartners({ lang, hideTitle = false, className }: Prop
                   <li
                     key={item}
                     className={cn(
-                      'border border-primary/10 bg-primary/[0.06] px-3 py-1.5 text-xs font-semibold text-primary',
+                      'border border-farm/25 bg-farm-soft px-3 py-1.5 text-xs font-semibold text-primary',
                       isAr ? 'font-arabic' : 'font-sans'
                     )}
                   >
@@ -86,15 +87,21 @@ export default function OurPartners({ lang, hideTitle = false, className }: Prop
                 ))}
               </ul>
               <Link
-                href={partner.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={partner.href.startsWith('http') ? partner.href : `/${lang}${partner.href}`}
+                target={partner.href.startsWith('http') ? '_blank' : undefined}
+                rel={partner.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className={cn(
                   'inline-flex min-h-[48px] items-center rounded-xl bg-secondary px-5 text-sm font-semibold text-primary hover:bg-secondary/90',
                   isAr ? 'font-arabic' : 'font-sans'
                 )}
               >
-                {isAr ? 'زيارة الموقع' : 'Visit website'}
+                {partner.href.startsWith('http')
+                  ? isAr
+                    ? 'زيارة الموقع'
+                    : 'Visit website'
+                  : isAr
+                    ? 'تعرف علينا'
+                    : 'Learn more'}
               </Link>
             </div>
           </article>

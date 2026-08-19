@@ -73,9 +73,9 @@ export function ProductCardSkeleton({ compact = false }: { compact?: boolean }) 
   return (
     <div className={cn('overflow-hidden rounded-xl shadow-soft', compact && 'rounded-xl')}>
       <Skeleton className="aspect-square w-full rounded-none" />
-      <div className="bg-primary px-4 py-3.5 space-y-2">
-        <Skeleton className="h-2 w-16 bg-cream/20" />
-        <Skeleton className="h-4 w-28 bg-cream/25" />
+      <div className="bg-farm-panel px-4 py-3.5 space-y-2">
+        <Skeleton className="h-2 w-16 bg-primary/15" />
+        <Skeleton className="h-4 w-28 bg-primary/20" />
       </div>
     </div>
   )

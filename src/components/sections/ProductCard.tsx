@@ -75,11 +75,11 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
 
         <Link
           href={`/${lang}/products/${product.slug}`}
-          className="flex flex-1 flex-col bg-primary px-3.5 py-3 md:px-4 md:py-3.5"
+          className="flex flex-1 flex-col bg-farm-panel px-3.5 py-3 md:px-4 md:py-3.5"
         >
           <p
             className={cn(
-              'text-[10px] uppercase tracking-[0.12em] text-cream/55 mb-0.5',
+              'text-[10px] uppercase tracking-[0.12em] text-primary/55 mb-0.5',
               isAr ? 'font-arabic normal-case tracking-normal text-[11px]' : 'font-sans'
             )}
           >
@@ -87,28 +87,28 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
           </p>
           <h3
             className={cn(
-              'text-[13px] md:text-[15px] font-semibold text-cream leading-snug line-clamp-2 mb-2.5',
+              'text-[13px] md:text-[15px] font-semibold text-primary leading-snug line-clamp-2 mb-2.5',
               isAr ? 'font-arabic' : 'font-display'
             )}
           >
             {title}
           </h3>
 
-          <ul className="mt-auto space-y-1.5 border-t border-cream/15 pt-2.5">
-            <li className="flex items-center gap-1.5 text-cream/85">
+          <ul className="mt-auto space-y-1.5 border-t border-primary/12 pt-2.5">
+            <li className="flex items-center gap-1.5 text-primary">
               <Tag className="h-3 w-3 shrink-0 text-secondary" strokeWidth={2} aria-hidden />
               <span className={cn('text-[11px] font-semibold truncate', isAr ? 'font-arabic' : 'font-sans')}>
                 {isAr ? `من ${moq}` : `From ${moq}`}
               </span>
             </li>
             {!compact && (
-              <li className="flex items-center gap-1.5 text-cream/70">
+              <li className="flex items-center gap-1.5 text-primary/70">
                 <Package className="h-3 w-3 shrink-0 opacity-80" strokeWidth={2} aria-hidden />
                 <span className={cn('text-[10px] truncate', isAr ? 'font-arabic' : 'font-sans')}>{packaging}</span>
               </li>
             )}
             {!compact && (
-              <li className="flex items-center gap-1.5 text-cream/70">
+              <li className="flex items-center gap-1.5 text-primary/70">
                 <CalendarDays className="h-3 w-3 shrink-0 opacity-80" strokeWidth={2} aria-hidden />
                 <span className={cn('text-[10px] truncate', isAr ? 'font-arabic' : 'font-sans')}>{season}</span>
               </li>

@@ -31,6 +31,15 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/:lang(en|ar)/certifications',
+        destination: '/:lang/quality',
+        permanent: true,
+      },
+    ]
+  },
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
   },

@@ -295,6 +295,38 @@
     transform-style: preserve-3d;
   }
 
+  @keyframes partner-logo-marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @keyframes partner-logo-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  .partner-logo-marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .partner-logo-marquee__track {
+    animation: partner-logo-marquee 28s linear infinite;
+  }
+
+  .partner-logo-float {
+    animation: partner-logo-float 4.8s ease-in-out infinite;
+  }
+
   @keyframes marquee-ltr {
     from {
       transform: translate3d(-50%, 0, 0);
@@ -627,6 +659,8 @@
       scroll-behavior: auto !important;
     }
 
+    .partner-logo-marquee__track,
+    .partner-logo-float,
     .marquee-track-ltr,
     .marquee-track-rtl,
     .marquee-ticker-ltr,

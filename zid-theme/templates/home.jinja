@@ -8,6 +8,15 @@
 {% block content %}
 {# ── Cinematic hero (v1.5) ── #}
 <section class="ka-hero">
+  <img
+    class="ka-hero__poster"
+    src="{{ 'images/brand/hero-reel/warehouse.png'|asset_url }}"
+    alt=""
+    width="1280"
+    height="720"
+    decoding="async"
+    fetchpriority="high"
+  />
   <video
     class="ka-hero__video"
     autoplay
@@ -20,19 +29,11 @@
     <source src="{{ 'videos/hero.webm'|asset_url }}" type="video/webm" />
     <source src="{{ 'videos/hero.mp4'|asset_url }}" type="video/mp4" />
   </video>
-  <img
-    class="ka-hero__poster"
-    src="{{ 'images/brand/hero-reel/warehouse.png'|asset_url }}"
-    alt=""
-    width="1280"
-    height="720"
-    hidden
-  />
   <div class="ka-hero__wash" aria-hidden="true"></div>
   <div class="ka-hero__edge" aria-hidden="true"></div>
 
-  <div class="ka-hero__grid ka-reveal">
-    <div>
+  <div class="ka-hero__grid">
+    <div class="ka-hero__copy">
       <p class="ka-hero__eyebrow">{% if en %}From Jeddah{% else %}من جدة{% endif %}</p>
       <h1 class="ka-hero__title">
         {% if en %}Khair Aljaar{% else %}خير الجوار{% endif %}
@@ -48,7 +49,7 @@
         {% endif %}
       </p>
       <div class="ka-hero__actions">
-        <a class="ka-btn ka-btn--primary" href="/products">
+        <a class="ka-btn ka-btn--primary" href="{{ url_for('pages', slug='contact') }}">
           {% if en %}Request a quote{% else %}اطلب عرض سعر{% endif %}
         </a>
         <a class="ka-btn ka-btn--outline" href="/products">
@@ -62,7 +63,7 @@
 {# ── Standards strip ── #}
 <section class="ka-standards">
   <div class="ka-container">
-    <p class="ka-standards__label">{% if en %}Trust & standards frame{% else %}إطار الثقة والمعايير{% endif %}</p>
+    <p class="ka-standards__label">{% if en %}Trust & standards{% else %}إطار الثقة والمعايير{% endif %}</p>
     <div class="ka-standards__row">
       <span>{% if en %}SFDA-aligned{% else %}امتثال SFDA{% endif %}</span>
       <span>GLOBALG.A.P.</span>
@@ -98,8 +99,13 @@
           نورد من مزارع شريكة موثوقة وننسّق التصدير بعناية من جدة.
         {% endif %}
       </p>
-      <a class="ka-btn ka-btn--primary" href="/page/about">
-        {% if en %}Learn more{% else %}اعرف قصتنا{% endif %}
+      <div class="ka-chips">
+        <span>{% if en %}Partner farms{% else %}مزارع شريكة{% endif %}</span>
+        <span>{% if en %}Jeddah hub{% else %}مركز جدة{% endif %}</span>
+        <span>{% if en %}Export ready{% else %}جاهز للتصدير{% endif %}</span>
+      </div>
+      <a class="ka-btn ka-btn--primary" href="{{ url_for('pages', slug='about') }}">
+        {% if en %}Our story{% else %}اعرف قصتنا{% endif %}
       </a>
     </div>
     <div class="ka-origin__strip">
@@ -118,21 +124,14 @@
     <div class="ka-section__center">
       <p class="ka-section__label">{% if en %}Our products{% else %}المنتجات{% endif %}</p>
       <h2 class="ka-section__title">
-        {% if en %}Made to be wanted.{% else %}منتجات تُطلب.{% endif %}
+        {% if en %}Fresh from Khair Aljaar.{% else %}من خير الجوار.{% endif %}
       </h2>
-      <p class="ka-section__text">
-        {% if en %}
-          Studio-grade produce. Clear specs. Ready for wholesale inquiry.
-        {% else %}
-          تصوير استوديو احترافي. مواصفات واضحة. جاهزة لطلبات الجملة.
-        {% endif %}
-      </p>
     </div>
 
     <div class="ka-products">
       {% if products and products|length > 0 %}
-        {% for product in products[:9] %}
-          <a class="ka-card" href="{{ product.html_url|default('/products/' ~ product.slug|default(product.id)) }}">
+        {% for product in products[:12] %}
+          <a class="ka-card" href="{{ product.html_url|default('/products/' ~ product.slug|default(product.id)) }}" data-sku="{{ product.sku|default('', true) }}" data-name="{{ product.name }}">
             <div class="ka-card__media">
               {% if product.images and product.images|length > 0 %}
                 <img src="{{ product.images[0].image.full_size|default(product.images[0].src|default(product.images[0])) }}" alt="{{ product.name }}" width="640" height="640" loading="lazy" />
@@ -141,10 +140,16 @@
               {% else %}
                 <img src="{{ 'images/products/oranges.webp'|asset_url }}" alt="{{ product.name }}" width="640" height="640" loading="lazy" />
               {% endif %}
+              <span class="ka-card__price" hidden></span>
             </div>
             <div class="ka-card__body">
               <p class="ka-card__cat">{{ product.categories[0].name if product.categories else '' }}</p>
               <h3 class="ka-card__title">{{ product.name }}</h3>
+              <ul class="ka-card__specs" hidden>
+                <li class="ka-card__moq"></li>
+                <li class="ka-card__pack"></li>
+                <li class="ka-card__season"></li>
+              </ul>
             </div>
           </a>
         {% endfor %}
@@ -202,7 +207,7 @@
 
     <div class="ka-section__center" style="margin-top:2.5rem">
       <a class="ka-btn ka-btn--primary" href="/products">
-        {% if en %}View full catalog{% else %}عرض الكتالوج كاملًا{% endif %}
+        {% if en %}View all{% else %}كل المنتجات{% endif %}
       </a>
     </div>
   </div>
@@ -214,31 +219,33 @@
     <div class="ka-section__center">
       <p class="ka-section__label">{% if en %}From farm to table{% else %}من المزرعة إلى المائدة{% endif %}</p>
       <h2 class="ka-section__title">
-        {% if en %}Quiet confidence.{% else %}ثقة بهدوء.{% endif %}
+        {% if en %}Trust you can see.{% else %}ثقة تُرى.{% endif %}
       </h2>
-      <p class="ka-section__text">
-        {% if en %}
-          Cold-chain discipline, export documentation, and partner-first service — without the noise.
-        {% else %}
-          سلسلة تبريد منضبطة، وثائق تصدير، وخدمة تضع الشريك أولًا — بلا ضجيج.
-        {% endif %}
-      </p>
     </div>
-    <article class="ka-editorial">
-      <div class="ka-editorial__media">
-        <img
-          src="{{ 'images/brand/editorial-board.webp'|asset_url }}"
-          alt="{% if en %}Harvest board{% else %}لوحة الحصاد{% endif %}"
-          width="840"
-          height="1050"
-          loading="lazy"
-        />
-      </div>
-      <div class="ka-editorial__body">
-        <p class="ka-editorial__cat">{% if en %}HARVEST · EDITORIAL{% else %}حصاد · تحريري{% endif %}</p>
-        <h3 class="ka-editorial__title">{% if en %}Harvest board{% else %}لوحة الحصاد{% endif %}</h3>
-      </div>
-    </article>
+    <div
+      class="ka-editorial-wrap"
+      data-ka-slider
+      data-slide-imgs="{{ 'images/brand/editorial-board.webp'|asset_url }}|{{ 'images/products/medjool-dates.webp'|asset_url }}|{{ 'images/products/kent-mangoes.webp'|asset_url }}|{{ 'images/products/dates.webp'|asset_url }}"
+      data-slide-cats="{% if en %}HARVEST · EDITORIAL|DATES · PREMIUM|FRUITS · SEASONAL|HOSPITALITY · JEDDAH{% else %}حصاد · تحريري|تمور · فاخر|فواكه · موسمي|ضيافة · جدة{% endif %}"
+      data-slide-titles="{% if en %}Harvest board|Medjool dates|Kent mangoes|Neighborly table{% else %}لوحة الحصاد|تمر مجدول|مانجو كينت|مائدة الجوار{% endif %}"
+    >
+      <button type="button" class="ka-editorial__nav" data-ka-prev aria-label="{% if en %}Previous{% else %}السابق{% endif %}">‹</button>
+      <article class="ka-editorial">
+        <div class="ka-editorial__media">
+          <img data-ka-slide-img src="{{ 'images/brand/editorial-board.webp'|asset_url }}" alt="" width="840" height="1050" loading="lazy" />
+        </div>
+        <div class="ka-editorial__body">
+          <p class="ka-editorial__cat" data-ka-slide-cat>{% if en %}HARVEST · EDITORIAL{% else %}حصاد · تحريري{% endif %}</p>
+          <h3 class="ka-editorial__title" data-ka-slide-title>{% if en %}Harvest board{% else %}لوحة الحصاد{% endif %}</h3>
+        </div>
+      </article>
+      <button type="button" class="ka-editorial__nav" data-ka-next aria-label="{% if en %}Next{% else %}التالي{% endif %}">›</button>
+    </div>
+    <div class="ka-editorial__dots" data-ka-dots aria-hidden="true"></div>
+    <div class="ka-editorial__actions">
+      <a class="ka-btn ka-btn--primary" href="{{ url_for('pages', slug='quality') }}">{% if en %}Download certificates{% else %}تحميل الشهادات{% endif %}</a>
+      <a class="ka-btn ka-btn--on-cream ka-btn--outline" href="{{ url_for('pages', slug='contact') }}">{% if en %}Request a specific doc{% else %}اطلب وثيقة محددة{% endif %}</a>
+    </div>
   </div>
 </section>
 
@@ -252,22 +259,26 @@
           {% if en %}Four pillars partners can lean on.{% else %}أربعة أعمدة يعتمد عليها الشريك.{% endif %}
         </h2>
       </div>
-      <a class="ka-link" href="/page/quality">{% if en %}Quality system →{% else %}نظام الجودة ←{% endif %}</a>
+      <a class="ka-link" href="{{ url_for('pages', slug='quality') }}">{% if en %}Quality system →{% else %}نظام الجودة ←{% endif %}</a>
     </div>
     <div class="ka-proof__grid">
       <article>
+        <span class="ka-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 3 5 6v6c0 5 3.2 8.4 7 9.5C15.8 20.4 19 17 19 12V6l-7-3z"/></svg></span>
         <strong>{% if en %}Quality care{% else %}عناية بالجودة{% endif %}</strong>
         <p>{% if en %}Graded lots, packing integrity, export-minded specs.{% else %}دفعات مفرزة وتعبئة سليمة ومواصفات تصدير.{% endif %}</p>
       </article>
       <article>
+        <span class="ka-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3.2"/></svg></span>
         <strong>{% if en %}Cold chain{% else %}سلسلة التبريد{% endif %}</strong>
         <p>{% if en %}Temperature-minded handling from hub to destination.{% else %}مناولة تراعي الحرارة من المركز إلى الوجهة.{% endif %}</p>
       </article>
       <article>
+        <span class="ka-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M8 3h6l5 5v13H8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
         <strong>{% if en %}Documentation{% else %}وثائق{% endif %}</strong>
         <p>{% if en %}Origin, packing lists, and partner-ready paperwork.{% else %}منشأ وقوائم تعبئة وأوراق جاهزة للشريك.{% endif %}</p>
       </article>
       <article>
+        <span class="ka-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg></span>
         <strong>{% if en %}Jeddah hub{% else %}مركز جدة{% endif %}</strong>
         <p>{% if en %}Red Sea logistics base for GCC and beyond.{% else %}قاعدة لوجستية على البحر الأحمر للخليج وما بعده.{% endif %}</p>
       </article>
@@ -278,28 +289,32 @@
 {# ── Export docs ── #}
 <section class="ka-docs" id="export-docs">
   <div class="ka-container">
-    <div class="ka-section__center" style="margin-bottom:1.5rem">
+    <div class="ka-docs__intro">
       <p class="ka-section__label">{% if en %}Export readiness{% else %}جاهزية التصدير{% endif %}</p>
-      <h2 class="ka-section__title" style="font-size:clamp(1.4rem,3vw,2rem)">
+      <h2 class="ka-section__title" style="font-size:clamp(1.35rem,5vw,1.875rem);text-align:start;margin:0">
         {% if en %}Documents and support importers expect.{% else %}وثائق ودعم يحتاجه المستورد.{% endif %}
       </h2>
     </div>
     <div class="ka-docs__grid">
       <article class="ka-docs__card">
+        <span class="ka-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M8 3h6l5 5v13H8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
         <strong>{% if en %}Commercial docs{% else %}وثائق تجارية{% endif %}</strong>
         <p>{% if en %}Invoice, packing list, and Certificate of Origin as required.{% else %}فاتورة وقائمة تعبئة وشهادة منشأ حسب الطلب.{% endif %}</p>
       </article>
       <article class="ka-docs__card">
+        <span class="ka-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M8 4h8v16H8z"/><path d="M10 8h4M10 12h4M10 16h3"/></svg></span>
         <strong>{% if en %}Quality pack{% else %}حزمة الجودة{% endif %}</strong>
         <p>{% if en %}Grade specs, lot notes, and partner-ready paperwork.{% else %}مواصفات الدرجة وملاحظات الدفعات وأوراق جاهزة للشريك.{% endif %}</p>
       </article>
       <article class="ka-docs__card">
+        <span class="ka-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 3v10"/><path d="M8 8h8"/><circle cx="12" cy="17" r="3"/></svg></span>
         <strong>{% if en %}Cold-chain notes{% else %}ملاحظات التبريد{% endif %}</strong>
         <p>{% if en %}Temperature-minded handling for chilled and frozen lines.{% else %}مناولة تراعي الحرارة للخطوط المبردة والمجمدة.{% endif %}</p>
       </article>
       <article class="ka-docs__card">
+        <span class="ka-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 17V8l9-4 9 4v9"/><path d="M3 17c2 2 5 3 9 3s7-1 9-3"/></svg></span>
         <strong>{% if en %}Shipping support{% else %}دعم الشحن{% endif %}</strong>
-        <p>{% if en %}FOB Jeddah by default; CIF/CFR by lane and volume.{% else %}FOB جدة افتراضيًا؛ CIF/CFR حسب المسار والحجم.{% endif %}</p>
+        <p>{% if en %}FOB Jeddah coordination; CIF/CFR available by lane and volume.{% else %}تنسيق FOB جدة؛ CIF/CFR حسب المسار والحجم.{% endif %}</p>
       </article>
     </div>
   </div>
@@ -316,16 +331,153 @@
     </div>
     <details open>
       <summary>{% if en %}What is the minimum order?{% else %}ما الحد الأدنى للطلب؟{% endif %}</summary>
-      <p>{% if en %}Most lines start from 1 MT or 1 container. Exact MOQ is confirmed on quote.{% else %}معظم الخطوط تبدأ من طن أو حاوية. الحد الأدنى يُؤكد في عرض السعر.{% endif %}</p>
+      <p>{% if en %}Most lines start from 1 MT or 1 container depending on the product. Exact MOQ is shown on each product card and confirmed on quote.{% else %}معظم الخطوط تبدأ من طن واحد أو حاوية حسب المنتج. الحد الأدنى يظهر على كرت المنتج ويُؤكد في عرض السعر.{% endif %}</p>
     </details>
     <details>
       <summary>{% if en %}Which Incoterms do you offer?{% else %}ما شروط الشحن المتوفرة؟{% endif %}</summary>
-      <p>{% if en %}FOB Jeddah is default. CIF, CFR, EXW, and DAP can be quoted by destination.{% else %}FOB جدة افتراضي. يمكن تسعير CIF وCFR وEXW وDAP حسب الوجهة.{% endif %}</p>
+      <p>{% if en %}FOB Jeddah is our default. CIF, CFR, EXW, and DAP can be quoted by destination, volume, and season.{% else %}FOB جدة هو الافتراضي. يمكن تسعير CIF وCFR وEXW وDAP حسب الوجهة والحجم والموسم.{% endif %}</p>
     </details>
     <details>
-      <summary>{% if en %}Are listed prices final?{% else %}هل الأسعار المعروضة نهائية؟{% endif %}</summary>
-      <p>{% if en %}No — index prices are indicative and subject to confirmation.{% else %}لا — الأسعار استرشادية وتخضع للتأكيد.{% endif %}</p>
+      <summary>{% if en %}How fast can you ship?{% else %}ما سرعة الشحن؟{% endif %}</summary>
+      <p>{% if en %}Lead time depends on product season and packing slot. Share your ship window in the RFQ and we confirm a realistic schedule.{% else %}زمن التجهيز يعتمد على موسم المنتج وموعد التعبئة. اذكر نافذة الشحن في الطلب ونؤكد جدولاً واقعياً.{% endif %}</p>
     </details>
+    <details>
+      <summary>{% if en %}Are the listed prices final?{% else %}هل الأسعار المعروضة نهائية؟{% endif %}</summary>
+      <p>{% if en %}No. Index prices on cards are indicative only and subject to confirmation. Final offers follow grade, volume, and Incoterm.{% else %}لا. الأسعار على الكروت استرشادية فقط وتخضع للتأكيد. العرض النهائي حسب الدرجة والحجم وشرط الشحن.{% endif %}</p>
+    </details>
+    <details>
+      <summary>{% if en %}What documents do you provide?{% else %}ما الوثائق التي توفرونها؟{% endif %}</summary>
+      <p>{% if en %}Commercial invoice, packing list, and Certificate of Origin as required, plus quality notes and cold-chain guidance for relevant lines.{% else %}فاتورة تجارية وقائمة تعبئة وشهادة منشأ حسب الطلب، مع ملاحظات جودة وإرشادات تبريد للخطوط المعنية.{% endif %}</p>
+    </details>
+  </div>
+</section>
+
+{# ── Partners (inlined — no include, avoids Zid template break) ── #}
+<section class="ka-section ka-section--soft" id="partners">
+  <div class="ka-container">
+    <div class="ka-section__center" style="margin-bottom:2rem">
+      <p class="ka-section__label">{% if en %}Khair Aljaar{% else %}خير الجوار{% endif %}</p>
+      <h2 class="ka-section__title">{% if en %}Our Partners{% else %}شركاؤنا{% endif %}</h2>
+      <p class="ka-section__text" style="margin-inline:auto;max-width:38rem">
+        {% if en %}
+          Trusted Saudi food partners we stand beside — wholesale reliability, cold-chain discipline, and quality that reaches kitchens and markets across the Kingdom.
+        {% else %}
+          شركاء غذائيون سعوديون نثق بهم — موثوقية توريد جملة، انضباط سلسلة التبريد، وجودة تصل المطابخ والأسواق في أنحاء المملكة.
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="ka-logo-strip" aria-label="{% if en %}Partners{% else %}الشركاء{% endif %}">
+      <div class="ka-logo-card ka-float">
+        <img src="{{ 'images/partners/ninja-logo.svg'|asset_url }}" alt="{% if en %}Ninja{% else %}نينجا{% endif %}" width="180" height="60" loading="lazy" />
+        <span>{% if en %}Ninja{% else %}نينجا{% endif %}</span>
+      </div>
+      <div class="ka-logo-card ka-float-delay">
+        <img src="{{ 'images/partners/noon-logo.svg'|asset_url }}" alt="{% if en %}noon{% else %}نون{% endif %}" width="180" height="60" loading="lazy" />
+        <span>{% if en %}noon{% else %}نون{% endif %}</span>
+      </div>
+      <div class="ka-logo-card ka-float">
+        <img src="{{ 'images/partners/tasami-logo.png'|asset_url }}" alt="{% if en %}Tasami{% else %}تسامي{% endif %}" width="180" height="60" loading="lazy" />
+        <span>{% if en %}Tasami{% else %}تسامي الوطنية{% endif %}</span>
+      </div>
+      <div class="ka-logo-card ka-float-delay">
+        <img src="{{ 'images/partners/alrehan-logo.png'|asset_url }}" alt="{% if en %}Al Rehan{% else %}الرهان الماسي{% endif %}" width="180" height="60" loading="lazy" />
+        <span>{% if en %}Al Rehan{% else %}الرهان الماسي{% endif %}</span>
+      </div>
+      <div class="ka-logo-card ka-float">
+        <img src="{{ 'images/partners/thimar-ardina-logo.svg'|asset_url }}" alt="{% if en %}Thimar Ardina{% else %}ثمار أرضنا{% endif %}" width="180" height="60" loading="lazy" />
+        <span>{% if en %}Thimar Ardina{% else %}ثمار أرضنا{% endif %}</span>
+      </div>
+    </div>
+
+    <div class="ka-partners">
+      <article class="ka-partner">
+        <div class="ka-partner__mark">
+          <img
+            src="{{ 'images/partners/tasami-logo.png'|asset_url }}"
+            alt="{% if en %}Tasami Al-Wataniya{% else %}تسامي الوطنية{% endif %}"
+            width="280"
+            height="280"
+            loading="lazy"
+          />
+        </div>
+        <div class="ka-partner__copy">
+          <p class="ka-partner__tag">{% if en %}Wholesale food supply{% else %}توريد أغذية بالجملة{% endif %}</p>
+          <h3 class="ka-partner__name">{% if en %}Tasami Al-Wataniya{% else %}تسامي الوطنية{% endif %}</h3>
+          <p class="ka-partner__brief">
+            {% if en %}
+              A national wholesale house for chilled and frozen poultry, fresh eggs, produce, frozen lines, and pantry staples — built for restaurants, central markets, and catering that need steady supply.
+            {% else %}
+              مؤسسة توريد جملة وطنية للدواجن المبردة والمجمدة، والبيض الطازج، والخضار والفاكهة، والمجمدات، ومستلزمات المطبخ — لخدمة المطاعم والأسواق المركزية وقطاع التموين بتوريد منتظم.
+            {% endif %}
+          </p>
+          <ul class="ka-partner__focus">
+            <li>{% if en %}Chilled &amp; frozen poultry{% else %}دواجن مبردة ومجمدة{% endif %}</li>
+            <li>{% if en %}Fresh eggs &amp; produce{% else %}بيض طازج وخضار وفاكهة{% endif %}</li>
+            <li>{% if en %}Frozen &amp; pantry lines{% else %}مجمدات ومستلزمات مطبخ{% endif %}</li>
+            <li>{% if en %}Halal · SFDA-aligned{% else %}حلال · مطابق لهيئة الغذاء والدواء{% endif %}</li>
+          </ul>
+          <a class="ka-btn ka-btn--primary" href="https://tasami56taa.vercel.app/" target="_blank" rel="noopener noreferrer">
+            {% if en %}Visit website{% else %}زيارة الموقع{% endif %}
+          </a>
+        </div>
+      </article>
+
+      <article class="ka-partner">
+        <div class="ka-partner__mark">
+          <img
+            src="{{ 'images/partners/alrehan-logo.png'|asset_url }}"
+            alt="{% if en %}Al Rehan Al Masi{% else %}الرهان الماسي{% endif %}"
+            width="280"
+            height="280"
+            loading="lazy"
+          />
+        </div>
+        <div class="ka-partner__copy">
+          <p class="ka-partner__tag">{% if en %}Poultry · Eggs · Farm to table{% else %}دواجن · بيض · من المزرعة إلى المائدة{% endif %}</p>
+          <h3 class="ka-partner__name">{% if en %}Al Rehan Al Masi Poultry{% else %}مؤسسة الرهان الماسي للدواجن{% endif %}</h3>
+          <p class="ka-partner__brief">
+            {% if en %}
+              A trusted poultry partner supplying chilled and frozen chicken, table eggs, and processed lines — with certified Halal slaughter, cold-chain care, and farm-to-table discipline for hotels, restaurants, and catering.
+            {% else %}
+              شريك دواجن موثوق يورّد الدجاج المبرد والمجمد، وبيض المائدة، والمصنعات — مع ذبح حلال معتمد، عناية بسلسلة التبريد، وانضباط من المزرعة إلى المائدة لخدمة الفنادق والمطاعم وشركات التموين.
+            {% endif %}
+          </p>
+          <ul class="ka-partner__focus">
+            <li>{% if en %}Chilled &amp; frozen chicken{% else %}دجاج مبرد ومجمد{% endif %}</li>
+            <li>{% if en %}Fresh table eggs{% else %}بيض مائدة طازج{% endif %}</li>
+            <li>{% if en %}Processed chicken lines{% else %}مصنعات الدجاج{% endif %}</li>
+            <li>{% if en %}Halal · Continuous cold chain{% else %}حلال · سلسلة تبريد متواصلة{% endif %}</li>
+          </ul>
+          <a class="ka-btn ka-btn--primary" href="https://alrehan-almasi.vercel.app/" target="_blank" rel="noopener noreferrer">
+            {% if en %}Visit website{% else %}زيارة الموقع{% endif %}
+          </a>
+        </div>
+      </article>
+
+      <article class="ka-partner">
+        <div class="ka-partner__mark">
+          <img
+            src="{{ 'images/partners/thimar-ardina-logo.svg'|asset_url }}"
+            alt="{% if en %}Thimar Ardina{% else %}ثمار أرضنا{% endif %}"
+            width="280"
+            height="280"
+            loading="lazy"
+          />
+        </div>
+        <div class="ka-partner__copy">
+          <p class="ka-partner__tag">{% if en %}Sister brand · Kingdom of Saudi Arabia{% else %}العلامة الشقيقة · المملكة العربية السعودية{% endif %}</p>
+          <h3 class="ka-partner__name">{% if en %}Thimar Ardina{% else %}ثمار أرضنا{% endif %}</h3>
+          <p class="ka-partner__brief">
+            {% if en %}
+              The group’s Saudi harvest house — bringing Khair Aljaar’s neighborly care into the Kingdom under the Thimar Ardina name.
+            {% else %}
+              بيت الحصاد السعودي للمجموعة — ينقل عناية خير الجوار إلى المملكة تحت اسم ثمار أرضنا.
+            {% endif %}
+          </p>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -339,28 +491,28 @@
     </div>
     <div class="ka-pillars">
       <div class="ka-pillar">
-        <svg class="ka-pillar__icon ka-float" viewBox="0 0 72 88" fill="none" aria-hidden="true"><path d="M36 80C20 62 14 40 22 22C28 10 36 8 36 8s8 2 14 14c8 18 2 40-14 58Z" fill="#F7F4EC" fill-opacity=".15" stroke="#F7F4EC" stroke-width="1.5"/></svg>
+        <svg class="ka-pillar__icon ka-float" viewBox="0 0 72 88" fill="none" aria-hidden="true"><path d="M36 80C20 62 14 40 22 22C28 10 36 8 36 8s8 2 14 14c8 18 2 40-14 58Z" fill="#C5D9B8" fill-opacity=".15" stroke="#C5D9B8" stroke-width="1.5"/></svg>
         <h3>{% if en %}Quality{% else %}الجودة{% endif %}</h3>
-        <p>{% if en %}Certified care in every carton.{% else %}عناية معتمدة في كل كرتونة.{% endif %}</p>
-        <a href="/page/quality">{% if en %}Explore{% else %}استكشف{% endif %}</a>
+        <p>{% if en %}Certified care in every carton — standards partners can trust.{% else %}عناية معتمدة في كل كرتونة — معايير يثق بها الشركاء.{% endif %}</p>
+        <a href="{{ url_for('pages', slug='quality') }}">{% if en %}More{% else %}المزيد{% endif %}</a>
       </div>
       <div class="ka-pillar">
-        <svg class="ka-pillar__icon ka-float-delay" viewBox="0 0 40 100" fill="none" aria-hidden="true"><path d="M20 96C18 70 10 52 20 28C28 10 26 4 20 2" stroke="#F7F4EC" stroke-width="1.5"/></svg>
+        <svg class="ka-pillar__icon ka-float-delay" viewBox="0 0 40 100" fill="none" aria-hidden="true"><path d="M20 96C18 70 10 52 20 28C28 10 26 4 20 2" stroke="#C5D9B8" stroke-width="1.5"/></svg>
         <h3>{% if en %}Cold chain{% else %}سلسلة التبريد{% endif %}</h3>
-        <p>{% if en %}Temperature-minded handling to port.{% else %}مناولة تراعي الحرارة حتى الميناء.{% endif %}</p>
-        <a href="/page/logistics">{% if en %}Explore{% else %}استكشف{% endif %}</a>
+        <p>{% if en %}Temperature-minded handling from packing through to port.{% else %}مناولة تراعي الحرارة من التعبئة حتى الميناء.{% endif %}</p>
+        <a href="{{ url_for('pages', slug='logistics') }}">{% if en %}More{% else %}المزيد{% endif %}</a>
       </div>
       <div class="ka-pillar">
-        <svg class="ka-pillar__icon ka-float" viewBox="0 0 90 90" fill="none" aria-hidden="true"><path d="M45 78V42M45 48c-14-6-22-18-24-30M45 52c14-6 22-18 24-30" stroke="#F7F4EC" stroke-width="1.55"/></svg>
+        <svg class="ka-pillar__icon ka-float" viewBox="0 0 90 90" fill="none" aria-hidden="true"><path d="M45 78V42M45 48c-14-6-22-18-24-30M45 52c14-6 22-18 24-30" stroke="#C5D9B8" stroke-width="1.55"/></svg>
         <h3>{% if en %}Jeddah hub{% else %}مركز جدة{% endif %}</h3>
-        <p>{% if en %}Export logistics rooted in Jeddah.{% else %}لوجستيات تصدير من جدة.{% endif %}</p>
-        <a href="/page/about">{% if en %}Explore{% else %}استكشف{% endif %}</a>
+        <p>{% if en %}Export logistics rooted in Jeddah, reaching partners worldwide.{% else %}لوجستيات تصدير من جدة إلى شركاء حول العالم.{% endif %}</p>
+        <a href="{{ url_for('pages', slug='about') }}">{% if en %}More{% else %}المزيد{% endif %}</a>
       </div>
       <div class="ka-pillar">
-        <svg class="ka-pillar__icon ka-float-delay" viewBox="0 0 72 72" fill="none" aria-hidden="true"><circle cx="28" cy="40" r="12" stroke="#F7F4EC" stroke-width="1.4"/><circle cx="44" cy="36" r="11" stroke="#F7F4EC" stroke-width="1.4"/></svg>
+        <svg class="ka-pillar__icon ka-float-delay" viewBox="0 0 72 72" fill="none" aria-hidden="true"><circle cx="28" cy="40" r="12" stroke="#C5D9B8" stroke-width="1.4"/><circle cx="44" cy="36" r="11" stroke="#C5D9B8" stroke-width="1.4"/></svg>
         <h3>{% if en %}Neighborly{% else %}الجوار{% endif %}</h3>
-        <p>{% if en %}Hospitality and clarity in every shipment.{% else %}ضيافة ووضوح في كل شحنة.{% endif %}</p>
-        <a href="/page/contact">{% if en %}Contact{% else %}تواصل{% endif %}</a>
+        <p>{% if en %}Hospitality and clarity in every conversation and shipment.{% else %}ضيافة ووضوح في كل محادثة وكل شحنة.{% endif %}</p>
+        <a href="{{ url_for('pages', slug='contact') }}">{% if en %}More{% else %}المزيد{% endif %}</a>
       </div>
     </div>
   </div>
@@ -368,13 +520,14 @@
 
 {# ── Closer ── #}
 <section class="ka-section ka-section--green ka-closer" id="closer">
+  <div class="ka-closer__edge" aria-hidden="true"></div>
   <div class="ka-closer__orb ka-breathe" aria-hidden="true"></div>
   <div class="ka-container" style="position:relative;z-index:2">
     <p class="ka-section__label">{% if en %}Neighborly Batch{% else %}دفعة الجوار{% endif %}</p>
     <h2 class="ka-section__title">
       {% if en %}Ready when you are.{% else %}جاهزون عندما تكون جاهزًا.{% endif %}
     </h2>
-    <p class="ka-section__text" style="margin-inline:auto;max-width:28rem">
+    <p class="ka-section__text">
       {% if en %}
         Request a quote or reach us in Jeddah — clear answers, trusted care.
       {% else %}
@@ -383,7 +536,7 @@
     </p>
     <div class="ka-closer__actions">
       <a class="ka-btn ka-btn--primary" href="/products">{% if en %}Shop now{% else %}تسوق الآن{% endif %}</a>
-      <a class="ka-btn ka-btn--ghost" href="/page/contact">{% if en %}Request a quote{% else %}اطلب عرض سعر{% endif %}</a>
+      <a class="ka-btn ka-btn--ghost" href="{{ url_for('pages', slug='contact') }}">{% if en %}Request a quote{% else %}اطلب عرض سعر{% endif %}</a>
     </div>
   </div>
 </section>

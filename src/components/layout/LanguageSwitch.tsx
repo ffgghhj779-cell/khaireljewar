@@ -37,8 +37,8 @@ export default function LanguageSwitch({
         ],
         variant === 'toolbar' && [
           'h-10 min-w-[48px] px-3',
-          'text-white bg-transparent',
-          'hover:bg-white/10 active:scale-95',
+          'text-primary bg-transparent',
+          'hover:bg-primary/8 active:scale-95',
         ],
         variant === 'menu' && [
           'min-h-[40px] px-4 rounded-full',
@@ -52,7 +52,7 @@ export default function LanguageSwitch({
     >
       {showIcon && (
         <Globe
-          className={cn('w-3.5 h-3.5', variant === 'toolbar' ? 'text-white/70' : 'text-dark/50')}
+          className={cn('w-3.5 h-3.5', variant === 'toolbar' ? 'text-primary/60' : 'text-dark/50')}
           aria-hidden
         />
       )}

@@ -1,39 +1,94 @@
 {% set en = store.language == 'en' %}
+<section class="ka-bio">
+  <div class="ka-container ka-bio__inner">
+    <div class="ka-bio__stars" aria-hidden="true">★★★★★★★</div>
+    <p>
+      {% if en %}
+        From Khair Aljaar in Egypt to Thimar Ardina in the Kingdom of Saudi Arabia
+      {% else %}
+        من خير الجوار في مصر إلى ثمار أرضنا في المملكة العربية السعودية
+      {% endif %}
+    </p>
+    <p class="ka-bio__second">
+      {% if en %}
+        And from Khair Aljaar, the other group companies
+      {% else %}
+        ومن خير الجوار الشركات الأخرى
+      {% endif %}
+    </p>
+  </div>
+</section>
 <footer class="ka-footer">
   <div class="ka-container">
     <div class="ka-footer__grid">
-      <div>
+      <div class="ka-footer__brand-col">
         <a class="ka-footer__brand" href="/">
           <img src="{{ 'images/khair-aljaar-mark.svg'|asset_url }}" alt="" width="36" height="36" />
-          <strong>{% if en %}Khair Aljaar Foods{% else %}خير الجوار للأغذية{% endif %}</strong>
+          <strong>{% if en %}Khair Aljaar Group{% else %}مجموعة خير الجوار{% endif %}</strong>
         </a>
         <p>
           {% if en %}
-            A Jeddah food house — hospitality, trust, and export-ready quality.
+            Khair Aljaar Group — from Egypt to Thimar Ardina in the Kingdom, and the group companies.
           {% else %}
-            بيت غذائي من جدة — ضيافة، ثقة، وجودة جاهزة للتصدير.
+            مجموعة خير الجوار — من مصر إلى ثمار أرضنا في المملكة، وشركات المجموعة.
           {% endif %}
         </p>
-        <p class="ka-footer__place">Jeddah, Saudi Arabia</p>
       </div>
+
       <div>
-        <strong>{% if en %}Explore{% else %}استكشف{% endif %}</strong>
-        <p><a href="/products">{% if en %}Products{% else %}المنتجات{% endif %}</a></p>
-        <p><a href="/page/about">{% if en %}About{% else %}من نحن{% endif %}</a></p>
-        <p><a href="/page/quality">{% if en %}Quality{% else %}الجودة{% endif %}</a></p>
-        <p><a href="/page/logistics">{% if en %}Logistics{% else %}اللوجستيات{% endif %}</a></p>
+        <strong class="ka-footer__heading">{% if en %}Company{% else %}الشركة{% endif %}</strong>
+        <p><a href="{{ url_for('pages', slug='about') }}">{% if en %}About{% else %}من نحن{% endif %}</a></p>
+        <p><a href="/#partners">{% if en %}Partners{% else %}شركاؤنا{% endif %}</a></p>
+        <p><a href="{{ url_for('pages', slug='quality') }}">{% if en %}Quality{% else %}الجودة{% endif %}</a></p>
+        <p><a href="{{ url_for('pages', slug='logistics') }}">{% if en %}Logistics{% else %}اللوجستيات{% endif %}</a></p>
+        <p><a href="{{ url_for('pages', slug='contact') }}">{% if en %}Contact{% else %}اتصل بنا{% endif %}</a></p>
       </div>
+
       <div>
-        <strong>{% if en %}Contact{% else %}تواصل{% endif %}</strong>
-        <p><a href="mailto:info@khairaljaarfoods.com">info@khairaljaarfoods.com</a></p>
-        <p><a href="/page/contact">{% if en %}Contact page{% else %}صفحة التواصل{% endif %}</a></p>
-        <p><a href="/products">{% if en %}Request a quote{% else %}اطلب عرض سعر{% endif %}</a></p>
+        <strong class="ka-footer__heading">{% if en %}Saudi Arabia{% else %}السعودية{% endif %}</strong>
+        <p class="ka-footer__contact-row">
+          <span class="ka-footer__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          </span>
+          <span>{% if en %}Abu Ma'ali Al-Hadari, Al-Safa, Jeddah 23454, Saudi Arabia{% else %}أبو معالي الحضري، الصفا، جدة 23454، المملكة العربية السعودية{% endif %}</span>
+        </p>
+        <p class="ka-footer__contact-row">
+          <span class="ka-footer__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8.1 9.5a16 16 0 0 0 6.4 6.4l1.1-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/></svg>
+          </span>
+          <a href="tel:+966564439652" dir="ltr">+966 56 443 9652</a>
+        </p>
+        <p class="ka-footer__contact-row">
+          <span class="ka-footer__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+          </span>
+          <a href="mailto:info@khairaljaarfoods.com">info@khairaljaarfoods.com</a>
+        </p>
+      </div>
+
+      <div>
+        <strong class="ka-footer__heading">{% if en %}Egypt branch{% else %}فرع مصر{% endif %}</strong>
+        <p class="ka-footer__contact-row">
+          <span>{% if en %}Fifth Settlement — Gardina{% else %}التجمع الخامس - جاردينا{% endif %}</span>
+        </p>
+        <p class="ka-footer__contact-row">
+          <a href="tel:+201122049900" dir="ltr">01122049900</a>
+        </p>
+        <p class="ka-footer__place" dir="ltr">{% if en %}Tax ID: 767-430-832 · C.R.: 247538{% else %}ب.ض: 767-430-832 | س.ت: 247538{% endif %}</p>
       </div>
     </div>
     <div class="ka-footer__copy">
-      <span>© {{ store.name|default('Khair Aljaar Foods') }} — Jeddah, Saudi Arabia</span>
+      <span>© {% if en %}Khair Aljaar Group. All rights reserved.{% else %}مجموعة خير الجوار. جميع الحقوق محفوظة.{% endif %}</span>
       <span class="ka-footer__langs">
-        {% if en %}EN · AR{% else %}ع · EN{% endif %}
+        {% if en %}
+          <a href="?lang=en" hreflang="en" aria-current="page">EN</a>
+          ·
+          <a href="?lang=ar" hreflang="ar">AR</a>
+        {% else %}
+          <a href="?lang=ar" hreflang="ar" aria-current="page">ع</a>
+          ·
+          <a href="?lang=en" hreflang="en">EN</a>
+        {% endif %}
       </span>
     </div>
   </div>

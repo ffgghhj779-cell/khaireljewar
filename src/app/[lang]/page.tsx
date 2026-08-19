@@ -4,6 +4,7 @@ import ProductsDesire from '@/components/sections/ProductsDesire'
 import TrustQuiet from '@/components/sections/TrustQuiet'
 import TrustProofStrip from '@/components/sections/TrustProofStrip'
 import PartnerStrip from '@/components/sections/PartnerStrip'
+import PartnerLogoMarquee from '@/components/sections/PartnerLogoMarquee'
 import OurPartners from '@/components/sections/OurPartners'
 import BrandMarquee from '@/components/sections/BrandMarquee'
 import ExportDocsStrip from '@/components/sections/ExportDocsStrip'
@@ -11,6 +12,7 @@ import HomeFaq from '@/components/sections/HomeFaq'
 import HomeCloser from '@/components/sections/HomeCloser'
 import Container from '@/components/ui/Container'
 import { getProducts } from '@/lib/actions/products'
+import { faqJsonLd } from '@/lib/seo'
 
 export default async function Home({
   params: { lang },
@@ -21,8 +23,13 @@ export default async function Home({
 
   return (
     <div className="relative bg-cream selection:bg-secondary/40 selection:text-primary">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(lang)) }}
+      />
       <HeroBrand lang={lang} />
       <PartnerStrip lang={lang} />
+      <PartnerLogoMarquee lang={lang} />
       <OriginStory lang={lang} />
       <ProductsDesire lang={lang} products={products} />
       <ExportDocsStrip lang={lang} />

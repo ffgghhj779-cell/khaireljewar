@@ -14,33 +14,89 @@
       <span>{{ product.name }}</span>
     </nav>
 
+    {% set variant = product.selected_product if product.selected_product else product %}
+    {% set media = variant.media if variant.media else product.images %}
+    {# formatted_sale_price is often null — use default(..., true) so null is not treated as set #}
+    {% set price_text = variant.formatted_sale_price|default(variant.formatted_price|default(product.formatted_price|default(''), true), true) %}
+    {% if not price_text and (variant.price or product.price) %}
+      {% set price_text = (variant.price or product.price)|string ~ ' ' ~ (product.currency_symbol|default(store.currency.symbol|default('ر.س'), true)) %}
+    {% endif %}
+    {% set image_src = media[0].image.full_size if media and media[0].image else (media[0].src if media and media[0].src else product.image) %}
+    {% set sku = (variant.sku|default(product.sku|default('', true), true)|string)|upper %}
+    {% set pname = (product.name|default('', true)|string) %}
+    {% if not image_src %}
+      {% if 'VAL' in sku or 'فالنسيا' in pname %}
+        {% set image_src = 'images/products/valencia-oranges.webp'|asset_url %}
+      {% elif 'NAV' in sku or 'نافيل' in pname %}
+        {% set image_src = 'images/products/navel-oranges.webp'|asset_url %}
+      {% elif 'MED' in sku or 'مجدول' in pname %}
+        {% set image_src = 'images/products/medjool-dates.webp'|asset_url %}
+      {% elif 'BAR' in sku or 'برحي' in pname %}
+        {% set image_src = 'images/products/barhi-dates.webp'|asset_url %}
+      {% elif 'HASS' in sku or 'أفوكادو' in pname or 'افوكادو' in pname %}
+        {% set image_src = 'images/products/hass-avocados.webp'|asset_url %}
+      {% elif 'POM' in sku or 'رمان' in pname %}
+        {% set image_src = 'images/products/pomegranates.webp'|asset_url %}
+      {% elif 'SPU' in sku or 'بطاطس' in pname %}
+        {% set image_src = 'images/products/spunta-potatoes.webp'|asset_url %}
+      {% elif 'ONI' in sku or 'بصل' in pname %}
+        {% set image_src = 'images/products/red-onions.webp'|asset_url %}
+      {% elif 'GAR' in sku or 'ثوم' in pname %}
+        {% set image_src = 'images/products/fresh-garlic.webp'|asset_url %}
+      {% elif 'MANGO' in sku or 'مانجو' in pname %}
+        {% set image_src = 'images/products/kent-mangoes.webp'|asset_url %}
+      {% elif 'STR' in sku or 'فراولة' in pname %}
+        {% set image_src = 'images/products/frozen-strawberries.webp'|asset_url %}
+      {% elif 'VEG' in sku or 'خضروات' in pname %}
+        {% set image_src = 'images/products/frozen-mixed-vegetables.webp'|asset_url %}
+      {% else %}
+        {% set image_src = 'images/products/oranges.webp'|asset_url %}
+      {% endif %}
+    {% endif %}
     <div class="ka-pdp">
       <div class="ka-pdp__media">
-        <img
-          src="{{ product.images[0].image.full_size|default(product.images[0].src|default(product.image)) }}"
-          alt="{{ product.name }}"
-          width="900"
-          height="900"
-        />
+        {% if image_src %}
+          <img
+            src="{{ image_src }}"
+            alt="{{ product.name }}"
+            width="900"
+            height="900"
+          />
+        {% else %}
+          <div class="ka-pdp__media-empty" aria-hidden="true"></div>
+        {% endif %}
       </div>
       <div class="ka-pdp__copy">
         <p class="ka-section__label">{{ product.categories[0].name if product.categories else '' }}</p>
         <p class="ka-pdp__origin">Jeddah, Saudi Arabia</p>
         <h1 class="ka-pdp__title">{{ product.name }}</h1>
-        <div class="ka-pdp__desc">{{ product.description|safe }}</div>
-        <div class="ka-pdp__price">
-          {{ product.formatted_sale_price|default(product.formatted_price|default(product.price)) }}
-        </div>
-        <form class="ka-pdp__form" action="/cart/add" method="post">
-          <input type="hidden" name="product_id" value="{{ product.id }}" />
+        {% if product.description %}
+          <div class="ka-pdp__desc">{{ product.description|safe }}</div>
+        {% endif %}
+        {% if price_text %}
+          <div class="ka-pdp__price">{{ price_text }}</div>
+        {% endif %}
+        <form
+          id="product-form"
+          class="ka-pdp__form"
+          data-cart-url="/cart"
+          data-msg-ok="{% if en %}Added to cart.{% else %}تمت الإضافة للسلة.{% endif %}"
+          data-msg-fail="{% if en %}Could not add to cart. Try again.{% else %}تعذر الإضافة للسلة. حاول مرة أخرى.{% endif %}"
+        >
+          <input id="product-id" type="hidden" value="{{ product.selected_product.id|default(variant.id|default(product.id)) }}" />
+          {% if template_for_product_variants_dropdown is defined %}
+            <div class="ka-pdp__variants">{{ template_for_product_variants_dropdown }}</div>
+          {% endif %}
           <label class="ka-qty">
             <span>{% if en %}Qty{% else %}الكمية{% endif %}</span>
-            <input type="number" name="quantity" value="1" min="1" />
+            <input id="product-quantity" type="number" name="quantity" value="1" min="1" />
           </label>
-          <button class="ka-btn ka-btn--primary" type="submit">
+          <button class="ka-btn ka-btn--primary" id="ka-add-to-cart" type="button">
             {% if en %}Add to cart{% else %}أضف للسلة{% endif %}
           </button>
+          <p class="ka-pdp__cart-msg" data-ka-cart-msg hidden></p>
         </form>
+        {% if product_view_scripts is defined %}{{ product_view_scripts|raw }}{% endif %}
         <p class="ka-pdp__note">
           {% if en %}
             B2B partners: ask for packing specs, caliber, and cold-chain options.
@@ -63,7 +119,7 @@
     </p>
     <div class="ka-closer__actions">
       <a class="ka-btn ka-btn--cream" href="/products">{% if en %}More products{% else %}المزيد من المنتجات{% endif %}</a>
-      <a class="ka-btn ka-btn--ghost" href="/page/contact">{% if en %}Contact{% else %}تواصل{% endif %}</a>
+      <a class="ka-btn ka-btn--ghost" href="{{ url_for('pages', slug='contact') }}">{% if en %}Contact{% else %}تواصل{% endif %}</a>
     </div>
   </div>
 </section>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
 import OurPartners from '@/components/sections/OurPartners'
+import PartnerLogoMarquee from '@/components/sections/PartnerLogoMarquee'
 import { buildPageMetadata } from '@/lib/seo'
 import { cn } from '@/lib/utils/cn'
 
@@ -12,8 +13,8 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
     path: '/partners',
     title: isAr ? 'شركاؤنا' : 'Our Partners',
     description: isAr
-      ? 'شركاء خير الجوار — تسامي الوطنية والرهان الماسي للدواجن.'
-      : 'Khair Aljaar partners — Tasami Al-Wataniya and Al Rehan Al Masi Poultry.',
+      ? 'شركاء خير الجوار — نينجا، نون، تسامي الوطنية، الرهان الماسي، وثمار أرضنا.'
+      : 'Khair Aljaar partners — Ninja, noon, Tasami, Al Rehan Al Masi, and Thimar Ardina.',
   })
 }
 
@@ -44,6 +45,8 @@ export default function PartnersPage({ params: { lang } }: { params: { lang: str
           </div>
         </Container>
       </section>
+
+      <PartnerLogoMarquee lang={lang} />
 
       <section className="bg-cream py-16 md:py-24">
         <Container size="large">

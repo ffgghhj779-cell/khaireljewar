@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 72" role="img" aria-labelledby="noonTitle">
+  <title id="noonTitle">noon</title>
+  <rect width="220" height="72" rx="16" fill="#FFEA00"/>
+  <text x="110" y="46" text-anchor="middle" fill="#1A1A1A" font-family="Georgia, 'Times New Roman', serif" font-size="32" font-weight="700">noon</text>
+</svg>

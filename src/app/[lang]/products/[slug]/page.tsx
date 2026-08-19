@@ -7,7 +7,7 @@ import ProductGallery from '@/components/ecom/ProductGallery'
 import ProductStickyCta from '@/components/ecom/ProductStickyCta'
 import ProductCard from '@/components/sections/ProductCard'
 import AddToCartButton from '@/components/ecom/AddToCartButton'
-import { buildPageMetadata } from '@/lib/seo'
+import { buildPageMetadata, productJsonLd } from '@/lib/seo'
 import { resolveProductImage, SECTION_IMAGES } from '@/lib/constants/images'
 import { COMPLIANCE_CERTIFICATES } from '@/lib/constants/brandAssets'
 import { cn } from '@/lib/utils/cn'
@@ -29,11 +29,13 @@ export async function generateMetadata({
   const isAr = lang === 'ar'
   const title = isAr ? product.title.ar : product.title.en
   const description = isAr ? product.desc.ar : product.desc.en
+  const image = resolveProductImage(product.image, product.category.en, product.slug)
   return buildPageMetadata({
     lang,
     path: `/products/${slug}`,
     title,
     description: description.slice(0, 160),
+    image,
   })
 }
 
@@ -87,6 +89,23 @@ export default async function SingleProductPage({
 
   return (
     <div className="min-h-screen bg-cream pb-[calc(10rem+env(safe-area-inset-bottom,0px))] lg:pb-0">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            productJsonLd({
+              lang,
+              slug: product.slug,
+              name: isAr ? product.title.ar : product.title.en,
+              description: isAr ? product.desc.ar : product.desc.en,
+              image: mainSrc,
+              sku: product.id,
+              category: isAr ? product.category.ar : product.category.en,
+              origin: isAr ? product.origin.ar : product.origin.en,
+            })
+          ),
+        }}
+      />
       <div className="flex flex-col lg:flex-row">
         <div className="lg:w-[48%] lg:sticky lg:top-[76px] lg:self-start lg:max-h-[calc(100dvh-76px)] overflow-hidden">
           <ProductGallery images={gallery} lang={lang} />

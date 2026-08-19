@@ -7,7 +7,7 @@
 <section class="ka-page-hero">
   <div class="ka-container ka-section__center">
     <p class="ka-section__label">{% if en %}Catalog{% else %}الكتالوج{% endif %}</p>
-    <h1 class="ka-section__title">{% if en %}Made to be wanted.{% else %}منتجات تُطلب.{% endif %}</h1>
+    <h1 class="ka-section__title">{% if en %}Fresh from Khair Aljaar.{% else %}من خير الجوار.{% endif %}</h1>
     <p class="ka-section__text">
       {% if en %}
         Export-ready produce from the Jeddah hub — clear specs, wholesale quantities.
@@ -23,22 +23,64 @@
     <div class="ka-products ka-products--wide">
       {% if products and products|length > 0 %}
         {% for product in products %}
-          <a class="ka-card" href="{{ product.html_url|default('/products/' ~ product.slug|default(product.id)) }}">
+          {% set card_media = product.images if product.images else (product.selected_product.media if product.selected_product else none) %}
+          {% set card_img = card_media[0].image.full_size if card_media and card_media[0].image else (card_media[0].src if card_media and card_media[0].src else product.image) %}
+          {% set sku = (product.sku|default(product.selected_product.sku|default('', true), true)|string)|upper %}
+          {% set pname = (product.name|default('', true)|string) %}
+          {% if not card_img %}
+            {% if 'VAL' in sku or 'فالنسيا' in pname %}
+              {% set card_img = 'images/products/valencia-oranges.webp'|asset_url %}
+            {% elif 'NAV' in sku or 'نافيل' in pname %}
+              {% set card_img = 'images/products/navel-oranges.webp'|asset_url %}
+            {% elif 'MED' in sku or 'مجدول' in pname %}
+              {% set card_img = 'images/products/medjool-dates.webp'|asset_url %}
+            {% elif 'BAR' in sku or 'برحي' in pname %}
+              {% set card_img = 'images/products/barhi-dates.webp'|asset_url %}
+            {% elif 'HASS' in sku or 'أفوكادو' in pname or 'افوكادو' in pname %}
+              {% set card_img = 'images/products/hass-avocados.webp'|asset_url %}
+            {% elif 'POM' in sku or 'رمان' in pname %}
+              {% set card_img = 'images/products/pomegranates.webp'|asset_url %}
+            {% elif 'SPU' in sku or 'بطاطس' in pname %}
+              {% set card_img = 'images/products/spunta-potatoes.webp'|asset_url %}
+            {% elif 'ONI' in sku or 'بصل' in pname %}
+              {% set card_img = 'images/products/red-onions.webp'|asset_url %}
+            {% elif 'GAR' in sku or 'ثوم' in pname %}
+              {% set card_img = 'images/products/fresh-garlic.webp'|asset_url %}
+            {% elif 'MANGO' in sku or 'مانجو' in pname %}
+              {% set card_img = 'images/products/kent-mangoes.webp'|asset_url %}
+            {% elif 'STR' in sku or 'فراولة' in pname %}
+              {% set card_img = 'images/products/frozen-strawberries.webp'|asset_url %}
+            {% elif 'VEG' in sku or 'خضروات' in pname %}
+              {% set card_img = 'images/products/frozen-mixed-vegetables.webp'|asset_url %}
+            {% else %}
+              {% set card_img = 'images/products/oranges.webp'|asset_url %}
+            {% endif %}
+          {% endif %}
+          {% set card_price = product.formatted_sale_price|default(product.formatted_price|default((product.selected_product.formatted_price if product.selected_product else none)|default('', true), true), true) %}
+          {% if not card_price and product.price %}
+            {% set card_price = product.price|string ~ ' ' ~ (product.currency_symbol|default('ر.س', true)) %}
+          {% endif %}
+          <a class="ka-card" href="{{ product.html_url|default('/products/' ~ product.slug|default(product.id)) }}" data-sku="{{ product.sku|default('', true) }}" data-name="{{ product.name }}">
             <div class="ka-card__media">
-              <img
-                src="{{ product.images[0].image.full_size|default(product.images[0].src|default(product.image)) }}"
-                alt="{{ product.name }}"
-                width="640"
-                height="640"
-                loading="lazy"
-              />
+              {% if card_img %}
+                <img
+                  src="{{ card_img }}"
+                  alt="{{ product.name }}"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                />
+              {% endif %}
+              <span class="ka-card__price" hidden></span>
             </div>
             <div class="ka-card__body">
               <p class="ka-card__cat">{{ product.categories[0].name if product.categories else '' }}</p>
               <h3 class="ka-card__title">{{ product.name }}</h3>
-              {% if product.formatted_sale_price or product.formatted_price or product.price %}
-                <p class="ka-card__meta">{{ product.formatted_sale_price|default(product.formatted_price|default(product.price)) }}</p>
-              {% endif %}
+              <ul class="ka-card__specs" hidden>
+                <li class="ka-card__moq"></li>
+                <li class="ka-card__pack"></li>
+                <li class="ka-card__season"></li>
+              </ul>
             </div>
           </a>
         {% endfor %}
@@ -58,7 +100,7 @@
       {% if en %}Need a wholesale quote?{% else %}تحتاج عرض سعر جملة؟{% endif %}
     </h2>
     <div class="ka-closer__actions" style="margin-top:1.5rem">
-      <a class="ka-btn ka-btn--cream" href="/page/contact">{% if en %}Contact us{% else %}تواصل معنا{% endif %}</a>
+      <a class="ka-btn ka-btn--cream" href="{{ url_for('pages', slug='contact') }}">{% if en %}Contact us{% else %}تواصل معنا{% endif %}</a>
     </div>
   </div>
 </section>

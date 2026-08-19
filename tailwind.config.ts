@@ -23,6 +23,15 @@ const config: Config = {
           800: '#102018',
           900: '#0C1812',
         },
+        /* Soft agricultural green — logo fields & light accents */
+        farm: {
+          DEFAULT: '#8FBA9A',
+          leaf: '#A3C7A8',
+          panel: '#C5D9B8',
+          muted: '#A8C4B0',
+          soft: '#E8F1EA',
+          mist: '#F3F8F4',
+        },
         /* Mustard / harvest — hero stage accent */
         secondary: {
           DEFAULT: '#E5B84A',

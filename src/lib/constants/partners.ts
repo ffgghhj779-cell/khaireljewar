@@ -1,4 +1,48 @@
-/** Business partners featured on Khair Aljaar */
+/** Business + retail partners featured on Khair Aljaar */
+
+export type PartnerLogo = {
+  id: string
+  name: { en: string; ar: string }
+  tag: { en: string; ar: string }
+  logo: string
+  href?: string
+}
+
+/** Display order: Ninja – noon – Tasami – Al Rehan – Thimar Ardina */
+export const PARTNER_LOGOS: PartnerLogo[] = [
+  {
+    id: 'ninja',
+    name: { en: 'Ninja', ar: 'نينجا' },
+    tag: { en: 'Retail partner', ar: 'شريك تجزئة' },
+    logo: '/images/partners/ninja-logo.svg',
+  },
+  {
+    id: 'noon',
+    name: { en: 'noon', ar: 'نون' },
+    tag: { en: 'Retail partner', ar: 'شريك تجزئة' },
+    logo: '/images/partners/noon-logo.svg',
+  },
+  {
+    id: 'tasami',
+    name: { en: 'Tasami Al-Wataniya', ar: 'تسامي الوطنية' },
+    tag: { en: 'Wholesale food supply', ar: 'توريد أغذية بالجملة' },
+    logo: '/images/partners/tasami-logo.png',
+    href: 'https://tasami56taa.vercel.app/',
+  },
+  {
+    id: 'alrehan',
+    name: { en: 'Al Rehan Al Masi', ar: 'الرهان الماسي' },
+    tag: { en: 'Poultry · Eggs', ar: 'دواجن · بيض' },
+    logo: '/images/partners/alrehan-logo.png',
+    href: 'https://alrehan-almasi.vercel.app/',
+  },
+  {
+    id: 'thimar',
+    name: { en: 'Thimar Ardina', ar: 'ثمار أرضنا' },
+    tag: { en: 'Sister brand · KSA', ar: 'العلامة الشقيقة · السعودية' },
+    logo: '/images/partners/thimar-ardina-logo.svg',
+  },
+]
 
 export const PARTNERS = [
   {
@@ -42,5 +86,26 @@ export const PARTNERS = [
     },
     href: 'https://alrehan-almasi.vercel.app/',
     logo: '/images/partners/alrehan-logo.png',
+  },
+  {
+    id: 'thimar',
+    name: {
+      en: 'Thimar Ardina',
+      ar: 'ثمار أرضنا',
+    },
+    tag: {
+      en: 'Sister brand · Kingdom of Saudi Arabia',
+      ar: 'العلامة الشقيقة · المملكة العربية السعودية',
+    },
+    brief: {
+      en: 'The group’s Saudi harvest house — bringing Khair Aljaar’s neighborly care into the Kingdom under the Thimar Ardina name, close to kitchens and partners across Saudi Arabia.',
+      ar: 'بيت الحصاد السعودي للمجموعة — ينقل عناية خير الجوار إلى المملكة تحت اسم ثمار أرضنا، قريباً من المطابخ والشركاء في أنحاء السعودية.',
+    },
+    focus: {
+      en: ['Jeddah hub', 'Fresh produce', 'Group sister brand', 'Saudi market'],
+      ar: ['مركز جدة', 'محاصيل طازجة', 'علامة شقيقة للمجموعة', 'السوق السعودي'],
+    },
+    href: '/about',
+    logo: '/images/partners/thimar-ardina-logo.svg',
   },
 ] as const

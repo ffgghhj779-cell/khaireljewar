@@ -6,7 +6,7 @@ import DepthHero from '@/components/graphics/DepthHero'
 import { BRAND } from '@/lib/constants/brand'
 import { buildPageMetadata } from '@/lib/seo'
 import { cn } from '@/lib/utils/cn'
-import { MapPin, Phone, Mail, Clock } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, Building2 } from 'lucide-react'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
   const isAr = lang === 'ar'
@@ -26,14 +26,27 @@ export default function ContactPage({ params: { lang } }: { params: { lang: stri
   const info = [
     {
       icon: MapPin,
-      title: isAr ? 'العنوان' : 'Address',
+      title: isAr ? 'العنوان السعودي' : 'Saudi address',
       content: isAr ? BRAND.contact.address.ar : BRAND.contact.address.en,
     },
     {
       icon: Phone,
-      title: isAr ? 'الهاتف' : 'Phone',
+      title: isAr ? 'الجوال السعودي' : 'Saudi mobile',
       content: BRAND.contact.phone,
       href: `tel:${BRAND.contact.phoneTel}`,
+    },
+    {
+      icon: MapPin,
+      title: isAr ? 'فرع مصر' : 'Egypt branch',
+      content: isAr
+        ? `${BRAND.contact.egypt.address.ar} – ${BRAND.contact.egypt.phone}`
+        : `${BRAND.contact.egypt.address.en} – ${BRAND.contact.egypt.phone}`,
+      href: `tel:${BRAND.contact.egypt.phoneTel}`,
+    },
+    {
+      icon: Building2,
+      title: isAr ? 'السجل التجاري' : 'Commercial registration',
+      content: isAr ? BRAND.legal.line.ar : BRAND.legal.line.en,
     },
     {
       icon: Mail,
@@ -66,12 +79,15 @@ export default function ContactPage({ params: { lang } }: { params: { lang: stri
 
       <Container size="large" className="pt-12 md:pt-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
-          <div className="lg:col-span-4 space-y-8">
+          <div className="lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">
             {info.map((item) => {
               const Icon = item.icon
               return (
-                <div key={item.title} className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white text-primary flex items-center justify-center shrink-0 shadow-soft">
+                <div
+                  key={item.title}
+                  className="flex items-start gap-4 rounded-2xl border border-farm/25 bg-farm-mist/80 p-4"
+                >
+                  <div className="w-10 h-10 rounded-full bg-white text-farm flex items-center justify-center shrink-0 shadow-soft">
                     <Icon className="w-4 h-4" strokeWidth={1.75} />
                   </div>
                   <div>

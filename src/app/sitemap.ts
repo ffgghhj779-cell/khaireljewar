@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
-import { getProductSlugs } from '@/lib/actions/products'
-import { SITE_URL } from '@/lib/seo'
+import { MOCK_PRODUCTS } from '@/lib/data/products'
+import { languageAlternates, SITE_URL } from '@/lib/seo'
 
 const STATIC_PATHS = [
   '',
@@ -9,15 +9,14 @@ const STATIC_PATHS = [
   '/products',
   '/logistics',
   '/quality',
-  '/certifications',
   '/export-markets',
   '/contact',
   '/privacy',
   '/terms',
 ]
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const slugs = await getProductSlugs()
+export default function sitemap(): MetadataRoute.Sitemap {
+  const slugs = MOCK_PRODUCTS.map((product) => product.slug)
   const langs = ['en', 'ar'] as const
   const now = new Date()
 
@@ -26,7 +25,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${SITE_URL}/${lang}${path}`,
       lastModified: now,
       changeFrequency: path === '' ? ('weekly' as const) : ('monthly' as const),
-      priority: path === '' ? 1 : 0.8,
+      priority: path === '' ? 1 : path === '/products' || path === '/contact' ? 0.9 : 0.8,
+      alternates: {
+        languages: languageAlternates(path),
+      },
     }))
   )
 
@@ -36,6 +38,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
+      alternates: {
+        languages: languageAlternates(`/products/${slug}`),
+      },
     }))
   )
 
