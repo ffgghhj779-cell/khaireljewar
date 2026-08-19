@@ -133,10 +133,10 @@ export default function TrustQuiet({ lang }: { lang: string }) {
                 )}
               />
             </div>
-            <div className="bg-primary px-6 py-7 md:px-8 md:py-8">
+            <div className="bg-farm-mint px-6 py-7 md:px-8 md:py-8">
               <p
                 className={cn(
-                  'mb-2 text-[10px] uppercase tracking-[0.16em] text-cream/65 font-semibold',
+                  'mb-2 text-[10px] uppercase tracking-[0.16em] text-primary/60 font-semibold',
                   isAr ? 'font-arabic normal-case tracking-normal text-xs' : 'font-sans'
                 )}
               >
@@ -144,7 +144,7 @@ export default function TrustQuiet({ lang }: { lang: string }) {
               </p>
               <h3
                 className={cn(
-                  'text-2xl md:text-3xl text-cream font-medium',
+                  'text-2xl md:text-3xl text-primary font-medium',
                   isAr ? 'font-arabic' : 'font-display'
                 )}
               >

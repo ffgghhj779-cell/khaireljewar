@@ -29,6 +29,7 @@ const config: Config = {
           leaf: '#A3C7A8',
           panel: '#C5D9B8',
           muted: '#A8C4B0',
+          mint: '#D6F3E6',
           soft: '#E8F1EA',
           mist: '#F3F8F4',
         },
@@ -43,11 +44,11 @@ const config: Config = {
           500: '#C49A32',
           600: '#A67E28',
         },
-        /* Deep harvest orange — footer / warm brand plane */
+        /* Juicy orange pulp — harvest planes (pillars, closer, footer) */
         harvest: {
-          DEFAULT: '#C45E1F',
-          soft: '#D4783A',
-          deep: '#A34C18',
+          DEFAULT: '#EE7F2D',
+          soft: '#F4A056',
+          deep: '#D4681C',
         },
         /* Deep forest ink */
         dark: {
