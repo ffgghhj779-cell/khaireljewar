@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils/cn'
 
 function FooterIcon({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black text-primary">
+    <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-farm text-cream">
       {children}
     </span>
   )

@@ -57,7 +57,7 @@ export default function MobileBottomNav({ lang }: { lang: string }) {
                   className={cn(
                     'relative -mt-3.5 flex flex-col items-center justify-center',
                     'min-w-[52px] min-h-[52px] rounded-2xl touch-manipulation',
-                    'bg-farm-panel text-primary border-2 border-cream shadow-[0_8px_20px_rgba(127,166,138,0.28)]',
+                    'bg-farm text-cream border-2 border-cream shadow-[0_8px_20px_rgba(43,182,115,0.35)]',
                     'active:scale-[0.96] transition-transform duration-150'
                   )}
                 >

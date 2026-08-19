@@ -5,11 +5,11 @@
   --ka-mustard: #e5b84a;
   --ka-harvest: #ee7f2d;
   --ka-harvest-deep: #d4681c;
-  --ka-farm: #8fba9a;
-  --ka-farm-panel: #c5d9b8;
-  --ka-farm-mint: #d6f3e6;
-  --ka-farm-soft: #e8f1ea;
-  --ka-farm-mist: #f3f8f4;
+  --ka-farm: #2bb673;
+  --ka-farm-panel: #c8f5d8;
+  --ka-farm-mint: #2bb673;
+  --ka-farm-soft: #e3fbeb;
+  --ka-farm-mist: #eafbf1;
   --ka-cream: #f7f4ec;
   --ka-cream-soft: #fbfaf6;
   --ka-cream-deep: #efe9dc;
@@ -941,7 +941,7 @@ a {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 600;
-  color: rgba(26, 51, 42, 0.6);
+  color: rgba(247, 244, 236, 0.82);
 }
 
 .ka-editorial__title {
@@ -949,7 +949,7 @@ a {
   font-family: var(--font-display);
   font-size: 1.75rem;
   font-weight: 500;
-  color: var(--ka-primary);
+  color: var(--ka-cream);
 }
 
 /* Product cards */
@@ -1007,8 +1007,8 @@ a {
   inset-inline-end: 0.65rem;
   max-width: 70%;
   border-radius: 999px;
-  background: var(--ka-mustard);
-  color: var(--ka-primary);
+  background: var(--ka-farm);
+  color: var(--ka-cream);
   font-size: 0.625rem;
   font-weight: 700;
   line-height: 1.2;
@@ -1738,8 +1738,8 @@ a {
   width: 2rem;
   height: 2rem;
   border-radius: 999px;
-  background: #000;
-  color: var(--ka-primary);
+  background: var(--ka-farm);
+  color: var(--ka-cream);
   flex-shrink: 0;
 }
 
@@ -1979,8 +1979,8 @@ a {
   height: 2.75rem;
   margin-bottom: 0.85rem;
   border-radius: 0.75rem;
-  background: var(--ka-mustard);
-  color: var(--ka-primary);
+  background: var(--ka-farm);
+  color: var(--ka-cream);
 }
 
 .ka-ico svg {

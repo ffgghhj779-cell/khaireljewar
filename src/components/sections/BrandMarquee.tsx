@@ -99,7 +99,7 @@ export default function BrandMarquee({ lang }: { lang: string }) {
               <div className="mb-3 flex justify-center md:mb-4">
                 <BotanicalMotif
                   kind={item.motif}
-                  tone="forest"
+                  tone="cream"
                   className={cn(
                     'h-10 w-10 opacity-100 md:h-14 md:w-14 transition-transform duration-500 group-hover:scale-110',
                     'md:soft-float'

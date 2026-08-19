@@ -23,15 +23,15 @@ const config: Config = {
           800: '#102018',
           900: '#0C1812',
         },
-        /* Soft agricultural green — logo fields & light accents */
+        /* Fresh leaf green — breaks harvest orange, not dusty sage */
         farm: {
-          DEFAULT: '#8FBA9A',
-          leaf: '#A3C7A8',
-          panel: '#C5D9B8',
-          muted: '#A8C4B0',
-          mint: '#D6F3E6',
-          soft: '#E8F1EA',
-          mist: '#F3F8F4',
+          DEFAULT: '#2BB673',
+          leaf: '#4AE08A',
+          panel: '#C8F5D8',
+          muted: '#6BC99A',
+          mint: '#2BB673',
+          soft: '#E3FBEB',
+          mist: '#EAFBF1',
         },
         /* Mustard / harvest — hero stage accent */
         secondary: {

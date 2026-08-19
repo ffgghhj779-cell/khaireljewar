@@ -25,7 +25,7 @@ export default function BotanicalMotif({
         : tone === 'soft'
           ? '#8FB09F'
           : tone === 'farm'
-            ? '#C5D9B8'
+            ? '#2BB673'
             : '#1A332A'
 
   const common = cn('pointer-events-none select-none', className)
