@@ -24,18 +24,21 @@ function LogoCard({
         width={220}
         height={88}
         unoptimized={!isRaster}
-        className="h-12 w-auto max-w-[9.5rem] object-contain md:h-14 md:max-w-[11rem]"
+        className="h-[4.6rem] w-auto max-w-[10.5rem] object-contain md:h-[5.4rem] md:max-w-[11.5rem]"
       />
-      <span className={cn('mt-2 text-[11px] font-semibold text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
-        {isAr ? partner.name.ar : partner.name.en}
-      </span>
+      {!partner.darkCard && (
+        <span className={cn('mt-2 text-[11px] font-semibold text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
+          {isAr ? partner.name.ar : partner.name.en}
+        </span>
+      )}
     </>
   )
 
   const className = cn(
     'partner-logo-float flex h-[7.25rem] w-[10.5rem] shrink-0 flex-col items-center justify-center rounded-2xl',
-    'border border-farm/30 bg-white px-4 shadow-soft md:h-[8rem] md:w-[12rem]',
-    'transition-transform duration-500 hover:-translate-y-1'
+    'px-4 shadow-soft md:h-[8rem] md:w-[12rem]',
+    'transition-transform duration-500 hover:-translate-y-1',
+    partner.darkCard ? 'border border-black bg-black' : 'border border-farm/30 bg-white'
   )
 
   if (partner.href?.startsWith('http')) {

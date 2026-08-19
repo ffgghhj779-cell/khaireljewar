@@ -6,6 +6,7 @@ export type PartnerLogo = {
   tag: { en: string; ar: string }
   logo: string
   href?: string
+  darkCard?: boolean
 }
 
 /** Display order: Ninja – noon – Tasami – Al Rehan – Thimar Ardina */
@@ -40,7 +41,9 @@ export const PARTNER_LOGOS: PartnerLogo[] = [
     id: 'thimar',
     name: { en: 'Thimar Ardina', ar: 'ثمار أرضنا' },
     tag: { en: 'Sister brand · KSA', ar: 'العلامة الشقيقة · السعودية' },
-    logo: '/images/partners/thimar-ardina-logo.svg',
+    logo: '/images/partners/thimar-ardina-logo.png',
+    href: 'https://themarardena.vercel.app/',
+    darkCard: true,
   },
 ]
 
@@ -105,7 +108,7 @@ export const PARTNERS = [
       en: ['Jeddah hub', 'Fresh produce', 'Group sister brand', 'Saudi market'],
       ar: ['مركز جدة', 'محاصيل طازجة', 'علامة شقيقة للمجموعة', 'السوق السعودي'],
     },
-    href: '/about',
-    logo: '/images/partners/thimar-ardina-logo.svg',
+    href: 'https://themarardena.vercel.app/',
+    logo: '/images/partners/thimar-ardina-logo.png',
   },
 ] as const

@@ -1164,6 +1164,16 @@ a {
   color: var(--ka-primary);
 }
 
+.ka-logo-card--dark {
+  background: #000;
+  border-color: #111;
+}
+
+.ka-logo-card--dark img {
+  height: 4.4rem;
+  max-width: 10rem;
+}
+
 .ka-partners {
   display: grid;
   gap: 2.75rem;
@@ -1198,6 +1208,11 @@ a {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.ka-partner__mark--dark {
+  background: #000;
+  border-color: #111;
 }
 
 .ka-partner__tag {
