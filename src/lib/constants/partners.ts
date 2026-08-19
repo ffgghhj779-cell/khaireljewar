@@ -8,8 +8,29 @@ export type PartnerLogo = {
   href?: string
 }
 
-/** Display order: noon – Tasami – Al Rehan – Thimar Ardina */
+/** Display order: retail brands first, then group companies */
 export const PARTNER_LOGOS: PartnerLogo[] = [
+  {
+    id: 'carrefour',
+    name: { en: 'Carrefour', ar: 'كارفور' },
+    tag: { en: 'Retail partner', ar: 'شريك تجزئة' },
+    logo: '/images/partners/carrefour-logo.png',
+    href: 'https://www.carrefourksa.com/',
+  },
+  {
+    id: 'panda',
+    name: { en: 'Panda', ar: 'بنده' },
+    tag: { en: 'Retail partner', ar: 'شريك تجزئة' },
+    logo: '/images/partners/panda-logo.png',
+    href: 'https://www.panda.com.sa/',
+  },
+  {
+    id: 'ninja',
+    name: { en: 'ninja', ar: 'نينجا' },
+    tag: { en: 'Retail partner', ar: 'شريك تجزئة' },
+    logo: '/images/partners/ninja-logo.png',
+    href: 'https://ninja.sa/',
+  },
   {
     id: 'noon',
     name: { en: 'noon', ar: 'نون' },
