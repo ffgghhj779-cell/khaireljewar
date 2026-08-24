@@ -1,3 +1,5 @@
+export const revalidate = 60
+
 import HeroBrand from '@/components/sections/HeroBrand'
 import OriginStory from '@/components/sections/OriginStory'
 import ProductsDesire from '@/components/sections/ProductsDesire'

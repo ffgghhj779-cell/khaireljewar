@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { getProducts } from '@/lib/actions/products'
 import { createAdminClient, isAdminClientConfigured } from '@/lib/supabase/admin'
 import { mapProductRow } from '@/lib/supabase/mappers'
@@ -7,6 +8,18 @@ import { slugifyProductTitle } from '@/lib/products/slugify'
 import type { ProductRow } from '@/lib/supabase/types'
 
 export const runtime = 'nodejs'
+
+function bustProductCaches(slug?: string) {
+  revalidatePath('/', 'layout')
+  revalidatePath('/ar')
+  revalidatePath('/en')
+  revalidatePath('/ar/products')
+  revalidatePath('/en/products')
+  if (slug) {
+    revalidatePath(`/ar/products/${slug}`)
+    revalidatePath(`/en/products/${slug}`)
+  }
+}
 
 function unauthorized() {
   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -182,6 +195,7 @@ export async function POST(request: Request) {
 
     const product = mapProductRow(data as ProductRow)
     const site = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || ''
+    bustProductCaches(product.slug)
     return NextResponse.json({
       ok: true,
       product,
@@ -230,6 +244,7 @@ export async function DELETE(request: Request) {
     }
 
     const product = mapProductRow(data as ProductRow)
+    bustProductCaches(product.slug)
     return NextResponse.json({
       ok: true,
       deleted: true,

@@ -125,19 +125,31 @@ export default function ProductImage({
       )}
     >
       {!showPendingOverlay && (
-        <Image
-          src={displaySrc}
-          alt={alt}
-          fill
-          sizes={sizes ?? styles.sizes}
-          priority={priority}
-          quality={variant === 'thumb' ? IMAGE_QUALITY_THUMB : variant === 'card' ? 78 : IMAGE_QUALITY_PRODUCT}
-          unoptimized={isBrandWebp || isRemoteUpload}
-          placeholder={isBrandWebp || isRemoteUpload ? 'empty' : 'blur'}
-          blurDataURL={isBrandWebp || isRemoteUpload ? undefined : IMAGE_BLUR_DATA_URL}
-          onError={handleError}
-          className={cn(objectFit)}
-        />
+        isRemoteUpload ? (
+          // eslint-disable-next-line @next/next/no-img-element -- remote bot uploads need reliable direct load on cards
+          <img
+            src={displaySrc}
+            alt={alt}
+            onError={handleError}
+            className={cn('absolute inset-0 h-full w-full', objectFit)}
+            loading={priority ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        ) : (
+          <Image
+            src={displaySrc}
+            alt={alt}
+            fill
+            sizes={sizes ?? styles.sizes}
+            priority={priority}
+            quality={variant === 'thumb' ? IMAGE_QUALITY_THUMB : variant === 'card' ? 78 : IMAGE_QUALITY_PRODUCT}
+            unoptimized={isBrandWebp}
+            placeholder={isBrandWebp ? 'empty' : 'blur'}
+            blurDataURL={isBrandWebp ? undefined : IMAGE_BLUR_DATA_URL}
+            onError={handleError}
+            className={cn(objectFit)}
+          />
+        )
       )}
       {showPendingOverlay && <PendingOverlay lang={lang} variant={variant} />}
     </div>
