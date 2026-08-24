@@ -13,6 +13,9 @@ import { COMPLIANCE_CERTIFICATES } from '@/lib/constants/brandAssets'
 import { cn } from '@/lib/utils/cn'
 import { ArrowLeft, MapPin, ShieldCheck, Snowflake, Package } from 'lucide-react'
 
+export const dynamicParams = true
+export const revalidate = 60
+
 export async function generateStaticParams() {
   const langs = ['ar', 'en'] as const
   const slugs = await getProductSlugs()

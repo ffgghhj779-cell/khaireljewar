@@ -1,3 +1,5 @@
+export const revalidate = 60
+
 import Container from '@/components/ui/Container'
 import ProductCatalog from '@/components/ecom/ProductCatalog'
 import { getProducts } from '@/lib/actions/products'

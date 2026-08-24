@@ -59,12 +59,12 @@ export function resolveProductImage(
   categoryEn?: string,
   slug?: string
 ): string {
-  // Slug map always wins — guarantees correct product match
+  // If an explicit image URL is stored in the DB (e.g. uploaded via bot), always prefer it
+  if (isValidImageUrl(image)) return image.trim()
+
+  // Then fall back to curated slug shots
   if (slug && PRODUCT_SLUG_IMAGES[slug]) return PRODUCT_SLUG_IMAGES[slug]
 
-  if (isValidImageUrl(image)) {
-    return image.trim()
-  }
   if (categoryEn && CATEGORY_FALLBACKS[categoryEn]) return CATEGORY_FALLBACKS[categoryEn]
   return PRODUCT_IMAGE_FALLBACK
 }
