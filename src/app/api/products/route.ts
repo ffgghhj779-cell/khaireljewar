@@ -94,13 +94,28 @@ export async function POST(request: Request) {
 
       const raw = b64.includes(',') ? b64.split(',').pop()! : b64
       const buffer = Buffer.from(raw, 'base64')
+      if (buffer.length < 4096) {
+        return NextResponse.json(
+          {
+            error: 'Image too small',
+            detail: `Received ${buffer.length} bytes. Re-send the Telegram photo and try again.`,
+          },
+          { status: 400 }
+        )
+      }
+      const magic = buffer.subarray(0, 12)
+      const isJpeg = magic[0] === 0xff && magic[1] === 0xd8
+      const isPng = magic[0] === 0x89 && magic[1] === 0x50 && magic[2] === 0x4e && magic[3] === 0x47
+      const isWebp = magic.toString('ascii', 0, 4) === 'RIFF' && magic.toString('ascii', 8, 12) === 'WEBP'
+      if (!isJpeg && !isPng && !isWebp) {
+        return NextResponse.json(
+          { error: 'Image is not a valid JPEG/PNG/WebP file' },
+          { status: 400 }
+        )
+      }
       const contentType =
         String(body.image_mime ?? body.imageMime ?? '').trim() ||
-        (safeName.endsWith('.png')
-          ? 'image/png'
-          : safeName.endsWith('.webp')
-            ? 'image/webp'
-            : 'image/jpeg')
+        (isPng ? 'image/png' : isWebp ? 'image/webp' : 'image/jpeg')
 
       const { error: uploadError } = await supabase.storage
         .from('product-images')

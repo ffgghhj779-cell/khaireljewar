@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import PremiumImage from '@/components/ui/PremiumImage'
+import ProductImage from '@/components/ui/ProductImage'
 import { cn } from '@/lib/utils/cn'
 
 interface GalleryImage {
@@ -26,18 +26,15 @@ export default function ProductGallery({
   return (
     <div className="flex h-full flex-col">
       <div className="relative flex-1 min-h-[38vh] lg:min-h-[calc(100dvh-76px)] bg-cream overflow-hidden">
-        <PremiumImage
+        <ProductImage
           key={current.src}
           src={current.src}
           alt={current.alt}
-          fill
+          variant="detail"
+          lang={lang}
           priority
-          sizes="(max-width: 1024px) 100vw, 48vw"
-          quality={92}
-          className={cn(
-            'transition-opacity duration-300',
-            (current.fit ?? 'contain') === 'cover' ? 'object-cover' : 'object-contain p-4 md:p-10'
-          )}
+          fit={current.fit ?? 'contain'}
+          className="!aspect-auto absolute inset-0 rounded-none border-0"
         />
       </div>
 
@@ -55,13 +52,13 @@ export default function ProductGallery({
                 i === active ? 'border-primary shadow-soft' : 'border-transparent opacity-70 hover:opacity-100'
               )}
             >
-              <PremiumImage
+              <ProductImage
                 src={img.src}
                 alt=""
-                fill
-                sizes="72px"
-                quality={70}
-                className={(img.fit ?? 'cover') === 'cover' ? 'object-cover' : 'object-contain bg-cream p-1.5'}
+                variant="thumb"
+                lang={lang}
+                fit={img.fit ?? 'cover'}
+                className="!w-full !h-full rounded-none border-0"
               />
             </button>
           ))}

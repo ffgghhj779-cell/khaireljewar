@@ -83,6 +83,7 @@ export default function ProductImage({
   const resolvedSrc = resolveProductImage(src, categoryEn, slug)
   const styles = VARIANT_STYLES[variant]
   const isBrandWebp = resolvedSrc.includes('/images/brand/') && resolvedSrc.endsWith('.webp')
+  const isRemoteUpload = /^https?:\/\//i.test(resolvedSrc)
 
   const [displaySrc, setDisplaySrc] = useState(resolvedSrc)
   const [failed, setFailed] = useState(false)
@@ -93,13 +94,19 @@ export default function ProductImage({
   }, [resolvedSrc])
 
   const handleError = useCallback(() => {
+    const original = (src || '').trim()
+    // Uploaded remote URLs must never fall back to another SKU photo
+    if (/^https?:\/\//i.test(original)) {
+      setFailed(true)
+      return
+    }
     const fallback = getCategoryFallback(categoryEn)
     if (displaySrc !== fallback) {
       setDisplaySrc(fallback)
     } else {
       setFailed(true)
     }
-  }, [displaySrc, categoryEn])
+  }, [displaySrc, categoryEn, src])
 
   const showPendingOverlay = pending || failed
   const objectFit =

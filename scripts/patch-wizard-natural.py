@@ -484,14 +484,105 @@ conns["Format Delete Reply"] = {"main": [[{"node": "Send Upload Result", "type":
 conns["Chat LLM"] = {"main": [[{"node": "Format Chat Reply", "type": "main", "index": 0}]]}
 conns["Format Chat Reply"] = {"main": [[{"node": "Send Reply", "type": "main", "index": 0}]]}
 
-# Soften photo save message
+# Fix photo binary read (n8n 2.x stores file bytes outside JSON `.data`)
+SAVE_PHOTO = r'''
+const staticData = $getWorkflowStaticData('global');
+if (!staticData.sessions) staticData.sessions = {};
+const trigger = $('Telegram Trigger').first().json;
+const msg = trigger.message || {};
+const chatId = String(msg.chat?.id || '');
+const caption = String(msg.caption || '').trim();
+let d = staticData.sessions[chatId];
+if (!d) {
+  d = {
+    step: 'collecting', title_ar:'', title_en:'', category_en:'', desc_ar:'', desc_en:'',
+    index_price:'', min_order:1, unit:'MT', packaging_ar:'', packaging_en:'',
+    sizes_ar:'', sizes_en:'', harvest_season_ar:'على مدار العام', harvest_season_en:'Year-round',
+    image_base64:'', image_filename:'', image_mime:'', image:''
+  };
+  staticData.sessions[chatId] = d;
+}
+
+const item = $input.first();
+const keys = item.binary ? Object.keys(item.binary) : [];
+const binaryKey = keys.includes('data') ? 'data' : keys[0];
+if (!binaryKey) {
+  return [{ json: { action: 'reply', chatId, text: '❌ ما قدرتش ألاقي ملف الصورة. ابعتها تاني كصورة (مش ملف مضغوط).' } }];
+}
+
+let buf;
+try {
+  if (typeof this.helpers?.getBinaryDataBuffer === 'function') {
+    buf = await this.helpers.getBinaryDataBuffer(0, binaryKey);
+  }
+} catch (e) {
+  buf = null;
+}
+if (!buf || !Buffer.isBuffer(buf)) {
+  const meta = item.binary[binaryKey] || {};
+  if (meta.data && String(meta.data).length > 2000) {
+    buf = Buffer.from(String(meta.data), 'base64');
+  }
+}
+if (!buf || buf.length < 4096) {
+  return [{ json: {
+    action: 'reply',
+    chatId,
+    text: '❌ الصورة وصلتني ناقصة/فاضية. ابعتها تاني من الجاليري كصورة عادية، مش كـ file مضغوط.',
+  }}];
+}
+
+const magic = buf.subarray(0, 12);
+const isJpeg = magic[0] === 0xff && magic[1] === 0xd8;
+const isPng = magic[0] === 0x89 && magic[1] === 0x50;
+const isWebp = magic.toString('ascii', 0, 4) === 'RIFF';
+if (!isJpeg && !isPng && !isWebp) {
+  return [{ json: { action: 'reply', chatId, text: '❌ الملف مش صورة JPEG/PNG صالحة. ابعت صورة تانية.' } }];
+}
+
+const meta = item.binary[binaryKey] || {};
+d.image_base64 = buf.toString('base64');
+d.image_filename = meta.fileName || (isPng ? 'product.png' : isWebp ? 'product.webp' : 'product.jpg');
+d.image_mime = meta.mimeType || (isPng ? 'image/png' : isWebp ? 'image/webp' : 'image/jpeg');
+d.image = '';
+d.step = d.step === 'idle' ? 'collecting' : d.step;
+staticData.sessions[chatId] = d;
+
+if (caption) {
+  const lines = caption.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  if (!(d.title_ar || d.title_en) && lines[0]) {
+    const parts = lines[0].split('|').map(x => x.trim());
+    if (parts.length >= 2) {
+      if (/[\u0600-\u06FF]/.test(parts[0])) { d.title_ar = parts[0]; d.title_en = parts[1]; }
+      else { d.title_en = parts[0]; d.title_ar = parts[1]; }
+    } else if (/[\u0600-\u06FF]/.test(lines[0])) d.title_ar = lines[0];
+    else d.title_en = lines[0];
+  }
+}
+
+const missing = [];
+if (!(d.title_ar || d.title_en)) missing.push('الاسم');
+if (!d.category_en) missing.push('التصنيف');
+if (!d.index_price) missing.push('السعر');
+
+let text = `تمام، الصورة وصلتني 👍 (${Math.round(buf.length/1024)}KB)\n`;
+if (!missing.length) {
+  text += 'كل البيانات الأساسية مكتملة.\nقول تأكيد عشان أرفعها على الموقع، أو /status للمراجعة.';
+} else {
+  text += `لسه ناقص: ${missing.join('، ')}\nكمّل الناقص وبعدين قول تأكيد.`;
+}
+return [{ json: { action: 'reply', chatId, text } }];
+'''
+
 if "Save Photo To Draft" in by:
-    code = by["Save Photo To Draft"]["parameters"]["jsCode"]
-    code = code.replace(
-        "let text = '✅ تم حفظ صورة المنتج\\n';",
-        "let text = 'تمام، الصورة وصلتني 👍\\n';",
-    )
-    by["Save Photo To Draft"]["parameters"]["jsCode"] = code
+    by["Save Photo To Draft"]["parameters"]["jsCode"] = SAVE_PHOTO
+
+if "Get Photo" in by:
+    gp = by["Get Photo"]["parameters"]
+    gp["download"] = True
+    if not isinstance(gp.get("additionalFields"), dict):
+        gp["additionalFields"] = {}
+    gp["additionalFields"]["download"] = True
 
 tg = by["Telegram Trigger"]
 WH = tg.get("webhookId")
