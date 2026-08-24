@@ -12,6 +12,40 @@ function unauthorized() {
   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 }
 
+function normalizeDeleteQuery(value: unknown): string {
+  return String(value ?? '').trim()
+}
+
+async function resolveDeleteSlug(
+  supabase: ReturnType<typeof createAdminClient>,
+  body: Record<string, unknown>
+): Promise<{ slug?: string; title?: string; error?: string }> {
+  const slugRaw = normalizeDeleteQuery(body.slug ?? body.product_slug ?? body.productSlug)
+  const titleRaw = normalizeDeleteQuery(body.title ?? body.product_title ?? body.productTitle ?? body.name)
+
+  if (slugRaw) return { slug: slugifyProductTitle(slugRaw) }
+  if (!titleRaw) return { error: 'Provide `slug` or `title` to delete a product.' }
+
+  const { data, error } = await supabase
+    .from('products')
+    .select('slug,title_ar,title_en')
+    .eq('is_active', true)
+    .or(`title_ar.ilike.%${titleRaw}%,title_en.ilike.%${titleRaw}%`)
+    .limit(3)
+
+  if (error) return { error: error.message }
+  if (!data?.length) return { error: `No active product matched "${titleRaw}".` }
+  if (data.length > 1) {
+    const choices = data.map((row) => row.slug).join(', ')
+    return { error: `More than one product matched "${titleRaw}". Use slug instead: ${choices}` }
+  }
+
+  return {
+    slug: data[0].slug,
+    title: [data[0].title_ar, data[0].title_en].filter(Boolean).join(' / '),
+  }
+}
+
 function assertBotAuth(request: Request): boolean {
   const expected = process.env.PRODUCT_BOT_SECRET?.trim()
   if (!expected) return false
@@ -144,5 +178,54 @@ export async function POST(request: Request) {
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error'
     return NextResponse.json({ error: 'Failed to create product', detail: message }, { status: 500 })
+  }
+}
+
+export async function DELETE(request: Request) {
+  if (!assertBotAuth(request)) return unauthorized()
+  if (!isAdminClientConfigured()) {
+    return NextResponse.json(
+      { error: 'Supabase admin is not configured (check SUPABASE_SERVICE_ROLE_KEY)' },
+      { status: 503 }
+    )
+  }
+
+  try {
+    const body = (await request.json()) as Record<string, unknown>
+    const supabase = createAdminClient()
+    const target = await resolveDeleteSlug(supabase, body)
+
+    if (target.error || !target.slug) {
+      return NextResponse.json({ error: target.error || 'Delete target not found' }, { status: 400 })
+    }
+
+    const { data, error } = await supabase
+      .from('products')
+      .update({ is_active: false })
+      .eq('slug', target.slug)
+      .eq('is_active', true)
+      .select('*')
+      .maybeSingle()
+
+    if (error) {
+      return NextResponse.json({ error: 'DB delete failed', detail: error.message }, { status: 502 })
+    }
+    if (!data) {
+      return NextResponse.json({ error: `Product "${target.slug}" is already inactive or missing.` }, { status: 404 })
+    }
+
+    const product = mapProductRow(data as ProductRow)
+    return NextResponse.json({
+      ok: true,
+      deleted: true,
+      product: {
+        slug: product.slug,
+        title: product.title,
+        category: product.category,
+      },
+    })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Unknown error'
+    return NextResponse.json({ error: 'Failed to delete product', detail: message }, { status: 500 })
   }
 }

@@ -143,6 +143,12 @@ function parseTitles(t) {
   if (/[\u0600-\u06FF]/.test(t)) return { title_ar: t.trim(), title_en: '' };
   return { title_en: t.trim(), title_ar: '' };
 }
+function parseDeleteQuery(t) {
+  const raw = String(t || '').trim();
+  const m = raw.match(/^(?:\/delete|delete|del|امسح|احذف|حذف)\s+(.+)$/i);
+  if (!m) return '';
+  return m[1].trim();
+}
 
 const HELP = `أهلاً ${firstName || ''} 👋 أنا نسرين، برفع منتجات خير الجوار على الموقع.
 
@@ -152,6 +158,7 @@ const HELP = `أهلاً ${firstName || ''} 👋 أنا نسرين، برفع م
 
 أوامر لو حابب:
 /new منتج جديد
+/delete original-lemon حذف منتج بالـ slug
 /status المسودة
 /confirm تأكيد الرفع
 /cancel إلغاء
@@ -166,12 +173,20 @@ if (cmd === '/cancel' || /^(الغِ|الغي|كنسل|cancel)$/i.test(text)) {
 
 let d = getSession();
 const startNew = cmd === '/new' || /^(عايز|أريد|اريد|ارفع|رفع منتج|منتج جديد|نرفع منتج)/i.test(text);
+const deleteQuery = parseDeleteQuery(text);
 
 if (startNew && (d.step === 'idle' || cmd === '/new')) {
   d = blankDraft();
   d.step = 'collecting';
   staticData.sessions[chatId] = d;
   return reply(`تمام يا ${firstName || 'حبيبي'}، نرفع منتج جديد على الموقع.\n${nextAsk(d)}`);
+}
+
+if (deleteQuery) {
+  if (!deleteQuery || deleteQuery.length < 2) {
+    return reply('ابعت أمر الحذف بالشكل ده:\n/delete original-lemon\nأو: امسح original-lemon');
+  }
+  return out({ action: 'delete', delete_body: { slug: deleteQuery } });
 }
 
 if (cmd === '/status') {
@@ -229,6 +244,8 @@ if (d.step === 'idle') {
 let extractedSomething = false;
 const waiting = missing(d)[0];
 const cat = parseCategory(text);
+const priceMatch = /\$|\bMT\b|سعر\s*:/i.test(text) ||
+  (waiting === 'السعر' && /\d/.test(text));
 if (cat && !d.category_en) { d.category_en = cat; extractedSomething = true; }
 if (d.step === 'collecting' || d.step === 'title') {
   if (!cat && text.length > 1 && !/^(\$|\d)/.test(text) && missing(d).includes('الاسم') && text.length < 80) {
@@ -244,8 +261,6 @@ if (text.length > 12 && !cat && !/^\$/.test(text) && !/\d/.test(text.slice(0,3))
   else { d.desc_en = text; d.desc_ar = d.desc_ar || text; }
   extractedSomething = true;
 }
-const priceMatch = /\$|\bMT\b|سعر\s*:/i.test(text) ||
-  (waiting === 'السعر' && /\d/.test(text));
 if (priceMatch && !d.index_price) {
   d.index_price = text.replace(/^(سعر|price)\s*:?\s*/i,'').trim();
   extractedSomething = true;
@@ -370,13 +385,82 @@ return [{ json: { action: 'reply', chatId, text } }];
     nodes.append(fmt)
     by[fmt["name"]] = fmt
 
-# Switch: add chat rule as extra output or new rule
+if "DELETE Product API" not in by:
+    delete_http = {
+        "id": str(uuid.uuid4()),
+        "name": "DELETE Product API",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [1000, 620],
+        "continueOnFail": True,
+        "onError": "continueRegularOutput",
+        "parameters": {
+            "method": "DELETE",
+            "url": "https://khairaljewargroup.com/api/products",
+            "sendHeaders": True,
+            "headerParameters": {"parameters": [
+                {"name": "Content-Type", "value": "application/json"},
+                {"name": "x-product-bot-secret", "value": "KhairProdBot_8723339xN8n"},
+            ]},
+            "sendBody": True,
+            "specifyBody": "json",
+            "jsonBody": "={{ $json.delete_body }}",
+            "options": {},
+        },
+    }
+    nodes.append(delete_http)
+    by[delete_http["name"]] = delete_http
+
+if "Format Delete Reply" not in by:
+    delete_fmt = {
+        "id": str(uuid.uuid4()),
+        "name": "Format Delete Reply",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [1220, 620],
+        "parameters": {"jsCode": r'''
+const chatId = String($json.chatId || $('Telegram Trigger').first().json.message.chat.id);
+const j = $input.first().json;
+let text = '';
+if (j.error) {
+  text = '❌ ماقدرتش أمسح المنتج:\n' + String(j.detail || j.error).slice(0,500) + '\n\nجرّب بالـ slug بالضبط، مثال: /delete original-lemon';
+} else if (j.ok && j.deleted && j.product) {
+  const p = j.product;
+  text = [
+    '🗑️ تم إخفاء المنتج من الموقع بنجاح',
+    '',
+    `• ${p.title?.ar || ''} / ${p.title?.en || ''}`,
+    `• slug: ${p.slug || ''}`,
+    `• التصنيف: ${p.category?.ar || p.category?.en || ''}`,
+    '',
+    'لو حبيت ترجعه بعدين، نقدر نفعّله تاني من الداتا.'
+  ].join('\n');
+} else {
+  text = '⚠️ رد غير متوقع في الحذف:\n' + JSON.stringify(j).slice(0,700);
+}
+return [{ json: { action: 'reply', chatId, text } }];
+'''},
+    }
+    nodes.append(delete_fmt)
+    by[delete_fmt["name"]] = delete_fmt
+
+# Switch: add delete/chat rules as extra outputs if missing
 sw = by["Switch Action"]
 rules = sw["parameters"]["rules"]["values"]
-# existing: reply, upload, photo
-has_chat = any(r.get("outputKey") == "chat" for r in rules)
-if not has_chat:
-    rules.append({
+# existing: reply, upload, photo, delete, chat
+rule_map = {r.get("outputKey"): r for r in rules}
+if "delete" not in rule_map:
+    rule_map["delete"] = {
+        "conditions": {
+            "options": {"caseSensitive": True, "leftValue": "", "typeValidation": "strict", "version": 3},
+            "conditions": [{"id": "del", "leftValue": "={{ $json.action }}", "rightValue": "delete", "operator": {"type": "string", "operation": "equals"}}],
+            "combinator": "and",
+        },
+        "renameOutput": True,
+        "outputKey": "delete",
+    }
+if "chat" not in rule_map:
+    rule_map["chat"] = {
         "conditions": {
             "options": {"caseSensitive": True, "leftValue": "", "typeValidation": "strict", "version": 3},
             "conditions": [{"id": "ch", "leftValue": "={{ $json.action }}", "rightValue": "chat", "operator": {"type": "string", "operation": "equals"}}],
@@ -384,15 +468,19 @@ if not has_chat:
         },
         "renameOutput": True,
         "outputKey": "chat",
-    })
-    sw["parameters"]["rules"]["values"] = rules
+    }
+ordered_keys = ["reply", "upload", "photo", "delete", "chat"]
+sw["parameters"]["rules"]["values"] = [rule_map[k] for k in ordered_keys if k in rule_map]
 
-# connections Switch main: 0 reply, 1 upload, 2 photo, 3 chat
+# connections Switch main follow the same rule order
 main = conns["Switch Action"]["main"]
-while len(main) < 4:
+while len(main) < len(ordered_keys):
     main.append([])
-main[3] = [{"node": "Chat LLM", "type": "main", "index": 0}]
+main[3] = [{"node": "DELETE Product API", "type": "main", "index": 0}]
+main[4] = [{"node": "Chat LLM", "type": "main", "index": 0}]
 conns["Switch Action"]["main"] = main
+conns["DELETE Product API"] = {"main": [[{"node": "Format Delete Reply", "type": "main", "index": 0}]]}
+conns["Format Delete Reply"] = {"main": [[{"node": "Send Upload Result", "type": "main", "index": 0}]]}
 conns["Chat LLM"] = {"main": [[{"node": "Format Chat Reply", "type": "main", "index": 0}]]}
 conns["Format Chat Reply"] = {"main": [[{"node": "Send Reply", "type": "main", "index": 0}]]}
 
