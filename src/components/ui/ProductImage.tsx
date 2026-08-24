@@ -132,9 +132,9 @@ export default function ProductImage({
           sizes={sizes ?? styles.sizes}
           priority={priority}
           quality={variant === 'thumb' ? IMAGE_QUALITY_THUMB : variant === 'card' ? 78 : IMAGE_QUALITY_PRODUCT}
-          unoptimized={isBrandWebp}
-          placeholder={isBrandWebp ? 'empty' : 'blur'}
-          blurDataURL={isBrandWebp ? undefined : IMAGE_BLUR_DATA_URL}
+          unoptimized={isBrandWebp || isRemoteUpload}
+          placeholder={isBrandWebp || isRemoteUpload ? 'empty' : 'blur'}
+          blurDataURL={isBrandWebp || isRemoteUpload ? undefined : IMAGE_BLUR_DATA_URL}
           onError={handleError}
           className={cn(objectFit)}
         />
