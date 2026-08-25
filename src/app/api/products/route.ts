@@ -5,9 +5,11 @@ import { createAdminClient, isAdminClientConfigured } from '@/lib/supabase/admin
 import { mapProductRow } from '@/lib/supabase/mappers'
 import { normalizeProductCreateInput } from '@/lib/products/normalizeCreate'
 import { slugifyProductTitle } from '@/lib/products/slugify'
-import type { ProductRow } from '@/lib/supabase/types'
+import type { Database, ProductRow } from '@/lib/supabase/types'
 
 export const runtime = 'nodejs'
+
+type ProductUpdate = Database['public']['Tables']['products']['Update']
 
 const BOT_SECRET_HEADER = 'x-product-bot-secret'
 
@@ -320,29 +322,25 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: `Product "${target.slug}" not found` }, { status: 404 })
     }
 
-    const patch: Record<string, unknown> = {}
+    const patch: ProductUpdate = {}
     if (restore) patch.is_active = true
 
-    const stringFields = [
-      'title_ar',
-      'title_en',
-      'category_en',
-      'category_ar',
-      'desc_ar',
-      'desc_en',
-      'index_price',
-      'packaging_ar',
-      'packaging_en',
-      'sizes_ar',
-      'sizes_en',
-      'harvest_season_ar',
-      'harvest_season_en',
-      'unit',
-      'image',
-    ] as const
-
-    for (const key of stringFields) {
-      if (body[key] != null && asTrim(body[key])) patch[key] = asTrim(body[key])
+    if (asTrim(body.title_ar)) patch.title_ar = asTrim(body.title_ar)
+    if (asTrim(body.title_en)) patch.title_en = asTrim(body.title_en)
+    if (asTrim(body.category_en)) patch.category_en = asTrim(body.category_en)
+    if (asTrim(body.category_ar)) patch.category_ar = asTrim(body.category_ar)
+    if (asTrim(body.desc_ar)) patch.desc_ar = asTrim(body.desc_ar)
+    if (asTrim(body.desc_en)) patch.desc_en = asTrim(body.desc_en)
+    if (asTrim(body.index_price)) patch.index_price = asTrim(body.index_price)
+    if (asTrim(body.packaging_ar)) patch.packaging_ar = asTrim(body.packaging_ar)
+    if (asTrim(body.packaging_en)) patch.packaging_en = asTrim(body.packaging_en)
+    if (asTrim(body.sizes_ar)) patch.sizes_ar = asTrim(body.sizes_ar)
+    if (asTrim(body.sizes_en)) patch.sizes_en = asTrim(body.sizes_en)
+    if (asTrim(body.harvest_season_ar)) patch.harvest_season_ar = asTrim(body.harvest_season_ar)
+    if (asTrim(body.harvest_season_en)) patch.harvest_season_en = asTrim(body.harvest_season_en)
+    if (asTrim(body.image)) patch.image = asTrim(body.image)
+    if (asTrim(body.unit) === 'MT' || asTrim(body.unit) === 'Containers') {
+      patch.unit = asTrim(body.unit) as 'MT' | 'Containers'
     }
 
     if (body.min_order != null && Number(body.min_order) > 0) {
