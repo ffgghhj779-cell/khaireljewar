@@ -9,6 +9,8 @@ import type { ProductRow } from '@/lib/supabase/types'
 
 export const runtime = 'nodejs'
 
+const BOT_SECRET_HEADER = 'x-product-bot-secret'
+
 function bustProductCaches(slug?: string) {
   revalidatePath('/', 'layout')
   revalidatePath('/ar')
@@ -25,62 +27,173 @@ function unauthorized() {
   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 }
 
-function normalizeDeleteQuery(value: unknown): string {
-  return String(value ?? '').trim()
-}
-
-async function resolveDeleteSlug(
-  supabase: ReturnType<typeof createAdminClient>,
-  body: Record<string, unknown>
-): Promise<{ slug?: string; title?: string; error?: string }> {
-  const slugRaw = normalizeDeleteQuery(body.slug ?? body.product_slug ?? body.productSlug)
-  const titleRaw = normalizeDeleteQuery(body.title ?? body.product_title ?? body.productTitle ?? body.name)
-
-  if (slugRaw) return { slug: slugifyProductTitle(slugRaw) }
-  if (!titleRaw) return { error: 'Provide `slug` or `title` to delete a product.' }
-
-  const { data, error } = await supabase
-    .from('products')
-    .select('slug,title_ar,title_en')
-    .eq('is_active', true)
-    .or(`title_ar.ilike.%${titleRaw}%,title_en.ilike.%${titleRaw}%`)
-    .limit(3)
-
-  if (error) return { error: error.message }
-  if (!data?.length) return { error: `No active product matched "${titleRaw}".` }
-  if (data.length > 1) {
-    const choices = data.map((row) => row.slug).join(', ')
-    return { error: `More than one product matched "${titleRaw}". Use slug instead: ${choices}` }
-  }
-
-  return {
-    slug: data[0].slug,
-    title: [data[0].title_ar, data[0].title_en].filter(Boolean).join(' / '),
-  }
-}
-
 function assertBotAuth(request: Request): boolean {
   const expected = process.env.PRODUCT_BOT_SECRET?.trim()
   if (!expected) return false
-  const header = request.headers.get('x-product-bot-secret') || ''
+  const header = request.headers.get(BOT_SECRET_HEADER) || ''
   const bearer = request.headers.get('authorization') || ''
   const token = header || (bearer.toLowerCase().startsWith('bearer ') ? bearer.slice(7).trim() : '')
   return Boolean(token) && token === expected
 }
 
-export async function GET() {
-  const products = await getProducts()
-  return NextResponse.json({ products, count: products.length, source: 'catalog' })
+function asTrim(value: unknown): string {
+  return String(value ?? '').trim()
 }
 
-/**
- * Create / upsert a product (Telegram bot + admin tools).
- * Auth: header `x-product-bot-secret` or `Authorization: Bearer <PRODUCT_BOT_SECRET>`
- *
- * Body JSON:
- * - product fields (title_en/ar, category_en, desc_*, image, …)
- * - optional: image_base64 + image_filename to upload into Storage first
- */
+function productUrls(slug: string) {
+  const site = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://khairaljewargroup.com'
+  return {
+    en: `${site}/en/products/${slug}`,
+    ar: `${site}/ar/products/${slug}`,
+  }
+}
+
+function compactProduct(row: ProductRow) {
+  const product = mapProductRow(row)
+  return {
+    id: product.id,
+    slug: product.slug,
+    title: product.title,
+    category: product.category,
+    indexPrice: product.indexPrice ?? null,
+    image: product.image,
+    is_active: row.is_active,
+    minOrder: product.minOrder,
+    unit: product.unit,
+    urls: productUrls(product.slug),
+  }
+}
+
+async function resolveSlug(
+  supabase: ReturnType<typeof createAdminClient>,
+  body: Record<string, unknown>,
+  opts?: { activeOnly?: boolean }
+): Promise<{ slug?: string; error?: string }> {
+  const slugRaw = asTrim(body.slug ?? body.product_slug ?? body.productSlug)
+  const titleRaw = asTrim(body.title ?? body.product_title ?? body.productTitle ?? body.name ?? body.q)
+
+  if (slugRaw) return { slug: slugifyProductTitle(slugRaw) }
+  if (!titleRaw) return { error: 'Provide `slug` or `title`.' }
+
+  let query = supabase
+    .from('products')
+    .select('slug,title_ar,title_en,is_active')
+    .or(`title_ar.ilike.%${titleRaw}%,title_en.ilike.%${titleRaw}%,slug.ilike.%${titleRaw}%`)
+    .limit(5)
+
+  if (opts?.activeOnly !== false) query = query.eq('is_active', true)
+
+  const { data, error } = await query
+  if (error) return { error: error.message }
+  if (!data?.length) return { error: `No product matched "${titleRaw}".` }
+  if (data.length > 1) {
+    return { error: `More than one match. Use slug: ${data.map((r) => r.slug).join(', ')}` }
+  }
+  return { slug: data[0].slug }
+}
+
+async function uploadImageBase64(
+  supabase: ReturnType<typeof createAdminClient>,
+  body: Record<string, unknown>,
+  slugHint: string
+): Promise<{ url?: string; error?: string; bytes?: number }> {
+  const b64 = asTrim(body.image_base64 ?? body.imageBase64)
+  if (!b64) return {}
+
+  const filenameRaw = asTrim(body.image_filename ?? body.imageFilename) || 'product.jpg'
+  const safeName = filenameRaw.replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 80) || 'product.jpg'
+  const path = `${slugHint}/${Date.now()}-${safeName}`
+  const raw = b64.includes(',') ? b64.split(',').pop()! : b64
+  const buffer = Buffer.from(raw, 'base64')
+
+  if (buffer.length < 4096) {
+    return { error: `Image too small (${buffer.length} bytes). Re-send the Telegram photo.` }
+  }
+
+  const magic = buffer.subarray(0, 12)
+  const isJpeg = magic[0] === 0xff && magic[1] === 0xd8
+  const isPng = magic[0] === 0x89 && magic[1] === 0x50 && magic[2] === 0x4e && magic[3] === 0x47
+  const isWebp = magic.toString('ascii', 0, 4) === 'RIFF' && magic.toString('ascii', 8, 12) === 'WEBP'
+  if (!isJpeg && !isPng && !isWebp) {
+    return { error: 'Image is not a valid JPEG/PNG/WebP file' }
+  }
+
+  const contentType =
+    asTrim(body.image_mime ?? body.imageMime) ||
+    (isPng ? 'image/png' : isWebp ? 'image/webp' : 'image/jpeg')
+
+  const { error: uploadError } = await supabase.storage
+    .from('product-images')
+    .upload(path, buffer, { contentType, upsert: true })
+
+  if (uploadError) return { error: uploadError.message }
+
+  const { data: pub } = supabase.storage.from('product-images').getPublicUrl(path)
+  return { url: pub.publicUrl, bytes: buffer.length }
+}
+
+function siteJson(product: ReturnType<typeof mapProductRow>, extra?: Record<string, unknown>) {
+  return {
+    ok: true,
+    product,
+    urls: productUrls(product.slug),
+    ...extra,
+  }
+}
+
+/** Public catalog, or authenticated bot admin list/search. */
+export async function GET(request: Request) {
+  const url = new URL(request.url)
+  const botMode = url.searchParams.get('bot') === '1' || url.searchParams.get('admin') === '1'
+
+  if (!botMode) {
+    const products = await getProducts()
+    return NextResponse.json({ products, count: products.length, source: 'catalog' })
+  }
+
+  if (!assertBotAuth(request)) return unauthorized()
+  if (!isAdminClientConfigured()) {
+    return NextResponse.json({ error: 'Supabase admin is not configured' }, { status: 503 })
+  }
+
+  try {
+    const supabase = createAdminClient()
+    const q = asTrim(url.searchParams.get('q'))
+    const slug = asTrim(url.searchParams.get('slug'))
+    const includeInactive = url.searchParams.get('include_inactive') === '1'
+    const inactiveOnly = url.searchParams.get('inactive') === '1'
+    const limit = Math.min(Number(url.searchParams.get('limit') || 40) || 40, 100)
+
+    let query = supabase
+      .from('products')
+      .select('*')
+      .order('updated_at', { ascending: false })
+      .limit(limit)
+
+    if (inactiveOnly) query = query.eq('is_active', false)
+    else if (!includeInactive) query = query.eq('is_active', true)
+
+    if (slug) query = query.eq('slug', slugifyProductTitle(slug))
+    else if (q) {
+      query = query.or(
+        `title_ar.ilike.%${q}%,title_en.ilike.%${q}%,slug.ilike.%${q}%,category_en.ilike.%${q}%,category_ar.ilike.%${q}%`
+      )
+    }
+
+    const { data, error } = await query
+    if (error) {
+      return NextResponse.json({ error: 'List failed', detail: error.message }, { status: 502 })
+    }
+
+    const items = ((data || []) as ProductRow[]).map(compactProduct)
+    return NextResponse.json({ ok: true, count: items.length, products: items })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Unknown error'
+    return NextResponse.json({ error: 'Failed to list products', detail: message }, { status: 500 })
+  }
+}
+
+/** Create / upsert product (Telegram bot). */
 export async function POST(request: Request) {
   if (!assertBotAuth(request)) return unauthorized()
   if (!isAdminClientConfigured()) {
@@ -94,56 +207,16 @@ export async function POST(request: Request) {
     const body = (await request.json()) as Record<string, unknown>
     const supabase = createAdminClient()
 
-    let imageUrl = String(body.image ?? body.image_url ?? body.imageUrl ?? '').trim()
+    let imageUrl = asTrim(body.image ?? body.image_url ?? body.imageUrl)
+    const slugHint = slugifyProductTitle(
+      String(body.title_en ?? body.title_ar ?? body.slug ?? 'product')
+    )
 
-    const b64 = String(body.image_base64 ?? body.imageBase64 ?? '').trim()
-    if (b64) {
-      const filenameRaw = String(body.image_filename ?? body.imageFilename ?? 'product.jpg')
-      const safeName = filenameRaw.replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 80) || 'product.jpg'
-      const slugHint = slugifyProductTitle(
-        String(body.title_en ?? body.title_ar ?? body.slug ?? 'product')
-      )
-      const path = `${slugHint}/${Date.now()}-${safeName}`
-
-      const raw = b64.includes(',') ? b64.split(',').pop()! : b64
-      const buffer = Buffer.from(raw, 'base64')
-      if (buffer.length < 4096) {
-        return NextResponse.json(
-          {
-            error: 'Image too small',
-            detail: `Received ${buffer.length} bytes. Re-send the Telegram photo and try again.`,
-          },
-          { status: 400 }
-        )
-      }
-      const magic = buffer.subarray(0, 12)
-      const isJpeg = magic[0] === 0xff && magic[1] === 0xd8
-      const isPng = magic[0] === 0x89 && magic[1] === 0x50 && magic[2] === 0x4e && magic[3] === 0x47
-      const isWebp = magic.toString('ascii', 0, 4) === 'RIFF' && magic.toString('ascii', 8, 12) === 'WEBP'
-      if (!isJpeg && !isPng && !isWebp) {
-        return NextResponse.json(
-          { error: 'Image is not a valid JPEG/PNG/WebP file' },
-          { status: 400 }
-        )
-      }
-      const contentType =
-        String(body.image_mime ?? body.imageMime ?? '').trim() ||
-        (isPng ? 'image/png' : isWebp ? 'image/webp' : 'image/jpeg')
-
-      const { error: uploadError } = await supabase.storage
-        .from('product-images')
-        .upload(path, buffer, { contentType, upsert: true })
-
-      if (uploadError) {
-        return NextResponse.json(
-          { error: 'Image upload failed', detail: uploadError.message },
-          { status: 502 }
-        )
-      }
-
-      const { data: pub } = supabase.storage.from('product-images').getPublicUrl(path)
-      imageUrl = pub.publicUrl
+    const uploaded = await uploadImageBase64(supabase, body, slugHint)
+    if (uploaded.error) {
+      return NextResponse.json({ error: 'Image upload failed', detail: uploaded.error }, { status: 400 })
     }
+    if (uploaded.url) imageUrl = uploaded.url
 
     const normalized = normalizeProductCreateInput({ ...body, image: imageUrl })
     if (!normalized.ok) {
@@ -183,6 +256,12 @@ export async function POST(request: Request) {
       sort_order: row.sort_order ?? 100,
     }
 
+    const { data: existing } = await supabase
+      .from('products')
+      .select('slug,is_active')
+      .eq('slug', payload.slug)
+      .maybeSingle()
+
     const { data, error } = await supabase
       .from('products')
       .upsert(payload, { onConflict: 'slug' })
@@ -194,35 +273,147 @@ export async function POST(request: Request) {
     }
 
     const product = mapProductRow(data as ProductRow)
-    const site = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || ''
     bustProductCaches(product.slug)
-    return NextResponse.json({
-      ok: true,
-      product,
-      urls: {
-        en: site ? `${site}/en/products/${product.slug}` : undefined,
-        ar: site ? `${site}/ar/products/${product.slug}` : undefined,
-      },
-    })
+    return NextResponse.json(
+      siteJson(product, {
+        updated: Boolean(existing),
+        created: !existing,
+        image_bytes: uploaded.bytes,
+      })
+    )
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error'
     return NextResponse.json({ error: 'Failed to create product', detail: message }, { status: 500 })
   }
 }
 
-export async function DELETE(request: Request) {
+/**
+ * Partial update / restore / photo replace.
+ * Body: { slug|title, restore?: true, ...fields, image_base64? }
+ */
+export async function PATCH(request: Request) {
   if (!assertBotAuth(request)) return unauthorized()
   if (!isAdminClientConfigured()) {
-    return NextResponse.json(
-      { error: 'Supabase admin is not configured (check SUPABASE_SERVICE_ROLE_KEY)' },
-      { status: 503 }
-    )
+    return NextResponse.json({ error: 'Supabase admin is not configured' }, { status: 503 })
   }
 
   try {
     const body = (await request.json()) as Record<string, unknown>
     const supabase = createAdminClient()
-    const target = await resolveDeleteSlug(supabase, body)
+    const restore = body.restore === true || body.is_active === true
+
+    const target = await resolveSlug(supabase, body, { activeOnly: !restore })
+    if (target.error || !target.slug) {
+      return NextResponse.json({ error: target.error || 'Target not found' }, { status: 400 })
+    }
+
+    const { data: current, error: loadError } = await supabase
+      .from('products')
+      .select('*')
+      .eq('slug', target.slug)
+      .maybeSingle()
+
+    if (loadError) {
+      return NextResponse.json({ error: 'Lookup failed', detail: loadError.message }, { status: 502 })
+    }
+    if (!current) {
+      return NextResponse.json({ error: `Product "${target.slug}" not found` }, { status: 404 })
+    }
+
+    const patch: Record<string, unknown> = {}
+    if (restore) patch.is_active = true
+
+    const stringFields = [
+      'title_ar',
+      'title_en',
+      'category_en',
+      'category_ar',
+      'desc_ar',
+      'desc_en',
+      'index_price',
+      'packaging_ar',
+      'packaging_en',
+      'sizes_ar',
+      'sizes_en',
+      'harvest_season_ar',
+      'harvest_season_en',
+      'unit',
+      'image',
+    ] as const
+
+    for (const key of stringFields) {
+      if (body[key] != null && asTrim(body[key])) patch[key] = asTrim(body[key])
+    }
+
+    if (body.min_order != null && Number(body.min_order) > 0) {
+      patch.min_order = Number(body.min_order)
+    }
+
+    if (asTrim(body.category_en) && !asTrim(body.category_ar)) {
+      const map: Record<string, string> = {
+        Citrus: 'الموالح',
+        Dates: 'التمور',
+        Fruits: 'الفواكه',
+        Vegetables: 'الخضروات',
+        Frozen: 'المجمدات',
+      }
+      const cat = asTrim(body.category_en)
+      if (map[cat]) {
+        patch.category_en = cat
+        patch.category_ar = map[cat]
+        patch.commodity_class_en = cat
+        patch.commodity_class_ar = map[cat]
+      }
+    }
+
+    const uploaded = await uploadImageBase64(supabase, body, target.slug)
+    if (uploaded.error) {
+      return NextResponse.json({ error: 'Image upload failed', detail: uploaded.error }, { status: 400 })
+    }
+    if (uploaded.url) patch.image = uploaded.url
+
+    if (!Object.keys(patch).length) {
+      return NextResponse.json({ error: 'No fields to update' }, { status: 400 })
+    }
+
+    const { data, error } = await supabase
+      .from('products')
+      .update(patch)
+      .eq('slug', target.slug)
+      .select('*')
+      .single()
+
+    if (error) {
+      return NextResponse.json({ error: 'DB update failed', detail: error.message }, { status: 502 })
+    }
+
+    const product = mapProductRow(data as ProductRow)
+    bustProductCaches(product.slug)
+    return NextResponse.json(
+      siteJson(product, {
+        patched: true,
+        restored: restore,
+        fields: Object.keys(patch),
+        image_bytes: uploaded.bytes,
+      })
+    )
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Unknown error'
+    return NextResponse.json({ error: 'Failed to update product', detail: message }, { status: 500 })
+  }
+}
+
+/** Soft-delete (is_active=false). */
+export async function DELETE(request: Request) {
+  if (!assertBotAuth(request)) return unauthorized()
+  if (!isAdminClientConfigured()) {
+    return NextResponse.json({ error: 'Supabase admin is not configured' }, { status: 503 })
+  }
+
+  try {
+    const body = (await request.json()) as Record<string, unknown>
+    const supabase = createAdminClient()
+    const target = await resolveSlug(supabase, body)
 
     if (target.error || !target.slug) {
       return NextResponse.json({ error: target.error || 'Delete target not found' }, { status: 400 })
@@ -240,7 +431,10 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: 'DB delete failed', detail: error.message }, { status: 502 })
     }
     if (!data) {
-      return NextResponse.json({ error: `Product "${target.slug}" is already inactive or missing.` }, { status: 404 })
+      return NextResponse.json(
+        { error: `Product "${target.slug}" is already inactive or missing.` },
+        { status: 404 }
+      )
     }
 
     const product = mapProductRow(data as ProductRow)
@@ -248,11 +442,8 @@ export async function DELETE(request: Request) {
     return NextResponse.json({
       ok: true,
       deleted: true,
-      product: {
-        slug: product.slug,
-        title: product.title,
-        category: product.category,
-      },
+      product: compactProduct(data as ProductRow),
+      urls: productUrls(product.slug),
     })
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error'
