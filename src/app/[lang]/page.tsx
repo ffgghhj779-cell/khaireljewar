@@ -2,6 +2,7 @@ export const revalidate = 60
 
 import HeroBrand from '@/components/sections/HeroBrand'
 import OriginStory from '@/components/sections/OriginStory'
+import BrandPackaging from '@/components/sections/BrandPackaging'
 import ProductsDesire from '@/components/sections/ProductsDesire'
 import TrustQuiet from '@/components/sections/TrustQuiet'
 import TrustProofStrip from '@/components/sections/TrustProofStrip'
@@ -33,6 +34,7 @@ export default async function Home({
       <PartnerStrip lang={lang} />
       <PartnerLogoMarquee lang={lang} />
       <OriginStory lang={lang} />
+      <BrandPackaging lang={lang} />
       <ProductsDesire lang={lang} products={products} />
       <ExportDocsStrip lang={lang} />
       <TrustQuiet lang={lang} />

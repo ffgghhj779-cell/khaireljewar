@@ -19,6 +19,9 @@ export interface Product {
   brix?: string
   indexPrice?: string
   trend?: string
+  /** Consumer retail price in EGP (online store) */
+  retailPriceEgp?: number
+  consumerUnit?: { en: string; ar: string }
 }
 
 /** Matches live catalog categories: https://khairaljewargroup.com/en/products */

@@ -89,13 +89,14 @@ export function normalizeProductImage(
   return resolveProductImage(image, categoryEn, slug)
 }
 
-/** Official brand mark + wordmark (SVG) */
-export const BRAND_LOGO = '/images/logo/khair-aljaar-logo.svg'
-export const BRAND_LOGO_AR = '/images/logo/khair-aljaar-logo-ar.svg'
-export const BRAND_MARK = '/images/logo/khair-aljaar-mark.svg'
-export const BRAND_MARK_PREMIUM = '/images/logo/khair-aljaar-mark-premium.png'
-export const BRAND_SEAL = '/images/logo/khair-aljaar-seal.svg'
-export const BRAND_LOGO_WHITE = '/images/logo/khair-aljaar-logo-white.svg'
+/** Official brand lockup + calligraphic mark */
+export const BRAND_LOGO = '/images/logo/khair-aljewar-logo.png'
+export const BRAND_LOGO_AR = '/images/logo/khair-aljewar-logo.png'
+export const BRAND_MARK = '/images/logo/khair-aljewar-mark.png'
+export const BRAND_MARK_PREMIUM = '/images/logo/khair-aljewar-mark.png'
+export const BRAND_SEAL = '/images/logo/khair-aljewar-mark.png'
+export const BRAND_LOGO_WHITE = '/images/logo/khair-aljewar-logo.png'
+export const BRAND_ICON = '/images/logo/khair-aljewar-icon.png'
 
 export const IMAGE_QUALITY = 90
 export const IMAGE_QUALITY_PRODUCT = 92
@@ -129,4 +130,10 @@ export const SECTION_IMAGES = {
   heroReelPoster: '/images/brand/hero-reel/warehouse.png',
   heroVideoWebm: '/videos/hero.webm',
   heroVideoMp4: '/videos/hero.mp4',
+  packTomatoes: '/images/brand/packaging/tomatoes-crate.webp',
+  packRice: '/images/brand/packaging/rice-bag.webp',
+  packSugar: '/images/brand/packaging/sugar-bag.webp',
+  packFries: '/images/brand/packaging/fries-bag.webp',
+  packOil: '/images/brand/packaging/vegetable-oil.webp',
+  packChicken: '/images/brand/packaging/chilled-chicken.webp',
 } as const

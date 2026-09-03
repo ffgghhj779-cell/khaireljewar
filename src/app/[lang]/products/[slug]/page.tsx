@@ -7,6 +7,7 @@ import ProductGallery from '@/components/ecom/ProductGallery'
 import ProductStickyCta from '@/components/ecom/ProductStickyCta'
 import ProductCard from '@/components/sections/ProductCard'
 import AddToCartButton from '@/components/ecom/AddToCartButton'
+import { formatEgp, getConsumerUnit, getRetailPriceEgp } from '@/lib/commerce/pricing'
 import { buildPageMetadata, productJsonLd } from '@/lib/seo'
 import { resolveProductImage, SECTION_IMAGES } from '@/lib/constants/images'
 import { COMPLIANCE_CERTIFICATES } from '@/lib/constants/brandAssets'
@@ -280,22 +281,24 @@ export default async function SingleProductPage({
 
             <div className="rounded-2xl bg-primary p-6 md:p-8 text-cream shadow-soft">
               <p className={cn('text-sm text-cream/65 mb-1', isAr ? 'font-arabic' : 'font-sans')}>
-                {isAr ? 'الحد الأدنى للطلب' : 'Minimum order'}
+                {isAr ? 'سعر التجزئة (مصر)' : 'Retail price (Egypt)'}
               </p>
               <p className={cn('text-3xl font-bold mb-1', isAr ? 'font-arabic' : 'font-display')}>
-                {product.minOrder}{' '}
-                <span className="text-lg font-semibold text-cream/65">{unitLabel}</span>
+                {formatEgp(getRetailPriceEgp(product), lang)}
               </p>
-              {product.indexPrice && (
-                <p className={cn('text-sm text-secondary mb-4', isAr ? 'font-arabic' : 'font-sans')}>
-                  {isAr ? `مؤشر: ${product.indexPrice}` : `Index: ${product.indexPrice}`}
-                </p>
-              )}
+              <p className={cn('text-sm text-secondary mb-4', isAr ? 'font-arabic' : 'font-sans')}>
+                {isAr
+                  ? `لكل ${getConsumerUnit(product).ar} · شحن ${formatEgp(49, lang)} داخل مصر`
+                  : `Per ${getConsumerUnit(product).en} · ${formatEgp(49, lang)} shipping in Egypt`}
+              </p>
               <AddToCartButton lang={lang} product={product} variant="onDark" />
               <p className={cn('mt-4 text-xs text-cream/50', isAr ? 'font-arabic' : 'font-sans')}>
                 {isAr
-                  ? 'أضف للتسعير ثم أرسل الطلب عبر واتساب من السلة.'
-                  : 'Add to quote, then send via WhatsApp from the cart.'}
+                  ? 'أضف للسلة ثم ادفع بالبطاقة أو المحفظة عبر Paymob.'
+                  : 'Add to cart, then pay by card or wallet via Paymob.'}
+              </p>
+              <p className={cn('mt-2 text-xs text-cream/40', isAr ? 'font-arabic' : 'font-sans')}>
+                {isAr ? `حد أدنى للجملة: ${product.minOrder} ${unitLabel}` : `Wholesale MOQ: ${product.minOrder} ${unitLabel}`}
               </p>
             </div>
           </Container>

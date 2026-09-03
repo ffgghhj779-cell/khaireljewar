@@ -7,6 +7,7 @@ import type { Product } from '@/lib/data/products'
 import { BRAND_EASE, SCROLL_VIEWPORT_INSTANT } from '@/lib/constants/motion'
 import { useLightMotion } from '@/hooks/useLightMotion'
 import ProductImage from '@/components/ui/ProductImage'
+import { getConsumerUnit, getRetailPriceEgp, formatEgp } from '@/lib/commerce/pricing'
 import { cn } from '@/lib/utils/cn'
 
 interface ProductCardProps {
@@ -26,7 +27,8 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
   const season = isAr ? product.harvestSeason.ar : product.harvestSeason.en
   const unitLabel =
     product.unit === 'Containers' ? (isAr ? 'حاوية' : 'ctr') : isAr ? 'طن' : 'MT'
-  const price = product.indexPrice
+  const retailPrice = getRetailPriceEgp(product)
+  const consumerUnit = getConsumerUnit(product)
   const moq = `${product.minOrder} ${unitLabel}`
 
   return (
@@ -58,16 +60,16 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
             className="!aspect-auto absolute inset-0 rounded-none border-0 !bg-cream"
             sizes={compact ? '280px' : '(max-width: 768px) 45vw, (max-width: 1200px) 30vw, 280px'}
           />
-          {price && (
+          {retailPrice > 0 && (
             <span
               className={cn(
                 'absolute top-2.5 end-2.5 z-[1] max-w-[70%] rounded-full bg-farm px-2.5 py-1 text-[10px] font-bold leading-tight text-cream shadow-sm',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >
-              {price}
+              {formatEgp(retailPrice, lang)}
               <span className="mt-0.5 block text-[8px] font-semibold uppercase tracking-wide opacity-80">
-                {isAr ? 'استرشادي' : 'Indicative'}
+                {isAr ? consumerUnit.ar : consumerUnit.en}
               </span>
             </span>
           )}

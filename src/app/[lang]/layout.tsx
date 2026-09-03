@@ -44,8 +44,8 @@ export async function generateMetadata({
     applicationName: brand,
     robots: { index: true, follow: true },
     icons: {
-      icon: '/images/logo/khair-aljaar-mark.svg',
-      apple: '/images/logo/khair-aljaar-mark.svg',
+      icon: '/images/logo/khair-aljewar-icon.png',
+      apple: '/images/logo/khair-aljewar-icon.png',
     },
     alternates: {
       canonical: `${SITE_URL}/${lang}`,
@@ -100,7 +100,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(graphJsonLd()) }}
         />
         <Header lang={lang} />
-        <main className="relative z-0 min-h-screen pt-[56px] md:pt-[76px]">{children}</main>
+        <main className="relative z-0 min-h-screen pt-[68px] md:pt-[88px]">{children}</main>
         <SiteBio lang={lang} />
         <Footer lang={lang} />
         <MobileAppChrome lang={lang} />

@@ -87,7 +87,7 @@ export function organizationJsonLd() {
     url: SITE_URL,
     logo: {
       '@type': 'ImageObject',
-      url: `${SITE_URL}/images/logo/khair-aljaar-mark.svg`,
+      url: `${SITE_URL}/images/logo/khair-aljewar-logo.png`,
     },
     image: DEFAULT_OG_IMAGE,
     description: BRAND.positioning.en,

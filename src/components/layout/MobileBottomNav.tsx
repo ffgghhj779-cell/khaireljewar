@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Package, ShieldCheck, MessageCircle } from 'lucide-react'
+import { Home, Package, ShoppingCart, ShieldCheck } from 'lucide-react'
+import { useCartStore } from '@/lib/commerce/cart-store'
 import { cn } from '@/lib/utils/cn'
 
 type NavItem = {
@@ -17,19 +18,20 @@ const NAV_ITEMS: Record<'en' | 'ar', NavItem[]> = {
   en: [
     { key: 'home', label: 'Home', href: '', icon: Home },
     { key: 'products', label: 'Products', href: '/products', icon: Package },
-    { key: 'quote', label: 'Quote', href: '/contact', icon: MessageCircle, emphasize: true },
+    { key: 'cart', label: 'Cart', href: '/cart', icon: ShoppingCart, emphasize: true },
     { key: 'quality', label: 'Quality', href: '/quality', icon: ShieldCheck },
   ],
   ar: [
     { key: 'home', label: 'الرئيسية', href: '', icon: Home },
     { key: 'products', label: 'المنتجات', href: '/products', icon: Package },
-    { key: 'quote', label: 'عرض سعر', href: '/contact', icon: MessageCircle, emphasize: true },
+    { key: 'cart', label: 'السلة', href: '/cart', icon: ShoppingCart, emphasize: true },
     { key: 'quality', label: 'الجودة', href: '/quality', icon: ShieldCheck },
   ],
 }
 
 export default function MobileBottomNav({ lang }: { lang: string }) {
   const pathname = usePathname()
+  const cartCount = useCartStore((s) => s.itemCount())
   const isAr = lang === 'ar'
   const navItems = NAV_ITEMS[lang as keyof typeof NAV_ITEMS] || NAV_ITEMS.en
 
@@ -62,6 +64,11 @@ export default function MobileBottomNav({ lang }: { lang: string }) {
                   )}
                 >
                   <Icon className="w-[18px] h-[18px]" strokeWidth={2.25} />
+                  {item.key === 'cart' && cartCount > 0 && (
+                    <span className="absolute -top-1 end-0 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-cream text-[9px] font-bold text-farm px-0.5">
+                      {cartCount > 9 ? '9+' : cartCount}
+                    </span>
+                  )}
                   <span className={cn('text-[9px] font-bold mt-0.5 leading-none', isAr ? 'font-arabic' : 'font-sans')}>
                     {item.label}
                   </span>

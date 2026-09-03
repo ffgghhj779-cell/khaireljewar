@@ -1,13 +1,14 @@
 'use client'
 
-import Link from 'next/link'
-import { MessageCircle } from 'lucide-react'
+import { useState } from 'react'
+import { ShoppingCart, Check } from 'lucide-react'
 import type { Product } from '@/lib/data/products'
+import { useCartStore } from '@/lib/commerce/cart-store'
+import { getConsumerUnit, getRetailPriceEgp, formatEgp } from '@/lib/commerce/pricing'
 import { TAP_SCALE } from '@/lib/constants/motion'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils/cn'
 
-/** CTA to contact — cart/checkout live on Zid store */
 export default function AddToCartButton({
   product,
   lang,
@@ -18,26 +19,54 @@ export default function AddToCartButton({
   variant?: 'default' | 'onDark'
 }) {
   const isAr = lang === 'ar'
-  const title = isAr ? product.title.ar : product.title.en
+  const addLine = useCartStore((s) => s.addLine)
+  const [added, setAdded] = useState(false)
+  const unit = getConsumerUnit(product)
+  const price = getRetailPriceEgp(product)
+
+  function handleAdd() {
+    addLine({
+      slug: product.slug,
+      titleEn: product.title.en,
+      titleAr: product.title.ar,
+      image: product.image,
+      unitLabelEn: unit.en,
+      unitLabelAr: unit.ar,
+      unitPriceEgp: price,
+    })
+    setAdded(true)
+    window.setTimeout(() => setAdded(false), 1800)
+  }
 
   return (
-    <motion.div whileTap={TAP_SCALE}>
-      <Link
-        href={`/${lang}/contact?product=${encodeURIComponent(product.slug)}`}
+    <motion.div whileTap={TAP_SCALE} className="space-y-2">
+      <button
+        type="button"
+        onClick={handleAdd}
         className={cn(
-          'w-full mt-6 text-base font-semibold',
-          'py-4 min-h-[52px] rounded-xl flex items-center justify-center gap-3',
-          'transition-colors duration-300 touch-manipulation',
+          'w-full mt-2 text-base font-semibold py-4 min-h-[52px] rounded-xl flex items-center justify-center gap-3 transition-colors duration-300 touch-manipulation',
           variant === 'onDark'
-            ? 'bg-cream text-primary hover:bg-white'
-            : 'bg-primary hover:bg-primary-700 text-cream',
+            ? added
+              ? 'bg-farm text-cream'
+              : 'bg-cream text-primary hover:bg-white'
+            : added
+              ? 'bg-farm text-cream'
+              : 'bg-primary hover:bg-primary-700 text-cream',
           isAr ? 'font-arabic' : 'font-sans'
         )}
-        aria-label={isAr ? `اطلب عرض سعر لـ ${title}` : `Request quote for ${title}`}
       >
-        <MessageCircle className="w-5 h-5" strokeWidth={1.75} />
-        {isAr ? 'اطلب عرض سعر' : 'Request a quote'}
-      </Link>
+        {added ? <Check className="w-5 h-5" /> : <ShoppingCart className="w-5 h-5" strokeWidth={1.75} />}
+        {added
+          ? isAr
+            ? 'تمت الإضافة للسلة'
+            : 'Added to cart'
+          : isAr
+            ? `أضف للسلة — ${formatEgp(price, lang)}`
+            : `Add to cart — ${formatEgp(price, lang)}`}
+      </button>
+      <p className={cn('text-center text-xs opacity-70', isAr ? 'font-arabic' : 'font-sans')}>
+        {isAr ? `لكل ${unit.ar}` : `Per ${unit.en}`}
+      </p>
     </motion.div>
   )
 }

@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Container from '@/components/ui/Container'
 import BrandLockup from '@/components/ui/BrandLockup'
 import LanguageSwitch from './LanguageSwitch'
+import CartButton from '@/components/ecom/CartButton'
 import { useScrollCompact } from '@/hooks/useScrollCompact'
 import { cn } from '@/lib/utils/cn'
 import { MOBILE_EASE_OUT } from '@/lib/constants/motion'
@@ -30,7 +31,7 @@ const navigation = {
   ],
 }
 
-/** Cream nav — brand-forward, active states; quote → contact (Zid owns cart) */
+/** Cream nav — brand-forward; consumer cart + checkout */
 export default function Header({ lang }: { lang: string }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const isCompact = useScrollCompact()
@@ -99,14 +100,15 @@ export default function Header({ lang }: { lang: string }) {
 
             <div className="ms-2 flex items-center gap-1.5 rounded-2xl border border-farm/30 bg-farm-mist p-1">
               <LanguageSwitch lang={lang} />
+              <CartButton lang={lang} />
               <Link
                 href={`/${lang}/contact`}
                 className={cn(
-                  'inline-flex min-h-[40px] items-center rounded-xl bg-primary px-3.5 text-[12px] font-semibold text-cream hover:bg-primary-700',
+                  'hidden xl:inline-flex min-h-[40px] items-center rounded-xl border border-primary/15 px-3 text-[12px] font-semibold text-primary hover:bg-primary/5',
                   isAr ? 'font-arabic' : 'font-sans'
                 )}
               >
-                {isAr ? 'اطلب عرض سعر' : 'Request quote'}
+                {isAr ? 'تواصل' : 'Contact'}
               </Link>
             </div>
           </div>

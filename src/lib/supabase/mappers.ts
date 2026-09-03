@@ -58,6 +58,14 @@ export function mapProductRow(row: ProductRow): Product {
     brix: row.brix ?? undefined,
     indexPrice: row.index_price ?? undefined,
     trend: row.trend ?? undefined,
+    retailPriceEgp:
+      row.retail_price_egp != null && Number(row.retail_price_egp) > 0
+        ? Number(row.retail_price_egp)
+        : undefined,
+    consumerUnit: {
+      en: row.consumer_unit_en || 'Carton',
+      ar: row.consumer_unit_ar || 'كرتون',
+    },
   }
 }
 

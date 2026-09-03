@@ -3,6 +3,13 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type ProductUnit = 'MT' | 'Containers'
 export type QuoteStatus = 'pending' | 'reviewed' | 'approved' | 'rejected'
 export type ProfileRole = 'client' | 'admin'
+export type OrderStatus =
+  | 'pending_payment'
+  | 'paid'
+  | 'failed'
+  | 'cancelled'
+  | 'fulfillment'
+  | 'delivered'
 
 export interface Database {
   public: {
@@ -67,6 +74,9 @@ export interface Database {
           brix: string | null
           index_price: string | null
           trend: string | null
+          retail_price_egp: number | null
+          consumer_unit_en: string
+          consumer_unit_ar: string
           is_active: boolean
           sort_order: number
           created_at: string
@@ -166,6 +176,96 @@ export interface Database {
           },
         ]
       }
+      orders: {
+        Row: {
+          id: string
+          order_number: string
+          status: OrderStatus
+          lang: string
+          currency: string
+          subtotal_egp: number
+          shipping_egp: number
+          total_egp: number
+          customer_name: string
+          customer_email: string
+          customer_phone: string
+          shipping_street: string
+          shipping_city: string
+          shipping_governorate: string
+          customer_notes: string | null
+          paymob_intention_id: string | null
+          paymob_transaction_id: string | null
+          payment_method: string | null
+          paid_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          order_number: string
+          status?: OrderStatus
+          lang?: string
+          currency?: string
+          subtotal_egp: number
+          shipping_egp?: number
+          total_egp: number
+          customer_name: string
+          customer_email: string
+          customer_phone: string
+          shipping_street: string
+          shipping_city: string
+          shipping_governorate: string
+          customer_notes?: string | null
+          paymob_intention_id?: string | null
+          paymob_transaction_id?: string | null
+          payment_method?: string | null
+          paid_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['orders']['Insert']>
+        Relationships: []
+      }
+      order_items: {
+        Row: {
+          id: string
+          order_id: string
+          product_id: string | null
+          product_slug: string
+          title_en: string
+          title_ar: string
+          unit_label_en: string
+          unit_label_ar: string
+          quantity: number
+          unit_price_egp: number
+          line_total_egp: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          order_id: string
+          product_id?: string | null
+          product_slug: string
+          title_en: string
+          title_ar: string
+          unit_label_en?: string
+          unit_label_ar?: string
+          quantity: number
+          unit_price_egp: number
+          line_total_egp: number
+          created_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['order_items']['Insert']>
+        Relationships: [
+          {
+            foreignKeyName: 'order_items_order_id_fkey'
+            columns: ['order_id']
+            isOneToOne: false
+            referencedRelation: 'orders'
+            referencedColumns: ['id']
+          },
+        ]
+      }
     }
     Views: Record<string, never>
     Functions: {
@@ -175,6 +275,7 @@ export interface Database {
       product_unit: ProductUnit
       quote_status: QuoteStatus
       profile_role: ProfileRole
+      order_status: OrderStatus
     }
   }
 }
@@ -183,3 +284,5 @@ export type ProductRow = Database['public']['Tables']['products']['Row']
 export type QuoteRequestRow = Database['public']['Tables']['quote_requests']['Row']
 export type QuoteItemRow = Database['public']['Tables']['quote_items']['Row']
 export type ProfileRow = Database['public']['Tables']['profiles']['Row']
+export type OrderRow = Database['public']['Tables']['orders']['Row']
+export type OrderItemRow = Database['public']['Tables']['order_items']['Row']

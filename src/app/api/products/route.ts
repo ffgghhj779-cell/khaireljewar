@@ -254,6 +254,9 @@ export async function POST(request: Request) {
       brix: row.brix ?? null,
       index_price: row.index_price ?? null,
       trend: row.trend ?? null,
+      retail_price_egp: null,
+      consumer_unit_en: 'Carton',
+      consumer_unit_ar: 'كرتون',
       is_active: row.is_active ?? true,
       sort_order: row.sort_order ?? 100,
     }

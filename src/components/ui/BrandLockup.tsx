@@ -21,21 +21,12 @@ export default function BrandLockup({
   tone = 'dark',
 }: BrandLockupProps) {
   const isAr = lang === 'ar'
-  const isFooter = variant === 'footer'
   const onDark = tone === 'light'
 
-  if (isFooter) {
+  if (variant === 'footer') {
     return (
-      <div className={cn('flex flex-col gap-4', className)}>
-        <BrandLogo variant="footer" priority={priority} iconOnly className="!h-12 !w-12" />
-        <div>
-          <p className={cn('text-cream text-xl mb-1', isAr ? 'font-arabic font-bold' : 'font-display font-bold')}>
-            {isAr ? BRAND.nameGroup.ar : BRAND.nameGroup.en}
-          </p>
-          <p className={cn('text-secondary text-sm font-semibold', isAr ? 'font-arabic' : 'font-sans')}>
-            {isAr ? BRAND.tagline.ar : BRAND.tagline.en}
-          </p>
-        </div>
+      <div className={cn(className)}>
+        <BrandLogo variant="footer" priority={priority} />
       </div>
     )
   }
@@ -52,7 +43,7 @@ export default function BrandLockup({
         variant="header"
         priority={priority}
         iconOnly
-        className={cn(compact && '!h-8 !w-8 sm:!h-9 sm:!w-9')}
+        className={cn(compact && '!h-10 !w-auto sm:!h-11')}
       />
       <div className="min-w-0 flex-1">
         <p

@@ -11,8 +11,8 @@
     --color-canvas: #f7f4ec;
     --color-mist: #f0ebe0;
     --color-white: #ffffff;
-    --header-height: 64px;
-    --header-height-md: 76px;
+    --header-height: 72px;
+    --header-height-md: 88px;
   }
 
   html {
