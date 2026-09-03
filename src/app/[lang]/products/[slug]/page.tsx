@@ -188,7 +188,7 @@ export default async function SingleProductPage({
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-x-6 gap-y-6 mb-10 pb-10 border-b border-primary/10">
+            <div className="mb-10 grid grid-cols-1 gap-x-6 gap-y-5 border-b border-primary/10 pb-10 sm:grid-cols-2 sm:gap-y-6">
               <Spec label={isAr ? 'المعايرة' : 'Sizing'} value={isAr ? product.sizes.ar : product.sizes.en} isAr={isAr} />
               <Spec
                 label={isAr ? 'التعبئة' : 'Packaging'}
@@ -319,7 +319,7 @@ export default async function SingleProductPage({
                 {isAr ? 'الكل' : 'View all'}
               </Link>
             </div>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-6">
               {relatedFallback.map((p, i) => (
                 <ProductCard key={p.id} product={p} lang={lang} index={i} compact />
               ))}

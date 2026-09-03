@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
-import { createOrderWithPaymob } from '@/lib/commerce/orders'
-import type { CheckoutCustomer } from '@/lib/commerce/types'
+import { createOrderWithCod, createOrderWithPaymob } from '@/lib/commerce/orders'
+import type { CheckoutCustomer, PaymentMethod } from '@/lib/commerce/types'
 import { createPaymobCheckout } from '@/lib/paymob/intention'
 import { getPaymobConfig } from '@/lib/paymob/config'
 
@@ -16,15 +16,13 @@ export async function POST(req: Request) {
       lang?: string
       items?: { slug: string; quantity: number }[]
       customer?: CheckoutCustomer
-    }
-
-    if (!getPaymobConfig().isConfigured) {
-      return bad('Payment gateway is not configured yet. Contact support.', 503)
+      paymentMethod?: PaymentMethod
     }
 
     const lang = body.lang === 'en' ? 'en' : 'ar'
     const items = body.items
     const customer = body.customer
+    const paymentMethod: PaymentMethod = body.paymentMethod === 'cod' ? 'cod' : 'paymob'
 
     if (!items?.length) return bad('Cart is empty')
     if (!customer?.fullName?.trim()) return bad('Full name is required')
@@ -36,6 +34,15 @@ export async function POST(req: Request) {
     }
     if (!customer.street?.trim() || !customer.city?.trim() || !customer.governorate?.trim()) {
       return bad('Complete shipping address is required')
+    }
+
+    if (paymentMethod === 'cod') {
+      const result = await createOrderWithCod({ lang, items, customer })
+      return NextResponse.json(result)
+    }
+
+    if (!getPaymobConfig().isConfigured) {
+      return bad('Payment gateway is not configured yet. Contact support.', 503)
     }
 
     const result = await createOrderWithPaymob({

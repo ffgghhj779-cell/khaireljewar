@@ -43,10 +43,10 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
       }}
       className="group h-full"
     >
-      <article className="relative h-full flex flex-col overflow-hidden rounded-2xl border border-primary/10 bg-cream shadow-[0_8px_24px_rgba(26,51,42,0.07)]">
+      <article className="relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-primary/10 bg-cream shadow-[0_8px_24px_rgba(26,51,42,0.07)]">
         <Link
           href={`/${lang}/products/${product.slug}`}
-          className="relative block aspect-[5/4] bg-cream overflow-hidden"
+          className="relative block aspect-square overflow-hidden bg-cream sm:aspect-[5/4]"
         >
           <ProductImage
             src={product.image}
@@ -63,12 +63,12 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
           {retailPrice > 0 && (
             <span
               className={cn(
-                'absolute top-2.5 end-2.5 z-[1] max-w-[70%] rounded-full bg-farm px-2.5 py-1 text-[10px] font-bold leading-tight text-cream shadow-sm',
+                'absolute top-2 end-2 z-[1] max-w-[calc(100%-1rem)] truncate rounded-full bg-farm px-2 py-0.5 text-[9px] font-bold leading-tight text-cream shadow-sm sm:top-2.5 sm:end-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >
               {formatEgp(retailPrice, lang)}
-              <span className="mt-0.5 block text-[8px] font-semibold uppercase tracking-wide opacity-80">
+              <span className="mt-0.5 hidden text-[8px] font-semibold uppercase tracking-wide opacity-80 sm:block">
                 {isAr ? consumerUnit.ar : consumerUnit.en}
               </span>
             </span>
@@ -77,7 +77,7 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
 
         <Link
           href={`/${lang}/products/${product.slug}`}
-          className="flex flex-1 flex-col bg-farm-panel px-3.5 py-3 md:px-4 md:py-3.5"
+          className="flex min-w-0 flex-1 flex-col bg-farm-panel px-2.5 py-2.5 sm:px-3.5 sm:py-3 md:px-4 md:py-3.5"
         >
           <p
             className={cn(

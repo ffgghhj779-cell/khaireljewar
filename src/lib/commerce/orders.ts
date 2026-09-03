@@ -83,6 +83,81 @@ export async function createOrderWithPaymob(params: {
     throw new Error('Orders database is not configured')
   }
 
+  const draft = await insertOrderDraft({
+    lang: params.lang,
+    items: params.items,
+    customer: params.customer,
+    paymentMethod: 'paymob',
+    status: 'pending_payment',
+  })
+
+  const paymobItems = [
+    ...draft.lines.map((l) => ({
+      name: l.titleEn,
+      amountEgp: l.unitPriceEgp,
+      quantity: l.quantity,
+    })),
+    { name: 'Delivery', amountEgp: draft.shippingEgp, quantity: 1 },
+  ]
+
+  const checkout = await params.createCheckout({
+    orderNumber: draft.orderNumber,
+    totalEgp: draft.totalEgp,
+    billing: params.customer,
+    items: paymobItems,
+    lang: params.lang,
+  })
+
+  const supabase = createAdminClient()
+  await supabase
+    .from('orders')
+    .update({ paymob_intention_id: checkout.intentionId })
+    .eq('id', draft.orderId)
+
+  return {
+    orderNumber: draft.orderNumber,
+    checkoutUrl: checkout.checkoutUrl,
+    totalEgp: draft.totalEgp,
+    subtotalEgp: draft.subtotalEgp,
+    shippingEgp: draft.shippingEgp,
+    paymentMethod: 'paymob' as const,
+  }
+}
+
+export async function createOrderWithCod(params: {
+  lang: string
+  items: { slug: string; quantity: number }[]
+  customer: CheckoutCustomer
+}) {
+  if (!isAdminClientConfigured()) {
+    throw new Error('Orders database is not configured')
+  }
+
+  const draft = await insertOrderDraft({
+    lang: params.lang,
+    items: params.items,
+    customer: params.customer,
+    paymentMethod: 'cod',
+    status: 'fulfillment',
+  })
+
+  return {
+    orderNumber: draft.orderNumber,
+    checkoutUrl: `/${params.lang === 'en' ? 'en' : 'ar'}/order/success?ref=${encodeURIComponent(draft.orderNumber)}&method=cod`,
+    totalEgp: draft.totalEgp,
+    subtotalEgp: draft.subtotalEgp,
+    shippingEgp: draft.shippingEgp,
+    paymentMethod: 'cod' as const,
+  }
+}
+
+async function insertOrderDraft(params: {
+  lang: string
+  items: { slug: string; quantity: number }[]
+  customer: CheckoutCustomer
+  paymentMethod: 'paymob' | 'cod'
+  status: 'pending_payment' | 'fulfillment'
+}) {
   const { lines, subtotalEgp } = await resolveCheckoutItems(params.items)
   const shippingEgp = SHIPPING_FEE_EGP
   const totalEgp = subtotalEgp + shippingEgp
@@ -93,7 +168,7 @@ export async function createOrderWithPaymob(params: {
     .from('orders')
     .insert({
       order_number: number,
-      status: 'pending_payment',
+      status: params.status,
       lang: params.lang === 'en' ? 'en' : 'ar',
       currency: 'EGP',
       subtotal_egp: subtotalEgp,
@@ -106,6 +181,7 @@ export async function createOrderWithPaymob(params: {
       shipping_city: params.customer.city.trim(),
       shipping_governorate: params.customer.governorate.trim(),
       customer_notes: params.customer.notes?.trim() || null,
+      payment_method: params.paymentMethod,
     })
     .select('id, order_number')
     .single()
@@ -128,34 +204,13 @@ export async function createOrderWithPaymob(params: {
   const { error: itemsError } = await supabase.from('order_items').insert(orderItems)
   if (itemsError) throw new Error(itemsError.message)
 
-  const paymobItems = [
-    ...lines.map((l) => ({
-      name: l.titleEn,
-      amountEgp: l.unitPriceEgp,
-      quantity: l.quantity,
-    })),
-    { name: 'Delivery', amountEgp: shippingEgp, quantity: 1 },
-  ]
-
-  const checkout = await params.createCheckout({
-    orderNumber: number,
-    totalEgp,
-    billing: params.customer,
-    items: paymobItems,
-    lang: params.lang,
-  })
-
-  await supabase
-    .from('orders')
-    .update({ paymob_intention_id: checkout.intentionId })
-    .eq('id', order.id)
-
   return {
+    orderId: order.id,
     orderNumber: number,
-    checkoutUrl: checkout.checkoutUrl,
-    totalEgp,
+    lines,
     subtotalEgp,
     shippingEgp,
+    totalEgp,
   }
 }
 

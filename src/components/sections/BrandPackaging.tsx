@@ -92,7 +92,7 @@ function PackFigure({
         src={pack.src}
         alt={isAr ? pack.altAr : pack.altEn}
         fill
-        sizes={hero ? '(max-width: 768px) 92vw, 420px' : '(max-width: 768px) 44vw, 220px'}
+        sizes={hero ? '(max-width: 768px) 92vw, 420px' : '(max-width: 640px) 88vw, (max-width: 768px) 30vw, 220px'}
         quality={90}
         className="object-contain drop-shadow-[0_22px_36px_rgba(26,51,42,0.14)]"
       />
@@ -171,8 +171,8 @@ export default function BrandPackaging({ lang }: { lang: string }) {
           </p>
         </motion.div>
 
-        <div className="mx-auto grid max-w-5xl grid-cols-2 items-end gap-x-4 gap-y-8 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.35fr)_minmax(0,0.9fr)] md:gap-x-10 lg:gap-x-14">
-          <div className="col-span-2 md:col-span-1 md:col-start-2 md:row-start-1">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 items-end gap-8 sm:grid-cols-2 sm:gap-x-4 sm:gap-y-8 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.35fr)_minmax(0,0.9fr)] md:gap-x-10 lg:gap-x-14">
+          <div className="sm:col-span-2 md:col-span-1 md:col-start-2 md:row-start-1">
             <PackFigure pack={tomatoes} isAr={isAr} hero delay={0.08} lightMotion={lightMotion} />
           </div>
           <div className="md:col-start-1 md:row-start-1">
@@ -183,7 +183,7 @@ export default function BrandPackaging({ lang }: { lang: string }) {
           </div>
         </div>
 
-        <div className="mx-auto mt-10 grid max-w-4xl grid-cols-3 items-end gap-3 md:mt-16 md:gap-10">
+        <div className="mx-auto mt-10 grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-3 sm:items-end sm:gap-4 md:mt-16 md:gap-10">
           {KITCHEN.map((pack, i) => (
             <PackFigure key={pack.key} pack={pack} isAr={isAr} delay={0.1 + i * 0.06} lightMotion={lightMotion} />
           ))}

@@ -1,8 +1,17 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { BRAND } from '@/lib/constants/brand'
 
 export default function FloatingWhatsApp({ lang }: { lang: string }) {
+  const pathname = usePathname()
+  const hideOnCheckout =
+    pathname?.includes('/checkout') ||
+    pathname?.includes('/cart') ||
+    pathname?.includes('/order/')
+
+  if (hideOnCheckout) return null
+
   const waUrl = `https://wa.me/${BRAND.contact.phoneWa}?text=${encodeURIComponent(
     lang === 'ar' ? `مرحباً ${BRAND.name.ar}` : `Hello ${BRAND.name.en}`
   )}`

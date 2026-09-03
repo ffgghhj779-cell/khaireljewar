@@ -27,6 +27,21 @@ export const PRODUCT_SLUG_IMAGES: Record<string, string> = {
   'fresh-garlic': `${BRAND_PRODUCTS}/fresh-garlic.webp`,
   'frozen-strawberries': `${BRAND_PRODUCTS}/frozen-strawberries.webp`,
   'frozen-mixed-vegetables': `${BRAND_PRODUCTS}/frozen-mixed-vegetables.webp`,
+  'fresh-tomatoes': `${BRAND_PRODUCTS}/fresh-tomatoes.webp`,
+  'long-grain-rice': `${BRAND_PRODUCTS}/long-grain-rice.webp`,
+  'white-sugar': `${BRAND_PRODUCTS}/white-sugar.webp`,
+  'vegetable-oil': `${BRAND_PRODUCTS}/vegetable-oil.webp`,
+  'chilled-chicken': `${BRAND_PRODUCTS}/chilled-chicken.webp`,
+  'frozen-fries': `${BRAND_PRODUCTS}/frozen-fries.webp`,
+  'fresh-carrots': `${BRAND_PRODUCTS}/fresh-carrots.webp`,
+  'bell-peppers': `${BRAND_PRODUCTS}/bell-peppers.webp`,
+  'table-grapes': `${BRAND_PRODUCTS}/table-grapes.webp`,
+  'green-beans': `${BRAND_PRODUCTS}/green-beans.webp`,
+  'fresh-okra': `${BRAND_PRODUCTS}/fresh-okra.webp`,
+  'fresh-molokhia': `${BRAND_PRODUCTS}/fresh-molokhia.webp`,
+  'fresh-tangerines': `${BRAND_PRODUCTS}/fresh-tangerines.webp`,
+  'fresh-lemons': `${BRAND_PRODUCTS}/fresh-lemons.webp`,
+  'sweet-potatoes': `${BRAND_PRODUCTS}/sweet-potatoes.webp`,
 }
 
 const CATEGORY_FALLBACKS: Record<string, string> = {
@@ -35,10 +50,11 @@ const CATEGORY_FALLBACKS: Record<string, string> = {
   Fruits: `${BRAND_PRODUCTS}/kent-mangoes.webp`,
   Vegetables: `${BRAND_PRODUCTS}/spunta-potatoes.webp`,
   Frozen: `${BRAND_PRODUCTS}/frozen-strawberries.webp`,
-  Poultry: '/images/products/chicken-fresh-ice.jpeg',
-  Oils: '/images/products/olive-oil-lifestyle.jpeg',
-  Grains: '/images/products/rice-bags-display.jpeg',
-  Meats: '/images/products/meats-display.jpeg',
+  Grocery: `${BRAND_PRODUCTS}/long-grain-rice.webp`,
+  Poultry: `${BRAND_PRODUCTS}/chilled-chicken.webp`,
+  Oils: `${BRAND_PRODUCTS}/vegetable-oil.webp`,
+  Grains: `${BRAND_PRODUCTS}/long-grain-rice.webp`,
+  Meats: `${BRAND_PRODUCTS}/chilled-chicken.webp`,
 }
 
 export function isValidImageUrl(url?: string | null): url is string {

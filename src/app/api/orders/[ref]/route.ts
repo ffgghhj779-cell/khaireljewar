@@ -13,6 +13,7 @@ export async function GET(_req: Request, { params }: { params: { ref: string } }
     totalEgp: order.total_egp,
     subtotalEgp: order.subtotal_egp,
     shippingEgp: order.shipping_egp,
+    paymentMethod: order.payment_method,
     customerName: order.customer_name,
     items: (order.order_items as Array<Record<string, unknown>> | undefined)?.map((i) => ({
       slug: i.product_slug,

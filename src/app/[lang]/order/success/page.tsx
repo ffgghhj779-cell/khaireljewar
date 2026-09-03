@@ -21,7 +21,13 @@ export default function OrderSuccessPage({
   searchParams,
 }: {
   params: { lang: string }
-  searchParams: { ref?: string }
+  searchParams: { ref?: string; method?: string }
 }) {
-  return <OrderSuccessClient lang={lang} orderRef={searchParams.ref || ''} />
+  return (
+    <OrderSuccessClient
+      lang={lang}
+      orderRef={searchParams.ref || ''}
+      methodHint={searchParams.method || ''}
+    />
+  )
 }

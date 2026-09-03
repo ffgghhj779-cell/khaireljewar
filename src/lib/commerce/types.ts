@@ -19,6 +19,8 @@ export type CheckoutCustomer = {
   notes?: string
 }
 
+export type PaymentMethod = 'paymob' | 'cod'
+
 export type OrderStatus =
   | 'pending_payment'
   | 'paid'

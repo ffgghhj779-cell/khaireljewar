@@ -15,6 +15,21 @@ const RETAIL_EGP_BY_SLUG: Record<string, number> = {
   'kent-mangoes': 165,
   'frozen-strawberries': 140,
   'frozen-mixed-vegetables': 118,
+  'fresh-tomatoes': 45,
+  'long-grain-rice': 55,
+  'white-sugar': 42,
+  'vegetable-oil': 95,
+  'chilled-chicken': 185,
+  'frozen-fries': 78,
+  'fresh-carrots': 38,
+  'bell-peppers': 65,
+  'table-grapes': 95,
+  'green-beans': 58,
+  'fresh-okra': 52,
+  'fresh-molokhia': 48,
+  'fresh-tangerines': 70,
+  'fresh-lemons': 55,
+  'sweet-potatoes': 48,
 }
 
 export function getRetailPriceEgp(product: Product, row?: Pick<ProductRow, 'retail_price_egp'> | null): number {

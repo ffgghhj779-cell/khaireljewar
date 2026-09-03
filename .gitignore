@@ -19,3 +19,5 @@ tmp-stock-src/
 tmp-stock-thumbs/
 tmp-hero-*/
 
+.vercel
+.env*

@@ -154,7 +154,7 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
       </div>
 
       {isPending && filteredProducts.length === 0 ? (
-        <div className="mx-auto grid max-w-5xl grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+        <div className="mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4 md:gap-5">
           {Array.from({ length: 8 }).map((_, i) => (
             <ProductCardSkeleton key={i} />
           ))}
@@ -167,7 +167,7 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="mx-auto grid max-w-5xl grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5"
+            className="mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4 md:gap-5"
           >
             {filteredProducts.map((product, index) => (
               <ProductCard key={product.id} product={product} lang={lang} index={index} />

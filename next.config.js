@@ -29,6 +29,11 @@ const nextConfig = {
         hostname: 'wmjfvijkgsjqlpfjcioy.supabase.co',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'xngflcegntxcipnwggcs.supabase.co',
+        pathname: '/**',
+      },
     ],
   },
   async redirects() {

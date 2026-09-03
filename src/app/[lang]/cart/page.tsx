@@ -21,9 +21,14 @@ export async function generateMetadata({
 export default function CartPage({ params: { lang } }: { params: { lang: string } }) {
   const isAr = lang === 'ar'
   return (
-    <div className="bg-cream min-h-screen pt-28 pb-24 lg:pb-16">
+    <div className="min-h-screen bg-cream pb-[calc(10rem+env(safe-area-inset-bottom,0px))] pt-24 sm:pt-28 lg:pb-16">
       <Container>
-        <h1 className={cn('text-3xl md:text-4xl font-medium text-primary mb-8', isAr ? 'font-arabic' : 'font-display')}>
+        <h1
+          className={cn(
+            'mb-6 text-[clamp(1.6rem,6vw,2.5rem)] font-medium leading-tight text-primary sm:mb-8',
+            isAr ? 'font-arabic' : 'font-display'
+          )}
+        >
           {isAr ? 'سلة التسوق' : 'Shopping cart'}
         </h1>
         <CartView lang={lang} />

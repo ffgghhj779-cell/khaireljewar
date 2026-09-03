@@ -39,7 +39,7 @@ export default function CartView({ lang }: { lang: string }) {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
+    <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(260px,360px)]">
       <ul className="space-y-4">
         {lines.map((line) => {
           const title = isAr ? line.titleAr : line.titleEn
@@ -47,54 +47,61 @@ export default function CartView({ lang }: { lang: string }) {
           return (
             <li
               key={line.slug}
-              className="flex gap-4 rounded-2xl border border-primary/10 bg-cream p-4 shadow-soft"
+              className="flex flex-col gap-3 rounded-2xl border border-primary/10 bg-cream p-3 shadow-soft sm:flex-row sm:gap-4 sm:p-4"
             >
-              <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-cream-soft">
-                <Image
-                  src={resolveProductImage(line.image, '', line.slug)}
-                  alt={title}
-                  fill
-                  className="object-contain p-1"
-                  sizes="96px"
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className={cn('font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>{title}</p>
-                <p className={cn('text-xs text-primary/55', isAr ? 'font-arabic' : 'font-sans')}>{unit}</p>
-                <p className={cn('mt-1 text-sm font-bold text-farm', isAr ? 'font-arabic' : 'font-sans')}>
-                  {formatEgp(line.unitPriceEgp, lang)}
-                </p>
-                <div className="mt-3 flex items-center gap-3">
-                  <div className="inline-flex items-center rounded-lg border border-primary/15">
+              <div className="flex gap-3 sm:contents">
+                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-cream-soft sm:h-24 sm:w-24">
+                  <Image
+                    src={resolveProductImage(line.image, '', line.slug)}
+                    alt={title}
+                    fill
+                    className="object-contain p-1"
+                    sizes="96px"
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className={cn('font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>{title}</p>
+                  <p className={cn('text-xs text-primary/55', isAr ? 'font-arabic' : 'font-sans')}>{unit}</p>
+                  <p className={cn('mt-1 text-sm font-bold text-farm', isAr ? 'font-arabic' : 'font-sans')}>
+                    {formatEgp(line.unitPriceEgp, lang)}
+                  </p>
+                  <div className="mt-3 flex flex-wrap items-center gap-3">
+                    <div className="inline-flex items-center rounded-lg border border-primary/15">
+                      <button
+                        type="button"
+                        onClick={() => setQuantity(line.slug, line.quantity - 1)}
+                        className="p-2 text-primary"
+                        aria-label={isAr ? 'تقليل' : 'Decrease'}
+                      >
+                        <Minus className="h-4 w-4" />
+                      </button>
+                      <span className="min-w-[2rem] text-center text-sm font-semibold">{line.quantity}</span>
+                      <button
+                        type="button"
+                        onClick={() => setQuantity(line.slug, line.quantity + 1)}
+                        className="p-2 text-primary"
+                        aria-label={isAr ? 'زيادة' : 'Increase'}
+                      >
+                        <Plus className="h-4 w-4" />
+                      </button>
+                    </div>
                     <button
                       type="button"
-                      onClick={() => setQuantity(line.slug, line.quantity - 1)}
-                      className="p-2 text-primary"
-                      aria-label={isAr ? 'تقليل' : 'Decrease'}
+                      onClick={() => removeLine(line.slug)}
+                      className="inline-flex items-center gap-1 text-xs text-red-700"
                     >
-                      <Minus className="h-4 w-4" />
-                    </button>
-                    <span className="min-w-[2rem] text-center text-sm font-semibold">{line.quantity}</span>
-                    <button
-                      type="button"
-                      onClick={() => setQuantity(line.slug, line.quantity + 1)}
-                      className="p-2 text-primary"
-                      aria-label={isAr ? 'زيادة' : 'Increase'}
-                    >
-                      <Plus className="h-4 w-4" />
+                      <Trash2 className="h-3.5 w-3.5" />
+                      {isAr ? 'حذف' : 'Remove'}
                     </button>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => removeLine(line.slug)}
-                    className="inline-flex items-center gap-1 text-xs text-red-700"
-                  >
-                    <Trash2 className="h-3.5 w-3.5" />
-                    {isAr ? 'حذف' : 'Remove'}
-                  </button>
                 </div>
               </div>
-              <p className={cn('shrink-0 text-sm font-bold text-primary', isAr ? 'font-arabic' : 'font-sans')}>
+              <p
+                className={cn(
+                  'shrink-0 text-sm font-bold text-primary sm:self-start',
+                  isAr ? 'font-arabic text-start sm:text-end' : 'font-sans text-end'
+                )}
+              >
                 {formatEgp(line.unitPriceEgp * line.quantity, lang)}
               </p>
             </li>

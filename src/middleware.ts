@@ -2,10 +2,27 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { CANONICAL_HOST, shouldRedirectHost } from '@/lib/seo'
 import { updateSession } from '@/lib/supabase/middleware'
+import { verifyAdminSession, ADMIN_COOKIE } from '@/lib/admin/auth'
 
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone()
   const host = request.headers.get('host') ?? ''
+  const path = url.pathname
+
+  // ── Admin panel protection ────────────────────────────────────────────────
+  if (path.startsWith('/admin')) {
+    if (path === '/admin/login') {
+      // Already on login — pass through (avoid redirect loop)
+      return NextResponse.next()
+    }
+    const session = request.cookies.get(ADMIN_COOKIE)?.value
+    const valid = await verifyAdminSession(session)
+    if (!valid) {
+      const loginUrl = new URL('/admin/login', request.url)
+      return NextResponse.redirect(loginUrl)
+    }
+    return NextResponse.next()
+  }
 
   if (shouldRedirectHost(host)) {
     url.protocol = 'https:'
