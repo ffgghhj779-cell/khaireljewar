@@ -1,5 +1,7 @@
 import { createAdminClient } from '@/lib/supabase/admin'
-import AdminShell, { StatusBadge, PayBadge, formatEGP, formatDate } from '@/components/admin/AdminShell'
+import AdminShell from '@/components/admin/AdminShell'
+import { StatusBadge, PayBadge } from '@/components/admin/AdminBadges'
+import { formatEGP, formatDate } from '@/lib/admin/format'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import OrderActions from './OrderActions'

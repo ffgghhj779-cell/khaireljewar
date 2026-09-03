@@ -25,7 +25,7 @@ export default function AdminLoginPage() {
         setLoading(false)
         return
       }
-      router.push('/admin/orders')
+      window.location.href = '/admin'
     } catch {
       setError('Connection error. Try again.')
       setLoading(false)

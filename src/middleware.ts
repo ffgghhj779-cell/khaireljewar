@@ -11,10 +11,14 @@ export async function middleware(request: NextRequest) {
 
   // ── Admin panel protection ────────────────────────────────────────────────
   if (path.startsWith('/admin')) {
-    if (path === '/admin/login') {
-      // Already on login — pass through (avoid redirect loop)
-      return NextResponse.next()
+  if (path === '/admin/login') {
+    const session = request.cookies.get(ADMIN_COOKIE)?.value
+    const valid = await verifyAdminSession(session)
+    if (valid) {
+      return NextResponse.redirect(new URL('/admin', request.url))
     }
+    return NextResponse.next()
+  }
     const session = request.cookies.get(ADMIN_COOKIE)?.value
     const valid = await verifyAdminSession(session)
     if (!valid) {

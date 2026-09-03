@@ -1,5 +1,7 @@
 import { createAdminClient } from '@/lib/supabase/admin'
-import AdminShell, { StatusBadge, PayBadge, formatEGP, formatDate } from '@/components/admin/AdminShell'
+import AdminShell from '@/components/admin/AdminShell'
+import { StatusBadge, PayBadge } from '@/components/admin/AdminBadges'
+import { formatEGP, formatDate } from '@/lib/admin/format'
 import Link from 'next/link'
 import OrdersClient from './OrdersClient'
 
@@ -20,6 +22,29 @@ interface Props {
   searchParams: { status?: string; q?: string; page?: string }
 }
 
+async function fetchOrders(
+  supabase: ReturnType<typeof createAdminClient>,
+  opts: { status: string; search: string; offset: number; limit: number }
+) {
+  let query = supabase
+    .from('orders')
+    .select('id,order_number,status,payment_method,total_egp,customer_name,customer_phone,created_at', { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .range(opts.offset, opts.offset + opts.limit - 1)
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if (opts.status !== 'all') query = (query as any).eq('status', opts.status)
+  if (opts.search.trim()) {
+    query = query.or(
+      `order_number.ilike.%${opts.search}%,customer_name.ilike.%${opts.search}%,customer_phone.ilike.%${opts.search}%`
+    )
+  }
+
+  const { data, error, count } = await query
+  if (error) throw error
+  return { orders: data ?? [], count: count ?? 0 }
+}
+
 export default async function OrdersPage({ searchParams }: Props) {
   const status = searchParams.status || 'all'
   const search = searchParams.q || ''
@@ -28,22 +53,18 @@ export default async function OrdersPage({ searchParams }: Props) {
   const offset = (page - 1) * limit
 
   const supabase = createAdminClient()
-  let query = supabase
-    .from('orders')
-    .select('id,order_number,status,payment_method,total_egp,customer_name,customer_phone,created_at', { count: 'exact' })
-    .order('created_at', { ascending: false })
-    .range(offset, offset + limit - 1)
+  let orders: Awaited<ReturnType<typeof fetchOrders>>['orders'] = []
+  let count = 0
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if (status !== 'all') query = (query as any).eq('status', status)
-  if (search.trim()) {
-    query = query.or(
-      `order_number.ilike.%${search}%,customer_name.ilike.%${search}%,customer_phone.ilike.%${search}%`
-    )
+  try {
+    const result = await fetchOrders(supabase, { status, search, offset, limit })
+    orders = result.orders
+    count = result.count
+  } catch (err) {
+    console.error('[admin/orders]', err)
   }
 
-  const { data: orders = [], count = 0 } = await query
-  const totalPages = Math.ceil((count ?? 0) / limit)
+  const totalPages = Math.ceil(count / limit)
 
   return (
     <AdminShell title="Orders">
