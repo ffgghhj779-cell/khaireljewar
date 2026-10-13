@@ -4,8 +4,8 @@
 zid-theme/
 scripts/.db-pass.tmp
 scripts/_tmp*
-alrehan-logo*
-tasami-logo*
+/alrehan-logo*
+/tasami-logo*
 banner-khair*
 supabase/.temp/
 node_modules/
