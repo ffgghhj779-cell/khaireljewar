@@ -73,10 +73,10 @@ export default function PartnerLogoMarquee({ lang }: { lang: string }) {
           isAr ? 'font-arabic normal-case tracking-normal text-sm' : 'font-sans'
         )}
       >
-        {isAr ? 'براندات اشتغلنا معها — شركاء التجزئة والمجموعة' : 'Brands we’ve worked with — retail & group partners'}
+        {isAr ? 'شركات المجموعة' : 'Group companies'}
       </p>
 
-      <div className="relative mx-auto hidden max-w-6xl grid-cols-4 gap-4 px-4 md:grid">
+      <div className="relative mx-auto hidden max-w-4xl grid-cols-3 justify-items-center gap-4 px-4 md:grid">
         {PARTNER_LOGOS.map((partner, i) => (
           <LogoCard key={partner.id} partner={partner} lang={lang} delay={i * 0.35} />
         ))}
@@ -85,7 +85,7 @@ export default function PartnerLogoMarquee({ lang }: { lang: string }) {
       <div className="partner-logo-marquee relative md:hidden" dir="ltr">
         <div className="partner-logo-marquee__track flex w-max gap-3 px-4">
           {loop.map((partner, i) => (
-            <LogoCard key={`${partner.id}-${i}`} partner={partner} lang={lang} delay={(i % 7) * 0.3} />
+            <LogoCard key={`${partner.id}-${i}`} partner={partner} lang={lang} delay={(i % PARTNER_LOGOS.length) * 0.35} />
           ))}
         </div>
       </div>

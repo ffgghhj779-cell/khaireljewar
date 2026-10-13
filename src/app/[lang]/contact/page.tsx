@@ -4,7 +4,8 @@ import Container from '@/components/ui/Container'
 import ContactForm from '@/components/contact/ContactForm'
 import DepthHero from '@/components/graphics/DepthHero'
 import { BRAND } from '@/lib/constants/brand'
-import { buildPageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, buildPageMetadata } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
 import { cn } from '@/lib/utils/cn'
 import { MapPin, Phone, Mail, Clock, Building2 } from 'lucide-react'
 
@@ -13,10 +14,10 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
   return buildPageMetadata({
     lang,
     path: '/contact',
-    title: isAr ? 'تواصل معنا' : 'Contact',
+    title: isAr ? 'اتصل بنا واطلب عرض سعر' : 'Contact & Quote Requests',
     description: isAr
-      ? `تواصل مع ${BRAND.nameFull.ar} في جدة — طلبات التسعير والتصدير.`
-      : `Contact ${BRAND.nameFull.en} in Jeddah — quotes and export inquiries.`,
+      ? `اطلب عرض سعر أو استفسر عن التصدير من جدة. اتصل على ${BRAND.contact.phone}.`
+      : `Request a quote or ask about export from Jeddah. Call ${BRAND.contact.phone}.`,
   })
 }
 
@@ -63,6 +64,7 @@ export default function ContactPage({ params: { lang } }: { params: { lang: stri
 
   return (
     <div className="min-h-screen pb-24 bg-canvas-soft">
+      <JsonLd data={breadcrumbJsonLd(lang, [{ name: isAr ? 'اتصل بنا' : 'Contact', path: '/contact' }])} />
       <DepthHero
         lang={lang}
         src="/images/brand/sections/hospitality.webp"

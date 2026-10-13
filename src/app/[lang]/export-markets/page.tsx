@@ -4,7 +4,8 @@ import Container from '@/components/ui/Container'
 import ExportRoutesDiagram from '@/components/graphics/ExportRoutesDiagram'
 import PartnerStrip from '@/components/sections/PartnerStrip'
 import { BRAND } from '@/lib/constants/brand'
-import { buildPageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, buildPageMetadata } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
 import { cn } from '@/lib/utils/cn'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
@@ -12,10 +13,10 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
   return buildPageMetadata({
     lang,
     path: '/export-markets',
-    title: isAr ? 'أسواق التصدير' : 'Export Markets',
+    title: isAr ? 'أسواق التصدير من جدة' : 'Export Markets from Jeddah',
     description: isAr
-      ? `من ${BRAND.city.ar} إلى أكثر من 40 وجهة حول العالم.`
-      : `From ${BRAND.city.en} to 40+ destinations worldwide.`,
+      ? 'مسارات التصدير من جدة إلى الخليج وأوروبا وآسيا وأفريقيا. أخبرنا بالوجهة والكمية لنحدد المسار.'
+      : 'Export lanes from Jeddah to the GCC, Europe, Asia, and Africa. Tell us the destination and volume for a clear export path.',
   })
 }
 
@@ -67,6 +68,9 @@ export default function ExportMarketsPage({ params: { lang } }: { params: { lang
 
   return (
     <div className="min-h-screen pb-24 bg-cream">
+      <JsonLd
+        data={breadcrumbJsonLd(lang, [{ name: isAr ? 'أسواق التصدير' : 'Export markets', path: '/export-markets' }])}
+      />
       <section className="relative overflow-hidden border-b border-primary/8 bg-cream-soft pt-14 md:pt-20 pb-12 md:pb-16">
         <Container size="large">
           <div className="grid items-end gap-10 lg:grid-cols-12">
@@ -84,8 +88,8 @@ export default function ExportMarketsPage({ params: { lang } }: { params: { lang
               </h1>
               <p className={cn('text-base md:text-lg text-primary/65 leading-relaxed max-w-md', isAr ? 'font-arabic' : 'font-sans')}>
                 {isAr
-                  ? 'ننسّق التوريد والتصدير من جدة إلى أكثر من 40 وجهة — بمعايير تناسب كل سوق.'
-                  : 'We coordinate sourcing and export from Jeddah to 40+ destinations — with standards that fit each market.'}
+                  ? 'ننسّق التوريد والتصدير من جدة إلى الخليج وأوروبا وآسيا وأفريقيا — بمعايير تناسب كل سوق.'
+                  : 'We coordinate sourcing and export from Jeddah to the GCC, Europe, Asia, and Africa — with standards that fit each market.'}
               </p>
             </div>
             <div className="lg:col-span-7">

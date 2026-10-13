@@ -17,6 +17,7 @@ export async function generateMetadata({
     description: isAr
       ? 'ادفع أونلاين عبر Paymob أو عند الاستلام'
       : 'Pay online via Paymob or cash on delivery',
+    noindex: true,
   })
 }
 

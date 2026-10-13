@@ -30,8 +30,8 @@ export default function OurPartners({ lang, hideTitle = false, className }: Prop
           </h2>
           <p className={cn('text-base leading-relaxed text-gray-600 md:text-lg', isAr ? 'font-arabic' : 'font-sans')}>
             {isAr
-              ? 'براندات اشتغلنا معها فعلياً — كارفور، بنده، نينجا، ونون — إلى جانب شركات المجموعة: تسامي الوطنية، الرهان الماسي، وثمار أرضنا.'
-              : 'Brands we’ve actually worked with — Carrefour, Panda, ninja, and noon — alongside group companies Tasami, Al Rehan Al Masi, and Thimar Ardina.'}
+              ? 'شركات المجموعة: تسامي الوطنية، الريحان الماسي، وثمار أرضنا.'
+              : 'Group companies: Tasami Al-Wataniya, Al Rehan Al Masi, and Thimar Ardina.'}
           </p>
         </div>
       )}

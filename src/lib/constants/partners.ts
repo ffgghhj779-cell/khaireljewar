@@ -1,4 +1,4 @@
-/** Business + retail partners featured on Khair Aljaar */
+/** Group companies featured on Khair Aljaar */
 
 export type PartnerLogo = {
   id: string
@@ -8,35 +8,8 @@ export type PartnerLogo = {
   href?: string
 }
 
-/** Display order: retail brands first, then group companies */
+/** Group companies shown on the site. Retail logos stay off until a relationship is documented. */
 export const PARTNER_LOGOS: PartnerLogo[] = [
-  {
-    id: 'carrefour',
-    name: { en: 'Carrefour', ar: 'كارفور' },
-    tag: { en: 'Retail partner', ar: 'شريك تجزئة' },
-    logo: '/images/partners/carrefour-logo.png',
-    href: 'https://www.carrefourksa.com/',
-  },
-  {
-    id: 'panda',
-    name: { en: 'Panda', ar: 'بنده' },
-    tag: { en: 'Retail partner', ar: 'شريك تجزئة' },
-    logo: '/images/partners/panda-logo.png',
-    href: 'https://www.panda.com.sa/',
-  },
-  {
-    id: 'ninja',
-    name: { en: 'ninja', ar: 'نينجا' },
-    tag: { en: 'Retail partner', ar: 'شريك تجزئة' },
-    logo: '/images/partners/ninja-logo.png',
-    href: 'https://ninja.sa/',
-  },
-  {
-    id: 'noon',
-    name: { en: 'noon', ar: 'نون' },
-    tag: { en: 'Retail partner', ar: 'شريك تجزئة' },
-    logo: '/images/partners/noon-logo.svg',
-  },
   {
     id: 'tasami',
     name: { en: 'Tasami Al-Wataniya', ar: 'تسامي الوطنية' },
@@ -46,7 +19,7 @@ export const PARTNER_LOGOS: PartnerLogo[] = [
   },
   {
     id: 'alrehan',
-    name: { en: 'Al Rehan Al Masi', ar: 'الرهان الماسي' },
+    name: { en: 'Al Rehan Al Masi', ar: 'الريحان الماسي' },
     tag: { en: 'Poultry · Eggs', ar: 'دواجن · بيض' },
     logo: '/images/partners/alrehan-logo.png',
     href: 'https://alrehan-almasi.vercel.app/',
@@ -86,7 +59,7 @@ export const PARTNERS = [
     id: 'alrehan',
     name: {
       en: 'Al Rehan Al Masi Poultry',
-      ar: 'مؤسسة الرهان الماسي للدواجن',
+      ar: 'مؤسسة الريحان الماسي للدواجن',
     },
     tag: {
       en: 'Poultry · Eggs · Farm to table',

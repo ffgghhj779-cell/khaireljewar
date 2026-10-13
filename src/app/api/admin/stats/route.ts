@@ -1,24 +1,23 @@
 import { NextResponse } from 'next/server'
+import { denyUnlessAdmin } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export const runtime = 'nodejs'
 
 export async function GET() {
+  const denied = await denyUnlessAdmin()
+  if (denied) return denied
+
   try {
     const supabase = createAdminClient()
     const today = new Date()
     today.setHours(0, 0, 0, 0)
 
     const [total, revenue, pending, todayOrders, byStatus] = await Promise.all([
-      // Total orders
       supabase.from('orders').select('id', { count: 'exact', head: true }),
-      // Revenue from successful orders
       supabase.from('orders').select('total_egp').in('status', ['paid', 'fulfillment', 'delivered']),
-      // Pending (need action)
       supabase.from('orders').select('id', { count: 'exact', head: true }).in('status', ['pending_payment', 'fulfillment']),
-      // Today's orders
       supabase.from('orders').select('id', { count: 'exact', head: true }).gte('created_at', today.toISOString()),
-      // By status
       supabase.from('orders').select('status'),
     ])
 

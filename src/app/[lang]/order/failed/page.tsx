@@ -1,6 +1,19 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import Container from '@/components/ui/Container'
+import { buildPageMetadata } from '@/lib/seo'
 import { cn } from '@/lib/utils/cn'
+
+export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
+  const isAr = lang === 'ar'
+  return buildPageMetadata({
+    lang,
+    path: '/order/failed',
+    title: isAr ? 'لم يكتمل الدفع' : 'Payment not completed',
+    description: isAr ? 'يمكنك المحاولة مرة أخرى من السلة.' : 'You can try again from your cart.',
+    noindex: true,
+  })
+}
 
 export default function OrderFailedPage({ params: { lang } }: { params: { lang: string } }) {
   const isAr = lang === 'ar'

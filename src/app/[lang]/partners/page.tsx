@@ -3,7 +3,8 @@ import Link from 'next/link'
 import Container from '@/components/ui/Container'
 import OurPartners from '@/components/sections/OurPartners'
 import PartnerLogoMarquee from '@/components/sections/PartnerLogoMarquee'
-import { buildPageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, buildPageMetadata } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
 import { cn } from '@/lib/utils/cn'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
@@ -11,10 +12,10 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
   return buildPageMetadata({
     lang,
     path: '/partners',
-    title: isAr ? 'شركاؤنا' : 'Our Partners',
+    title: isAr ? 'شركات المجموعة والشركاء' : 'Group Companies & Partners',
     description: isAr
-      ? 'شركاء خير الجوار — كارفور، بنده، نينجا، نون، تسامي الوطنية، الرهان الماسي، وثمار أرضنا.'
-      : 'Khair Aljaar partners — Carrefour, Panda, ninja, noon, Tasami, Al Rehan Al Masi, and Thimar Ardina.',
+      ? 'شركات مجموعة خير الجوار: تسامي الوطنية، الريحان الماسي، وثمار أرضنا.'
+      : 'Khair Aljaar group companies: Tasami Al-Wataniya, Al Rehan Al Masi, and Thimar Ardina.',
   })
 }
 
@@ -23,6 +24,7 @@ export default function PartnersPage({ params: { lang } }: { params: { lang: str
 
   return (
     <div className="min-h-screen pb-0">
+      <JsonLd data={breadcrumbJsonLd(lang, [{ name: isAr ? 'الشركاء' : 'Partners', path: '/partners' }])} />
       <section className="bg-canvas-soft pb-10 pt-14 md:pb-12 md:pt-20">
         <Container size="large">
           <div className="mx-auto max-w-3xl text-center">
@@ -39,8 +41,8 @@ export default function PartnersPage({ params: { lang } }: { params: { lang: str
             </h1>
             <p className={cn('text-base leading-relaxed text-gray-600 md:text-lg', isAr ? 'font-arabic' : 'font-sans')}>
               {isAr
-                ? 'براندات اشتغلنا معها فعلياً — كارفور، بنده، نينجا، ونون — إلى جانب شركات المجموعة: تسامي الوطنية، الرهان الماسي، وثمار أرضنا.'
-                : 'Brands we’ve actually worked with — Carrefour, Panda, ninja, and noon — alongside group companies Tasami, Al Rehan Al Masi, and Thimar Ardina.'}
+                ? 'شركات المجموعة: تسامي الوطنية، الريحان الماسي، وثمار أرضنا.'
+                : 'Group companies: Tasami Al-Wataniya, Al Rehan Al Masi, and Thimar Ardina.'}
             </p>
           </div>
         </Container>

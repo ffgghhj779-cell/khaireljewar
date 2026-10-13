@@ -13,6 +13,7 @@ export async function generateMetadata({
     path: '/order/success',
     title: isAr ? 'تم الطلب' : 'Order received',
     description: isAr ? 'تأكيد الطلب' : 'Order confirmation',
+    noindex: true,
   })
 }
 

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 
 const NAV = [
   { href: '/admin', label: 'Dashboard', icon: '◈' },
@@ -16,7 +17,8 @@ export default function AdminShell({ children, title }: { children: React.ReactN
 
   async function logout() {
     setLoggingOut(true)
-    await fetch('/api/admin/logout', { method: 'POST' })
+    const supabase = createClient()
+    await supabase.auth.signOut()
     router.push('/admin/login')
   }
 

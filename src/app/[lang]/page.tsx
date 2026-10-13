@@ -15,7 +15,23 @@ import HomeFaq from '@/components/sections/HomeFaq'
 import HomeCloser from '@/components/sections/HomeCloser'
 import Container from '@/components/ui/Container'
 import { getProducts } from '@/lib/actions/products'
-import { faqJsonLd } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
+import { faqJsonLd, buildPageMetadata } from '@/lib/seo'
+import type { Metadata } from 'next'
+
+export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
+  const isAr = lang === 'ar'
+  return buildPageMetadata({
+    lang,
+    path: '',
+    title: isAr
+      ? 'توريد وتصدير الخضار والفاكهة من جدة | خير الجوار'
+      : 'Fresh & Frozen Produce Exporter from Jeddah | Khair Aljaar',
+    description: isAr
+      ? 'مورّد جملة من جدة للموالح والتمور والفواكه والخضروات والمجمدات IQF. توريد وتصدير للسعودية والخليج. اطلب عرض سعر.'
+      : 'Jeddah wholesale supplier of citrus, dates, fruits, vegetables, and IQF frozen produce. Export across Saudi Arabia and the Gulf. Request a quote.',
+  })
+}
 
 export default async function Home({
   params: { lang },
@@ -26,10 +42,7 @@ export default async function Home({
 
   return (
     <div className="relative bg-cream selection:bg-secondary/40 selection:text-primary">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(lang)) }}
-      />
+      <JsonLd data={faqJsonLd(lang)} />
       <HeroBrand lang={lang} />
       <PartnerStrip lang={lang} />
       <PartnerLogoMarquee lang={lang} />

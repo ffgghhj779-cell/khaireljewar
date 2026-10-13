@@ -6,7 +6,7 @@ export const HOME_FAQ = {
     },
     {
       q: 'Which Incoterms do you offer?',
-      a: 'FOB Jeddah is our default. CIF, CFR, EXW, and DAP can be quoted by destination, volume, and season.',
+      a: 'FOB Jeddah is our default. CIF, CFR, EXW, and DAP can be quoted by destination, volume, and season. The shipping terms page explains each one in plain language.',
     },
     {
       q: 'How fast can you ship?',
@@ -28,7 +28,7 @@ export const HOME_FAQ = {
     },
     {
       q: 'ما شروط الشحن المتوفرة؟',
-      a: 'FOB جدة هو الافتراضي. يمكن تسعير CIF وCFR وEXW وDAP حسب الوجهة والحجم والموسم.',
+      a: 'FOB جدة هو الافتراضي. يمكن تسعير CIF وCFR وEXW وDAP حسب الوجهة والحجم والموسم. صفحة شروط الشحن تشرح كل شرط بلغة بسيطة.',
     },
     {
       q: 'ما سرعة الشحن؟',

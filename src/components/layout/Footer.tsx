@@ -22,6 +22,8 @@ export default function Footer({ lang }: { lang: string }) {
     { label: isAr ? 'الجودة' : 'Quality', href: `/${lang}/quality` },
     { label: isAr ? 'اللوجستيات' : 'Logistics', href: `/${lang}/logistics` },
     { label: isAr ? 'أسواق التصدير' : 'Markets', href: `/${lang}/export-markets` },
+    { label: isAr ? 'شروط الشحن' : 'Shipping terms', href: `/${lang}/guides/incoterms` },
+    { label: isAr ? 'التجميد IQF' : 'IQF freezing', href: `/${lang}/guides/iqf` },
     { label: isAr ? 'اتصل بنا' : 'Contact', href: `/${lang}/contact` },
   ]
 

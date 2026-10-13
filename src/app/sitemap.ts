@@ -13,6 +13,8 @@ const STATIC_PATHS = [
   '/contact',
   '/privacy',
   '/terms',
+  '/guides/incoterms',
+  '/guides/iqf',
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

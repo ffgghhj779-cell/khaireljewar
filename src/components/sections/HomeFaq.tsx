@@ -56,6 +56,9 @@ export default function HomeFaq({ lang }: { lang: string }) {
                       {item.a}
                     </p>
                   )}
+                  {!isOpen && (
+                    <p className="hidden">{item.a}</p>
+                  )}
                 </li>
               )
             })}

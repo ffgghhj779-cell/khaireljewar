@@ -172,13 +172,11 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
               <CheckCircle2 className="w-5 h-5 text-green-600" />
             </div>
             <p className={cn('text-sm font-bold text-dark', isAr ? 'font-arabic' : 'font-display')}>
-              {isAr
-                ? 'شهادات جاهزة للتحميل — استُبدل الملفات النهائية عند الإطلاق'
-                : 'Downloadable certificates — replace with final scans at go-live'}
+              {isAr ? 'وثائق الجودة متاحة عند الطلب.' : 'Quality documents are available on request.'}
             </p>
           </div>
           <span className={cn('text-[10px] font-bold text-gray-400 uppercase tracking-widest shrink-0', isAr ? 'font-ibm-arabic' : 'font-inter')}>
-            {isAr ? '6 شهادات نشطة' : '6 Active Certificates'}
+            {isAr ? 'عند الطلب' : 'On request'}
           </span>
         </motion.div>
       </Container>

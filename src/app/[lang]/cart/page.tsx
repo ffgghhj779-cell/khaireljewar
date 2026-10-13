@@ -15,6 +15,7 @@ export async function generateMetadata({
     path: '/cart',
     title: isAr ? 'سلة التسوق' : 'Shopping cart',
     description: isAr ? 'راجع طلبك قبل الدفع' : 'Review your order before checkout',
+    noindex: true,
   })
 }
 

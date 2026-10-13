@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SECTION_IMAGES } from '@/lib/constants/images'
-import { buildPageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, buildPageMetadata, logisticsServiceJsonLd } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
 import Container from '@/components/ui/Container'
 import ColdChainStepper from '@/components/logistics/ColdChainStepper'
 import LogisticsEditorialGallery from '@/components/sections/LogisticsEditorialGallery'
@@ -14,10 +15,10 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
   return buildPageMetadata({
     lang,
     path: '/logistics',
-    title: isAr ? 'اللوجستيات' : 'Logistics',
+    title: isAr ? 'سلسلة التبريد ولوجستيات التصدير' : 'Cold Chain & Export Logistics',
     description: isAr
-      ? 'من المزرعة إلى ميناء جدة — سلسلة تبريد وتوصيل موثوق.'
-      : 'From farm to Jeddah port — cold chain and reliable delivery.',
+      ? 'مناولة مبردة ونقل بالحاويات المبردة وتنسيق شحن التصدير من جدة، مع متابعة الشحنة.'
+      : 'Temperature-controlled handling, reefer transport, and export shipping coordinated from Jeddah, with shipment follow-up.',
   })
 }
 
@@ -44,6 +45,12 @@ export default function LogisticsPage({ params: { lang } }: { params: { lang: st
 
   return (
     <div className="min-h-screen pb-0">
+      <JsonLd
+        data={[
+          breadcrumbJsonLd(lang, [{ name: isAr ? 'اللوجستيات' : 'Logistics', path: '/logistics' }]),
+          logisticsServiceJsonLd(lang),
+        ]}
+      />
       <DepthHero
         lang={lang}
         src={SECTION_IMAGES.logisticsHub}
@@ -95,7 +102,7 @@ export default function LogisticsPage({ params: { lang } }: { params: { lang: st
           </div>
           <ColdChainStepper lang={lang} activeStep={3} />
 
-          <div className="mt-12">
+          <div className="mt-12 flex flex-col gap-3 sm:flex-row sm:gap-6">
             <Link
               href={`/${lang}/export-markets`}
               className={cn(
@@ -104,6 +111,24 @@ export default function LogisticsPage({ params: { lang } }: { params: { lang: st
               )}
             >
               {isAr ? 'أسواق التصدير ←' : 'Export markets →'}
+            </Link>
+            <Link
+              href={`/${lang}/guides/incoterms`}
+              className={cn(
+                'inline-flex text-sm font-semibold text-primary hover:text-dark transition-colors',
+                isAr ? 'font-arabic' : 'font-sans'
+              )}
+            >
+              {isAr ? 'شروط الشحن ←' : 'Shipping terms →'}
+            </Link>
+            <Link
+              href={`/${lang}/guides/iqf`}
+              className={cn(
+                'inline-flex text-sm font-semibold text-primary hover:text-dark transition-colors',
+                isAr ? 'font-arabic' : 'font-sans'
+              )}
+            >
+              {isAr ? 'ما هو التجميد IQF ←' : 'What IQF freezing is →'}
             </Link>
           </div>
         </Container>

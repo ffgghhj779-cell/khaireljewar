@@ -1,31 +1,86 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { CANONICAL_HOST, shouldRedirectHost } from '@/lib/seo'
-import { updateSession } from '@/lib/supabase/middleware'
-import { verifyAdminSession, ADMIN_COOKIE } from '@/lib/admin/auth'
+
+async function withSupabase(request: NextRequest) {
+  let response = NextResponse.next({ request: { headers: request.headers } })
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          request.cookies.set({ name, value, ...options })
+          response = NextResponse.next({ request: { headers: request.headers } })
+          response.cookies.set({ name, value, ...options })
+        },
+        remove(name: string, options: CookieOptions) {
+          request.cookies.set({ name, value: '', ...options })
+          response = NextResponse.next({ request: { headers: request.headers } })
+          response.cookies.set({ name, value: '', ...options })
+        },
+      },
+    }
+  )
+
+  await supabase.auth.getUser()
+  return { supabase, response }
+}
 
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone()
   const host = request.headers.get('host') ?? ''
   const path = url.pathname
+  const supabaseReady = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  )
 
-  // ── Admin panel protection ────────────────────────────────────────────────
+  // ── Admin panel protection (Supabase session + profiles.role = admin) ──
   if (path.startsWith('/admin')) {
-  if (path === '/admin/login') {
-    const session = request.cookies.get(ADMIN_COOKIE)?.value
-    const valid = await verifyAdminSession(session)
-    if (valid) {
-      return NextResponse.redirect(new URL('/admin', request.url))
+    if (!supabaseReady) {
+      if (path === '/admin/login') return NextResponse.next()
+      return NextResponse.redirect(new URL('/admin/login', request.url))
     }
-    return NextResponse.next()
-  }
-    const session = request.cookies.get(ADMIN_COOKIE)?.value
-    const valid = await verifyAdminSession(session)
-    if (!valid) {
-      const loginUrl = new URL('/admin/login', request.url)
-      return NextResponse.redirect(loginUrl)
+
+    const { supabase, response } = await withSupabase(request)
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (path === '/admin/login') {
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .maybeSingle()
+        if (profile?.role === 'admin') {
+          return NextResponse.redirect(new URL('/admin', request.url))
+        }
+      }
+      return response
     }
-    return NextResponse.next()
+
+    if (!user) {
+      return NextResponse.redirect(new URL('/admin/login', request.url))
+    }
+
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .maybeSingle()
+
+    if (profile?.role !== 'admin') {
+      return NextResponse.redirect(new URL('/admin/login', request.url))
+    }
+
+    return response
   }
 
   if (shouldRedirectHost(host)) {
@@ -48,8 +103,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/en', request.url))
   }
 
-  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    return updateSession(request)
+  if (supabaseReady) {
+    const { response } = await withSupabase(request)
+    return response
   }
 
   return NextResponse.next()

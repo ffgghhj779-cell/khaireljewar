@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -9,6 +9,7 @@ import BrandLockup from '@/components/ui/BrandLockup'
 import LanguageSwitch from './LanguageSwitch'
 import CartButton from '@/components/ecom/CartButton'
 import { useScrollCompact } from '@/hooks/useScrollCompact'
+import { createClient, isSupabaseConfigured } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils/cn'
 import { MOBILE_EASE_OUT } from '@/lib/constants/motion'
 
@@ -34,10 +35,23 @@ const navigation = {
 /** Cream nav — brand-forward; consumer cart + checkout */
 export default function Header({ lang }: { lang: string }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [signedIn, setSignedIn] = useState(false)
   const isCompact = useScrollCompact()
   const pathname = usePathname()
   const isAr = lang === 'ar'
   const navItems = navigation[lang as keyof typeof navigation] || navigation.en
+
+  useEffect(() => {
+    if (!isSupabaseConfigured()) return
+    const supabase = createClient()
+    supabase.auth.getSession().then(({ data }) => {
+      setSignedIn(Boolean(data.session))
+    })
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSignedIn(Boolean(session))
+    })
+    return () => sub.subscription.unsubscribe()
+  }, [])
 
   const isActive = (href: string) => {
     const full = `/${lang}${href}`
@@ -102,6 +116,15 @@ export default function Header({ lang }: { lang: string }) {
               <LanguageSwitch lang={lang} />
               <CartButton lang={lang} />
               <Link
+                href={signedIn ? `/${lang}/account` : `/${lang}/login`}
+                className={cn(
+                  'hidden xl:inline-flex min-h-[40px] items-center rounded-xl border border-primary/15 px-3 text-[12px] font-semibold text-primary hover:bg-primary/5',
+                  isAr ? 'font-arabic' : 'font-sans'
+                )}
+              >
+                {signedIn ? (isAr ? 'حسابي' : 'Account') : isAr ? 'دخول' : 'Sign in'}
+              </Link>
+              <Link
                 href={`/${lang}/contact`}
                 className={cn(
                   'hidden xl:inline-flex min-h-[40px] items-center rounded-xl border border-primary/15 px-3 text-[12px] font-semibold text-primary hover:bg-primary/5',
@@ -159,6 +182,30 @@ export default function Header({ lang }: { lang: string }) {
                   {item.name}
                 </Link>
               ))}
+              <Link
+                href={signedIn ? `/${lang}/account` : `/${lang}/login`}
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  'block px-5 py-4 min-h-[52px] text-[15px] font-semibold border-b border-primary/8',
+                  'hover:bg-primary/4 transition-colors touch-manipulation text-primary',
+                  isAr ? 'font-arabic' : 'font-display'
+                )}
+              >
+                {signedIn ? (isAr ? 'حسابي' : 'My account') : isAr ? 'تسجيل الدخول' : 'Sign in'}
+              </Link>
+              {!signedIn && (
+                <Link
+                  href={`/${lang}/signup`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    'block px-5 py-4 min-h-[52px] text-[15px] font-semibold border-b border-primary/8',
+                    'hover:bg-primary/4 transition-colors touch-manipulation text-primary',
+                    isAr ? 'font-arabic' : 'font-display'
+                  )}
+                >
+                  {isAr ? 'إنشاء حساب' : 'Create account'}
+                </Link>
+              )}
               <Link
                 href={`/${lang}/contact`}
                 onClick={() => setMobileMenuOpen(false)}

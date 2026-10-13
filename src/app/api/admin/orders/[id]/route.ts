@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server'
+import { denyUnlessAdmin } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { OrderStatus } from '@/lib/supabase/types'
 
 export const runtime = 'nodejs'
 
 export async function GET(_req: Request, { params }: { params: { id: string } }) {
+  const denied = await denyUnlessAdmin()
+  if (denied) return denied
+
   try {
     const supabase = createAdminClient()
     const { data, error } = await supabase
@@ -22,6 +26,9 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
 }
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+  const denied = await denyUnlessAdmin()
+  if (denied) return denied
+
   try {
     const body = (await req.json()) as { status?: string; notes?: string }
     const allowed = ['pending_payment', 'paid', 'fulfillment', 'shipped', 'delivered', 'failed', 'cancelled']

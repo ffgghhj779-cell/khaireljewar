@@ -22,6 +22,7 @@ type PageMetaInput = {
   description: string
   path?: string
   image?: string
+  noindex?: boolean
 }
 
 function brandName(lang: string) {
@@ -46,6 +47,7 @@ export function buildPageMetadata({
   description,
   path = '',
   image = DEFAULT_OG_IMAGE,
+  noindex = false,
 }: PageMetaInput): Metadata {
   const canonical = `${SITE_URL}/${lang}${path}`
   const brand = brandName(lang)
@@ -55,6 +57,7 @@ export function buildPageMetadata({
     metadataBase: new URL(SITE_URL),
     title,
     description,
+    robots: noindex ? { index: false, follow: true } : { index: true, follow: true },
     alternates: {
       canonical,
       languages: languageAlternates(path),
@@ -154,6 +157,35 @@ export function faqJsonLd(lang: string) {
   }
 }
 
+function minimumOrderLabel(minOrder: number, unit: 'MT' | 'Containers', lang: string): string {
+  const isAr = lang === 'ar'
+  if (unit === 'Containers') {
+    if (isAr) return minOrder === 1 ? 'حاوية واحدة' : `${minOrder} حاويات`
+    return minOrder === 1 ? '1 container' : `${minOrder} containers`
+  }
+  return isAr ? `${minOrder} طن` : `${minOrder} MT`
+}
+
+/** Search title and description for one product. Jeddah / Saudi / GCC only. */
+export function productSearchCopy(input: {
+  lang: string
+  name: string
+  minOrder: number
+  unit: 'MT' | 'Containers'
+}): { title: string; description: string } {
+  const order = minimumOrderLabel(input.minOrder, input.unit, input.lang)
+  if (input.lang === 'ar') {
+    return {
+      title: `${input.name} للتصدير`,
+      description: `${input.name} بالجملة من جدة إلى السعودية والخليج. الحد الأدنى ${order}. اطلب عرض سعر.`,
+    }
+  }
+  return {
+    title: `${input.name} Exporter`,
+    description: `${input.name} wholesale from Jeddah to Saudi Arabia and the GCC. Minimum order ${order}. Request a quote.`,
+  }
+}
+
 export function productJsonLd(input: {
   lang: string
   slug: string
@@ -181,12 +213,48 @@ export function productJsonLd(input: {
     },
     countryOfOrigin: input.origin,
     url,
-    offers: {
-      '@type': 'Offer',
-      url: `${SITE_URL}/${input.lang}/contact?product=${encodeURIComponent(input.slug)}`,
-      availability: 'https://schema.org/InStock',
-      businessFunction: 'http://purl.org/goodrelations/v1#Sell',
-      seller: { '@id': `${SITE_URL}/#organization` },
-    },
+  }
+}
+
+export function breadcrumbJsonLd(lang: string, trail: { name: string; path: string }[]) {
+  const items = [{ name: lang === 'ar' ? 'الرئيسية' : 'Home', path: '' }, ...trail]
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: `${SITE_URL}/${lang}${item.path}`,
+    })),
+  }
+}
+
+export function productListJsonLd(lang: string, products: { slug: string; name: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: products.map((product, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: product.name,
+      url: `${SITE_URL}/${lang}/products/${product.slug}`,
+    })),
+  }
+}
+
+export function logisticsServiceJsonLd(lang: string) {
+  const isAr = lang === 'ar'
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: isAr ? 'شحن مبرد وتصدير من جدة' : 'Cold-chain export from Jeddah',
+    serviceType: isAr ? 'تنسيق التصدير والشحن المبرد' : 'Export coordination and cold-chain shipping',
+    provider: { '@id': `${SITE_URL}/#organization` },
+    areaServed: ['SA', 'AE', 'BH', 'KW', 'OM', 'QA'],
+    url: `${SITE_URL}/${lang}/logistics`,
+    description: isAr
+      ? 'مناولة مبردة ونقل بالحاويات المبردة وتنسيق شحن التصدير من جدة، مع متابعة الشحنة.'
+      : 'Temperature-controlled handling, reefer transport, and export shipping coordinated from Jeddah, with shipment follow-up.',
   }
 }

@@ -8,7 +8,8 @@ import ProductStickyCta from '@/components/ecom/ProductStickyCta'
 import ProductCard from '@/components/sections/ProductCard'
 import AddToCartButton from '@/components/ecom/AddToCartButton'
 import { formatEgp, getConsumerUnit, getRetailPriceEgp } from '@/lib/commerce/pricing'
-import { buildPageMetadata, productJsonLd } from '@/lib/seo'
+import { buildPageMetadata, breadcrumbJsonLd, productJsonLd, productSearchCopy } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
 import { resolveProductImage, SECTION_IMAGES } from '@/lib/constants/images'
 import { COMPLIANCE_CERTIFICATES } from '@/lib/constants/brandAssets'
 import { cn } from '@/lib/utils/cn'
@@ -31,14 +32,18 @@ export async function generateMetadata({
   const product = await getProductBySlug(slug)
   if (!product) return {}
   const isAr = lang === 'ar'
-  const title = isAr ? product.title.ar : product.title.en
-  const description = isAr ? product.desc.ar : product.desc.en
+  const search = productSearchCopy({
+    lang,
+    name: isAr ? product.title.ar : product.title.en,
+    minOrder: product.minOrder,
+    unit: product.unit,
+  })
   const image = resolveProductImage(product.image, product.category.en, product.slug)
   return buildPageMetadata({
     lang,
     path: `/products/${slug}`,
-    title,
-    description: description.slice(0, 160),
+    title: search.title,
+    description: search.description,
     image,
   })
 }
@@ -93,22 +98,23 @@ export default async function SingleProductPage({
 
   return (
     <div className="min-h-screen bg-cream pb-[calc(10rem+env(safe-area-inset-bottom,0px))] lg:pb-0">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            productJsonLd({
-              lang,
-              slug: product.slug,
-              name: isAr ? product.title.ar : product.title.en,
-              description: isAr ? product.desc.ar : product.desc.en,
-              image: mainSrc,
-              sku: product.id,
-              category: isAr ? product.category.ar : product.category.en,
-              origin: isAr ? product.origin.ar : product.origin.en,
-            })
-          ),
-        }}
+      <JsonLd
+        data={[
+          productJsonLd({
+            lang,
+            slug: product.slug,
+            name: isAr ? product.title.ar : product.title.en,
+            description: isAr ? product.desc.ar : product.desc.en,
+            image: mainSrc,
+            sku: product.id,
+            category: isAr ? product.category.ar : product.category.en,
+            origin: isAr ? product.origin.ar : product.origin.en,
+          }),
+          breadcrumbJsonLd(lang, [
+            { name: isAr ? 'المنتجات' : 'Products', path: '/products' },
+            { name: isAr ? product.title.ar : product.title.en, path: `/products/${product.slug}` },
+          ]),
+        ]}
       />
       <div className="flex flex-col lg:flex-row">
         <div className="lg:w-[48%] lg:sticky lg:top-[76px] lg:self-start lg:max-h-[calc(100dvh-76px)] overflow-hidden">

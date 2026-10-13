@@ -1,9 +1,13 @@
 import { NextResponse } from 'next/server'
+import { denyUnlessAdmin } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export const runtime = 'nodejs'
 
 export async function GET(req: Request) {
+  const denied = await denyUnlessAdmin()
+  if (denied) return denied
+
   try {
     const { searchParams } = new URL(req.url)
     const status = searchParams.get('status') || 'all'

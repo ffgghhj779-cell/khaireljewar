@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ABOUT_HERO_IMAGE } from '@/lib/constants/images'
 import { BRAND } from '@/lib/constants/brand'
-import { buildPageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, buildPageMetadata } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
 import Container from '@/components/ui/Container'
 import PeoplePassionGallery from '@/components/sections/PeoplePassionGallery'
 import DepthHero from '@/components/graphics/DepthHero'
@@ -13,10 +14,10 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
   return buildPageMetadata({
     lang,
     path: '/about',
-    title: isAr ? 'من نحن' : 'About',
+    title: isAr ? 'تجارة غذائية من جدة' : 'Neighborly Food Trade from Jeddah',
     description: isAr
-      ? `${BRAND.nameFull.ar} — من جدة إلى العالم.`
-      : `${BRAND.nameFull.en} — ${BRAND.tagline.en}.`,
+      ? 'خير الجوار للأغذية تورد من مزارع شريكة وتنسّق الجملة والتصدير من جدة إلى السعودية والخليج.'
+      : 'Khair Aljaar Foods sources from trusted partner farms and coordinates wholesale and export from Jeddah across Saudi Arabia and the Gulf.',
   })
 }
 
@@ -25,6 +26,7 @@ export default function AboutPage({ params: { lang } }: { params: { lang: string
 
   return (
     <div className="min-h-screen pb-0">
+      <JsonLd data={breadcrumbJsonLd(lang, [{ name: isAr ? 'من نحن' : 'About', path: '/about' }])} />
       <DepthHero
         lang={lang}
         src={ABOUT_HERO_IMAGE}
@@ -84,9 +86,9 @@ export default function AboutPage({ params: { lang } }: { params: { lang: string
 
             <div className="lg:col-span-5 flex flex-col justify-center gap-8 lg:border-s lg:border-dark/8 lg:ps-12">
               {[
-                { value: '25+', label: isAr ? 'سنوات خبرة' : 'Years of experience' },
-                { value: '40+', label: isAr ? 'وجهة تصدير' : 'Export destinations' },
-                { value: '100%', label: isAr ? 'التزام بالجودة' : 'Quality commitment' },
+                { value: isAr ? 'جدة' : 'Jeddah', label: isAr ? 'مركز التوريد والتصدير' : 'Wholesale and export hub' },
+                { value: isAr ? 'عرض سعر' : 'Quote', label: isAr ? 'السعر والتوفر يُؤكدان رسمياً' : 'Price and availability confirmed on quote' },
+                { value: isAr ? 'المجموعة' : 'Group', label: isAr ? 'تسامي، الريحان الماسي، وثمار أرضنا' : 'Tasami, Al Rehan Al Masi, and Thimar Ardina' },
               ].map((stat) => (
                 <div key={stat.label}>
                   <p className={cn('text-4xl md:text-5xl font-bold text-primary mb-1', isAr ? 'font-arabic' : 'font-display')}>

@@ -3,7 +3,8 @@ import Link from 'next/link'
 import Container from '@/components/ui/Container'
 import QualityStepper from '@/components/quality/QualityStepper'
 import TrustComplianceHub from '@/components/sections/TrustComplianceHub'
-import { buildPageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, buildPageMetadata } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
 import { cn } from '@/lib/utils/cn'
 import { ShieldCheck, Leaf, FlaskConical, FileCheck } from 'lucide-react'
 
@@ -12,10 +13,10 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
   return buildPageMetadata({
     lang,
     path: '/quality',
-    title: isAr ? 'الجودة والاعتمادات' : 'Quality & Certifications',
+    title: isAr ? 'الجودة ووثائق التصدير' : 'Quality & Export Documents',
     description: isAr
-      ? 'نظام جودة متكامل بتنسيق من جدة — من المزرعة الشريكة إلى الشحنة.'
-      : 'An integrated quality system coordinated from Jeddah — from partner farm to shipment.',
+      ? 'كيف تُدار الجودة من المزرعة الشريكة حتى الشحن من جدة: فرز وتعبئة وفحوص مخبرية وسلسلة تبريد. اطلب وثائق الجودة.'
+      : 'How quality is managed from partner farm to shipment out of Jeddah: sorting, packing, lab checks, and cold chain. Request quality documents.',
   })
 }
 
@@ -47,6 +48,7 @@ export default function CertificationsPage({ params: { lang } }: { params: { lan
 
   return (
     <div className="min-h-screen pb-0">
+      <JsonLd data={breadcrumbJsonLd(lang, [{ name: isAr ? 'الجودة' : 'Quality', path: '/quality' }])} />
       <section className="pt-14 md:pt-20 pb-16 md:pb-20 bg-canvas-soft">
         <Container size="large">
           <div className="max-w-3xl">
