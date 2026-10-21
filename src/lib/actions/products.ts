@@ -1,13 +1,14 @@
 'use server'
 
 import { MOCK_PRODUCTS, type Product } from '@/lib/data/products'
+import { RICE_SLUGS } from '@/lib/data/riceCatalog'
 import { createAnonClient } from '@/lib/supabase/anon'
 import { isSupabaseConfigured } from '@/lib/supabase/env'
 import { mapProductRow } from '@/lib/supabase/mappers'
 import type { ProductRow } from '@/lib/supabase/types'
 
 /** Kept in code so the gallery and Egyptian product name are not rewritten by the catalog mapper. */
-const LOCAL_CATALOG_SLUGS = new Set(['sallam-egyptian-rice'])
+const LOCAL_CATALOG_SLUGS = RICE_SLUGS
 
 function mergeLocalCatalog(products: Product[]): Product[] {
   const local = MOCK_PRODUCTS.filter((p) => LOCAL_CATALOG_SLUGS.has(p.slug))

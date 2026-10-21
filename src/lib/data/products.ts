@@ -24,6 +24,8 @@ export interface Product {
   consumerUnit?: { en: string; ar: string }
   /** Wholesale line sold by written quote, not the Egypt retail cart */
   quoteOnly?: boolean
+  /** Small label on the catalog card, such as exclusive agent or brand */
+  badge?: { en: string; ar: string }
   gallery?: {
     src: string
     alt: { en: string; ar: string }
@@ -39,11 +41,13 @@ export const PRODUCT_CATEGORIES = [
   { id: 'Fruits', en: 'Fruits', ar: 'الفواكه' },
   { id: 'Vegetables', en: 'Vegetables', ar: 'الخضروات' },
   { id: 'Frozen', en: 'Frozen', ar: 'المجمدات' },
+  { id: 'Rice', en: 'Rice', ar: 'الأرز' },
   { id: 'Grocery', en: 'Grocery', ar: 'البقالة' },
   { id: 'Poultry', en: 'Poultry', ar: 'الدواجن' },
 ] as const
 
 import { PRODUCT_SLUG_IMAGES } from '@/lib/constants/images'
+import { RICE_PRODUCTS } from '@/lib/data/riceCatalog'
 
 const IMG = PRODUCT_SLUG_IMAGES
 
@@ -414,83 +418,7 @@ export const MOCK_PRODUCTS: Product[] = [
     retailPriceEgp: 55,
     consumerUnit: { en: 'Bag 1kg', ar: 'كيس 1 كجم' },
   },
-  {
-    id: 'p-sallam-rice',
-    slug: 'sallam-egyptian-rice',
-    category: { en: 'Grocery', ar: 'البقالة' },
-    title: { en: 'Sallam Egyptian Rice', ar: 'أرز سلام المصري' },
-    desc: {
-      en: 'Sallam Egyptian rice for wholesale: white rice in 5 kg and 25 kg bags, and Calrose in 1, 5, 10, and 25 kg bags. Ready for retail shelves and kitchens, supplied from Jeddah. Tasami Al-Wataniya is the exclusive agent in Saudi Arabia.',
-      ar: 'أرز سلام المصري للجملة: أرز أبيض في أكياس 5 كجم و25 كجم، وكالروز في أكياس 1 و5 و10 و25 كجم. جاهز لأرفف التجزئة والمطاعم، والتوريد من جدة. تسامي الوطنية الوكيل الحصري في السعودية.',
-    },
-    specs: {
-      en: [
-        'Brand: Sallam',
-        'White rice packs: 5 kg and 25 kg',
-        'Calrose packs: 1 kg, 5 kg, 10 kg, and 25 kg',
-        'Calrose broken grains: 1% to 5%',
-        'Minimum order: 1 container, about 27 MT',
-        'Indicative Calrose list, confirmed on the written quote: 3.6 SAR per 1 kg, 18 SAR per 5 kg, 36 SAR per 10 kg, 90 SAR per 25 kg, 3,600 SAR per ton ex-warehouse',
-        'Saudi agent: Tasami Al-Wataniya',
-      ],
-      ar: [
-        'العلامة: سلام',
-        'الأرز الأبيض: 5 كجم و25 كجم',
-        'الكالروز: 1 كجم و5 كجم و10 كجم و25 كجم',
-        'نسبة الكسر في الكالروز: من 1٪ إلى 5٪',
-        'الحد الأدنى: حاوية واحدة، حوالي 27 طن',
-        'أسعار الكالروز استرشادية وتثبت بعرض مكتوب: 3.6 ريال لكيلو، 18 ريال لـ5 كجم، 36 ريال لـ10 كجم، 90 ريال لـ25 كجم، 3600 ريال للطن من المستودع',
-        'الوكيل في السعودية: تسامي الوطنية',
-      ],
-    },
-    image: '/images/brand/products/sallam/white-5kg.webp',
-    gallery: [
-      {
-        src: '/images/brand/products/sallam/white-5kg.webp',
-        alt: { en: 'Sallam Egyptian white rice, 5 kg bag', ar: 'أرز سلام المصري الأبيض، كيس 5 كجم' },
-        fit: 'contain',
-      },
-      {
-        src: '/images/brand/products/sallam/sizes.webp',
-        alt: { en: 'Sallam rice pack sizes: 1 kg, 5 kg, and 25 kg', ar: 'مقاسات أرز سلام: 1 كجم و5 كجم و25 كجم' },
-        fit: 'contain',
-      },
-      {
-        src: '/images/brand/products/sallam/calrose.webp',
-        alt: { en: 'Sallam Calrose rice bag', ar: 'كيس أرز سلام كالروز' },
-        fit: 'contain',
-      },
-      {
-        src: '/images/brand/products/sallam/white-25kg.webp',
-        alt: { en: 'Sallam Egyptian white rice, 25 kg bag', ar: 'أرز سلام المصري الأبيض، كيس 25 كجم' },
-        fit: 'contain',
-      },
-      {
-        src: '/images/brand/products/sallam/grain.webp',
-        alt: { en: 'Sallam rice grain beside a ruler', ar: 'حبة أرز سلام بجانب مسطرة' },
-        fit: 'contain',
-      },
-      {
-        src: '/images/brand/products/sallam/table.webp',
-        alt: { en: 'Sallam rice served on a banquet tray', ar: 'أرز سلام على سفرة' },
-        fit: 'contain',
-      },
-      {
-        src: '/images/brand/products/sallam/field.webp',
-        alt: { en: 'Sallam rice with a bowl of cooked rice', ar: 'أرز سلام مع طبق أرز مطهو' },
-        fit: 'contain',
-      },
-    ],
-    minOrder: 1,
-    unit: 'Containers',
-    availability: { en: 'In Stock', ar: 'متوفر' },
-    harvestSeason: { en: 'Year-round', ar: 'على مدار العام' },
-    sizes: { en: '1–25 kg', ar: '1–25 كجم' },
-    packaging: { en: '1, 5, 10, and 25 kg bags', ar: 'أكياس 1 و5 و10 و25 كجم' },
-    commodityClass: { en: 'Grains', ar: 'حبوب' },
-    origin: { en: 'Egypt, supplied from Jeddah', ar: 'مصر، والتوريد من جدة' },
-    quoteOnly: true,
-  },
+  ...RICE_PRODUCTS,
   {
     id: 'p-11',
     slug: 'white-sugar',

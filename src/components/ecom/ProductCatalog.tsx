@@ -146,6 +146,14 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
           ))}
         </div>
 
+        {activeCategory === 'Rice' && (
+          <p className={cn('mt-4 max-w-2xl text-sm leading-relaxed text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
+            {isAr
+              ? 'أرز سلام بالوكالة الحصرية لتسامي الوطنية، ثم بسمتي وبقوليات ومكرونة. كل عبوة منتج مستقل، والسعر بعرض مكتوب.'
+              : 'The rice department follows Tasami Al-Wataniya: Sallam under exclusive agency, then basmati, pulses, and pasta. Each pack is its own product, priced by written quote.'}
+          </p>
+        )}
+
         <p className={cn('mt-5 text-sm text-primary/50', isAr ? 'font-arabic' : 'font-sans')}>
           {isAr
             ? `${filteredProducts.length} منتج${isPending ? '…' : ''}`

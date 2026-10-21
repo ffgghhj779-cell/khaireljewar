@@ -43,6 +43,11 @@ const nextConfig = {
         destination: '/:lang/quality',
         permanent: true,
       },
+      {
+        source: '/:lang(en|ar)/products/sallam-egyptian-rice',
+        destination: '/:lang/products/sallam-egyptian-rice-5kg',
+        permanent: true,
+      },
     ]
   },
   experimental: {

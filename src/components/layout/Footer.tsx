@@ -33,6 +33,7 @@ export default function Footer({ lang }: { lang: string }) {
     { label: isAr ? 'التمور' : 'Dates', href: `/${lang}/products?category=Dates` },
     { label: isAr ? 'الفواكه' : 'Fruits', href: `/${lang}/products?category=Fruits` },
     { label: isAr ? 'الخضروات' : 'Vegetables', href: `/${lang}/products?category=Vegetables` },
+    { label: isAr ? 'الأرز' : 'Rice', href: `/${lang}/products?category=Rice` },
     { label: isAr ? 'المجمدات' : 'Frozen', href: `/${lang}/products?category=Frozen` },
     { label: isAr ? 'البقالة' : 'Grocery', href: `/${lang}/products?category=Grocery` },
   ]
