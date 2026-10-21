@@ -67,23 +67,29 @@ export default async function SingleProductPage({
       : all.filter((p) => p.slug !== product.slug).slice(0, 3)
 
   const mainSrc = resolveProductImage(product.image, product.category.en, product.slug)
-  const gallery = [
-    {
-      src: mainSrc,
-      alt: isAr ? product.title.ar : product.title.en,
-      fit: 'contain' as const,
-    },
-    {
-      src: SECTION_IMAGES.editorialBoard,
-      alt: isAr ? 'لوحة الحصاد' : 'Harvest board',
-      fit: 'cover' as const,
-    },
-    {
-      src: SECTION_IMAGES.hospitality,
-      alt: isAr ? 'ضيافة جدة' : 'Jeddah hospitality',
-      fit: 'cover' as const,
-    },
-  ]
+  const gallery = product.gallery?.length
+    ? product.gallery.map((img) => ({
+        src: img.src,
+        alt: isAr ? img.alt.ar : img.alt.en,
+        fit: img.fit ?? ('contain' as const),
+      }))
+    : [
+        {
+          src: mainSrc,
+          alt: isAr ? product.title.ar : product.title.en,
+          fit: 'contain' as const,
+        },
+        {
+          src: SECTION_IMAGES.editorialBoard,
+          alt: isAr ? 'لوحة الحصاد' : 'Harvest board',
+          fit: 'cover' as const,
+        },
+        {
+          src: SECTION_IMAGES.hospitality,
+          alt: isAr ? 'ضيافة جدة' : 'Jeddah hospitality',
+          fit: 'cover' as const,
+        },
+      ]
 
   const unitLabel =
     product.unit === 'Containers'
@@ -286,24 +292,51 @@ export default async function SingleProductPage({
             </div>
 
             <div className="rounded-2xl bg-primary p-6 md:p-8 text-cream shadow-soft">
-              <p className={cn('text-sm text-cream/65 mb-1', isAr ? 'font-arabic' : 'font-sans')}>
-                {isAr ? 'سعر التجزئة (مصر)' : 'Retail price (Egypt)'}
-              </p>
-              <p className={cn('text-3xl font-bold mb-1', isAr ? 'font-arabic' : 'font-display')}>
-                {formatEgp(getRetailPriceEgp(product), lang)}
-              </p>
-              <p className={cn('text-sm text-secondary mb-4', isAr ? 'font-arabic' : 'font-sans')}>
-                {isAr
-                  ? `لكل ${getConsumerUnit(product).ar} · شحن ${formatEgp(49, lang)} داخل مصر`
-                  : `Per ${getConsumerUnit(product).en} · ${formatEgp(49, lang)} shipping in Egypt`}
-              </p>
-              <AddToCartButton lang={lang} product={product} variant="onDark" />
-              <p className={cn('mt-4 text-xs text-cream/50', isAr ? 'font-arabic' : 'font-sans')}>
-                {isAr
-                  ? 'أضف للسلة ثم ادفع بالبطاقة أو المحفظة عبر Paymob.'
-                  : 'Add to cart, then pay by card or wallet via Paymob.'}
-              </p>
-              <p className={cn('mt-2 text-xs text-cream/40', isAr ? 'font-arabic' : 'font-sans')}>
+              {product.quoteOnly ? (
+                <>
+                  <p className={cn('text-sm text-cream/65 mb-1', isAr ? 'font-arabic' : 'font-sans')}>
+                    {isAr ? 'جملة' : 'Wholesale'}
+                  </p>
+                  <p className={cn('text-3xl font-bold mb-3', isAr ? 'font-arabic' : 'font-display')}>
+                    {isAr ? 'السعر بعرض مكتوب' : 'Price by written quote'}
+                  </p>
+                  <p className={cn('text-sm text-cream/70 mb-5 leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+                    {isAr
+                      ? 'أسعار العبوات الموضحة في المواصفات استرشادية. عرض السعر المكتوب هو اللي يثبت الصفقة.'
+                      : 'The pack prices in the specifications are indicative. The written quotation confirms the deal.'}
+                  </p>
+                  <Link
+                    href={`/${lang}/contact`}
+                    className={cn(
+                      'inline-flex min-h-[48px] items-center justify-center rounded-xl bg-secondary px-5 py-3 text-sm font-semibold text-primary',
+                      isAr ? 'font-arabic' : 'font-sans'
+                    )}
+                  >
+                    {isAr ? 'اطلب عرض سعر' : 'Request a quote'}
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <p className={cn('text-sm text-cream/65 mb-1', isAr ? 'font-arabic' : 'font-sans')}>
+                    {isAr ? 'سعر التجزئة (مصر)' : 'Retail price (Egypt)'}
+                  </p>
+                  <p className={cn('text-3xl font-bold mb-1', isAr ? 'font-arabic' : 'font-display')}>
+                    {formatEgp(getRetailPriceEgp(product), lang)}
+                  </p>
+                  <p className={cn('text-sm text-secondary mb-4', isAr ? 'font-arabic' : 'font-sans')}>
+                    {isAr
+                      ? `لكل ${getConsumerUnit(product).ar} · شحن ${formatEgp(49, lang)} داخل مصر`
+                      : `Per ${getConsumerUnit(product).en} · ${formatEgp(49, lang)} shipping in Egypt`}
+                  </p>
+                  <AddToCartButton lang={lang} product={product} variant="onDark" />
+                  <p className={cn('mt-4 text-xs text-cream/50', isAr ? 'font-arabic' : 'font-sans')}>
+                    {isAr
+                      ? 'أضف للسلة ثم ادفع بالبطاقة أو المحفظة عبر Paymob.'
+                      : 'Add to cart, then pay by card or wallet via Paymob.'}
+                  </p>
+                </>
+              )}
+              <p className={cn('mt-4 text-xs text-cream/40', isAr ? 'font-arabic' : 'font-sans')}>
                 {isAr ? `حد أدنى للجملة: ${product.minOrder} ${unitLabel}` : `Wholesale MOQ: ${product.minOrder} ${unitLabel}`}
               </p>
             </div>

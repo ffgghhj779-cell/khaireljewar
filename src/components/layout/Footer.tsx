@@ -34,6 +34,7 @@ export default function Footer({ lang }: { lang: string }) {
     { label: isAr ? 'الفواكه' : 'Fruits', href: `/${lang}/products?category=Fruits` },
     { label: isAr ? 'الخضروات' : 'Vegetables', href: `/${lang}/products?category=Vegetables` },
     { label: isAr ? 'المجمدات' : 'Frozen', href: `/${lang}/products?category=Frozen` },
+    { label: isAr ? 'البقالة' : 'Grocery', href: `/${lang}/products?category=Grocery` },
   ]
 
   return (

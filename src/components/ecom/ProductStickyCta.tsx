@@ -21,9 +21,25 @@ export default function ProductStickyCta({ product, lang }: { product: Product; 
             {isAr ? product.title.ar : product.title.en}
           </p>
           <p className={cn('text-[11px] text-farm font-semibold', isAr ? 'font-arabic' : 'font-sans')}>
-            {formatEgp(price, lang)} / {isAr ? unit.ar : unit.en}
+            {product.quoteOnly
+              ? isAr
+                ? 'السعر بعرض مكتوب'
+                : 'Price by written quote'
+              : `${formatEgp(price, lang)} / ${isAr ? unit.ar : unit.en}`}
           </p>
         </div>
+        {product.quoteOnly ? (
+          <Link
+            href={`/${lang}/contact`}
+            className={cn(
+              'shrink-0 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-cream min-h-[44px] flex items-center touch-manipulation active:scale-[0.98]',
+              isAr ? 'font-arabic' : 'font-sans'
+            )}
+          >
+            {isAr ? 'اطلب عرض سعر' : 'Request a quote'}
+          </Link>
+        ) : (
+          <>
         <button
           type="button"
           onClick={() =>
@@ -54,6 +70,8 @@ export default function ProductStickyCta({ product, lang }: { product: Product; 
         >
           {isAr ? 'السلة' : 'Cart'}
         </Link>
+          </>
+        )}
       </div>
     </div>
   )

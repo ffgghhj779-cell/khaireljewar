@@ -60,7 +60,16 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
             className="!aspect-auto absolute inset-0 rounded-none border-0 !bg-cream"
             sizes={compact ? '280px' : '(max-width: 768px) 45vw, (max-width: 1200px) 30vw, 280px'}
           />
-          {retailPrice > 0 && (
+          {product.quoteOnly ? (
+            <span
+              className={cn(
+                'absolute top-2 end-2 z-[1] rounded-full bg-farm px-2 py-0.5 text-[9px] font-bold leading-tight text-cream shadow-sm sm:top-2.5 sm:end-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
+                isAr ? 'font-arabic' : 'font-sans'
+              )}
+            >
+              {isAr ? 'عرض سعر' : 'Quote'}
+            </span>
+          ) : retailPrice > 0 && (
             <span
               className={cn(
                 'absolute top-2 end-2 z-[1] max-w-[calc(100%-1rem)] truncate rounded-full bg-farm px-2 py-0.5 text-[9px] font-bold leading-tight text-cream shadow-sm sm:top-2.5 sm:end-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',

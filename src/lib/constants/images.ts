@@ -29,6 +29,7 @@ export const PRODUCT_SLUG_IMAGES: Record<string, string> = {
   'frozen-mixed-vegetables': `${BRAND_PRODUCTS}/frozen-mixed-vegetables.webp`,
   'fresh-tomatoes': `${BRAND_PRODUCTS}/fresh-tomatoes.webp`,
   'long-grain-rice': `${BRAND_PRODUCTS}/long-grain-rice.webp`,
+  'sallam-egyptian-rice': `${BRAND_PRODUCTS}/sallam/white-5kg.webp`,
   'white-sugar': `${BRAND_PRODUCTS}/white-sugar.webp`,
   'vegetable-oil': `${BRAND_PRODUCTS}/vegetable-oil.webp`,
   'chilled-chicken': `${BRAND_PRODUCTS}/chilled-chicken.webp`,

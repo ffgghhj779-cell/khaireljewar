@@ -6,13 +6,25 @@ import { isSupabaseConfigured } from '@/lib/supabase/env'
 import { mapProductRow } from '@/lib/supabase/mappers'
 import type { ProductRow } from '@/lib/supabase/types'
 
+/** Kept in code so the gallery and Egyptian product name are not rewritten by the catalog mapper. */
+const LOCAL_CATALOG_SLUGS = new Set(['sallam-egyptian-rice'])
+
+function mergeLocalCatalog(products: Product[]): Product[] {
+  const local = MOCK_PRODUCTS.filter((p) => LOCAL_CATALOG_SLUGS.has(p.slug))
+  if (!local.length) return products
+  const rest = products.filter((p) => !LOCAL_CATALOG_SLUGS.has(p.slug))
+  const anchor = rest.findIndex((p) => p.slug === 'long-grain-rice')
+  if (anchor === -1) return [...rest, ...local]
+  return [...rest.slice(0, anchor + 1), ...local, ...rest.slice(anchor + 1)]
+}
+
 /**
  * Catalog source: Supabase `products` when reachable.
  * Falls back to local MOCK_PRODUCTS if DB is down / unset (keeps site live).
  * Commerce cart/checkout is separate — this site is brand + catalog + contact.
  */
 export async function getProducts(): Promise<Product[]> {
-  if (!isSupabaseConfigured()) return MOCK_PRODUCTS
+  if (!isSupabaseConfigured()) return mergeLocalCatalog(MOCK_PRODUCTS)
 
   try {
     const supabase = createAnonClient()
@@ -24,18 +36,22 @@ export async function getProducts(): Promise<Product[]> {
 
     if (error) {
       console.warn('[products] Supabase read failed, using mock:', error.message)
-      return MOCK_PRODUCTS
+      return mergeLocalCatalog(MOCK_PRODUCTS)
     }
 
-    if (!data?.length) return MOCK_PRODUCTS
-    return (data as ProductRow[]).map(mapProductRow)
+    if (!data?.length) return mergeLocalCatalog(MOCK_PRODUCTS)
+    return mergeLocalCatalog((data as ProductRow[]).map(mapProductRow))
   } catch (err) {
     console.warn('[products] Supabase unreachable, using mock:', err)
-    return MOCK_PRODUCTS
+    return mergeLocalCatalog(MOCK_PRODUCTS)
   }
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | undefined> {
+  if (LOCAL_CATALOG_SLUGS.has(slug)) {
+    return MOCK_PRODUCTS.find((p) => p.slug === slug)
+  }
+
   if (!isSupabaseConfigured()) {
     return MOCK_PRODUCTS.find((p) => p.slug === slug)
   }
