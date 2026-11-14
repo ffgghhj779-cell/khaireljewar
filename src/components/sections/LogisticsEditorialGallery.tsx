@@ -4,7 +4,7 @@ import { useState } from 'react'
 import PremiumImage from '@/components/ui/PremiumImage'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, MapPin, Tag } from 'lucide-react'
-import { LOGISTICS_GALLERY, type LogisticsPhoto } from '@/lib/constants/brandAssets'
+import { LOGISTICS_GALLERY, LOGISTICS_TAG_LABELS, type LogisticsPhoto } from '@/lib/constants/brandAssets'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/constants/images'
 import { SCROLL_VIEWPORT, TAP_SCALE } from '@/lib/constants/motion'
 import Container from '@/components/ui/Container'
@@ -63,13 +63,14 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
               whileTap={TAP_SCALE}
               onClick={() => setActiveTag(tag)}
               className={cn(
-                'px-3 py-1.5 rounded-lg text-[11px] font-bold border transition-all duration-200 touch-manipulation',
+                'min-h-[36px] px-3.5 py-1.5 rounded-lg text-xs font-bold border transition-all duration-200 touch-manipulation',
+                isAr ? 'font-arabic' : 'font-sans',
                 activeTag === tag
                   ? 'bg-secondary text-primary border-secondary'
                   : 'bg-white text-primary/70 border-primary/12 hover:border-primary/30'
               )}
             >
-              {tag}
+              {isAr ? LOGISTICS_TAG_LABELS[tag].ar : LOGISTICS_TAG_LABELS[tag].en}
             </motion.button>
           ))}
         </div>
@@ -111,19 +112,19 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
                 <div className="absolute inset-0 p-3 md:p-4 flex flex-col justify-end opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
                   <span
                     className={cn(
-                      'self-start mb-2 px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest border',
+                      'self-start mb-2 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-widest border',
                       TAG_COLORS[photo.tag]
                     )}
                   >
                     <Tag className="w-2.5 h-2.5 inline me-1" />
-                    {photo.tag}
+                    {isAr ? LOGISTICS_TAG_LABELS[photo.tag].ar : LOGISTICS_TAG_LABELS[photo.tag].en}
                   </span>
                   <h4 className={cn('text-white font-bold text-sm leading-snug mb-1', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
                     {isAr ? photo.titleAr : photo.titleEn}
                   </h4>
-                  <p className="text-white/60 text-[10px] flex items-center gap-1">
-                    <MapPin className="w-2.5 h-2.5 shrink-0" />
-                    {photo.location}
+                  <p className={cn('text-white/75 text-[11px] flex items-center gap-1', isAr ? 'font-arabic' : 'font-sans')}>
+                    <MapPin className="w-3 h-3 shrink-0" />
+                    {isAr ? photo.locationAr : photo.location}
                   </p>
                 </div>
               </motion.button>
@@ -171,18 +172,18 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
               <div className="absolute bottom-0 inset-x-0 p-6 md:p-8">
                 <span
                   className={cn(
-                    'inline-block mb-2 px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-widest border',
+                    'inline-block mb-2 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest border',
                     TAG_COLORS[lightbox.tag]
                   )}
                 >
-                  {lightbox.tag}
+                  {isAr ? LOGISTICS_TAG_LABELS[lightbox.tag].ar : LOGISTICS_TAG_LABELS[lightbox.tag].en}
                 </span>
                 <h3 className={cn('text-white font-black text-xl md:text-2xl mb-1', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
                   {isAr ? lightbox.titleAr : lightbox.titleEn}
                 </h3>
                 <p className="text-white/60 text-sm flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 shrink-0" />
-                  {lightbox.location}
+                  {isAr ? lightbox.locationAr : lightbox.location}
                 </p>
               </div>
             </motion.div>

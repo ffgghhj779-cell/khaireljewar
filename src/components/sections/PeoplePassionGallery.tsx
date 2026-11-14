@@ -105,7 +105,7 @@ export default function PeoplePassionGallery({ lang }: { lang: string }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-400" />
 
                 <div className="absolute bottom-0 inset-x-0 p-3 md:p-4">
-                  <span className={cn('text-primary text-[9px] font-bold uppercase tracking-widest block mb-0.5', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+                  <span className={cn('text-primary text-[10px] font-bold uppercase tracking-widest block mb-0.5', isAr ? 'font-ibm-arabic' : 'font-inter')}>
                     {isAr ? photo.roleAr : photo.roleEn}
                   </span>
                   <p className={cn('text-white font-bold text-xs md:text-sm leading-snug line-clamp-2', isAr ? 'font-ibm-arabic' : 'font-manrope')}>

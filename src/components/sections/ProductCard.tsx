@@ -69,7 +69,7 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
           {product.badge && (
             <span
               className={cn(
-                'absolute top-2 start-2 z-[1] max-w-[46%] truncate rounded-full px-2 py-0.5 text-[9px] font-bold leading-tight text-primary shadow-sm sm:top-2.5 sm:start-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
+                'absolute top-2 start-2 z-[1] max-w-[46%] truncate rounded-full px-2 py-0.5 text-[10px] font-bold leading-tight text-primary shadow-sm sm:top-2.5 sm:start-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
                 product.isNew ? 'bg-secondary' : 'bg-white/95',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
@@ -80,7 +80,7 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
           {product.quoteOnly ? (
             <span
               className={cn(
-                'absolute top-2 end-2 z-[1] rounded-full bg-farm px-2 py-0.5 text-[9px] font-bold leading-tight text-cream shadow-sm sm:top-2.5 sm:end-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
+                'absolute top-2 end-2 z-[1] rounded-full bg-farm px-2 py-0.5 text-[10px] font-bold leading-tight text-cream shadow-sm sm:top-2.5 sm:end-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >
@@ -89,7 +89,7 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
           ) : retailPrice > 0 && (
             <span
               className={cn(
-                'absolute top-2 end-2 z-[1] max-w-[calc(100%-1rem)] truncate rounded-full bg-farm px-2 py-0.5 text-[9px] font-bold leading-tight text-cream shadow-sm sm:top-2.5 sm:end-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
+                'absolute top-2 end-2 z-[1] max-w-[calc(100%-1rem)] truncate rounded-full bg-farm px-2 py-0.5 text-[10px] font-bold leading-tight text-cream shadow-sm sm:top-2.5 sm:end-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >

@@ -286,7 +286,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
           className="inline-flex items-center gap-2 px-5 py-3 min-h-[48px] rounded-full bg-[#25D366] text-white font-semibold text-sm hover:opacity-90 transition-opacity touch-manipulation"
         >
           <MessageCircle className="w-5 h-5" />
-          WhatsApp
+          {isAr ? 'واتساب' : 'WhatsApp'}
         </a>
       </div>
     </>

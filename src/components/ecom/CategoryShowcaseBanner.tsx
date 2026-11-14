@@ -172,7 +172,7 @@ export default function CategoryShowcaseBanner({
                         className="object-cover"
                       />
                     </span>
-                    <span className="line-clamp-2 block px-1.5 py-1.5 text-center text-[9px] font-semibold leading-tight text-cream/85 sm:text-[10px]">
+                    <span className="line-clamp-2 block px-1.5 py-1.5 text-center text-[10.5px] font-semibold leading-tight text-cream/90 sm:text-[11px]">
                       {label}
                     </span>
                   </Link>

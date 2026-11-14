@@ -4,9 +4,10 @@ import { useState } from 'react'
 import PremiumImage from '@/components/ui/PremiumImage'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  ShieldCheck, Download, ExternalLink, CheckCircle2, Clock, X
+  Download, ExternalLink, CheckCircle2, Clock, MessageCircle, X
 } from 'lucide-react'
 import { COMPLIANCE_CERTIFICATES, type ComplianceCertificate } from '@/lib/constants/brandAssets'
+import { BRAND } from '@/lib/constants/brand'
 import { IMAGE_BLUR_DATA_URL } from '@/lib/constants/images'
 import { SCROLL_VIEWPORT, TAP_SCALE } from '@/lib/constants/motion'
 import Container from '@/components/ui/Container'
@@ -57,6 +58,12 @@ function VerificationStamp({ color }: { color: string }) {
 export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
   const isAr = lang === 'ar'
   const [active, setActive] = useState<ComplianceCertificate | null>(null)
+  const requestUrl = (cert: ComplianceCertificate) =>
+    `https://wa.me/${BRAND.contact.phoneWa}?text=${encodeURIComponent(
+      isAr
+        ? `مرحبًا خير الجوار، أرغب في الاطلاع على وثيقة: ${cert.nameAr}.`
+        : `Hello Khair Aljaar, I would like to review this document: ${cert.nameEn}.`
+    )}`
 
   return (
     <section className="py-20 md:py-28 bg-white border-t border-gray-100 relative">
@@ -133,18 +140,23 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
                   </h3>
                   <StatusBadge status={cert.status} isAr={isAr} />
                 </div>
-                <p className={cn('text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1', isAr ? 'font-ibm-arabic' : 'font-inter')}>
-                  {cert.body} · {cert.year}
+                <p className={cn('text-xs font-bold text-gray-400 mb-1', isAr ? 'font-ibm-arabic' : 'font-inter uppercase tracking-wider')}>
+                  {isAr ? cert.bodyAr : cert.body} · {cert.year}
                 </p>
-                <p className={cn('text-xs text-gray-500 leading-relaxed', isAr ? 'font-ibm-arabic' : 'font-inter')}>
-                  {cert.scope}
+                <p className={cn('text-[13px] text-gray-500 leading-relaxed', isAr ? 'font-ibm-arabic' : 'font-inter')}>
+                  {isAr ? cert.scopeAr : cert.scope}
                 </p>
 
                 <div className="flex items-center gap-3 mt-4">
-                  {cert.downloadUrl && (
-                    <span className="flex items-center gap-1 text-[10px] font-bold text-primary uppercase tracking-wider">
+                  {cert.downloadUrl ? (
+                    <span className="flex items-center gap-1 text-[11px] font-bold text-primary uppercase tracking-wider">
                       <Download className="w-3 h-3" />
                       {isAr ? 'تحميل' : 'Download PDF'}
+                    </span>
+                  ) : (
+                    <span className={cn('flex items-center gap-1 text-[11px] font-bold text-primary', isAr ? 'font-arabic' : 'font-sans')}>
+                      <MessageCircle className="w-3.5 h-3.5" />
+                      {isAr ? 'اطلب الوثيقة' : 'Request document'}
                     </span>
                   )}
                   {cert.verifyUrl && (
@@ -219,7 +231,7 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
                 </button>
                 <div className="absolute bottom-4 start-4 end-4">
                   <h3 className="text-white font-black text-xl">{isAr ? active.nameAr : active.nameEn}</h3>
-                  <p className="text-white/70 text-xs mt-1">{active.body} · {active.year}</p>
+                  <p className="text-white/80 text-xs mt-1">{isAr ? active.bodyAr : active.body} · {active.year}</p>
                 </div>
               </div>
 
@@ -229,9 +241,23 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
                   <span className="text-[10px] font-semibold text-gray-400 tracking-wider">{active.year}</span>
                 </div>
                 <p className={cn('text-sm text-gray-600 leading-relaxed mb-6', isAr ? 'font-arabic' : 'font-sans')}>
-                  {active.scope}
+                  {isAr ? active.scopeAr : active.scope}
                 </p>
                 <div className="flex gap-3">
+                  {!active.downloadUrl && (
+                    <a
+                      href={requestUrl(active)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        'flex-1 flex min-h-[44px] items-center justify-center gap-2 py-2.5 rounded-xl bg-secondary text-primary hover:bg-secondary-400 text-sm font-bold transition-colors',
+                        isAr ? 'font-arabic' : 'font-sans'
+                      )}
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      {isAr ? 'اطلب الوثيقة عبر واتساب' : 'Request via WhatsApp'}
+                    </a>
+                  )}
                   {active.downloadUrl && (
                     <a
                       href={active.downloadUrl}

@@ -15,6 +15,15 @@
     --header-height-md: 88px;
   }
 
+  /* iOS Safari zooms the page when a focused field is under 16px */
+  @media (max-width: 767px) {
+    input:not([type='checkbox']):not([type='radio']),
+    select,
+    textarea {
+      font-size: 16px;
+    }
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;

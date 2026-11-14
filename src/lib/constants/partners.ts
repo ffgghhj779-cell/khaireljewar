@@ -15,7 +15,7 @@ export const PARTNER_LOGOS: PartnerLogo[] = [
     name: { en: 'Tasami Al-Wataniya', ar: 'تسامي الوطنية' },
     tag: { en: 'Wholesale food supply', ar: 'توريد أغذية بالجملة' },
     logo: '/images/partners/tasami-logo.png',
-    href: 'https://tasami56taa.vercel.app/',
+    href: 'https://www.tasamialwatania.com/',
   },
   {
     id: 'alrehan',
@@ -52,7 +52,7 @@ export const PARTNERS = [
       en: ['Chilled & frozen poultry', 'Fresh eggs & produce', 'Frozen & pantry lines', 'Halal · SFDA-aligned'],
       ar: ['دواجن مبردة ومجمدة', 'بيض طازج وخضار وفاكهة', 'مجمدات ومستلزمات مطبخ', 'حلال · مطابق لهيئة الغذاء والدواء'],
     },
-    href: 'https://tasami56taa.vercel.app/',
+    href: 'https://www.tasamialwatania.com/',
     logo: '/images/partners/tasami-logo.png',
   },
   {

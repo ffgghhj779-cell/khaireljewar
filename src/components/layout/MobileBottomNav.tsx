@@ -69,7 +69,7 @@ export default function MobileBottomNav({ lang }: { lang: string }) {
                       {cartCount > 9 ? '9+' : cartCount}
                     </span>
                   )}
-                  <span className={cn('text-[9px] font-bold mt-0.5 leading-none', isAr ? 'font-arabic' : 'font-sans')}>
+                  <span className={cn('text-[10px] font-bold mt-0.5 leading-none', isAr ? 'font-arabic' : 'font-sans')}>
                     {item.label}
                   </span>
                 </Link>
