@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
@@ -54,7 +55,7 @@ export default function DepthHero({
             initial={skip ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: BRAND_EASE }}
-            className={cn('text-secondary-600 text-sm font-semibold mb-3', isAr ? 'font-arabic' : 'font-sans')}
+            className={cn('text-secondary-600 text-sm font-semibold mb-3', localeFontClass(lang))}
           >
             {eyebrow}
           </motion.p>
@@ -64,7 +65,7 @@ export default function DepthHero({
             transition={{ duration: 0.55, delay: 0.04, ease: BRAND_EASE }}
             className={cn(
               'text-4xl md:text-6xl font-bold text-primary tracking-tight editorial-heading mb-4',
-              isAr ? 'font-arabic' : 'font-display'
+              localeDisplayClass(lang)
             )}
           >
             {title}
@@ -74,7 +75,7 @@ export default function DepthHero({
               initial={skip ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.08, ease: BRAND_EASE }}
-              className={cn('text-primary/70 text-base md:text-lg max-w-xl', isAr ? 'font-arabic' : 'font-sans')}
+              className={cn('text-primary/70 text-base md:text-lg max-w-xl', localeFontClass(lang))}
             >
               {subtitle}
             </motion.p>

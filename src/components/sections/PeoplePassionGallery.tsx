@@ -1,4 +1,5 @@
 'use client'
+import { txList, localeFontClass, localeDisplayClass, isRtl } from '@/lib/i18n/localize'
 
 import { useState } from 'react'
 import PremiumImage from '@/components/ui/PremiumImage'
@@ -26,7 +27,7 @@ const QUOTES = {
 export default function PeoplePassionGallery({ lang }: { lang: string }) {
   const isAr = lang === 'ar'
   const [lightbox, setLightbox] = useState<TeamPhoto | null>(null)
-  const quotes = isAr ? QUOTES.ar : QUOTES.en
+  const quotes = txList(lang, QUOTES)
 
   return (
     <section className="py-20 md:py-28 bg-canvas-mist border-t border-dark/5">
@@ -38,13 +39,13 @@ export default function PeoplePassionGallery({ lang }: { lang: string }) {
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="mb-12 md:mb-16"
         >
-          <p className={cn('text-primary font-semibold text-sm mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-primary font-semibold text-sm mb-3', localeFontClass(lang))}>
             {isAr ? 'الناس' : 'People'}
           </p>
-          <h2 className={cn('text-3xl md:text-5xl font-bold text-dark tracking-tight mb-4 editorial-heading', isAr ? 'font-arabic' : 'font-display')}>
+          <h2 className={cn('text-3xl md:text-5xl font-bold text-dark tracking-tight mb-4 editorial-heading', localeDisplayClass(lang))}>
             {isAr ? 'الوجوه خلف الشحنة' : 'The people behind every shipment'}
           </h2>
-          <p className={cn('text-base md:text-lg text-gray-500 max-w-xl leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-base md:text-lg text-gray-500 max-w-xl leading-relaxed', localeFontClass(lang))}>
             {isAr
               ? 'من الحقل إلى الميناء — من يعملون على وعد الجودة كل يوم.'
               : 'From field to port — the people who keep our quality promise every day.'}
@@ -63,7 +64,7 @@ export default function PeoplePassionGallery({ lang }: { lang: string }) {
               className="bg-white rounded-2xl border border-dark/5 p-5 relative overflow-hidden shadow-soft"
             >
               <Quote className="w-8 h-8 text-primary/15 absolute top-4 start-4" />
-              <p className={cn('text-sm text-gray-600 leading-relaxed ps-6', isAr ? 'font-arabic text-right' : 'font-sans')}>
+              <p className={cn('text-sm text-gray-600 leading-relaxed ps-6', isRtl(lang) ? 'font-arabic text-right' : localeFontClass(lang))}>
                 {q}
               </p>
               <div className="w-8 h-0.5 bg-primary rounded-full mt-4" />

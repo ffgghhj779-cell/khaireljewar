@@ -1,4 +1,5 @@
 'use client'
+import { tx, localeFontClass } from '@/lib/i18n/localize'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -103,13 +104,13 @@ export default function CategoryShowcaseBanner({
 
   const hero = pool.find((p) => p.slug === showcase.hero) ?? pool[0]
   const thumbs = [hero, ...pool.filter((p) => p.id !== hero.id)].slice(0, MAX_THUMBS)
-  const title = isAr ? showcase.title.ar : showcase.title.en
-  const heroTitle = isAr ? hero.title.ar : hero.title.en
+  const title = tx(lang, showcase.title)
+  const heroTitle = tx(lang, hero.title)
   const waText = isAr
     ? `مرحبًا خير الجوار، أرغب في عرض سعر لقسم ${showcase.eyebrow.ar}.`
     : `Hello Khair Al-Jewar, I'd like a quote for your ${showcase.eyebrow.en} range.`
   const waUrl = `https://wa.me/${BRAND.contact.phoneWa}?text=${encodeURIComponent(waText)}`
-  const font = isAr ? 'font-arabic' : 'font-sans'
+  const font = localeFontClass(lang)
 
   const primaryClass = cn(
     'flex-1 sm:flex-none inline-flex items-center justify-center min-h-[44px] px-3 sm:px-5 rounded-xl bg-secondary text-primary font-bold text-[13px] sm:text-sm text-center leading-tight touch-manipulation transition-colors hover:bg-secondary-200',
@@ -140,7 +141,7 @@ export default function CategoryShowcaseBanner({
 
         <div className={cn('relative flex min-w-0 flex-col justify-center gap-3 p-4 text-cream sm:gap-4 sm:p-8', font)}>
           <p className={cn('text-[11px] font-bold text-secondary sm:text-xs', isAr ? '' : 'uppercase tracking-[0.18em]')}>
-            {isAr ? showcase.eyebrow.ar : showcase.eyebrow.en}
+            {tx(lang, showcase.eyebrow)}
           </p>
           <h2
             className={cn(
@@ -151,13 +152,13 @@ export default function CategoryShowcaseBanner({
             {title}
           </h2>
           <p className="max-w-xl text-sm leading-relaxed text-cream/80 sm:text-base">
-            {isAr ? showcase.subtitle.ar : showcase.subtitle.en}
+            {tx(lang, showcase.subtitle)}
           </p>
 
           {thumbs.length > 1 && (
             <div className="flex snap-x snap-mandatory gap-2 overflow-x-auto overscroll-x-contain pb-1 scrollbar-hide">
               {thumbs.map((item) => {
-                const label = isAr ? item.title.ar : item.title.en
+                const label = tx(lang, item.title)
                 return (
                   <Link
                     key={item.id}

@@ -1,3 +1,4 @@
+import { tx, localeFontClass } from '@/lib/i18n/localize'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import BrandLockup from '@/components/ui/BrandLockup'
@@ -55,7 +56,7 @@ export default function Footer({ lang }: { lang: string }) {
             <div className="mb-6">
               <BrandLockup lang={lang} variant="footer" />
             </div>
-            <p className={cn('text-cream/75 leading-relaxed max-w-sm text-[15px]', isAr ? 'font-arabic' : 'font-sans')}>
+            <p className={cn('text-cream/75 leading-relaxed max-w-sm text-[15px]', localeFontClass(lang))}>
               {isAr
                 ? `${BRAND.nameGroup.ar} — من مصر إلى ${BRAND.sisterBrand.ar} في المملكة، وشركات المجموعة.`
                 : `${BRAND.nameGroup.en} — from Egypt to ${BRAND.sisterBrand.en} in the Kingdom, and the group companies.`}
@@ -63,7 +64,7 @@ export default function Footer({ lang }: { lang: string }) {
           </div>
 
           <div className="lg:col-span-2">
-            <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', isAr ? 'font-arabic' : 'font-sans')}>
+            <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', localeFontClass(lang))}>
               {isAr ? 'الشركة' : 'Company'}
             </h4>
             <ul className="space-y-3">
@@ -73,7 +74,7 @@ export default function Footer({ lang }: { lang: string }) {
                     href={link.href}
                     className={cn(
                       'text-cream/85 hover:text-secondary transition-colors text-sm font-medium',
-                      isAr ? 'font-arabic' : 'font-sans'
+                      localeFontClass(lang)
                     )}
                   >
                     {link.label}
@@ -84,7 +85,7 @@ export default function Footer({ lang }: { lang: string }) {
           </div>
 
           <div className="lg:col-span-2">
-            <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', isAr ? 'font-arabic' : 'font-sans')}>
+            <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', localeFontClass(lang))}>
               {isAr ? 'المنتجات' : 'Products'}
             </h4>
             <ul className="space-y-3">
@@ -94,7 +95,7 @@ export default function Footer({ lang }: { lang: string }) {
                     href={link.href}
                     className={cn(
                       'text-cream/85 hover:text-secondary transition-colors text-sm font-medium',
-                      isAr ? 'font-arabic' : 'font-sans'
+                      localeFontClass(lang)
                     )}
                   >
                     {link.label}
@@ -106,7 +107,7 @@ export default function Footer({ lang }: { lang: string }) {
 
           <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div>
-              <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', isAr ? 'font-arabic' : 'font-sans')}>
+              <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', localeFontClass(lang))}>
                 {isAr ? 'السعودية' : 'Saudi Arabia'}
               </h4>
               <ul className="space-y-4">
@@ -114,8 +115,8 @@ export default function Footer({ lang }: { lang: string }) {
                   <FooterIcon>
                     <MapPin className="w-4 h-4" strokeWidth={1.75} />
                   </FooterIcon>
-                  <span className={cn('text-cream/85 text-sm pt-1.5', isAr ? 'font-arabic' : 'font-sans')}>
-                    {isAr ? BRAND.contact.address.ar : BRAND.contact.address.en}
+                  <span className={cn('text-cream/85 text-sm pt-1.5', localeFontClass(lang))}>
+                    {tx(lang, BRAND.contact.address)}
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
@@ -145,7 +146,7 @@ export default function Footer({ lang }: { lang: string }) {
             </div>
 
             <div>
-              <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', isAr ? 'font-arabic' : 'font-sans')}>
+              <h4 className={cn('font-semibold text-sm mb-5 text-cream/55', localeFontClass(lang))}>
                 {isAr ? 'فرع مصر' : 'Egypt branch'}
               </h4>
               <ul className="space-y-4">
@@ -153,8 +154,8 @@ export default function Footer({ lang }: { lang: string }) {
                   <FooterIcon>
                     <MapPin className="w-4 h-4" strokeWidth={1.75} />
                   </FooterIcon>
-                  <span className={cn('text-cream/85 text-sm pt-1.5', isAr ? 'font-arabic' : 'font-sans')}>
-                    {isAr ? BRAND.contact.egypt.address.ar : BRAND.contact.egypt.address.en}
+                  <span className={cn('text-cream/85 text-sm pt-1.5', localeFontClass(lang))}>
+                    {tx(lang, BRAND.contact.egypt.address)}
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
@@ -173,8 +174,8 @@ export default function Footer({ lang }: { lang: string }) {
                   <FooterIcon>
                     <Building2 className="w-4 h-4" strokeWidth={1.75} />
                   </FooterIcon>
-                  <span className={cn('text-cream/85 text-sm pt-1.5', isAr ? 'font-arabic' : 'font-sans')} dir="ltr">
-                    {isAr ? BRAND.legal.line.ar : BRAND.legal.line.en}
+                  <span className={cn('text-cream/85 text-sm pt-1.5', localeFontClass(lang))} dir="ltr">
+                    {tx(lang, BRAND.legal.line)}
                   </span>
                 </li>
               </ul>
@@ -183,13 +184,13 @@ export default function Footer({ lang }: { lang: string }) {
         </div>
 
         <div className="pt-8 border-t border-black/15 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className={cn('text-cream/60 text-sm text-center md:text-start', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-cream/60 text-sm text-center md:text-start', localeFontClass(lang))}>
             &copy; {new Date().getFullYear()}{' '}
             {isAr
               ? `${BRAND.nameGroup.ar}. جميع الحقوق محفوظة.`
               : `${BRAND.nameGroup.en}. All rights reserved.`}
           </p>
-          <div className={cn('flex items-center gap-6 text-sm text-cream/60', isAr ? 'font-arabic' : 'font-sans')}>
+          <div className={cn('flex items-center gap-6 text-sm text-cream/60', localeFontClass(lang))}>
             <Link href={`/${lang}/privacy`} className="hover:text-secondary transition-colors">
               {isAr ? 'سياسة الخصوصية' : 'Privacy'}
             </Link>

@@ -1,59 +1,66 @@
+import type { LocalizedList, LocalizedString } from '@/lib/i18n/localize'
+import { PRODUCT_SLUG_IMAGES } from '@/lib/constants/images'
+import { CATEGORY_SA, PRODUCT_TITLE_SA } from '@/lib/data/productSouthAsia'
+import { RICE_PRODUCTS } from '@/lib/data/riceCatalog'
+import { SEASON_PRODUCTS } from '@/lib/data/seasonCatalog'
+
 export type ProductUnit = 'MT' | 'Containers'
 
 export interface Product {
   id: string
   slug: string
-  category: { en: string; ar: string }
-  title: { en: string; ar: string }
-  desc: { en: string; ar: string }
-  specs: { en: string[]; ar: string[] }
+  category: LocalizedString
+  title: LocalizedString
+  desc: LocalizedString
+  specs: LocalizedList
   image: string
   minOrder: number
   unit: ProductUnit
-  availability: { en: string; ar: string }
-  harvestSeason: { en: string; ar: string }
-  sizes: { en: string; ar: string }
-  packaging: { en: string; ar: string }
-  commodityClass: { en: string; ar: string }
-  origin: { en: string; ar: string }
+  availability: LocalizedString
+  harvestSeason: LocalizedString
+  sizes: LocalizedString
+  packaging: LocalizedString
+  commodityClass: LocalizedString
+  origin: LocalizedString
   brix?: string
   indexPrice?: string
   trend?: string
   /** Consumer retail price in EGP (online store) */
   retailPriceEgp?: number
-  consumerUnit?: { en: string; ar: string }
+  consumerUnit?: LocalizedString
   /** Wholesale line sold by written quote, not the Egypt retail cart */
   quoteOnly?: boolean
   /** Small label on the catalog card, such as exclusive agent or brand */
-  badge?: { en: string; ar: string }
+  badge?: LocalizedString
   /** Shown in the home “New this season” showcase and the catalog “New” filter */
   isNew?: boolean
   /** Field and lifestyle photos fill the card; studio packshots stay contained */
   imageFit?: 'contain' | 'cover'
   gallery?: {
     src: string
-    alt: { en: string; ar: string }
+    alt: LocalizedString
     fit?: 'contain' | 'cover'
   }[]
 }
 
 /** Matches live catalog categories: https://khairaljewargroup.com/en/products */
-export const PRODUCT_CATEGORIES = [
-  { id: 'All', en: 'All', ar: 'الكل' },
-  { id: 'New', en: 'New', ar: 'جديد' },
-  { id: 'Citrus', en: 'Citrus', ar: 'الموالح' },
-  { id: 'Dates', en: 'Dates', ar: 'التمور' },
-  { id: 'Fruits', en: 'Fruits', ar: 'الفواكه' },
-  { id: 'Vegetables', en: 'Vegetables', ar: 'الخضروات' },
-  { id: 'Frozen', en: 'Frozen', ar: 'المجمدات' },
-  { id: 'Rice', en: 'Rice', ar: 'الأرز' },
-  { id: 'Grocery', en: 'Grocery', ar: 'البقالة' },
-  { id: 'Poultry', en: 'Poultry', ar: 'الدواجن' },
-] as const
-
-import { PRODUCT_SLUG_IMAGES } from '@/lib/constants/images'
-import { RICE_PRODUCTS } from '@/lib/data/riceCatalog'
-import { SEASON_PRODUCTS } from '@/lib/data/seasonCatalog'
+export const PRODUCT_CATEGORIES = (
+  [
+    { id: 'All', en: 'All', ar: 'الكل' },
+    { id: 'New', en: 'New', ar: 'جديد' },
+    { id: 'Citrus', en: 'Citrus', ar: 'الموالح' },
+    { id: 'Dates', en: 'Dates', ar: 'التمور' },
+    { id: 'Fruits', en: 'Fruits', ar: 'الفواكه' },
+    { id: 'Vegetables', en: 'Vegetables', ar: 'الخضروات' },
+    { id: 'Frozen', en: 'Frozen', ar: 'المجمدات' },
+    { id: 'Rice', en: 'Rice', ar: 'الأرز' },
+    { id: 'Grocery', en: 'Grocery', ar: 'البقالة' },
+    { id: 'Poultry', en: 'Poultry', ar: 'الدواجن' },
+  ] as const
+).map((category) => ({
+  ...category,
+  ...(CATEGORY_SA[category.id] || {}),
+}))
 
 const IMG = PRODUCT_SLUG_IMAGES
 
@@ -66,7 +73,7 @@ const ORIGIN_JEDDAH = {
  * Core B2B commodities — aligned with live site catalog
  * (khairaljewargroup.com) — Jeddah hub, no Egypt locations.
  */
-export const MOCK_PRODUCTS: Product[] = [
+export const MOCK_PRODUCTS = ([
   {
     id: 'p-1',
     slug: 'valencia-oranges',
@@ -778,7 +785,18 @@ export const MOCK_PRODUCTS: Product[] = [
     retailPriceEgp: 48,
     consumerUnit: { en: 'Sack 10kg', ar: 'شوال 10 كجم' },
   },
-]
+] as Product[]).map((product) => {
+  const titleExtra = PRODUCT_TITLE_SA[product.slug]
+  const categoryId =
+    PRODUCT_CATEGORIES.find((category) => category.en === product.category.en)?.id ||
+    product.category.en
+  const categoryExtra = CATEGORY_SA[categoryId]
+  return {
+    ...product,
+    title: titleExtra ? { ...product.title, ...titleExtra } : product.title,
+    category: categoryExtra ? { ...product.category, ...categoryExtra } : product.category,
+  }
+}) as Product[]
 
 export function getProductBySlug(slug: string): Product | undefined {
   return MOCK_PRODUCTS.find((p) => p.slug === slug)

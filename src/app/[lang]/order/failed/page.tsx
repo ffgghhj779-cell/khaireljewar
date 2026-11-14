@@ -1,3 +1,4 @@
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import Container from '@/components/ui/Container'
@@ -21,17 +22,17 @@ export default function OrderFailedPage({ params: { lang } }: { params: { lang: 
     <div className="bg-cream min-h-screen pt-28 pb-24">
       <Container className="max-w-xl text-center">
         <div className="rounded-2xl border border-red-200 bg-red-50 p-10">
-          <h1 className={cn('text-2xl font-bold text-red-900 mb-3', isAr ? 'font-arabic' : 'font-display')}>
+          <h1 className={cn('text-2xl font-bold text-red-900 mb-3', localeDisplayClass(lang))}>
             {isAr ? 'لم يكتمل الدفع' : 'Payment not completed'}
           </h1>
-          <p className={cn('text-sm text-red-800/80 mb-8', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-sm text-red-800/80 mb-8', localeFontClass(lang))}>
             {isAr ? 'يمكنك المحاولة مرة أخرى من السلة.' : 'You can try again from your cart.'}
           </p>
           <Link
             href={`/${lang}/checkout`}
             className={cn(
               'inline-flex rounded-xl bg-secondary text-primary hover:bg-secondary-400 px-6 py-3 text-sm font-semibold',
-              isAr ? 'font-arabic' : 'font-sans'
+              localeFontClass(lang)
             )}
           >
             {isAr ? 'إعادة المحاولة' : 'Try again'}

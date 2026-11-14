@@ -97,6 +97,7 @@ const config: Config = {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         arabic: ['var(--font-arabic)', 'system-ui', 'sans-serif'],
         'arabic-display': ['var(--font-arabic-display)', 'var(--font-arabic)', 'system-ui', 'sans-serif'],
+        hindi: ['var(--font-hindi)', 'system-ui', 'sans-serif'],
         inter: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         manrope: ['var(--font-display)', 'Georgia', 'serif'],
         'ibm-arabic': ['var(--font-arabic-display)', 'var(--font-arabic)', 'system-ui', 'sans-serif'],

@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import { FileCheck2, ClipboardList, Thermometer, Ship } from 'lucide-react'
 import Container from '@/components/ui/Container'
@@ -29,13 +30,13 @@ export default function ExportDocsStrip({ lang }: { lang: string }) {
       <div className="absolute inset-x-0 top-0 h-0.5 bg-secondary" aria-hidden />
       <Container>
         <div className="mb-6 md:mb-8 max-w-2xl">
-          <p className={cn('mb-2 text-sm font-semibold text-secondary-600', isAr ? 'font-arabic' : 'font-display')}>
+          <p className={cn('mb-2 text-sm font-semibold text-secondary-600', localeDisplayClass(lang))}>
             {isAr ? 'جاهزية التصدير' : 'Export readiness'}
           </p>
           <h2
             className={cn(
               'text-[clamp(1.35rem,5vw,1.875rem)] font-medium text-primary tracking-tight text-balance',
-              isAr ? 'font-arabic' : 'font-display'
+              localeDisplayClass(lang)
             )}
           >
             {isAr ? 'وثائق ودعم يحتاجه المستورد.' : 'Documents and support importers expect.'}
@@ -51,10 +52,10 @@ export default function ExportDocsStrip({ lang }: { lang: string }) {
               <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-primary">
                 <Icon className="h-5 w-5" strokeWidth={1.75} />
               </div>
-              <h3 className={cn('mb-1.5 text-base font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>
+              <h3 className={cn('mb-1.5 text-base font-semibold text-primary', localeDisplayClass(lang))}>
                 {title}
               </h3>
-              <p className={cn('text-[13px] leading-relaxed text-primary/65', isAr ? 'font-arabic' : 'font-sans')}>
+              <p className={cn('text-[13px] leading-relaxed text-primary/65', localeFontClass(lang))}>
                 {text}
               </p>
             </div>

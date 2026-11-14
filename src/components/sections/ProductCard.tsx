@@ -1,4 +1,5 @@
 'use client'
+import { tx, localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -22,10 +23,10 @@ interface ProductCardProps {
 export default function ProductCard({ product, lang, index = 0, compact = false }: ProductCardProps) {
   const isAr = lang === 'ar'
   const lightMotion = useLightMotion()
-  const title = isAr ? product.title.ar : product.title.en
-  const category = isAr ? product.category.ar : product.category.en
-  const packaging = isAr ? product.packaging.ar : product.packaging.en
-  const season = isAr ? product.harvestSeason.ar : product.harvestSeason.en
+  const title = tx(lang, product.title)
+  const category = tx(lang, product.category)
+  const packaging = tx(lang, product.packaging)
+  const season = tx(lang, product.harvestSeason)
   const unitLabel =
     product.unit === 'Containers' ? (isAr ? 'حاوية' : 'ctr') : isAr ? 'طن' : 'MT'
   const retailPrice = getRetailPriceEgp(product)
@@ -72,17 +73,17 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
               className={cn(
                 'absolute top-2 start-2 z-[1] max-w-[46%] truncate rounded-full px-2 py-0.5 text-[10px] font-bold leading-tight text-primary shadow-sm sm:top-2.5 sm:start-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
                 product.isNew ? 'bg-secondary' : 'bg-white/95',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
-              {isAr ? product.badge.ar : product.badge.en}
+              {tx(lang, product.badge)}
             </span>
           )}
           {product.quoteOnly ? (
             <span
               className={cn(
                 'absolute top-2 end-2 z-[1] rounded-full bg-farm px-2 py-0.5 text-[10px] font-bold leading-tight text-cream shadow-sm sm:top-2.5 sm:end-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {isAr ? 'عرض سعر' : 'Quote'}
@@ -91,12 +92,12 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
             <span
               className={cn(
                 'absolute top-2 end-2 z-[1] max-w-[calc(100%-1rem)] truncate rounded-full bg-farm px-2 py-0.5 text-[10px] font-bold leading-tight text-cream shadow-sm sm:top-2.5 sm:end-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {formatEgp(retailPrice, lang)}
               <span className="mt-0.5 hidden text-[8px] font-semibold uppercase tracking-wide opacity-80 sm:block">
-                {isAr ? consumerUnit.ar : consumerUnit.en}
+                {tx(lang, consumerUnit)}
               </span>
             </span>
           )}
@@ -117,7 +118,7 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
           <h3
             className={cn(
               'text-[13px] md:text-[15px] font-semibold text-primary leading-snug line-clamp-2 mb-2.5',
-              isAr ? 'font-arabic' : 'font-display'
+              localeDisplayClass(lang)
             )}
           >
             {title}
@@ -126,20 +127,20 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
           <ul className="mt-auto space-y-1.5 border-t border-primary/12 pt-2.5">
             <li className="flex items-center gap-1.5 text-primary">
               <Tag className="h-3.5 w-3.5 shrink-0 text-farm" strokeWidth={2.4} aria-hidden />
-              <span className={cn('text-[11px] font-semibold truncate', isAr ? 'font-arabic' : 'font-sans')}>
+              <span className={cn('text-[11px] font-semibold truncate', localeFontClass(lang))}>
                 {moq}
               </span>
             </li>
             {!compact && (
               <li className="flex items-center gap-1.5 text-primary/80">
                 <Package className="h-3.5 w-3.5 shrink-0 text-farm" strokeWidth={2.4} aria-hidden />
-                <span className={cn('text-[10px] truncate', isAr ? 'font-arabic' : 'font-sans')}>{packaging}</span>
+                <span className={cn('text-[10px] truncate', localeFontClass(lang))}>{packaging}</span>
               </li>
             )}
             {!compact && (
               <li className="flex items-center gap-1.5 text-primary/80">
                 <CalendarDays className="h-3.5 w-3.5 shrink-0 text-farm" strokeWidth={2.4} aria-hidden />
-                <span className={cn('text-[10px] truncate', isAr ? 'font-arabic' : 'font-sans')}>{season}</span>
+                <span className={cn('text-[10px] truncate', localeFontClass(lang))}>{season}</span>
               </li>
             )}
           </ul>

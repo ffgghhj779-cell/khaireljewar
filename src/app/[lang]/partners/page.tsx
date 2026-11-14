@@ -1,3 +1,4 @@
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
@@ -28,18 +29,18 @@ export default function PartnersPage({ params: { lang } }: { params: { lang: str
       <section className="bg-canvas-soft pb-10 pt-14 md:pb-12 md:pt-20">
         <Container size="large">
           <div className="mx-auto max-w-3xl text-center">
-            <p className={cn('mb-3 text-sm font-semibold text-primary', isAr ? 'font-arabic' : 'font-sans')}>
+            <p className={cn('mb-3 text-sm font-semibold text-primary', localeFontClass(lang))}>
               {isAr ? 'خير الجوار' : 'Khair Aljaar'}
             </p>
             <h1
               className={cn(
                 'mb-5 text-4xl font-bold tracking-tight text-dark editorial-heading md:text-6xl',
-                isAr ? 'font-arabic' : 'font-display'
+                localeDisplayClass(lang)
               )}
             >
               {isAr ? 'شركاؤنا' : 'Our Partners'}
             </h1>
-            <p className={cn('text-base leading-relaxed text-gray-600 md:text-lg', isAr ? 'font-arabic' : 'font-sans')}>
+            <p className={cn('text-base leading-relaxed text-gray-600 md:text-lg', localeFontClass(lang))}>
               {isAr
                 ? 'شركات المجموعة: تسامي الوطنية، الريحان الماسي، وثمار أرضنا.'
                 : 'Group companies: Tasami Al-Wataniya, Al Rehan Al Masi, and Thimar Ardina.'}
@@ -61,7 +62,7 @@ export default function PartnersPage({ params: { lang } }: { params: { lang: str
           <h2
             className={cn(
               'mb-6 text-2xl font-bold tracking-tight text-cream md:text-3xl',
-              isAr ? 'font-arabic' : 'font-display'
+              localeDisplayClass(lang)
             )}
           >
             {isAr ? 'جاهز للتصدير؟' : 'Ready for export?'}
@@ -70,7 +71,7 @@ export default function PartnersPage({ params: { lang } }: { params: { lang: str
             href={`/${lang}/contact`}
             className={cn(
               'inline-flex min-h-[48px] items-center rounded-xl bg-cream px-6 text-sm font-semibold text-primary hover:bg-white',
-              isAr ? 'font-arabic' : 'font-sans'
+              localeFontClass(lang)
             )}
           >
             {isAr ? 'اطلب عرض سعر' : 'Request a quote'}

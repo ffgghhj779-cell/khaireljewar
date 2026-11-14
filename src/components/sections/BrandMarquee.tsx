@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -78,7 +79,7 @@ export default function BrandMarquee({ lang }: { lang: string }) {
           transition={{ duration: 0.4, ease: BRAND_EASE }}
           className={cn(
             'mx-auto mb-8 max-w-3xl text-center text-[clamp(1.5rem,6vw,3rem)] font-medium text-cream leading-[1.2] text-balance md:mb-14',
-            isAr ? 'font-arabic' : 'font-display'
+            localeDisplayClass(lang)
           )}
         >
           {isAr
@@ -109,7 +110,7 @@ export default function BrandMarquee({ lang }: { lang: string }) {
               <h3
                 className={cn(
                   'mb-2 text-base md:mb-3 md:text-2xl text-cream font-medium',
-                  isAr ? 'font-arabic' : 'font-display'
+                  localeDisplayClass(lang)
                 )}
               >
                 {item.title}
@@ -117,7 +118,7 @@ export default function BrandMarquee({ lang }: { lang: string }) {
               <p
                 className={cn(
                   'mb-3 text-[11px] leading-snug text-cream/65 md:mb-5 md:text-sm md:leading-relaxed line-clamp-3 md:line-clamp-none',
-                  isAr ? 'font-arabic' : 'font-sans'
+                  localeFontClass(lang)
                 )}
               >
                 {item.desc}
@@ -127,7 +128,7 @@ export default function BrandMarquee({ lang }: { lang: string }) {
                 className={cn(
                   'inline-flex min-h-[36px] items-center justify-center rounded-lg border border-cream/35 px-3 text-[11px] font-semibold text-cream md:min-h-[40px] md:px-4 md:text-sm',
                   'active:bg-cream active:text-primary',
-                  isAr ? 'font-arabic' : 'font-sans'
+                  localeFontClass(lang)
                 )}
               >
                 {isAr ? 'المزيد' : 'More'}

@@ -1,4 +1,5 @@
 'use client'
+import { tx, localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import { useState } from 'react'
 import { Banknote, CreditCard } from 'lucide-react'
@@ -34,7 +35,7 @@ export default function CheckoutForm({ lang }: { lang: string }) {
 
   if (!lines.length) {
     return (
-      <p className={cn('text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
+      <p className={cn('text-primary/70', localeFontClass(lang))}>
         {isAr ? 'السلة فارغة.' : 'Cart is empty.'}
       </p>
     )
@@ -105,7 +106,7 @@ export default function CheckoutForm({ lang }: { lang: string }) {
   return (
     <form onSubmit={onSubmit} className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(260px,320px)]">
       <div className="min-w-0 space-y-4">
-        <h2 className={cn('text-xl font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>
+        <h2 className={cn('text-xl font-semibold text-primary', localeDisplayClass(lang))}>
           {isAr ? 'بيانات التوصيل' : 'Delivery details'}
         </h2>
 
@@ -153,8 +154,8 @@ export default function CheckoutForm({ lang }: { lang: string }) {
             onChange={(e) => setForm({ ...form, governorate: e.target.value })}
           >
             {EGYPT_GOVERNORATES.map((g) => (
-              <option key={g.en} value={isAr ? g.ar : g.en}>
-                {isAr ? g.ar : g.en}
+              <option key={g.en} value={tx(lang, g)}>
+                {tx(lang, g)}
               </option>
             ))}
           </select>
@@ -167,7 +168,7 @@ export default function CheckoutForm({ lang }: { lang: string }) {
         />
 
         <div className="space-y-3 pt-2 pb-4">
-          <h3 className={cn('text-base font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>
+          <h3 className={cn('text-base font-semibold text-primary', localeDisplayClass(lang))}>
             {isAr ? 'طريقة الدفع' : 'Payment method'}
           </h3>
           <div className="grid gap-3">
@@ -198,7 +199,7 @@ export default function CheckoutForm({ lang }: { lang: string }) {
                     <span
                       className={cn(
                         'block text-sm font-semibold text-primary',
-                        isAr ? 'font-arabic' : 'font-sans'
+                        localeFontClass(lang)
                       )}
                     >
                       {isAr ? method.titleAr : method.titleEn}
@@ -206,7 +207,7 @@ export default function CheckoutForm({ lang }: { lang: string }) {
                     <span
                       className={cn(
                         'mt-0.5 block text-xs leading-relaxed text-primary/60',
-                        isAr ? 'font-arabic' : 'font-sans'
+                        localeFontClass(lang)
                       )}
                     >
                       {isAr ? method.descAr : method.descEn}
@@ -226,7 +227,7 @@ export default function CheckoutForm({ lang }: { lang: string }) {
         </div>
 
         {error && (
-          <p className={cn('rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800', localeFontClass(lang))}>
             {error}
           </p>
         )}
@@ -236,7 +237,7 @@ export default function CheckoutForm({ lang }: { lang: string }) {
           disabled={loading}
           className={cn(
             'mb-2 w-full rounded-xl bg-secondary text-primary hover:bg-secondary-400 py-4 text-sm font-bold disabled:opacity-60',
-            isAr ? 'font-arabic' : 'font-sans'
+            localeFontClass(lang)
           )}
         >
           {loading
@@ -255,7 +256,7 @@ export default function CheckoutForm({ lang }: { lang: string }) {
                 ? 'ادفع الآن أونلاين'
                 : 'Pay online now'}
         </button>
-        <p className={cn('text-xs leading-relaxed text-primary/50', isAr ? 'font-arabic' : 'font-sans')}>
+        <p className={cn('text-xs leading-relaxed text-primary/50', localeFontClass(lang))}>
           {paymentMethod === 'cod'
             ? isAr
               ? 'هيتم تجهيز الطلب والتواصل معاك قبل التوصيل. المبلغ يُسدَّد للكابتن نقدًا أو تحويل حسب المتاح.'
@@ -267,10 +268,10 @@ export default function CheckoutForm({ lang }: { lang: string }) {
       </div>
 
       <aside className="h-fit min-w-0 rounded-2xl border border-primary/10 bg-cream-soft p-5">
-        <p className={cn('mb-3 font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>
+        <p className={cn('mb-3 font-semibold text-primary', localeDisplayClass(lang))}>
           {isAr ? 'ملخص' : 'Summary'}
         </p>
-        <ul className={cn('mb-4 space-y-2 text-sm text-primary/80', isAr ? 'font-arabic' : 'font-sans')}>
+        <ul className={cn('mb-4 space-y-2 text-sm text-primary/80', localeFontClass(lang))}>
           {lines.map((l) => (
             <li key={l.slug} className="flex justify-between gap-2">
               <span className="min-w-0 truncate">{isAr ? l.titleAr : l.titleEn} × {l.quantity}</span>
@@ -278,7 +279,7 @@ export default function CheckoutForm({ lang }: { lang: string }) {
             </li>
           ))}
         </ul>
-        <div className={cn('space-y-1 border-t border-primary/10 pt-3 text-sm', isAr ? 'font-arabic' : 'font-sans')}>
+        <div className={cn('space-y-1 border-t border-primary/10 pt-3 text-sm', localeFontClass(lang))}>
           <div className="flex justify-between gap-2">
             <span>{isAr ? 'شحن' : 'Shipping'}</span>
             <span>{formatEgp(SHIPPING_FEE_EGP, lang)}</span>

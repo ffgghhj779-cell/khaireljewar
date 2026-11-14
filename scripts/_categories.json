@@ -1,0 +1,52 @@
+[
+  {
+    "id": "All",
+    "en": "All",
+    "ar": "الكل"
+  },
+  {
+    "id": "New",
+    "en": "New",
+    "ar": "جديد"
+  },
+  {
+    "id": "Citrus",
+    "en": "Citrus",
+    "ar": "الموالح"
+  },
+  {
+    "id": "Dates",
+    "en": "Dates",
+    "ar": "التمور"
+  },
+  {
+    "id": "Fruits",
+    "en": "Fruits",
+    "ar": "الفواكه"
+  },
+  {
+    "id": "Vegetables",
+    "en": "Vegetables",
+    "ar": "الخضروات"
+  },
+  {
+    "id": "Frozen",
+    "en": "Frozen",
+    "ar": "المجمدات"
+  },
+  {
+    "id": "Rice",
+    "en": "Rice",
+    "ar": "الأرز"
+  },
+  {
+    "id": "Grocery",
+    "en": "Grocery",
+    "ar": "البقالة"
+  },
+  {
+    "id": "Poultry",
+    "en": "Poultry",
+    "ar": "الدواجن"
+  }
+]

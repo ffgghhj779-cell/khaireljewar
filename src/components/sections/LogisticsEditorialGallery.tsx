@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import { useState } from 'react'
 import PremiumImage from '@/components/ui/PremiumImage'
@@ -41,13 +42,13 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10 md:mb-14"
         >
-          <p className={cn('text-farm text-sm font-semibold mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-farm text-sm font-semibold mb-3', localeFontClass(lang))}>
             {isAr ? 'الميدان' : 'In the field'}
           </p>
-          <h2 className={cn('text-3xl md:text-5xl font-bold text-primary tracking-tight mb-4 editorial-heading', isAr ? 'font-arabic' : 'font-display')}>
+          <h2 className={cn('text-3xl md:text-5xl font-bold text-primary tracking-tight mb-4 editorial-heading', localeDisplayClass(lang))}>
             {isAr ? 'اللوجستيات كما هي.' : 'Logistics, as it happens.'}
           </h2>
-          <p className={cn('text-base text-primary/60 max-w-xl leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-base text-primary/60 max-w-xl leading-relaxed', localeFontClass(lang))}>
             {isAr
               ? 'لحظات حقيقية من عمليات التصدير — الموانئ، المستودعات، والطريق.'
               : 'Real moments from export operations — ports, warehouses, and the road.'}
@@ -64,7 +65,7 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
               onClick={() => setActiveTag(tag)}
               className={cn(
                 'min-h-[36px] px-3.5 py-1.5 rounded-lg text-xs font-bold border transition-all duration-200 touch-manipulation',
-                isAr ? 'font-arabic' : 'font-sans',
+                localeFontClass(lang),
                 activeTag === tag
                   ? 'bg-secondary text-primary border-secondary'
                   : 'bg-white text-primary/70 border-primary/12 hover:border-primary/30'
@@ -122,7 +123,7 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
                   <h4 className={cn('text-white font-bold text-sm leading-snug mb-1', isAr ? 'font-ibm-arabic' : 'font-manrope')}>
                     {isAr ? photo.titleAr : photo.titleEn}
                   </h4>
-                  <p className={cn('text-white/75 text-[11px] flex items-center gap-1', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-white/75 text-[11px] flex items-center gap-1', localeFontClass(lang))}>
                     <MapPin className="w-3 h-3 shrink-0" />
                     {isAr ? photo.locationAr : photo.location}
                   </p>

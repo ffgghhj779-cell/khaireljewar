@@ -1,3 +1,4 @@
+import { localeFontClass } from '@/lib/i18n/localize'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
@@ -75,7 +76,7 @@ export default function ExportMarketsPage({ params: { lang } }: { params: { lang
         <Container size="large">
           <div className="grid items-end gap-10 lg:grid-cols-12">
             <div className="lg:col-span-5">
-              <p className={cn('text-primary font-semibold text-sm mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+              <p className={cn('text-primary font-semibold text-sm mb-3', localeFontClass(lang))}>
                 {isAr ? `${BRAND.city.ar} · مركز التصدير` : `${BRAND.city.en} · Export hub`}
               </p>
               <h1
@@ -86,7 +87,7 @@ export default function ExportMarketsPage({ params: { lang } }: { params: { lang
               >
                 {isAr ? 'من جدة إلى العالم.' : 'From Jeddah outward.'}
               </h1>
-              <p className={cn('text-base md:text-lg text-primary/65 leading-relaxed max-w-md', isAr ? 'font-arabic' : 'font-sans')}>
+              <p className={cn('text-base md:text-lg text-primary/65 leading-relaxed max-w-md', localeFontClass(lang))}>
                 {isAr
                   ? 'ننسّق التوريد والتصدير من جدة إلى الخليج وأوروبا وآسيا وأفريقيا — بمعايير تناسب كل سوق.'
                   : 'We coordinate sourcing and export from Jeddah to the GCC, Europe, Asia, and Africa — with standards that fit each market.'}
@@ -106,7 +107,7 @@ export default function ExportMarketsPage({ params: { lang } }: { params: { lang
           <h2 className={cn('text-2xl md:text-4xl font-medium text-primary mb-3', isAr ? 'font-arabic-display' : 'font-display')}>
             {isAr ? 'أربع مناطق. معيار واحد.' : 'Four regions. One standard.'}
           </h2>
-          <p className={cn('text-primary/60', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-primary/60', localeFontClass(lang))}>
             {isAr
               ? 'كل سوق له إيقاعه — ونحن نضبط التعبئة والوثائق وسلسلة التبريد وفقه.'
               : 'Each market has its rhythm — we tune packing, paperwork, and cold chain to match.'}
@@ -130,10 +131,10 @@ export default function ExportMarketsPage({ params: { lang } }: { params: { lang
               <h3 className={cn('text-2xl md:text-3xl font-bold text-primary mb-2', isAr ? 'font-arabic-display' : 'font-display')}>
                 {region.name}
               </h3>
-              <p className={cn('text-sm font-semibold text-primary/80 mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+              <p className={cn('text-sm font-semibold text-primary/80 mb-3', localeFontClass(lang))}>
                 {region.focus}
               </p>
-              <p className={cn('text-[15px] text-primary/55 leading-relaxed mb-5', isAr ? 'font-arabic' : 'font-sans')}>
+              <p className={cn('text-[15px] text-primary/55 leading-relaxed mb-5', localeFontClass(lang))}>
                 {region.detail}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -142,7 +143,7 @@ export default function ExportMarketsPage({ params: { lang } }: { params: { lang
                     key={c}
                     className={cn(
                       'rounded-full bg-cream-soft px-3 py-1 text-xs font-semibold text-primary/70',
-                      isAr ? 'font-arabic' : 'font-sans'
+                      localeFontClass(lang)
                     )}
                   >
                     {c}
@@ -158,7 +159,7 @@ export default function ExportMarketsPage({ params: { lang } }: { params: { lang
           <h2 className={cn('text-2xl md:text-3xl font-medium text-primary mb-4', isAr ? 'font-arabic-display' : 'font-display')}>
             {isAr ? 'جاهزون لفتح مسار جديد.' : 'Ready to open a new lane.'}
           </h2>
-          <p className={cn('mx-auto mb-8 max-w-md text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('mx-auto mb-8 max-w-md text-primary/70', localeFontClass(lang))}>
             {isAr
               ? 'أخبرنا بالوجهة والكميات — ونرد بمسار تصدير واضح من جدة.'
               : 'Tell us destination and volumes — we will respond with a clear export path from Jeddah.'}
@@ -167,7 +168,7 @@ export default function ExportMarketsPage({ params: { lang } }: { params: { lang
             href={`/${lang}/contact`}
             className={cn(
               'inline-flex min-h-[52px] items-center rounded-xl bg-secondary px-8 font-semibold text-primary hover:bg-secondary-400',
-              isAr ? 'font-arabic' : 'font-sans'
+              localeFontClass(lang)
             )}
           >
             {isAr ? 'تواصل للتصدير' : 'Talk export with us'}

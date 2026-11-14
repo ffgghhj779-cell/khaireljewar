@@ -1,4 +1,5 @@
 'use client'
+import { tx, localeFontClass } from '@/lib/i18n/localize'
 
 import { useCallback, useDeferredValue, useEffect, useMemo, useState, useTransition } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -122,7 +123,7 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
   return (
     <>
       <div className="mb-8 md:mb-14">
-        <p className={cn('text-primary font-semibold text-sm mb-2.5 md:mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+        <p className={cn('text-primary font-semibold text-sm mb-2.5 md:mb-3', localeFontClass(lang))}>
           {isAr ? 'الكتالوج' : 'Catalog'}
         </p>
         <h1
@@ -133,8 +134,8 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
         >
           {isAr ? 'منتجات تُطلب.' : 'Made to be wanted.'}
         </h1>
-        <p className={cn('text-gray-600 text-[15px] md:text-lg max-w-2xl mb-6 md:mb-8 leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
-          {isAr ? BRAND.sourcing.ar : BRAND.sourcing.en}
+        <p className={cn('text-gray-600 text-[15px] md:text-lg max-w-2xl mb-6 md:mb-8 leading-relaxed', localeFontClass(lang))}>
+          {tx(lang, BRAND.sourcing)}
         </p>
 
         <div className="relative max-w-md w-full mb-6">
@@ -171,16 +172,16 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
                 activeCategory === cat.id
                   ? 'bg-secondary text-primary'
                   : 'bg-white text-gray-600 border border-dark/10 hover:border-primary/30',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
-              {isAr ? cat.ar : cat.en}
+              {tx(lang, cat)}
             </motion.button>
           ))}
         </div>
 
         {activeCategory === 'New' && (
-          <p className={cn('mt-4 max-w-2xl text-sm leading-relaxed text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('mt-4 max-w-2xl text-sm leading-relaxed text-primary/70', localeFontClass(lang))}>
             {isAr
               ? 'أحدث ما انضم للكتالوج: عجوة المدينة، فراولة وكيوي، فلفل أحمر، ومجمدات جديدة. السعر بعرض مكتوب.'
               : 'The latest additions: Ajwa from Al Madinah, strawberries and kiwi, red peppers, and new frozen lines. Priced by written quote.'}
@@ -188,14 +189,14 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
         )}
 
         {activeCategory === 'Rice' && (
-          <p className={cn('mt-4 max-w-2xl text-sm leading-relaxed text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('mt-4 max-w-2xl text-sm leading-relaxed text-primary/70', localeFontClass(lang))}>
             {isAr
               ? 'أرز سلام بالوكالة الحصرية لتسامي الوطنية، ثم بسمتي وبقوليات ومكرونة. كل عبوة منتج مستقل، والسعر بعرض مكتوب.'
               : 'The rice department follows Tasami Al-Wataniya: Sallam under exclusive agency, then basmati, pulses, and pasta. Each pack is its own product, priced by written quote.'}
           </p>
         )}
 
-        <p className={cn('mt-5 text-sm text-primary/50', isAr ? 'font-arabic' : 'font-sans')}>
+        <p className={cn('mt-5 text-sm text-primary/50', localeFontClass(lang))}>
           {isAr
             ? `${filteredProducts.length} منتج${isPending ? '…' : ''}`
             : `${filteredProducts.length} product${filteredProducts.length === 1 ? '' : 's'}${isPending ? '…' : ''}`}
@@ -220,7 +221,7 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
           >
             {groupedView ? (
               groups.map((group) => (
-                <section key={group.id} aria-label={isAr ? group.label.ar : group.label.en} className="mb-10 md:mb-16">
+                <section key={group.id} aria-label={tx(lang, group.label)} className="mb-10 md:mb-16">
                   <CategoryShowcaseBanner
                     categoryId={group.id}
                     products={products}
@@ -237,8 +238,8 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
                         isAr ? 'font-arabic-display' : 'font-display'
                       )}
                     >
-                      {isAr ? group.label.ar : group.label.en}
-                      <span className={cn('ms-2 text-sm font-semibold text-primary/45', isAr ? 'font-arabic' : 'font-sans')}>
+                      {tx(lang, group.label)}
+                      <span className={cn('ms-2 text-sm font-semibold text-primary/45', localeFontClass(lang))}>
                         {group.items.length}
                       </span>
                     </h2>
@@ -247,7 +248,7 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
                       onClick={() => openCategory(group.id)}
                       className={cn(
                         'inline-flex min-h-[40px] shrink-0 items-center gap-1 rounded-full border border-primary/15 bg-white px-3.5 text-[13px] font-semibold text-primary transition-colors hover:border-primary/35 touch-manipulation',
-                        isAr ? 'font-arabic' : 'font-sans'
+                        localeFontClass(lang)
                       )}
                     >
                       {isAr ? `عرض الكل (${group.items.length})` : `View all (${group.items.length})`}

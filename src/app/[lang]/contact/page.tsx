@@ -1,3 +1,4 @@
+import { tx, localeFontClass } from '@/lib/i18n/localize'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import Container from '@/components/ui/Container'
@@ -28,7 +29,7 @@ export default function ContactPage({ params: { lang } }: { params: { lang: stri
     {
       icon: MapPin,
       title: isAr ? 'العنوان السعودي' : 'Saudi address',
-      content: isAr ? BRAND.contact.address.ar : BRAND.contact.address.en,
+      content: tx(lang, BRAND.contact.address),
     },
     {
       icon: Phone,
@@ -47,7 +48,7 @@ export default function ContactPage({ params: { lang } }: { params: { lang: stri
     {
       icon: Building2,
       title: isAr ? 'السجل التجاري' : 'Commercial registration',
-      content: isAr ? BRAND.legal.line.ar : BRAND.legal.line.en,
+      content: tx(lang, BRAND.legal.line),
     },
     {
       icon: Mail,
@@ -58,7 +59,7 @@ export default function ContactPage({ params: { lang } }: { params: { lang: stri
     {
       icon: Clock,
       title: isAr ? 'ساعات العمل' : 'Hours',
-      content: isAr ? BRAND.contact.hours.ar : BRAND.contact.hours.en,
+      content: tx(lang, BRAND.contact.hours),
     },
   ]
 
@@ -93,7 +94,7 @@ export default function ContactPage({ params: { lang } }: { params: { lang: stri
                     <Icon className="w-4 h-4" strokeWidth={1.75} />
                   </div>
                   <div>
-                    <h2 className={cn('text-sm font-semibold text-dark mb-1', isAr ? 'font-arabic' : 'font-sans')}>
+                    <h2 className={cn('text-sm font-semibold text-dark mb-1', localeFontClass(lang))}>
                       {item.title}
                     </h2>
                     {item.href ? (
@@ -101,14 +102,14 @@ export default function ContactPage({ params: { lang } }: { params: { lang: stri
                         href={item.href}
                         className={cn(
                           'text-gray-600 hover:text-primary transition-colors text-[15px] break-all',
-                          isAr ? 'font-arabic' : 'font-sans'
+                          localeFontClass(lang)
                         )}
                         dir={item.icon === Phone ? 'ltr' : undefined}
                       >
                         {item.content}
                       </a>
                     ) : (
-                      <p className={cn('text-gray-600 text-[15px]', isAr ? 'font-arabic' : 'font-sans')}>
+                      <p className={cn('text-gray-600 text-[15px]', localeFontClass(lang))}>
                         {item.content}
                       </p>
                     )}
@@ -132,7 +133,7 @@ export default function ContactPage({ params: { lang } }: { params: { lang: stri
                   rel="noopener noreferrer"
                   className={cn(
                     'text-xs font-semibold text-primary hover:underline',
-                    isAr ? 'font-arabic' : 'font-sans'
+                    localeFontClass(lang)
                   )}
                 >
                   {isAr ? 'افتح الخريطة ←' : 'Open full map →'}

@@ -1,4 +1,5 @@
 'use client'
+import { tx } from '@/lib/i18n/localize'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -36,13 +37,13 @@ export default function FeaturedProductsPreview({ lang }: { lang: string }) {
               <div className="p-8 flex-1 flex flex-col justify-between">
                 <div>
                   <span className="text-xs font-bold uppercase text-primary tracking-wider block mb-1">
-                    {isAr ? product.category.ar : product.category.en}
+                    {tx(lang, product.category)}
                   </span>
                   <h3 className={cn("text-2xl font-bold text-dark mb-2 group-hover:text-primary transition-colors", isAr ? 'font-ibm-arabic' : 'font-manrope')}>
-                    {isAr ? product.title.ar : product.title.en}
+                    {tx(lang, product.title)}
                   </h3>
                   <p className={cn("text-gray-500 text-sm leading-relaxed line-clamp-3", isAr ? 'font-ibm-arabic' : 'font-inter')}>
-                    {isAr ? product.desc.ar : product.desc.en}
+                    {tx(lang, product.desc)}
                   </p>
                 </div>
                 <div className="mt-4 flex items-center justify-between border-t border-gray-200/60 pt-4">

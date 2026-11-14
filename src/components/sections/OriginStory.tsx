@@ -1,4 +1,5 @@
 'use client'
+import { tx, localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -88,7 +89,7 @@ export default function OriginStory({ lang }: { lang: string }) {
             whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={SCROLL_VIEWPORT_INSTANT}
             transition={{ duration: 0.45, ease: BRAND_EASE }}
-            className={cn('mb-4 text-primary font-semibold text-sm md:text-base', isAr ? 'font-arabic' : 'font-display')}
+            className={cn('mb-4 text-primary font-semibold text-sm md:text-base', localeDisplayClass(lang))}
           >
             {isAr ? 'خير الجوار' : 'Khair Aljaar'}
           </motion.p>
@@ -100,7 +101,7 @@ export default function OriginStory({ lang }: { lang: string }) {
             transition={{ duration: 0.5, delay: 0.04, ease: BRAND_EASE }}
             className={cn(
               'text-[clamp(2.5rem,5.5vw,4.25rem)] font-medium text-primary leading-[1.08] tracking-tight mb-6',
-              isAr ? 'font-arabic' : 'font-display'
+              localeDisplayClass(lang)
             )}
           >
             {isAr ? 'خير الجوار يبدأ من جدة.' : 'A neighborly harvest.'}
@@ -113,10 +114,10 @@ export default function OriginStory({ lang }: { lang: string }) {
             transition={{ duration: 0.4, delay: 0.08, ease: BRAND_EASE }}
             className={cn(
               'mx-auto mb-6 max-w-md text-sm md:mb-10 md:text-lg text-primary/65 leading-relaxed',
-              isAr ? 'font-arabic' : 'font-sans'
+              localeFontClass(lang)
             )}
           >
-            {isAr ? BRAND.sourcing.ar : BRAND.sourcing.en}
+            {tx(lang, BRAND.sourcing)}
           </motion.p>
 
           <div className="mb-8 flex flex-wrap items-center justify-center gap-2 md:hidden">
@@ -129,10 +130,10 @@ export default function OriginStory({ lang }: { lang: string }) {
                 key={chip.en}
                 className={cn(
                   'inline-flex items-center rounded-full border border-primary/15 bg-white px-3 py-1.5 text-[11px] font-semibold text-primary/75',
-                  isAr ? 'font-arabic' : 'font-sans'
+                  localeFontClass(lang)
                 )}
               >
-                {isAr ? chip.ar : chip.en}
+                {tx(lang, chip)}
               </span>
             ))}
           </div>
@@ -142,7 +143,7 @@ export default function OriginStory({ lang }: { lang: string }) {
             className={cn(
               'inline-flex items-center justify-center min-h-[48px] px-7 rounded-xl touch-manipulation',
               'bg-secondary text-primary font-semibold active:opacity-90',
-              isAr ? 'font-arabic' : 'font-sans'
+              localeFontClass(lang)
             )}
           >
             {isAr ? 'اعرف قصتنا' : 'Our story'}

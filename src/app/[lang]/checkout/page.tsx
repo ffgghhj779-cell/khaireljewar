@@ -1,3 +1,4 @@
+import { localeDisplayClass } from '@/lib/i18n/localize'
 import type { Metadata } from 'next'
 import Container from '@/components/ui/Container'
 import CheckoutForm from '@/components/ecom/CheckoutForm'
@@ -29,7 +30,7 @@ export default function CheckoutPage({ params: { lang } }: { params: { lang: str
         <h1
           className={cn(
             'mb-6 text-[clamp(1.6rem,6vw,2.5rem)] font-medium leading-tight text-primary sm:mb-8',
-            isAr ? 'font-arabic' : 'font-display'
+            localeDisplayClass(lang)
           )}
         >
           {isAr ? 'إتمام الشراء والدفع' : 'Checkout & payment'}

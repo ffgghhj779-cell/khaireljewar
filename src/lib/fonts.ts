@@ -1,4 +1,4 @@
-import { Cairo, DM_Sans, Fraunces, IBM_Plex_Sans_Arabic } from 'next/font/google'
+import { Cairo, DM_Sans, Fraunces, IBM_Plex_Sans_Arabic, Noto_Sans_Devanagari } from 'next/font/google'
 
 /** Editorial serif — headlines & brand (EN) */
 export const display = Fraunces({
@@ -18,7 +18,7 @@ export const sans = DM_Sans({
   weight: ['400', '500', '600', '700'],
 })
 
-/** Arabic body + UI */
+/** Arabic + Urdu body/UI (Arabic script) */
 export const arabic = Cairo({
   subsets: ['arabic', 'latin'],
   display: 'swap',
@@ -36,4 +36,13 @@ export const arabicDisplay = IBM_Plex_Sans_Arabic({
   weight: ['500', '600', '700'],
 })
 
-export const fontVariables = `${display.variable} ${sans.variable} ${arabic.variable} ${arabicDisplay.variable}`
+/** Hindi (Devanagari) — UI + headlines */
+export const hindi = Noto_Sans_Devanagari({
+  subsets: ['devanagari', 'latin'],
+  display: 'swap',
+  variable: '--font-hindi',
+  preload: true,
+  weight: ['400', '500', '600', '700'],
+})
+
+export const fontVariables = `${display.variable} ${sans.variable} ${arabic.variable} ${arabicDisplay.variable} ${hindi.variable}`

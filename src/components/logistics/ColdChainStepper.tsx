@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import { motion } from 'framer-motion'
 import { ThermometerSnowflake, Truck, Ship, Warehouse, MapPin, CheckCircle2 } from 'lucide-react'
@@ -88,7 +89,7 @@ export default function ColdChainStepper({ lang, activeStep = 3 }: ColdChainStep
                 <step.icon className="w-5 h-5" strokeWidth={1.75} />
               </div>
               <div className="flex items-center gap-2 mb-1">
-                <h4 className={cn('text-sm font-bold text-dark', isAr ? 'font-arabic' : 'font-display')}>
+                <h4 className={cn('text-sm font-bold text-dark', localeDisplayClass(lang))}>
                   {step.title}
                 </h4>
                 {step.temp !== '—' && (
@@ -98,7 +99,7 @@ export default function ColdChainStepper({ lang, activeStep = 3 }: ColdChainStep
                   </span>
                 )}
               </div>
-              <p className={cn('text-xs text-gray-500 mb-3', isAr ? 'font-arabic' : 'font-sans')}>{step.desc}</p>
+              <p className={cn('text-xs text-gray-500 mb-3', localeFontClass(lang))}>{step.desc}</p>
               <ProgressBar value={step.progress} showValue color={isActive ? 'primary' : 'blue'} />
             </motion.div>
           )

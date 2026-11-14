@@ -1,15 +1,23 @@
 import { Star } from 'lucide-react'
 import { BRAND } from '@/lib/constants/brand'
+import { localeDisplayClass, txList } from '@/lib/i18n/localize'
 import { cn } from '@/lib/utils/cn'
 
 export default function SiteBio({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
-  const lines = isAr ? BRAND.bio.ar : BRAND.bio.en
+  const lines = txList(lang, BRAND.bio)
 
   return (
     <section className="relative z-10 border-t border-farm/25 bg-cream py-10 md:py-14">
       <div className="mx-auto max-w-3xl px-4 text-center">
-        <div className="mb-5 flex items-center justify-center gap-1.5" aria-label={isAr ? 'سبع نجوم' : 'Seven stars'}>
+        <div
+          className="mb-5 flex items-center justify-center gap-1.5"
+          aria-label={txList(lang, {
+            en: ['Seven stars'],
+            ar: ['سبع نجوم'],
+            ur: ['سات ستارے'],
+            hi: ['सात तारे'],
+          })[0]}
+        >
           {Array.from({ length: 7 }).map((_, i) => (
             <Star
               key={i}
@@ -21,7 +29,7 @@ export default function SiteBio({ lang }: { lang: string }) {
         <p
           className={cn(
             'text-[clamp(1.05rem,3.4vw,1.45rem)] font-medium leading-relaxed text-primary text-balance',
-            isAr ? 'font-arabic' : 'font-display'
+            localeDisplayClass(lang)
           )}
         >
           {lines[0]}
@@ -29,7 +37,7 @@ export default function SiteBio({ lang }: { lang: string }) {
         <p
           className={cn(
             'mt-2 text-[clamp(1rem,3vw,1.25rem)] font-medium leading-relaxed text-farm text-balance',
-            isAr ? 'font-arabic' : 'font-display'
+            localeDisplayClass(lang)
           )}
         >
           {lines[1]}

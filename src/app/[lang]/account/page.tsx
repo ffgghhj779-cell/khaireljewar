@@ -1,3 +1,4 @@
+import { localeDisplayClass } from '@/lib/i18n/localize'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import Container from '@/components/ui/Container'
@@ -25,7 +26,7 @@ export default async function AccountPage({ params: { lang } }: { params: { lang
   return (
     <div className="min-h-[70vh] bg-canvas-soft pb-24 pt-10 md:pt-14">
       <Container size="small">
-        <h1 className={cn('mb-6 text-2xl font-bold text-primary', isAr ? 'font-arabic' : 'font-display')}>
+        <h1 className={cn('mb-6 text-2xl font-bold text-primary', localeDisplayClass(lang))}>
           {isAr ? 'حسابي' : 'My account'}
         </h1>
         <AccountPanel lang={lang} email={session.user.email ?? ''} profile={session.profile} />

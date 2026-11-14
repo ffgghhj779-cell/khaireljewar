@@ -1,3 +1,4 @@
+import { tx, localeFontClass } from '@/lib/i18n/localize'
 import BrandLogo from '@/components/ui/BrandLogo'
 import { BRAND } from '@/lib/constants/brand'
 import { cn } from '@/lib/utils/cn'
@@ -54,17 +55,17 @@ export default function BrandLockup({
             onDark ? 'text-white' : 'text-dark'
           )}
         >
-          {isAr ? BRAND.name.ar : BRAND.name.en}
+          {tx(lang, BRAND.name)}
         </p>
         <p
           className={cn(
             'leading-snug truncate font-medium hidden sm:block',
             compact ? 'text-[10px] sm:text-xs' : 'text-xs sm:text-sm',
-            isAr ? 'font-arabic' : 'font-sans',
+            localeFontClass(lang),
             onDark ? 'text-secondary' : 'text-primary'
           )}
         >
-          {isAr ? BRAND.tagline.ar : BRAND.tagline.en}
+          {tx(lang, BRAND.tagline)}
         </p>
       </div>
     </div>

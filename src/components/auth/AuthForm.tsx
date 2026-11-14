@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass } from '@/lib/i18n/localize'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -113,7 +114,7 @@ export default function AuthForm({ lang, mode }: Props) {
       {mode === 'signup' && (
         <>
           <div>
-            <label className={cn('mb-1.5 block text-[12px] font-semibold text-primary/60', isAr ? 'font-arabic' : 'font-sans')}>
+            <label className={cn('mb-1.5 block text-[12px] font-semibold text-primary/60', localeFontClass(lang))}>
               {isAr ? 'الاسم' : 'Full name'}
             </label>
             <input
@@ -125,7 +126,7 @@ export default function AuthForm({ lang, mode }: Props) {
             />
           </div>
           <div>
-            <label className={cn('mb-1.5 block text-[12px] font-semibold text-primary/60', isAr ? 'font-arabic' : 'font-sans')}>
+            <label className={cn('mb-1.5 block text-[12px] font-semibold text-primary/60', localeFontClass(lang))}>
               {isAr ? 'اسم الشركة' : 'Company name'}
             </label>
             <input
@@ -140,7 +141,7 @@ export default function AuthForm({ lang, mode }: Props) {
       )}
 
       <div>
-        <label className={cn('mb-1.5 block text-[12px] font-semibold text-primary/60', isAr ? 'font-arabic' : 'font-sans')}>
+        <label className={cn('mb-1.5 block text-[12px] font-semibold text-primary/60', localeFontClass(lang))}>
           {isAr ? 'البريد الإلكتروني' : 'Email'}
         </label>
         <input
@@ -155,7 +156,7 @@ export default function AuthForm({ lang, mode }: Props) {
       </div>
 
       <div>
-        <label className={cn('mb-1.5 block text-[12px] font-semibold text-primary/60', isAr ? 'font-arabic' : 'font-sans')}>
+        <label className={cn('mb-1.5 block text-[12px] font-semibold text-primary/60', localeFontClass(lang))}>
           {isAr ? 'كلمة المرور' : 'Password'}
         </label>
         <input
@@ -186,7 +187,7 @@ export default function AuthForm({ lang, mode }: Props) {
         className={cn(
           'w-full rounded-xl bg-secondary text-primary hover:bg-secondary-400 py-3.5 text-[14px] font-bold transition',
           'hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60',
-          isAr ? 'font-arabic' : 'font-sans'
+          localeFontClass(lang)
         )}
       >
         {loading
@@ -202,7 +203,7 @@ export default function AuthForm({ lang, mode }: Props) {
               : 'Sign in'}
       </button>
 
-      <p className={cn('pt-1 text-center text-[13px] text-primary/55', isAr ? 'font-arabic' : 'font-sans')}>
+      <p className={cn('pt-1 text-center text-[13px] text-primary/55', localeFontClass(lang))}>
         {mode === 'login' ? (
           <>
             {isAr ? 'ليس لديك حساب؟' : 'No account yet?'}{' '}

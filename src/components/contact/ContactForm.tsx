@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import { useMemo, useState, type FormEvent } from 'react'
 import { useSearchParams } from 'next/navigation'
@@ -26,7 +27,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
 
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
   const [error, setError] = useState<string | null>(null)
-  const labelClass = cn('block text-sm font-semibold text-gray-700 mb-2', isAr ? 'font-arabic' : 'font-sans')
+  const labelClass = cn('block text-sm font-semibold text-gray-700 mb-2', localeFontClass(lang))
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -132,16 +133,16 @@ export default function ContactForm({ lang }: ContactFormProps) {
     return (
       <div className="text-center py-8">
         <CheckCircle2 className="w-14 h-14 text-primary mx-auto mb-4" strokeWidth={1.5} />
-        <h3 className={cn('text-xl font-bold text-dark mb-2', isAr ? 'font-arabic' : 'font-display')}>
+        <h3 className={cn('text-xl font-bold text-dark mb-2', localeDisplayClass(lang))}>
           {isAr ? 'تم إرسال طلبك' : 'Request sent'}
         </h3>
-        <p className={cn('text-gray-500 mb-6', isAr ? 'font-arabic' : 'font-sans')}>
+        <p className={cn('text-gray-500 mb-6', localeFontClass(lang))}>
           {isAr ? 'فريق المبيعات سيتواصل معك قريباً.' : 'Our sales team will get back to you shortly.'}
         </p>
         <button
           type="button"
           onClick={() => setStatus('idle')}
-          className={cn('text-primary font-semibold text-sm hover:underline touch-manipulation', isAr ? 'font-arabic' : 'font-sans')}
+          className={cn('text-primary font-semibold text-sm hover:underline touch-manipulation', localeFontClass(lang))}
         >
           {isAr ? 'إرسال طلب آخر' : 'Send another request'}
         </button>
@@ -157,13 +158,13 @@ export default function ContactForm({ lang }: ContactFormProps) {
             <label htmlFor="contact-name" className={labelClass}>
               {isAr ? 'الاسم' : 'Name'} *
             </label>
-            <input id="contact-name" name="name" required type="text" autoComplete="name" className={cn(inputClass, isAr ? 'font-arabic' : 'font-sans')} />
+            <input id="contact-name" name="name" required type="text" autoComplete="name" className={cn(inputClass, localeFontClass(lang))} />
           </div>
           <div>
             <label htmlFor="contact-company" className={labelClass}>
               {isAr ? 'الشركة' : 'Company'}
             </label>
-            <input id="contact-company" name="company" type="text" autoComplete="organization" className={cn(inputClass, isAr ? 'font-arabic' : 'font-sans')} />
+            <input id="contact-company" name="company" type="text" autoComplete="organization" className={cn(inputClass, localeFontClass(lang))} />
           </div>
         </div>
 
@@ -172,7 +173,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
             <label htmlFor="contact-email" className={labelClass}>
               {isAr ? 'البريد الإلكتروني' : 'Email'} *
             </label>
-            <input id="contact-email" name="email" required type="email" autoComplete="email" className={cn(inputClass, isAr ? 'font-arabic' : 'font-sans')} />
+            <input id="contact-email" name="email" required type="email" autoComplete="email" className={cn(inputClass, localeFontClass(lang))} />
           </div>
           <div>
             <label htmlFor="contact-phone" className={labelClass}>
@@ -183,7 +184,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
         </div>
 
         <div className="rounded-2xl border border-secondary/30 bg-secondary/10 p-4 space-y-4">
-          <p className={cn('text-sm font-semibold text-primary', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-sm font-semibold text-primary', localeFontClass(lang))}>
             {isAr ? 'تفاصيل عرض السعر (اختياري)' : 'Quote details (optional)'}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -191,13 +192,13 @@ export default function ContactForm({ lang }: ContactFormProps) {
               <label htmlFor="destination-country" className={labelClass}>
                 {isAr ? 'بلد الوجهة' : 'Destination country'}
               </label>
-              <input id="destination-country" name="destinationCountry" type="text" className={cn(inputClass, isAr ? 'font-arabic' : 'font-sans')} />
+              <input id="destination-country" name="destinationCountry" type="text" className={cn(inputClass, localeFontClass(lang))} />
             </div>
             <div>
               <label htmlFor="destination-port" className={labelClass}>
                 {isAr ? 'ميناء الوجهة' : 'Destination port'}
               </label>
-              <input id="destination-port" name="destinationPort" type="text" className={cn(inputClass, isAr ? 'font-arabic' : 'font-sans')} />
+              <input id="destination-port" name="destinationPort" type="text" className={cn(inputClass, localeFontClass(lang))} />
             </div>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -211,7 +212,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
               <label htmlFor="unit" className={labelClass}>
                 {isAr ? 'الوحدة' : 'Unit'}
               </label>
-              <select id="unit" name="unit" defaultValue="MT" className={cn(inputClass, isAr ? 'font-arabic' : 'font-sans')}>
+              <select id="unit" name="unit" defaultValue="MT" className={cn(inputClass, localeFontClass(lang))}>
                 <option value="MT">{isAr ? 'طن' : 'MT'}</option>
                 <option value="Containers">{isAr ? 'حاوية' : 'Containers'}</option>
                 <option value="KG">{isAr ? 'كجم' : 'KG'}</option>
@@ -238,7 +239,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
                 name="shipWindow"
                 type="text"
                 placeholder={isAr ? 'مثلاً: خلال 3 أسابيع' : 'e.g. within 3 weeks'}
-                className={cn(inputClass, isAr ? 'font-arabic' : 'font-sans')}
+                className={cn(inputClass, localeFontClass(lang))}
               />
             </div>
           </div>
@@ -254,7 +255,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
             required
             rows={5}
             defaultValue={defaultMessage}
-            className={cn(inputClass, 'resize-y min-h-[140px]', isAr ? 'font-arabic' : 'font-sans')}
+            className={cn(inputClass, 'resize-y min-h-[140px]', localeFontClass(lang))}
           />
         </div>
         {error && (
@@ -267,7 +268,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
           disabled={status === 'sending'}
           className={cn(
             'w-full bg-secondary hover:bg-secondary-400 disabled:opacity-60 text-primary py-4 min-h-[52px] rounded-full font-semibold transition-colors touch-manipulation flex items-center justify-center gap-2',
-            isAr ? 'font-arabic' : 'font-sans'
+            localeFontClass(lang)
           )}
         >
           {status === 'sending' && <Loader2 className="w-5 h-5 animate-spin" />}
@@ -276,7 +277,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
       </form>
 
       <div className="mt-6 pt-6 border-t border-dark/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className={cn('text-sm text-gray-500', isAr ? 'font-arabic' : 'font-sans')}>
+        <p className={cn('text-sm text-gray-500', localeFontClass(lang))}>
           {isAr ? 'أو تواصل فوراً عبر واتساب' : 'Or reach us on WhatsApp'}
         </p>
         <a

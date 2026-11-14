@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -22,14 +23,14 @@ export default function CartView({ lang }: { lang: string }) {
     return (
       <div className="rounded-2xl border border-primary/10 bg-cream-soft p-10 text-center">
         <ShoppingBag className="mx-auto mb-4 h-12 w-12 text-primary/30" />
-        <p className={cn('text-lg font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>
+        <p className={cn('text-lg font-semibold text-primary', localeDisplayClass(lang))}>
           {isAr ? 'السلة فارغة' : 'Your cart is empty'}
         </p>
         <Link
           href={`/${lang}/products`}
           className={cn(
             'mt-6 inline-flex rounded-xl bg-secondary text-primary hover:bg-secondary-400 px-6 py-3 text-sm font-semibold',
-            isAr ? 'font-arabic' : 'font-sans'
+            localeFontClass(lang)
           )}
         >
           {isAr ? 'تسوق المنتجات' : 'Browse products'}
@@ -60,9 +61,9 @@ export default function CartView({ lang }: { lang: string }) {
                   />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className={cn('font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>{title}</p>
-                  <p className={cn('text-xs text-primary/55', isAr ? 'font-arabic' : 'font-sans')}>{unit}</p>
-                  <p className={cn('mt-1 text-sm font-bold text-farm', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('font-semibold text-primary', localeDisplayClass(lang))}>{title}</p>
+                  <p className={cn('text-xs text-primary/55', localeFontClass(lang))}>{unit}</p>
+                  <p className={cn('mt-1 text-sm font-bold text-farm', localeFontClass(lang))}>
                     {formatEgp(line.unitPriceEgp, lang)}
                   </p>
                   <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -110,10 +111,10 @@ export default function CartView({ lang }: { lang: string }) {
       </ul>
 
       <aside className="h-fit rounded-2xl border border-farm/25 bg-farm-soft p-6 text-primary">
-        <h2 className={cn('text-lg font-semibold mb-4', isAr ? 'font-arabic' : 'font-display')}>
+        <h2 className={cn('text-lg font-semibold mb-4', localeDisplayClass(lang))}>
           {isAr ? 'ملخص الطلب' : 'Order summary'}
         </h2>
-        <div className={cn('space-y-2 text-sm', isAr ? 'font-arabic' : 'font-sans')}>
+        <div className={cn('space-y-2 text-sm', localeFontClass(lang))}>
           <div className="flex justify-between">
             <span>{isAr ? 'المجموع' : 'Subtotal'}</span>
             <span>{formatEgp(subtotal, lang)}</span>
@@ -131,7 +132,7 @@ export default function CartView({ lang }: { lang: string }) {
           href={`/${lang}/checkout`}
           className={cn(
             'mt-6 flex w-full items-center justify-center rounded-xl bg-secondary py-3.5 text-sm font-bold text-primary hover:bg-secondary-400',
-            isAr ? 'font-arabic' : 'font-sans'
+            localeFontClass(lang)
           )}
         >
           {isAr ? 'إتمام الشراء' : 'Proceed to checkout'}

@@ -1,3 +1,4 @@
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 import type { Metadata } from 'next'
 import Container from '@/components/ui/Container'
 import { BRAND } from '@/lib/constants/brand'
@@ -22,18 +23,18 @@ export default function PrivacyPage({ params: { lang } }: { params: { lang: stri
   return (
     <div className="min-h-screen py-14 md:py-20 pb-24 bg-canvas-soft">
       <Container size="small">
-        <p className={cn('text-primary font-semibold text-sm mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+        <p className={cn('text-primary font-semibold text-sm mb-3', localeFontClass(lang))}>
           {isAr ? 'قانوني' : 'Legal'}
         </p>
         <h1
           className={cn(
             'text-3xl md:text-5xl font-bold text-dark mb-8 editorial-heading',
-            isAr ? 'font-arabic' : 'font-display'
+            localeDisplayClass(lang)
           )}
         >
           {isAr ? 'سياسة الخصوصية' : 'Privacy policy'}
         </h1>
-        <div className={cn('text-gray-600 space-y-5 leading-relaxed text-[15px] md:text-base', isAr ? 'font-arabic' : 'font-sans')}>
+        <div className={cn('text-gray-600 space-y-5 leading-relaxed text-[15px] md:text-base', localeFontClass(lang))}>
           <p>
             {isAr
               ? `${BRAND.nameFull.ar} تجمع البيانات اللازمة للرد على طلبات الأسعار والرسائل، ولإنشاء الحساب، ولإتمام الطلب: الاسم، الشركة، البريد، الهاتف، وعنوان التوصيل عند الشراء.`

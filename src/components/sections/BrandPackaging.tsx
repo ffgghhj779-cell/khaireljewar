@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import { motion } from 'framer-motion'
 import PremiumImage from '@/components/ui/PremiumImage'
@@ -148,13 +149,13 @@ export default function BrandPackaging({ lang }: { lang: string }) {
           transition={{ duration: 0.5, ease: BRAND_EASE }}
           className="mx-auto mb-10 max-w-xl text-center md:mb-16"
         >
-          <p className={cn('mb-2.5 text-primary font-semibold', isAr ? 'font-arabic' : 'font-display')}>
+          <p className={cn('mb-2.5 text-primary font-semibold', localeDisplayClass(lang))}>
             {isAr ? 'التغليف' : 'Packaging'}
           </p>
           <h2
             className={cn(
               'mb-4 text-[clamp(2.15rem,5vw,3.75rem)] font-medium leading-[1.1] tracking-tight text-primary text-balance',
-              isAr ? 'font-arabic' : 'font-display'
+              localeDisplayClass(lang)
             )}
           >
             {isAr ? 'الاسم يصل مع الشحنة.' : 'The name travels with the goods.'}
@@ -162,7 +163,7 @@ export default function BrandPackaging({ lang }: { lang: string }) {
           <p
             className={cn(
               'mx-auto max-w-md text-sm leading-relaxed text-primary/65 md:text-base',
-              isAr ? 'font-arabic' : 'font-sans'
+              localeFontClass(lang)
             )}
           >
             {isAr

@@ -1,3 +1,4 @@
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
@@ -44,13 +45,13 @@ export default function IncotermsGuidePage({ params: { lang } }: { params: { lan
         ])}
       />
       <Container size="small">
-        <p className={cn('mb-3 text-sm font-semibold text-primary', isAr ? 'font-arabic' : 'font-sans')}>
+        <p className={cn('mb-3 text-sm font-semibold text-primary', localeFontClass(lang))}>
           {isAr ? 'من جدة' : 'From Jeddah'}
         </p>
-        <h1 className={cn('mb-6 text-3xl font-bold text-dark editorial-heading md:text-5xl', isAr ? 'font-arabic' : 'font-display')}>
+        <h1 className={cn('mb-6 text-3xl font-bold text-dark editorial-heading md:text-5xl', localeDisplayClass(lang))}>
           {isAr ? 'شروط الشحن بلغة بسيطة' : 'Shipping terms in plain language'}
         </h1>
-        <p className={cn('mb-8 text-[15px] leading-relaxed text-gray-600 md:text-base', isAr ? 'font-arabic' : 'font-sans')}>
+        <p className={cn('mb-8 text-[15px] leading-relaxed text-gray-600 md:text-base', localeFontClass(lang))}>
           {isAr
             ? 'الشرط الذي يسري هو المكتوب في عرض السعر الرسمي. الأسعار على الموقع استرشادية.'
             : 'The term that applies is the one written on the official quotation. Prices on the website are indicative.'}
@@ -58,14 +59,14 @@ export default function IncotermsGuidePage({ params: { lang } }: { params: { lan
         <div className="space-y-5">
           {terms.map(([title, body]) => (
             <section key={title} className="rounded-2xl border border-primary/10 bg-cream p-5">
-              <h2 className={cn('mb-2 text-xl font-bold text-primary', isAr ? 'font-arabic' : 'font-display')}>{title}</h2>
-              <p className={cn('leading-relaxed text-primary/75', isAr ? 'font-arabic' : 'font-sans')}>{body}</p>
+              <h2 className={cn('mb-2 text-xl font-bold text-primary', localeDisplayClass(lang))}>{title}</h2>
+              <p className={cn('leading-relaxed text-primary/75', localeFontClass(lang))}>{body}</p>
             </section>
           ))}
         </div>
         <Link
           href={`/${lang}/contact`}
-          className={cn('mt-8 inline-flex text-sm font-semibold text-primary hover:underline', isAr ? 'font-arabic' : 'font-sans')}
+          className={cn('mt-8 inline-flex text-sm font-semibold text-primary hover:underline', localeFontClass(lang))}
         >
           {isAr ? 'اطلب عرض سعر بالشرط المناسب ←' : 'Request a quote with the right term →'}
         </Link>

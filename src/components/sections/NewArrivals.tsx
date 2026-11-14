@@ -1,4 +1,6 @@
 'use client'
+import { tx, localeFontClass, localeDisplayClass, isRtl, usesArabicScript } from '@/lib/i18n/localize'
+import { UI } from '@/lib/i18n/ui'
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -41,11 +43,10 @@ function Tile({
   wide?: boolean
   className?: string
 }) {
-  const isAr = lang === 'ar'
   const lightMotion = useLightMotion()
-  const title = isAr ? product.title.ar : product.title.en
-  const category = isAr ? product.category.ar : product.category.en
-  const badge = product.badge ? (isAr ? product.badge.ar : product.badge.en) : null
+  const title = tx(lang, product.title)
+  const category = tx(lang, product.category)
+  const badge = product.badge ? tx(lang, product.badge) : null
   const packshot = (product.imageFit ?? 'contain') === 'contain'
 
   return (
@@ -88,7 +89,7 @@ function Tile({
             <span
               className={cn(
                 'absolute top-4 start-4 rounded-full bg-secondary px-3 py-1 text-[11px] font-bold text-primary shadow-sm',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {badge}
@@ -108,7 +109,7 @@ function Tile({
             <p
               className={cn(
                 'mb-1 text-xs font-semibold text-farm',
-                isAr ? 'font-arabic' : 'font-sans uppercase tracking-[0.14em]'
+                usesArabicScript(lang) ? 'font-arabic' : lang === 'hi' ? 'font-hindi' : 'font-sans uppercase tracking-[0.14em]'
               )}
             >
               {category}
@@ -117,7 +118,7 @@ function Tile({
               className={cn(
                 'font-semibold leading-snug text-primary text-balance',
                 hero ? 'text-2xl md:text-3xl' : 'text-base md:text-lg line-clamp-2',
-                isAr ? 'font-arabic' : 'font-display'
+                localeDisplayClass(lang)
               )}
             >
               {title}
@@ -127,15 +128,15 @@ function Tile({
                 className={cn(
                   'mt-2 hidden max-w-lg text-[15px] leading-relaxed text-primary/65',
                   wide ? 'lg:line-clamp-3' : 'lg:block',
-                  isAr ? 'font-arabic' : 'font-sans'
+                  localeFontClass(lang)
                 )}
               >
-                {isAr ? product.desc.ar : product.desc.en}
+                {tx(lang, product.desc)}
               </p>
             )}
           </div>
           <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-farm-soft text-primary transition-colors duration-300 group-hover:bg-secondary">
-            <ArrowUpRight className={cn('h-4 w-4', isAr && '-scale-x-100')} />
+            <ArrowUpRight className={cn('h-4 w-4', isRtl(lang) && '-scale-x-100')} />
           </span>
         </div>
       </Link>
@@ -144,7 +145,6 @@ function Tile({
 }
 
 export default function NewArrivals({ lang, products }: { lang: string; products: Product[] }) {
-  const isAr = lang === 'ar'
   const lightMotion = useLightMotion()
   const items = products.filter((p) => p.isNew)
   if (!items.length) return null
@@ -171,35 +171,33 @@ export default function NewArrivals({ lang, products }: { lang: string; products
             <p
               className={cn(
                 'mb-3 inline-flex items-center gap-2 rounded-full border border-secondary/50 bg-secondary-50 px-3.5 py-1.5 text-sm font-semibold text-primary',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               <Sparkles className="h-4 w-4 text-secondary-500" />
-              {isAr ? 'وصل حديثاً' : 'Just arrived'}
+              {tx(lang, UI.newArrivals.eyebrow)}
             </p>
             <h2
               className={cn(
                 'text-[clamp(2rem,6vw,3.5rem)] font-medium leading-[1.1] tracking-tight text-primary text-balance',
-                isAr ? 'font-arabic' : 'font-display'
+                localeDisplayClass(lang)
               )}
             >
-              {isAr ? 'جديد الموسم في خير الجوار.' : 'New this season at Khair Aljaar.'}
+              {tx(lang, UI.newArrivals.title)}
             </h2>
-            <p className={cn('mt-4 text-base leading-relaxed text-primary/65 md:text-lg', isAr ? 'font-arabic' : 'font-sans')}>
-              {isAr
-                ? 'عجوة المدينة، فراولة وكيوي، فلفل أحمر، ومجمدات جديدة. كل منتج له صفحة بصوره ومواصفاته، والسعر بعرض مكتوب.'
-                : 'Ajwa from Al Madinah, strawberries and kiwi, red peppers, and new frozen lines. Each has its own page with photos and specs, priced by written quote.'}
+            <p className={cn('mt-4 text-base leading-relaxed text-primary/65 md:text-lg', localeFontClass(lang))}>
+              {tx(lang, UI.newArrivals.lead)}
             </p>
           </div>
           <Link
             href={`/${lang}/products?category=New`}
             className={cn(
               'inline-flex min-h-[48px] shrink-0 items-center gap-2 self-start rounded-xl bg-secondary px-6 font-semibold text-primary transition-colors hover:bg-secondary-400 md:self-auto',
-              isAr ? 'font-arabic' : 'font-sans'
+              localeFontClass(lang)
             )}
           >
-            {isAr ? 'كل المنتجات الجديدة' : 'All new products'}
-            <ArrowUpRight className={cn('h-4 w-4', isAr && '-scale-x-100')} />
+            {tx(lang, UI.cta.allNew)}
+            <ArrowUpRight className={cn('h-4 w-4', isRtl(lang) && '-scale-x-100')} />
           </Link>
         </motion.div>
 

@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import { useState } from 'react'
 import PremiumImage from '@/components/ui/PremiumImage'
@@ -75,18 +76,18 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="mb-12 md:mb-16"
         >
-          <p className={cn('text-primary font-semibold text-sm mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-primary font-semibold text-sm mb-3', localeFontClass(lang))}>
             {isAr ? 'الاعتمادات' : 'Certifications'}
           </p>
           <h2
             className={cn(
               'text-3xl md:text-5xl font-bold text-dark tracking-tight mb-4 editorial-heading',
-              isAr ? 'font-arabic' : 'font-display'
+              localeDisplayClass(lang)
             )}
           >
             {isAr ? 'وثائق رسمية' : 'Official documents'}
           </h2>
-          <p className={cn('text-base md:text-lg text-gray-500 max-w-2xl leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-base md:text-lg text-gray-500 max-w-2xl leading-relaxed', localeFontClass(lang))}>
             {isAr
               ? 'كل شحنة مدعومة بسلسلة توثيق واضحة — من الحقل إلى الميناء.'
               : 'Every shipment is backed by a clear documentation chain — from field to port.'}
@@ -154,7 +155,7 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
                       {isAr ? 'تحميل' : 'Download PDF'}
                     </span>
                   ) : (
-                    <span className={cn('flex items-center gap-1 text-[11px] font-bold text-primary', isAr ? 'font-arabic' : 'font-sans')}>
+                    <span className={cn('flex items-center gap-1 text-[11px] font-bold text-primary', localeFontClass(lang))}>
                       <MessageCircle className="w-3.5 h-3.5" />
                       {isAr ? 'اطلب الوثيقة' : 'Request document'}
                     </span>
@@ -183,7 +184,7 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
             <div className="w-10 h-10 rounded-xl bg-green-50 border border-green-200 flex items-center justify-center shrink-0">
               <CheckCircle2 className="w-5 h-5 text-green-600" />
             </div>
-            <p className={cn('text-sm font-bold text-dark', isAr ? 'font-arabic' : 'font-display')}>
+            <p className={cn('text-sm font-bold text-dark', localeDisplayClass(lang))}>
               {isAr ? 'وثائق الجودة متاحة عند الطلب.' : 'Quality documents are available on request.'}
             </p>
           </div>
@@ -240,7 +241,7 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
                   <StatusBadge status={active.status} isAr={isAr} />
                   <span className="text-[10px] font-semibold text-gray-400 tracking-wider">{active.year}</span>
                 </div>
-                <p className={cn('text-sm text-gray-600 leading-relaxed mb-6', isAr ? 'font-arabic' : 'font-sans')}>
+                <p className={cn('text-sm text-gray-600 leading-relaxed mb-6', localeFontClass(lang))}>
                   {isAr ? active.scopeAr : active.scope}
                 </p>
                 <div className="flex gap-3">
@@ -251,7 +252,7 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
                       rel="noopener noreferrer"
                       className={cn(
                         'flex-1 flex min-h-[44px] items-center justify-center gap-2 py-2.5 rounded-xl bg-secondary text-primary hover:bg-secondary-400 text-sm font-bold transition-colors',
-                        isAr ? 'font-arabic' : 'font-sans'
+                        localeFontClass(lang)
                       )}
                     >
                       <MessageCircle className="w-4 h-4" />

@@ -1,6 +1,7 @@
 export const revalidate = 60
 
 import type { Metadata } from 'next'
+import { localeFontClass, tx as pickLocale } from '@/lib/i18n/localize'
 import type { ReactNode } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -228,6 +229,10 @@ function tx(isAr: boolean, copy: Copy) {
   return isAr ? copy.ar : copy.en
 }
 
+function txLang(lang: string, copy: Copy) {
+  return pickLocale(lang, copy)
+}
+
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
   const isAr = lang === 'ar'
   return buildPageMetadata({
@@ -308,7 +313,7 @@ function SectionTitle({
 export default async function AboutPage({ params: { lang } }: { params: { lang: string } }) {
   const isAr = lang === 'ar'
   const t = (copy: Copy) => tx(isAr, copy)
-  const font = isAr ? 'font-arabic' : 'font-sans'
+  const font = localeFontClass(lang)
   const Arrow = isAr ? ArrowLeft : ArrowRight
 
   const products = await getProducts()
@@ -748,7 +753,7 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
                 <div className="mt-4 flex flex-wrap gap-1.5">
                   {categories.map((c) => (
                     <span key={c.id} className="rounded-full border border-primary/10 bg-cream px-2.5 py-1 text-[11px] font-semibold text-primary">
-                      {isAr ? c.ar : c.en}
+                      {txLang(lang, c)}
                     </span>
                   ))}
                 </div>
@@ -903,7 +908,7 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
                   {c.hero && (
                     <Image
                       src={resolveProductImage(c.hero.image, c.hero.category.en, c.hero.slug)}
-                      alt={isAr ? c.ar : c.en}
+                      alt={txLang(lang, c)}
                       fill
                       sizes="(max-width: 1024px) 50vw, 280px"
                       className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -916,7 +921,7 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
                 </div>
                 <div className="flex items-center justify-between gap-2 p-3 sm:p-4">
                   <h3 className={cn('text-[15px] font-bold text-dark sm:text-lg', isAr ? 'font-arabic-display' : 'font-display')}>
-                    {isAr ? c.ar : c.en}
+                    {txLang(lang, c)}
                   </h3>
                   <Arrow className="h-4 w-4 shrink-0 text-harvest transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" aria-hidden />
                 </div>

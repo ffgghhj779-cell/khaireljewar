@@ -93,7 +93,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 308)
   }
 
-  const certifications = url.pathname.match(/^\/(en|ar)\/certifications\/?$/)
+  const certifications = url.pathname.match(/^\/(en|ar|ur|hi)\/certifications\/?$/)
   if (certifications) {
     url.pathname = `/${certifications[1]}/quality`
     return NextResponse.redirect(url, 308)

@@ -1,3 +1,4 @@
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
@@ -42,13 +43,13 @@ export default function IqfGuidePage({ params: { lang } }: { params: { lang: str
         ])}
       />
       <Container size="small">
-        <p className={cn('mb-3 text-sm font-semibold text-primary', isAr ? 'font-arabic' : 'font-sans')}>
+        <p className={cn('mb-3 text-sm font-semibold text-primary', localeFontClass(lang))}>
           {isAr ? 'من جدة' : 'From Jeddah'}
         </p>
-        <h1 className={cn('mb-6 text-3xl font-bold text-dark editorial-heading md:text-5xl', isAr ? 'font-arabic' : 'font-display')}>
+        <h1 className={cn('mb-6 text-3xl font-bold text-dark editorial-heading md:text-5xl', localeDisplayClass(lang))}>
           {isAr ? 'ما هو التجميد IQF؟' : 'What is IQF freezing?'}
         </h1>
-        <p className={cn('mb-8 text-[15px] leading-relaxed text-gray-600 md:text-base', isAr ? 'font-arabic' : 'font-sans')}>
+        <p className={cn('mb-8 text-[15px] leading-relaxed text-gray-600 md:text-base', localeFontClass(lang))}>
           {isAr
             ? 'هذا شرح لطريقة التجميد المستخدمة في خطوط المجمدات. المواصفة النهائية لكل شحنة تُكتب في عرض السعر.'
             : 'This explains the freezing method used on the frozen lines. The final specification for each shipment is written on the quotation.'}
@@ -56,16 +57,16 @@ export default function IqfGuidePage({ params: { lang } }: { params: { lang: str
         <div className="space-y-5">
           {points.map(([title, body]) => (
             <section key={title} className="rounded-2xl border border-primary/10 bg-cream p-5">
-              <h2 className={cn('mb-2 text-xl font-bold text-primary', isAr ? 'font-arabic' : 'font-display')}>{title}</h2>
-              <p className={cn('leading-relaxed text-primary/75', isAr ? 'font-arabic' : 'font-sans')}>{body}</p>
+              <h2 className={cn('mb-2 text-xl font-bold text-primary', localeDisplayClass(lang))}>{title}</h2>
+              <p className={cn('leading-relaxed text-primary/75', localeFontClass(lang))}>{body}</p>
             </section>
           ))}
         </div>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-6">
-          <Link href={`/${lang}/products/frozen-strawberries`} className={cn('text-sm font-semibold text-primary hover:underline', isAr ? 'font-arabic' : 'font-sans')}>
+          <Link href={`/${lang}/products/frozen-strawberries`} className={cn('text-sm font-semibold text-primary hover:underline', localeFontClass(lang))}>
             {isAr ? 'فراولة مجمدة IQF ←' : 'IQF frozen strawberries →'}
           </Link>
-          <Link href={`/${lang}/products/frozen-mixed-vegetables`} className={cn('text-sm font-semibold text-primary hover:underline', isAr ? 'font-arabic' : 'font-sans')}>
+          <Link href={`/${lang}/products/frozen-mixed-vegetables`} className={cn('text-sm font-semibold text-primary hover:underline', localeFontClass(lang))}>
             {isAr ? 'خضروات مشكلة مجمدة ←' : 'IQF mixed vegetables →'}
           </Link>
         </div>

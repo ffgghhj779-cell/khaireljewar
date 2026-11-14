@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass } from '@/lib/i18n/localize'
 
 import { motion } from 'framer-motion'
 import { Leaf, ShieldCheck, Award, Snowflake, FileCheck, Building2 } from 'lucide-react'
@@ -49,7 +50,7 @@ export default function PartnerStrip({ lang }: { lang: string }) {
                 'inline-flex shrink-0 items-center gap-1.5 min-h-[34px] rounded-full border border-secondary/35 bg-white px-3 py-1.5',
                 'text-[11px] font-semibold text-primary/85 md:min-h-[40px] md:gap-2 md:px-4 md:text-xs',
                 i >= 4 && 'hidden md:inline-flex',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               <Icon className="h-3.5 w-3.5 shrink-0 text-secondary" strokeWidth={2} aria-hidden />

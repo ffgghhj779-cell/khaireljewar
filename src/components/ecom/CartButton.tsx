@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass } from '@/lib/i18n/localize'
 
 import Link from 'next/link'
 import { ShoppingBag } from 'lucide-react'
@@ -14,7 +15,7 @@ export default function CartButton({ lang }: { lang: string }) {
       href={`/${lang}/cart`}
       className={cn(
         'relative inline-flex min-h-[40px] min-w-[40px] items-center justify-center rounded-xl border border-primary/15 bg-cream-soft text-primary hover:bg-primary/5',
-        isAr ? 'font-arabic' : 'font-sans'
+        localeFontClass(lang)
       )}
       aria-label={isAr ? `السلة (${count})` : `Cart (${count})`}
     >

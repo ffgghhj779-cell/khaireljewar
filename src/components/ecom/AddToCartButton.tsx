@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass } from '@/lib/i18n/localize'
 
 import { useState } from 'react'
 import { ShoppingCart, Check } from 'lucide-react'
@@ -52,7 +53,7 @@ export default function AddToCartButton({
             : added
               ? 'bg-farm text-cream'
               : 'bg-secondary text-primary hover:bg-secondary-400',
-          isAr ? 'font-arabic' : 'font-sans'
+          localeFontClass(lang)
         )}
       >
         {added ? <Check className="w-5 h-5" /> : <ShoppingCart className="w-5 h-5" strokeWidth={1.75} />}
@@ -64,7 +65,7 @@ export default function AddToCartButton({
             ? `أضف للسلة — ${formatEgp(price, lang)}`
             : `Add to cart — ${formatEgp(price, lang)}`}
       </button>
-      <p className={cn('text-center text-xs opacity-70', isAr ? 'font-arabic' : 'font-sans')}>
+      <p className={cn('text-center text-xs opacity-70', localeFontClass(lang))}>
         {isAr ? `لكل ${unit.ar}` : `Per ${unit.en}`}
       </p>
     </motion.div>

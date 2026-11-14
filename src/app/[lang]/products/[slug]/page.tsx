@@ -1,3 +1,4 @@
+import { tx, txList, localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getProductBySlug, getProductSlugs, getProducts } from '@/lib/actions/products'
@@ -20,7 +21,7 @@ export const dynamicParams = true
 export const revalidate = 60
 
 export async function generateStaticParams() {
-  const langs = ['ar', 'en'] as const
+  const langs = ['ar', 'en', 'ur', 'hi'] as const
   const slugs = await getProductSlugs()
   return langs.flatMap((lang) => slugs.map((slug) => ({ lang, slug })))
 }
@@ -35,7 +36,7 @@ export async function generateMetadata({
   const isAr = lang === 'ar'
   const search = productSearchCopy({
     lang,
-    name: isAr ? product.title.ar : product.title.en,
+    name: tx(lang, product.title),
     minOrder: product.quoteOnly ? undefined : product.minOrder,
     unit: product.unit,
   })
@@ -70,12 +71,12 @@ export default async function SingleProductPage({
   const mainSrc = resolveProductImage(product.image, product.category.en, product.slug)
   const toGalleryImage = (img: NonNullable<typeof product.gallery>[number]) => ({
     src: img.src,
-    alt: isAr ? img.alt.ar : img.alt.en,
+    alt: tx(lang, img.alt),
     fit: img.fit ?? ('contain' as const),
   })
   const extras = GALLERY_EXTRAS[product.slug]
   const cleanShot = cleanShotFor(product.image)
-  const productTitle = isAr ? product.title.ar : product.title.en
+  const productTitle = tx(lang, product.title)
   const gallery = product.gallery?.length
     ? product.gallery.map(toGalleryImage)
     : [
@@ -123,16 +124,16 @@ export default async function SingleProductPage({
           productJsonLd({
             lang,
             slug: product.slug,
-            name: isAr ? product.title.ar : product.title.en,
-            description: isAr ? product.desc.ar : product.desc.en,
+            name: tx(lang, product.title),
+            description: tx(lang, product.desc),
             image: mainSrc,
             sku: product.id,
-            category: isAr ? product.category.ar : product.category.en,
-            origin: isAr ? product.origin.ar : product.origin.en,
+            category: tx(lang, product.category),
+            origin: tx(lang, product.origin),
           }),
           breadcrumbJsonLd(lang, [
             { name: isAr ? 'المنتجات' : 'Products', path: '/products' },
-            { name: isAr ? product.title.ar : product.title.en, path: `/products/${product.slug}` },
+            { name: tx(lang, product.title), path: `/products/${product.slug}` },
           ]),
         ]}
       />
@@ -147,7 +148,7 @@ export default async function SingleProductPage({
               href={`/${lang}/products`}
               className={cn(
                 'inline-flex items-center gap-2 text-sm font-semibold text-primary/55 hover:text-primary transition-colors mb-8',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               <ArrowLeft className={cn('w-4 h-4', isAr && 'rotate-180')} />
@@ -158,88 +159,88 @@ export default async function SingleProductPage({
               <span
                 className={cn(
                   'inline-flex px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold',
-                  isAr ? 'font-arabic' : 'font-sans'
+                  localeFontClass(lang)
                 )}
               >
-                {isAr ? product.category.ar : product.category.en}
+                {tx(lang, product.category)}
               </span>
               <span
                 className={cn(
                   'inline-flex items-center gap-1.5 text-xs text-primary/55',
-                  isAr ? 'font-arabic' : 'font-sans'
+                  localeFontClass(lang)
                 )}
               >
                 <MapPin className="w-3.5 h-3.5 text-primary" strokeWidth={1.75} />
-                {isAr ? product.origin.ar : product.origin.en}
+                {tx(lang, product.origin)}
               </span>
             </div>
 
             <h1
               className={cn(
                 'text-3xl md:text-5xl font-bold text-primary tracking-tight mb-5',
-                isAr ? 'font-arabic' : 'font-display'
+                localeDisplayClass(lang)
               )}
             >
-              {isAr ? product.title.ar : product.title.en}
+              {tx(lang, product.title)}
             </h1>
 
             <p
               className={cn(
                 'text-base md:text-lg text-primary/65 leading-relaxed mb-8 max-w-xl',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
-              {isAr ? product.desc.ar : product.desc.en}
+              {tx(lang, product.desc)}
             </p>
 
             {/* Season bar */}
             <div className="mb-10 rounded-2xl border border-primary/10 bg-cream-soft px-5 py-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className={cn('text-xs text-primary/45 mb-1', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-xs text-primary/45 mb-1', localeFontClass(lang))}>
                     {isAr ? 'موسم الحصاد' : 'Harvest season'}
                   </p>
-                  <p className={cn('text-sm font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>
-                    {isAr ? product.harvestSeason.ar : product.harvestSeason.en}
+                  <p className={cn('text-sm font-semibold text-primary', localeDisplayClass(lang))}>
+                    {tx(lang, product.harvestSeason)}
                   </p>
                 </div>
                 <div className="text-end">
-                  <p className={cn('text-xs text-primary/45 mb-1', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-xs text-primary/45 mb-1', localeFontClass(lang))}>
                     {isAr ? 'التوفر' : 'Availability'}
                   </p>
-                  <p className={cn('text-sm font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>
-                    {isAr ? product.availability.ar : product.availability.en}
+                  <p className={cn('text-sm font-semibold text-primary', localeDisplayClass(lang))}>
+                    {tx(lang, product.availability)}
                   </p>
                 </div>
               </div>
             </div>
 
             <div className="mb-10 grid grid-cols-1 gap-x-6 gap-y-5 border-b border-primary/10 pb-10 sm:grid-cols-2 sm:gap-y-6">
-              <Spec label={isAr ? 'المعايرة' : 'Sizing'} value={isAr ? product.sizes.ar : product.sizes.en} isAr={isAr} />
+              <Spec label={isAr ? 'المعايرة' : 'Sizing'} value={tx(lang, product.sizes)} lang={lang} />
               <Spec
                 label={isAr ? 'التعبئة' : 'Packaging'}
-                value={isAr ? product.packaging.ar : product.packaging.en}
-                isAr={isAr}
+                value={tx(lang, product.packaging)}
+                lang={lang}
               />
-              {product.brix && <Spec label={isAr ? 'نسبة السكر' : 'Brix'} value={product.brix} isAr={isAr} />}
+              {product.brix && <Spec label={isAr ? 'نسبة السكر' : 'Brix'} value={product.brix} lang={lang} />}
               <Spec
                 label={isAr ? 'التصنيف' : 'Class'}
-                value={isAr ? product.commodityClass.ar : product.commodityClass.en}
-                isAr={isAr}
+                value={tx(lang, product.commodityClass)}
+                lang={lang}
               />
             </div>
 
             <div className="mb-10">
-              <h2 className={cn('text-lg font-bold text-primary mb-4', isAr ? 'font-arabic' : 'font-display')}>
+              <h2 className={cn('text-lg font-bold text-primary mb-4', localeDisplayClass(lang))}>
                 {isAr ? 'المواصفات' : 'Specifications'}
               </h2>
               <ul className="space-y-3">
-                {(isAr ? product.specs.ar : product.specs.en).map((spec) => (
+                {txList(lang, product.specs).map((spec) => (
                   <li
                     key={spec}
                     className={cn(
                       'flex items-start gap-3 text-[15px] text-primary/65 leading-relaxed',
-                      isAr ? 'font-arabic' : 'font-sans'
+                      localeFontClass(lang)
                     )}
                   >
                     <span className="mt-2 h-1.5 w-1.5 rounded-full bg-secondary shrink-0" />
@@ -270,7 +271,7 @@ export default async function SingleProductPage({
                   className="flex items-center gap-2.5 rounded-xl border border-primary/10 bg-white/60 px-3.5 py-3"
                 >
                   <Icon className="h-4 w-4 text-primary shrink-0" strokeWidth={1.75} />
-                  <span className={cn('text-xs font-semibold text-primary', isAr ? 'font-arabic' : 'font-sans')}>
+                  <span className={cn('text-xs font-semibold text-primary', localeFontClass(lang))}>
                     {t}
                   </span>
                 </div>
@@ -278,7 +279,7 @@ export default async function SingleProductPage({
             </div>
 
             <div className="mb-10">
-              <p className={cn('text-xs font-semibold text-primary/45 mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+              <p className={cn('text-xs font-semibold text-primary/45 mb-3', localeFontClass(lang))}>
                 {isAr ? 'إطار الامتثال' : 'Compliance frame'}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -287,7 +288,7 @@ export default async function SingleProductPage({
                     key={c.id}
                     className={cn(
                       'inline-flex rounded-full border border-primary/12 bg-cream-soft px-3 py-1.5 text-[11px] font-semibold text-primary/80',
-                      isAr ? 'font-arabic' : 'font-sans'
+                      localeFontClass(lang)
                     )}
                   >
                     {isAr ? c.nameAr : c.nameEn}
@@ -297,7 +298,7 @@ export default async function SingleProductPage({
                   href={`/${lang}/quality`}
                   className={cn(
                     'inline-flex rounded-full border border-secondary/40 bg-secondary/20 px-3 py-1.5 text-[11px] font-semibold text-primary',
-                    isAr ? 'font-arabic' : 'font-sans'
+                    localeFontClass(lang)
                   )}
                 >
                   {isAr ? 'التفاصيل ←' : 'Details →'}
@@ -308,13 +309,13 @@ export default async function SingleProductPage({
             <div className="rounded-2xl border border-farm/25 bg-farm-soft p-6 md:p-8 text-primary shadow-soft">
               {product.quoteOnly ? (
                 <>
-                  <p className={cn('text-sm text-primary/60 mb-1', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-sm text-primary/60 mb-1', localeFontClass(lang))}>
                     {isAr ? 'جملة' : 'Wholesale'}
                   </p>
-                  <p className={cn('text-3xl font-bold mb-3', isAr ? 'font-arabic' : 'font-display')}>
+                  <p className={cn('text-3xl font-bold mb-3', localeDisplayClass(lang))}>
                     {isAr ? 'السعر بعرض مكتوب' : 'Price by written quote'}
                   </p>
-                  <p className={cn('text-sm text-primary/70 mb-5 leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-sm text-primary/70 mb-5 leading-relaxed', localeFontClass(lang))}>
                     {isAr
                       ? 'السعر يتحدد حسب الكمية والعبوة والوجهة. عرض السعر المكتوب هو اللي يثبت الصفقة.'
                       : 'Price depends on quantity, pack, and destination. The written quotation confirms the deal.'}
@@ -323,7 +324,7 @@ export default async function SingleProductPage({
                     href={`/${lang}/contact`}
                     className={cn(
                       'inline-flex min-h-[48px] items-center justify-center rounded-xl bg-secondary px-5 py-3 text-sm font-semibold text-primary',
-                      isAr ? 'font-arabic' : 'font-sans'
+                      localeFontClass(lang)
                     )}
                   >
                     {isAr ? 'اطلب عرض سعر' : 'Request a quote'}
@@ -331,26 +332,26 @@ export default async function SingleProductPage({
                 </>
               ) : (
                 <>
-                  <p className={cn('text-sm text-primary/60 mb-1', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-sm text-primary/60 mb-1', localeFontClass(lang))}>
                     {isAr ? 'سعر التجزئة (مصر)' : 'Retail price (Egypt)'}
                   </p>
-                  <p className={cn('text-3xl font-bold mb-1', isAr ? 'font-arabic' : 'font-display')}>
+                  <p className={cn('text-3xl font-bold mb-1', localeDisplayClass(lang))}>
                     {formatEgp(getRetailPriceEgp(product), lang)}
                   </p>
-                  <p className={cn('text-sm text-farm font-semibold mb-4', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-sm text-farm font-semibold mb-4', localeFontClass(lang))}>
                     {isAr
                       ? `لكل ${getConsumerUnit(product).ar} · شحن ${formatEgp(49, lang)} داخل مصر`
                       : `Per ${getConsumerUnit(product).en} · ${formatEgp(49, lang)} shipping in Egypt`}
                   </p>
                   <AddToCartButton lang={lang} product={product} variant="accent" />
-                  <p className={cn('mt-4 text-xs text-primary/55', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('mt-4 text-xs text-primary/55', localeFontClass(lang))}>
                     {isAr
                       ? 'أضف للسلة ثم ادفع بالبطاقة أو المحفظة عبر Paymob.'
                       : 'Add to cart, then pay by card or wallet via Paymob.'}
                   </p>
                 </>
               )}
-              <p className={cn('mt-4 text-xs text-primary/50', isAr ? 'font-arabic' : 'font-sans')}>
+              <p className={cn('mt-4 text-xs text-primary/50', localeFontClass(lang))}>
                 {product.quoteOnly
                   ? isAr
                     ? 'الكمية والحد الأدنى يتحددوا في عرض السعر'
@@ -368,12 +369,12 @@ export default async function SingleProductPage({
         <section className="border-t border-primary/8 bg-cream-soft py-16 md:py-20">
           <Container>
             <div className="mb-8 flex items-end justify-between gap-4">
-              <h2 className={cn('text-2xl md:text-3xl font-medium text-primary', isAr ? 'font-arabic' : 'font-display')}>
+              <h2 className={cn('text-2xl md:text-3xl font-medium text-primary', localeDisplayClass(lang))}>
                 {isAr ? 'منتجات ذات صلة' : 'Related products'}
               </h2>
               <Link
                 href={`/${lang}/products`}
-                className={cn('text-sm font-semibold text-primary hover:underline', isAr ? 'font-arabic' : 'font-sans')}
+                className={cn('text-sm font-semibold text-primary hover:underline', localeFontClass(lang))}
               >
                 {isAr ? 'الكل' : 'View all'}
               </Link>
@@ -392,11 +393,20 @@ export default async function SingleProductPage({
   )
 }
 
-function Spec({ label, value, isAr }: { label: string; value: string; isAr: boolean }) {
+function Spec({
+  label,
+  value,
+  lang,
+}: {
+  label: string
+  value: string
+  lang: string
+  isAr?: boolean
+}) {
   return (
     <div>
-      <p className={cn('text-xs text-primary/40 mb-1', isAr ? 'font-arabic' : 'font-sans')}>{label}</p>
-      <p className={cn('text-sm font-semibold text-primary leading-snug', isAr ? 'font-arabic' : 'font-sans')}>
+      <p className={cn('text-xs text-primary/40 mb-1', localeFontClass(lang))}>{label}</p>
+      <p className={cn('text-sm font-semibold text-primary leading-snug', localeFontClass(lang))}>
         {value}
       </p>
     </div>

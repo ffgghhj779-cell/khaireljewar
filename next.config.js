@@ -47,12 +47,12 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/:lang(en|ar)/certifications',
+        source: '/:lang(en|ar|ur|hi)/certifications',
         destination: '/:lang/quality',
         permanent: true,
       },
       {
-        source: '/:lang(en|ar)/products/sallam-egyptian-rice',
+        source: '/:lang(en|ar|ur|hi)/products/sallam-egyptian-rice',
         destination: '/:lang/products/sallam-egyptian-rice-5kg',
         permanent: true,
       },

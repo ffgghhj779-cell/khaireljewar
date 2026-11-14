@@ -1,3 +1,4 @@
+import { tx, localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 import Link from 'next/link'
 import { cn } from '@/lib/utils/cn'
 import { BRAND } from '@/lib/constants/brand'
@@ -27,14 +28,14 @@ export default function AuthCard({
       <div className="relative mx-auto w-full max-w-md px-4">
         <div className="mb-8 text-center">
           <Link href={`/${lang}`} className="inline-block">
-            <p className={cn('text-2xl font-bold tracking-tight text-primary', isAr ? 'font-arabic' : 'font-display')}>
-              {isAr ? BRAND.name.ar : BRAND.name.en}
+            <p className={cn('text-2xl font-bold tracking-tight text-primary', localeDisplayClass(lang))}>
+              {tx(lang, BRAND.name)}
             </p>
           </Link>
-          <h1 className={cn('mt-4 text-xl font-bold text-primary', isAr ? 'font-arabic' : 'font-display')}>
+          <h1 className={cn('mt-4 text-xl font-bold text-primary', localeDisplayClass(lang))}>
             {title}
           </h1>
-          <p className={cn('mt-2 text-[14px] text-primary/55', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('mt-2 text-[14px] text-primary/55', localeFontClass(lang))}>
             {subtitle}
           </p>
         </div>

@@ -1,4 +1,5 @@
 'use client'
+import { tx, localeFontClass } from '@/lib/i18n/localize'
 
 import Image from 'next/image'
 import { PARTNER_LOGOS } from '@/lib/constants/partners'
@@ -20,14 +21,14 @@ function LogoCard({
     <>
       <Image
         src={partner.logo}
-        alt={isAr ? partner.name.ar : partner.name.en}
+        alt={tx(lang, partner.name)}
         width={220}
         height={88}
         unoptimized={!isRaster}
         className="h-[4.6rem] w-auto max-w-[10.5rem] object-contain md:h-[5.4rem] md:max-w-[11.5rem]"
       />
-      <span className={cn('mt-2 text-[11px] font-semibold text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
-        {isAr ? partner.name.ar : partner.name.en}
+      <span className={cn('mt-2 text-[11px] font-semibold text-primary/70', localeFontClass(lang))}>
+        {tx(lang, partner.name)}
       </span>
     </>
   )

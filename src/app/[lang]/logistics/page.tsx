@@ -1,3 +1,4 @@
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SECTION_IMAGES } from '@/lib/constants/images'
@@ -74,10 +75,10 @@ export default function LogisticsPage({ params: { lang } }: { params: { lang: st
                   <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-primary shadow-soft">
                     <Icon className="w-5 h-5" strokeWidth={1.75} />
                   </div>
-                  <h2 className={cn('text-xl font-bold text-dark mb-2', isAr ? 'font-arabic' : 'font-display')}>
+                  <h2 className={cn('text-xl font-bold text-dark mb-2', localeDisplayClass(lang))}>
                     {item.title}
                   </h2>
-                  <p className={cn('text-gray-600 text-[15px] leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-gray-600 text-[15px] leading-relaxed', localeFontClass(lang))}>
                     {item.desc}
                   </p>
                 </div>
@@ -89,12 +90,12 @@ export default function LogisticsPage({ params: { lang } }: { params: { lang: st
             <h2
               className={cn(
                 'text-2xl md:text-4xl font-bold text-dark tracking-tight mb-3 editorial-heading',
-                isAr ? 'font-arabic' : 'font-display'
+                localeDisplayClass(lang)
               )}
             >
               {isAr ? 'رحلة التبريد' : 'The cold chain journey'}
             </h2>
-            <p className={cn('text-gray-600 mb-8 max-w-xl', isAr ? 'font-arabic' : 'font-sans')}>
+            <p className={cn('text-gray-600 mb-8 max-w-xl', localeFontClass(lang))}>
               {isAr
                 ? 'مراقبة مستمرة في كل مرحلة من التعبئة إلى التسليم.'
                 : 'Continuous care at every stage from packing to delivery.'}
@@ -107,7 +108,7 @@ export default function LogisticsPage({ params: { lang } }: { params: { lang: st
               href={`/${lang}/export-markets`}
               className={cn(
                 'inline-flex text-sm font-semibold text-primary hover:text-dark transition-colors',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {isAr ? 'أسواق التصدير ←' : 'Export markets →'}
@@ -116,7 +117,7 @@ export default function LogisticsPage({ params: { lang } }: { params: { lang: st
               href={`/${lang}/guides/incoterms`}
               className={cn(
                 'inline-flex text-sm font-semibold text-primary hover:text-dark transition-colors',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {isAr ? 'شروط الشحن ←' : 'Shipping terms →'}
@@ -125,7 +126,7 @@ export default function LogisticsPage({ params: { lang } }: { params: { lang: st
               href={`/${lang}/guides/iqf`}
               className={cn(
                 'inline-flex text-sm font-semibold text-primary hover:text-dark transition-colors',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {isAr ? 'ما هو التجميد IQF ←' : 'What IQF freezing is →'}

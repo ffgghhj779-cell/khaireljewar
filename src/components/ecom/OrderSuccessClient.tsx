@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -55,24 +56,24 @@ export default function OrderSuccessClient({
     <div className="min-h-screen bg-cream pb-24 pt-28">
       <Container className="max-w-xl px-4 text-center sm:px-6">
         <div className="rounded-2xl border border-farm/30 bg-farm-mist p-6 sm:p-10">
-          <h1 className={cn('mb-3 text-2xl font-bold text-primary', isAr ? 'font-arabic' : 'font-display')}>
+          <h1 className={cn('mb-3 text-2xl font-bold text-primary', localeDisplayClass(lang))}>
             {isAr ? 'شكرًا لطلبك!' : 'Thank you for your order!'}
           </h1>
           {orderRef && (
-            <p className={cn('mb-2 text-sm text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
+            <p className={cn('mb-2 text-sm text-primary/70', localeFontClass(lang))}>
               {isAr ? 'رقم الطلب:' : 'Order:'}{' '}
               <span className="font-mono font-semibold">{orderRef}</span>
             </p>
           )}
           {order && (
-            <p className={cn('mb-4 text-sm text-primary/80', isAr ? 'font-arabic' : 'font-sans')}>
+            <p className={cn('mb-4 text-sm text-primary/80', localeFontClass(lang))}>
               {isAr ? 'الحالة:' : 'Status:'}{' '}
               <span className="font-semibold">{statusLabel}</span>
               {' · '}
               {formatEgp(Number(order.totalEgp), lang)}
             </p>
           )}
-          <p className={cn('mb-8 text-sm leading-relaxed text-primary/60', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('mb-8 text-sm leading-relaxed text-primary/60', localeFontClass(lang))}>
             {isCod
               ? isAr
                 ? 'طلبك اتأكد. هنتواصل معاك قبل التوصيل، والمبلغ يُسدَّد عند الاستلام.'
@@ -85,7 +86,7 @@ export default function OrderSuccessClient({
             href={`/${lang}/products`}
             className={cn(
               'inline-flex rounded-xl bg-secondary text-primary hover:bg-secondary-400 px-6 py-3 text-sm font-semibold',
-              isAr ? 'font-arabic' : 'font-sans'
+              localeFontClass(lang)
             )}
           >
             {isAr ? 'متابعة التسوق' : 'Continue shopping'}

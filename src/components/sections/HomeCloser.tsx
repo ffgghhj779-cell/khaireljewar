@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -48,7 +49,7 @@ export default function HomeCloser({ lang }: { lang: string }) {
           <h2
             className={cn(
               'mb-5 text-[clamp(2rem,8vw,4rem)] font-medium leading-[1.12] tracking-tight text-cream text-balance md:mb-6',
-              isAr ? 'font-arabic' : 'font-display'
+              localeDisplayClass(lang)
             )}
           >
             {isAr ? 'جاهزون عندما تكون جاهزًا.' : 'Ready when you are.'}
@@ -56,7 +57,7 @@ export default function HomeCloser({ lang }: { lang: string }) {
           <p
             className={cn(
               'mx-auto mb-8 max-w-md text-[15px] leading-relaxed text-cream/75 md:mb-10 md:text-lg',
-              isAr ? 'font-arabic' : 'font-display'
+              localeDisplayClass(lang)
             )}
           >
             {isAr
@@ -70,7 +71,7 @@ export default function HomeCloser({ lang }: { lang: string }) {
               className={cn(
                 'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl px-8 touch-manipulation active:scale-[0.98]',
                 'bg-secondary text-primary font-semibold hover:bg-secondary-400',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {isAr ? 'تسوق الآن' : 'Shop now'}
@@ -80,7 +81,7 @@ export default function HomeCloser({ lang }: { lang: string }) {
               className={cn(
                 'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl border border-cream/40 px-8 touch-manipulation active:scale-[0.98]',
                 'text-cream font-semibold hover:bg-cream/10',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {isAr ? 'اطلب عرض سعر' : 'Request a quote'}

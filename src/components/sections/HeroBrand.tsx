@@ -1,4 +1,5 @@
 'use client'
+import { tx, localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
@@ -47,7 +48,7 @@ export default function HeroBrand({ lang }: { lang: string }) {
             isAr ? 'font-arabic-display' : 'font-display'
           )}
         >
-          {isAr ? BRAND.name.ar : BRAND.name.en}
+          {tx(lang, BRAND.name)}
         </motion.h1>
 
         <motion.p
@@ -56,7 +57,7 @@ export default function HeroBrand({ lang }: { lang: string }) {
           transition={{ duration: 0.45, delay: 0.08, ease: BRAND_EASE }}
           className={cn(
             'mb-3 max-w-md text-[clamp(1.05rem,3.8vw,1.65rem)] font-medium leading-snug text-primary/85 text-balance md:mb-4',
-            isAr ? 'font-arabic' : 'font-display'
+            localeDisplayClass(lang)
           )}
         >
           {isAr ? 'خير الجوار يبدأ هنا' : 'Neighborly goodness starts here'}
@@ -68,7 +69,7 @@ export default function HeroBrand({ lang }: { lang: string }) {
           transition={{ duration: 0.4, delay: 0.12, ease: BRAND_EASE }}
           className={cn(
             'mb-6 max-w-sm text-[13px] leading-relaxed text-primary/70 sm:mb-8 sm:text-[15px] md:max-w-md md:text-base',
-            isAr ? 'font-arabic' : 'font-sans'
+            localeFontClass(lang)
           )}
         >
           {isAr
@@ -87,7 +88,7 @@ export default function HeroBrand({ lang }: { lang: string }) {
               className={cn(
                 'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl px-7 touch-manipulation',
                 'bg-secondary text-primary font-semibold shadow-[0_10px_28px_-12px_rgba(229,184,74,0.55)] active:opacity-90',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {isAr ? 'اطلب عرض سعر' : 'Request a quote'}
@@ -97,7 +98,7 @@ export default function HeroBrand({ lang }: { lang: string }) {
               className={cn(
                 'inline-flex min-h-[48px] items-center justify-center rounded-xl border border-primary/20 bg-white/80 px-7 backdrop-blur-sm touch-manipulation',
                 'text-primary font-semibold hover:bg-white active:bg-white',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {isAr ? 'المنتجات' : 'Products'}

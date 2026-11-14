@@ -1,3 +1,4 @@
+import { tx } from '@/lib/i18n/localize'
 export const revalidate = 60
 
 import Container from '@/components/ui/Container'
@@ -47,7 +48,7 @@ export default async function ProductsPage({ params: { lang } }: { params: { lan
             lang,
             products.map((product) => ({
               slug: product.slug,
-              name: lang === 'ar' ? product.title.ar : product.title.en,
+              name: tx(lang, product.title),
             }))
           ),
         ]}

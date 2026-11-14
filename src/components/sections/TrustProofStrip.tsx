@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -34,13 +35,13 @@ export default function TrustProofStrip({ lang }: { lang: string }) {
       <Container>
         <div className="mb-6 flex flex-col items-start justify-between gap-3 md:mb-12 md:flex-row md:items-end">
           <div className="max-w-xl">
-            <p className={cn('mb-2 text-sm font-semibold text-secondary-600', isAr ? 'font-arabic' : 'font-display')}>
+            <p className={cn('mb-2 text-sm font-semibold text-secondary-600', localeDisplayClass(lang))}>
               {isAr ? 'ثقة بهدوء' : 'Quiet confidence'}
             </p>
             <h2
               className={cn(
                 'text-[clamp(1.35rem,5vw,1.875rem)] font-medium text-primary tracking-tight text-balance',
-                isAr ? 'font-arabic' : 'font-display'
+                localeDisplayClass(lang)
               )}
             >
               {isAr ? 'أربعة أعمدة يعتمد عليها الشريك.' : 'Four pillars partners can lean on.'}
@@ -50,7 +51,7 @@ export default function TrustProofStrip({ lang }: { lang: string }) {
             href={`/${lang}/quality`}
             className={cn(
               'text-sm font-semibold text-primary underline-offset-4 hover:underline',
-              isAr ? 'font-arabic' : 'font-sans'
+              localeFontClass(lang)
             )}
           >
             {isAr ? 'نظام الجودة ←' : 'Quality system →'}
@@ -71,10 +72,10 @@ export default function TrustProofStrip({ lang }: { lang: string }) {
               <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-primary">
                 <Icon className="h-5 w-5" strokeWidth={1.75} />
               </div>
-              <h3 className={cn('mb-1.5 text-base font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>
+              <h3 className={cn('mb-1.5 text-base font-semibold text-primary', localeDisplayClass(lang))}>
                 {title}
               </h3>
-              <p className={cn('text-[12px] leading-relaxed text-primary/60', isAr ? 'font-arabic' : 'font-sans')}>
+              <p className={cn('text-[12px] leading-relaxed text-primary/60', localeFontClass(lang))}>
                 {text}
               </p>
             </motion.div>
@@ -94,10 +95,10 @@ export default function TrustProofStrip({ lang }: { lang: string }) {
               <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-secondary/90 text-primary transition-colors group-hover:bg-secondary">
                 <Icon className="h-5 w-5" strokeWidth={1.75} />
               </div>
-              <h3 className={cn('mb-2 text-lg font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>
+              <h3 className={cn('mb-2 text-lg font-semibold text-primary', localeDisplayClass(lang))}>
                 {title}
               </h3>
-              <p className={cn('text-sm leading-relaxed text-primary/60', isAr ? 'font-arabic' : 'font-sans')}>
+              <p className={cn('text-sm leading-relaxed text-primary/60', localeFontClass(lang))}>
                 {text}
               </p>
             </motion.div>

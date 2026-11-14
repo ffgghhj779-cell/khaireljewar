@@ -1,4 +1,5 @@
 'use client'
+import { tx, localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import Link from 'next/link'
 import { ShoppingCart } from 'lucide-react'
@@ -17,15 +18,15 @@ export default function ProductStickyCta({ product, lang }: { product: Product; 
     <div className="mobile-sticky-cta-offset fixed inset-x-0 z-[90] border-t border-primary/10 bg-cream lg:hidden pb-0 shadow-[0_-4px_20px_rgba(26,51,42,0.06)]">
       <div className="mx-auto flex max-w-lg items-center gap-3 px-4 py-2.5">
         <div className="min-w-0 flex-1">
-          <p className={cn('truncate text-sm font-semibold text-primary', isAr ? 'font-arabic' : 'font-display')}>
-            {isAr ? product.title.ar : product.title.en}
+          <p className={cn('truncate text-sm font-semibold text-primary', localeDisplayClass(lang))}>
+            {tx(lang, product.title)}
           </p>
-          <p className={cn('text-[11px] text-farm font-semibold', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-[11px] text-farm font-semibold', localeFontClass(lang))}>
             {product.quoteOnly
               ? isAr
                 ? 'السعر بعرض مكتوب'
                 : 'Price by written quote'
-              : `${formatEgp(price, lang)} / ${isAr ? unit.ar : unit.en}`}
+              : `${formatEgp(price, lang)} / ${tx(lang, unit)}`}
           </p>
         </div>
         {product.quoteOnly ? (
@@ -33,7 +34,7 @@ export default function ProductStickyCta({ product, lang }: { product: Product; 
             href={`/${lang}/contact`}
             className={cn(
               'shrink-0 rounded-xl bg-secondary text-primary hover:bg-secondary-400 px-4 py-3 text-sm font-semibold min-h-[44px] flex items-center touch-manipulation active:scale-[0.98]',
-              isAr ? 'font-arabic' : 'font-sans'
+              localeFontClass(lang)
             )}
           >
             {isAr ? 'اطلب عرض سعر' : 'Request a quote'}
@@ -55,7 +56,7 @@ export default function ProductStickyCta({ product, lang }: { product: Product; 
           }
           className={cn(
             'shrink-0 rounded-xl bg-secondary text-primary hover:bg-secondary-400 px-4 py-3 text-sm font-semibold min-h-[44px] flex items-center gap-2 touch-manipulation active:scale-[0.98]',
-            isAr ? 'font-arabic' : 'font-sans'
+            localeFontClass(lang)
           )}
         >
           <ShoppingCart className="w-4 h-4" />
@@ -65,7 +66,7 @@ export default function ProductStickyCta({ product, lang }: { product: Product; 
           href={`/${lang}/cart`}
           className={cn(
             'shrink-0 rounded-xl border border-primary/20 px-3 py-3 text-xs font-semibold text-primary min-h-[44px] flex items-center',
-            isAr ? 'font-arabic' : 'font-sans'
+            localeFontClass(lang)
           )}
         >
           {isAr ? 'السلة' : 'Cart'}

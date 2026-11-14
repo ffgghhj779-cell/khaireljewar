@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -90,13 +91,13 @@ export default function TrustQuiet({ lang }: { lang: string }) {
           transition={{ duration: 0.5, ease: BRAND_EASE }}
           className="mx-auto mb-8 max-w-xl text-center md:mb-16"
         >
-          <p className={cn('mb-3 text-primary font-semibold', isAr ? 'font-arabic' : 'font-display')}>
+          <p className={cn('mb-3 text-primary font-semibold', localeDisplayClass(lang))}>
             {isAr ? 'من المزرعة إلى المائدة' : 'From farm to table'}
           </p>
           <h2
             className={cn(
               'text-[clamp(2.25rem,4.5vw,3.75rem)] font-medium text-primary leading-[1.1]',
-              isAr ? 'font-arabic' : 'font-display'
+              localeDisplayClass(lang)
             )}
           >
             {isAr ? 'ثقة تُرى.' : 'Trust you can see.'}
@@ -145,7 +146,7 @@ export default function TrustQuiet({ lang }: { lang: string }) {
               <h3
                 className={cn(
                   'text-2xl md:text-3xl text-cream font-medium',
-                  isAr ? 'font-arabic' : 'font-display'
+                  localeDisplayClass(lang)
                 )}
               >
                 {slide.title}
@@ -202,7 +203,7 @@ export default function TrustQuiet({ lang }: { lang: string }) {
               href={`/${lang}/quality`}
               className={cn(
                 'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl bg-secondary px-7 font-semibold text-primary hover:bg-secondary-400',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {isAr ? 'تحميل الشهادات' : 'Download certificates'}
@@ -211,7 +212,7 @@ export default function TrustQuiet({ lang }: { lang: string }) {
               href={`/${lang}/contact`}
               className={cn(
                 'magnetic-cta inline-flex min-h-[48px] items-center justify-center rounded-xl border border-secondary/40 px-7 font-semibold text-primary hover:bg-secondary hover:text-primary',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {isAr ? 'اطلب وثيقة محددة' : 'Request a specific doc'}

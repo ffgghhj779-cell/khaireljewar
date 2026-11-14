@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import { BRAND } from '@/lib/constants/brand'
 import { HOME_FAQ } from '@/lib/data/faq'
+import { i18n, localeOg, type Locale } from '@/lib/i18n/config'
+import { asLocale, tx } from '@/lib/i18n/localize'
+import { UI } from '@/lib/i18n/ui'
 
 export const CANONICAL_HOST = 'khairaljewargroup.com'
 
@@ -26,19 +29,19 @@ type PageMetaInput = {
 }
 
 function brandName(lang: string) {
-  return lang === 'ar' ? BRAND.nameFull.ar : BRAND.nameFull.en
+  return tx(lang, BRAND.nameFull)
 }
 
-function localeCode(lang: string) {
-  return lang === 'ar' ? 'ar_SA' : 'en_US'
+export function localeCode(lang: string) {
+  return localeOg[asLocale(lang)]
 }
 
 export function languageAlternates(path = '') {
-  return {
-    en: `${SITE_URL}/en${path}`,
-    ar: `${SITE_URL}/ar${path}`,
-    'x-default': `${SITE_URL}/en${path}`,
-  }
+  const languages = Object.fromEntries(
+    i18n.locales.map((locale) => [locale, `${SITE_URL}/${locale}${path}`])
+  ) as Record<Locale, string> & { 'x-default': string }
+  languages['x-default'] = `${SITE_URL}/en${path}`
+  return languages
 }
 
 export function buildPageMetadata({
@@ -49,9 +52,11 @@ export function buildPageMetadata({
   image = DEFAULT_OG_IMAGE,
   noindex = false,
 }: PageMetaInput): Metadata {
-  const canonical = `${SITE_URL}/${lang}${path}`
-  const brand = brandName(lang)
+  const locale = asLocale(lang)
+  const canonical = `${SITE_URL}/${locale}${path}`
+  const brand = brandName(locale)
   const imageUrl = image.startsWith('http') ? image : `${SITE_URL}${image}`
+  const alternateLocales = i18n.locales.filter((l) => l !== locale).map((l) => localeOg[l])
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -67,8 +72,8 @@ export function buildPageMetadata({
       description,
       url: canonical,
       siteName: brand,
-      locale: localeCode(lang),
-      alternateLocale: lang === 'ar' ? ['en_US'] : ['ar_SA'],
+      locale: localeCode(locale),
+      alternateLocale: alternateLocales,
       type: 'website',
       images: [{ url: imageUrl, width: 1200, height: 630, alt: `${title} | ${brand}` }],
     },
@@ -86,7 +91,13 @@ export function organizationJsonLd() {
     '@type': 'Organization',
     '@id': `${SITE_URL}/#organization`,
     name: BRAND.nameFull.en,
-    alternateName: [BRAND.nameFull.ar, BRAND.nameGroup.en, BRAND.nameGroup.ar],
+    alternateName: [
+      BRAND.nameFull.ar,
+      BRAND.nameFull.ur,
+      BRAND.nameFull.hi,
+      BRAND.nameGroup.en,
+      BRAND.nameGroup.ar,
+    ],
     url: SITE_URL,
     logo: {
       '@type': 'ImageObject',
@@ -107,8 +118,8 @@ export function organizationJsonLd() {
         '@type': 'ContactPoint',
         telephone: BRAND.contact.phoneTel,
         contactType: 'sales',
-        areaServed: ['SA', 'AE', 'BH', 'KW', 'OM', 'QA', 'EG', 'EU'],
-        availableLanguage: ['en', 'ar'],
+        areaServed: ['SA', 'AE', 'BH', 'KW', 'OM', 'QA', 'EG', 'EU', 'PK', 'IN', 'BD'],
+        availableLanguage: [...i18n.locales],
       },
       {
         '@type': 'ContactPoint',
@@ -128,8 +139,8 @@ export function websiteJsonLd() {
     '@id': `${SITE_URL}/#website`,
     url: SITE_URL,
     name: BRAND.nameFull.en,
-    alternateName: BRAND.nameFull.ar,
-    inLanguage: ['en', 'ar'],
+    alternateName: [BRAND.nameFull.ar, BRAND.nameFull.ur, BRAND.nameFull.hi],
+    inLanguage: [...i18n.locales],
     publisher: { '@id': `${SITE_URL}/#organization` },
   }
 }
@@ -142,7 +153,9 @@ export function graphJsonLd() {
 }
 
 export function faqJsonLd(lang: string) {
-  const items = HOME_FAQ[lang === 'ar' ? 'ar' : 'en']
+  const locale = asLocale(lang)
+  const faqKey = locale === 'ar' || locale === 'ur' ? 'ar' : 'en'
+  const items = HOME_FAQ[faqKey]
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -158,12 +171,17 @@ export function faqJsonLd(lang: string) {
 }
 
 function minimumOrderLabel(minOrder: number, unit: 'MT' | 'Containers', lang: string): string {
-  const isAr = lang === 'ar'
+  const locale = asLocale(lang)
   if (unit === 'Containers') {
-    if (isAr) return minOrder === 1 ? 'حاوية واحدة' : `${minOrder} حاويات`
+    if (locale === 'ar') return minOrder === 1 ? 'حاوية واحدة' : `${minOrder} حاويات`
+    if (locale === 'ur') return minOrder === 1 ? '1 کنٹینر' : `${minOrder} کنٹینرز`
+    if (locale === 'hi') return minOrder === 1 ? '1 कंटेनर' : `${minOrder} कंटेनर`
     return minOrder === 1 ? '1 container' : `${minOrder} containers`
   }
-  return isAr ? `${minOrder} طن` : `${minOrder} MT`
+  if (locale === 'ar') return `${minOrder} طن`
+  if (locale === 'ur') return `${minOrder} میٹرک ٹن`
+  if (locale === 'hi') return `${minOrder} मीट्रिक टन`
+  return `${minOrder} MT`
 }
 
 /** Search title and description for one product. Jeddah / Saudi / GCC only. */
@@ -174,13 +192,30 @@ export function productSearchCopy(input: {
   minOrder?: number
   unit: 'MT' | 'Containers'
 }): { title: string; description: string } {
-  const order = input.minOrder == null ? null : minimumOrderLabel(input.minOrder, input.unit, input.lang)
-  if (input.lang === 'ar') {
+  const locale = asLocale(input.lang)
+  const order = input.minOrder == null ? null : minimumOrderLabel(input.minOrder, input.unit, locale)
+  if (locale === 'ar') {
     return {
       title: `${input.name} للتصدير`,
       description: order
         ? `${input.name} بالجملة من جدة إلى السعودية والخليج. الحد الأدنى ${order}. اطلب عرض سعر.`
         : `${input.name} بالجملة من جدة إلى السعودية والخليج. الكمية تتحدد في عرض السعر. اطلب عرض سعر.`,
+    }
+  }
+  if (locale === 'ur') {
+    return {
+      title: `${input.name} برآمد کنندہ`,
+      description: order
+        ? `${input.name} بالجملہ جدّہ سے سعودی عرب اور خلیج تک۔ کم از کم آرڈر ${order}۔ قیمت کی درخواست کریں۔`
+        : `${input.name} بالجملہ جدّہ سے سعودی عرب اور خلیج تک۔ مقدار کوٹیشن میں طے ہوتی ہے۔ قیمت کی درخواست کریں۔`,
+    }
+  }
+  if (locale === 'hi') {
+    return {
+      title: `${input.name} निर्यातक`,
+      description: order
+        ? `${input.name} थोक — जेद्दाह से सऊदी अरब और जीसीसी तक। न्यूनतम ऑर्डर ${order}। कोटेशन माँगें।`
+        : `${input.name} थोक — जेद्दाह से सऊदी अरब और जीसीसी तक। मात्रा कोटेशन में तय होती है। कोटेशन माँगें।`,
     }
   }
   return {
@@ -222,7 +257,8 @@ export function productJsonLd(input: {
 }
 
 export function breadcrumbJsonLd(lang: string, trail: { name: string; path: string }[]) {
-  const items = [{ name: lang === 'ar' ? 'الرئيسية' : 'Home', path: '' }, ...trail]
+  const locale = asLocale(lang)
+  const items = [{ name: tx(locale, UI.nav.home), path: '' }, ...trail]
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -230,7 +266,7 @@ export function breadcrumbJsonLd(lang: string, trail: { name: string; path: stri
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: `${SITE_URL}/${lang}${item.path}`,
+      item: `${SITE_URL}/${locale}${item.path}`,
     })),
   }
 }
@@ -249,17 +285,35 @@ export function productListJsonLd(lang: string, products: { slug: string; name: 
 }
 
 export function logisticsServiceJsonLd(lang: string) {
-  const isAr = lang === 'ar'
+  const locale = asLocale(lang)
+  const copy = {
+    name: {
+      en: 'Cold-chain export from Jeddah',
+      ar: 'شحن مبرد وتصدير من جدة',
+      ur: 'جدّہ سے کولڈ چین برآمد',
+      hi: 'जेद्दाह से कोल्ड-चेन निर्यात',
+    },
+    serviceType: {
+      en: 'Export coordination and cold-chain shipping',
+      ar: 'تنسيق التصدير والشحن المبرد',
+      ur: 'برآمد کی ہم آہنگی اور کولڈ چین شپنگ',
+      hi: 'निर्यात समन्वय और कोल्ड-चेन शिपिंग',
+    },
+    description: {
+      en: 'Temperature-controlled handling, reefer transport, and export shipping coordinated from Jeddah, with shipment follow-up.',
+      ar: 'مناولة مبردة ونقل بالحاويات المبردة وتنسيق شحن التصدير من جدة، مع متابعة الشحنة.',
+      ur: 'درجہ حرارت کنٹرولڈ ہینڈلنگ، ریفر ٹرانسپورٹ، اور جدّہ سے مربوط برآمدی شپنگ بمع شپمنٹ فالو اپ۔',
+      hi: 'तापमान-नियंत्रित हैंडलिंग, रीफ़र परिवहन, और जेद्दाह से समन्वयित निर्यात शिपिंग, शिपमेंट फ़ॉलो-अप के साथ।',
+    },
+  }
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: isAr ? 'شحن مبرد وتصدير من جدة' : 'Cold-chain export from Jeddah',
-    serviceType: isAr ? 'تنسيق التصدير والشحن المبرد' : 'Export coordination and cold-chain shipping',
+    name: tx(locale, copy.name),
+    serviceType: tx(locale, copy.serviceType),
     provider: { '@id': `${SITE_URL}/#organization` },
-    areaServed: ['SA', 'AE', 'BH', 'KW', 'OM', 'QA'],
-    url: `${SITE_URL}/${lang}/logistics`,
-    description: isAr
-      ? 'مناولة مبردة ونقل بالحاويات المبردة وتنسيق شحن التصدير من جدة، مع متابعة الشحنة.'
-      : 'Temperature-controlled handling, reefer transport, and export shipping coordinated from Jeddah, with shipment follow-up.',
+    areaServed: ['SA', 'AE', 'BH', 'KW', 'OM', 'QA', 'PK', 'IN', 'BD'],
+    url: `${SITE_URL}/${locale}/logistics`,
+    description: tx(locale, copy.description),
   }
 }

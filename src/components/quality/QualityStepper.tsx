@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils/cn'
@@ -44,13 +45,13 @@ export default function QualityStepper({ lang }: QualityStepperProps) {
           transition={{ delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="relative"
         >
-          <p className={cn('text-primary/40 text-4xl font-bold mb-4', isAr ? 'font-arabic' : 'font-display')}>
+          <p className={cn('text-primary/40 text-4xl font-bold mb-4', localeDisplayClass(lang))}>
             {step.num}
           </p>
-          <h3 className={cn('text-lg font-bold text-dark mb-2', isAr ? 'font-arabic' : 'font-display')}>
+          <h3 className={cn('text-lg font-bold text-dark mb-2', localeDisplayClass(lang))}>
             {step.title}
           </h3>
-          <p className={cn('text-sm text-gray-600 leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-sm text-gray-600 leading-relaxed', localeFontClass(lang))}>
             {step.desc}
           </p>
         </motion.div>

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { MOCK_PRODUCTS } from '@/lib/data/products'
+import { i18n } from '@/lib/i18n/config'
 import { languageAlternates, SITE_URL } from '@/lib/seo'
 
 const STATIC_PATHS = [
@@ -19,7 +20,7 @@ const STATIC_PATHS = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const slugs = MOCK_PRODUCTS.map((product) => product.slug)
-  const langs = ['en', 'ar'] as const
+  const langs = i18n.locales
   const now = new Date()
 
   const staticEntries = langs.flatMap((lang) =>

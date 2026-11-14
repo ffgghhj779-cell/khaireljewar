@@ -1,3 +1,4 @@
+import { tx, txList, localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PARTNERS } from '@/lib/constants/partners'
@@ -17,18 +18,18 @@ export default function OurPartners({ lang, hideTitle = false, className }: Prop
     <div className={cn('w-full', className)}>
       {!hideTitle && (
         <div className="mx-auto mb-10 max-w-2xl text-center md:mb-14">
-          <p className={cn('mb-3 text-sm font-semibold text-primary', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('mb-3 text-sm font-semibold text-primary', localeFontClass(lang))}>
             {isAr ? 'خير الجوار' : 'Khair Aljaar'}
           </p>
           <h2
             className={cn(
               'mb-4 text-3xl font-bold tracking-tight text-dark editorial-heading md:text-4xl',
-              isAr ? 'font-arabic' : 'font-display'
+              localeDisplayClass(lang)
             )}
           >
             {isAr ? 'شركاؤنا' : 'Our Partners'}
           </h2>
-          <p className={cn('text-base leading-relaxed text-gray-600 md:text-lg', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-base leading-relaxed text-gray-600 md:text-lg', localeFontClass(lang))}>
             {isAr
               ? 'شركات المجموعة: تسامي الوطنية، الريحان الماسي، وثمار أرضنا.'
               : 'Group companies: Tasami Al-Wataniya, Al Rehan Al Masi, and Thimar Ardina.'}
@@ -45,7 +46,7 @@ export default function OurPartners({ lang, hideTitle = false, className }: Prop
             <div className="mx-auto grid aspect-square w-full max-w-[15rem] place-items-center border border-farm/30 bg-farm-mist p-6 shadow-soft">
               <Image
                 src={partner.logo}
-                alt={isAr ? partner.name.ar : partner.name.en}
+                alt={tx(lang, partner.name)}
                 width={280}
                 height={280}
                 unoptimized={partner.logo.endsWith('.svg')}
@@ -60,26 +61,26 @@ export default function OurPartners({ lang, hideTitle = false, className }: Prop
                   isAr ? 'font-arabic normal-case tracking-normal text-xs' : 'font-sans'
                 )}
               >
-                {isAr ? partner.tag.ar : partner.tag.en}
+                {tx(lang, partner.tag)}
               </p>
               <h3
                 className={cn(
                   'mb-3 text-2xl font-bold tracking-tight text-primary md:text-[1.85rem]',
-                  isAr ? 'font-arabic' : 'font-display'
+                  localeDisplayClass(lang)
                 )}
               >
-                {isAr ? partner.name.ar : partner.name.en}
+                {tx(lang, partner.name)}
               </h3>
-              <p className={cn('mb-5 text-[1.02rem] leading-relaxed text-primary/80', isAr ? 'font-arabic' : 'font-sans')}>
-                {isAr ? partner.brief.ar : partner.brief.en}
+              <p className={cn('mb-5 text-[1.02rem] leading-relaxed text-primary/80', localeFontClass(lang))}>
+                {tx(lang, partner.brief)}
               </p>
               <ul className="mb-6 flex flex-wrap gap-2">
-                {(isAr ? partner.focus.ar : partner.focus.en).map((item) => (
+                {txList(lang, partner.focus).map((item) => (
                   <li
                     key={item}
                     className={cn(
                       'border border-farm/25 bg-farm-soft px-3 py-1.5 text-xs font-semibold text-primary',
-                      isAr ? 'font-arabic' : 'font-sans'
+                      localeFontClass(lang)
                     )}
                   >
                     {item}
@@ -92,7 +93,7 @@ export default function OurPartners({ lang, hideTitle = false, className }: Prop
                 rel={partner.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className={cn(
                   'inline-flex min-h-[48px] items-center rounded-xl bg-secondary px-5 text-sm font-semibold text-primary hover:bg-secondary/90',
-                  isAr ? 'font-arabic' : 'font-sans'
+                  localeFontClass(lang)
                 )}
               >
                 {partner.href.startsWith('http')

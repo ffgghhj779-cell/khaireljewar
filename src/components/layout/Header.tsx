@@ -12,25 +12,17 @@ import { useScrollCompact } from '@/hooks/useScrollCompact'
 import { createClient, isSupabaseConfigured } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils/cn'
 import { MOBILE_EASE_OUT } from '@/lib/constants/motion'
+import { localeDisplayClass, localeFontClass, tx } from '@/lib/i18n/localize'
+import { UI } from '@/lib/i18n/ui'
 
-const navigation = {
-  en: [
-    { name: 'Products', href: '/products' },
-    { name: 'About', href: '/about' },
-    { name: 'Partners', href: '/partners' },
-    { name: 'Quality', href: '/quality' },
-    { name: 'Logistics', href: '/logistics' },
-    { name: 'Contact', href: '/contact' },
-  ],
-  ar: [
-    { name: 'المنتجات', href: '/products' },
-    { name: 'من نحن', href: '/about' },
-    { name: 'شركاؤنا', href: '/partners' },
-    { name: 'الجودة', href: '/quality' },
-    { name: 'اللوجستيات', href: '/logistics' },
-    { name: 'اتصل بنا', href: '/contact' },
-  ],
-}
+const NAV_HREFS = [
+  { key: 'products' as const, href: '/products' },
+  { key: 'about' as const, href: '/about' },
+  { key: 'partners' as const, href: '/partners' },
+  { key: 'quality' as const, href: '/quality' },
+  { key: 'logistics' as const, href: '/logistics' },
+  { key: 'contact' as const, href: '/contact' },
+]
 
 /** Cream nav — brand-forward; consumer cart + checkout */
 export default function Header({ lang }: { lang: string }) {
@@ -38,8 +30,12 @@ export default function Header({ lang }: { lang: string }) {
   const [signedIn, setSignedIn] = useState(false)
   const isCompact = useScrollCompact()
   const pathname = usePathname()
-  const isAr = lang === 'ar'
-  const navItems = navigation[lang as keyof typeof navigation] || navigation.en
+  const font = localeFontClass(lang)
+  const display = localeDisplayClass(lang)
+  const navItems = NAV_HREFS.map((item) => ({
+    name: tx(lang, UI.nav[item.key]),
+    href: item.href,
+  }))
 
   useEffect(() => {
     if (!isSupabaseConfigured()) return
@@ -65,8 +61,12 @@ export default function Header({ lang }: { lang: string }) {
       isActive(href)
         ? 'text-primary bg-primary/8'
         : 'text-primary/75 hover:text-primary hover:bg-primary/5',
-      isAr ? 'font-arabic' : 'font-sans'
+      font
     )
+
+  const accountLabel = signedIn
+    ? tx(lang, { en: 'Account', ar: 'حسابي', ur: 'میرا اکاؤنٹ', hi: 'मेरा खाता' })
+    : tx(lang, UI.nav.login)
 
   return (
     <header
@@ -82,7 +82,7 @@ export default function Header({ lang }: { lang: string }) {
           <div className="hidden lg:flex items-center gap-1 relative z-[102] flex-1">
             {navItems.slice(0, 3).map((item) => (
               <Link
-                key={item.name}
+                key={item.href}
                 href={`/${lang}${item.href}`}
                 className={linkClass(item.href)}
                 aria-current={isActive(item.href) ? 'page' : undefined}
@@ -103,7 +103,7 @@ export default function Header({ lang }: { lang: string }) {
           <div className="hidden lg:flex items-center justify-end gap-1 relative z-[102] flex-1">
             {navItems.slice(3).map((item) => (
               <Link
-                key={item.name}
+                key={item.href}
                 href={`/${lang}${item.href}`}
                 className={linkClass(item.href)}
                 aria-current={isActive(item.href) ? 'page' : undefined}
@@ -119,19 +119,19 @@ export default function Header({ lang }: { lang: string }) {
                 href={signedIn ? `/${lang}/account` : `/${lang}/login`}
                 className={cn(
                   'hidden xl:inline-flex min-h-[40px] items-center rounded-xl border border-primary/15 px-3 text-[12px] font-semibold text-primary hover:bg-primary/5',
-                  isAr ? 'font-arabic' : 'font-sans'
+                  font
                 )}
               >
-                {signedIn ? (isAr ? 'حسابي' : 'Account') : isAr ? 'دخول' : 'Sign in'}
+                {accountLabel}
               </Link>
               <Link
                 href={`/${lang}/contact`}
                 className={cn(
                   'hidden xl:inline-flex min-h-[40px] items-center rounded-xl border border-primary/15 px-3 text-[12px] font-semibold text-primary hover:bg-primary/5',
-                  isAr ? 'font-arabic' : 'font-sans'
+                  font
                 )}
               >
-                {isAr ? 'تواصل' : 'Contact'}
+                {tx(lang, UI.nav.reach)}
               </Link>
             </div>
           </div>
@@ -143,7 +143,11 @@ export default function Header({ lang }: { lang: string }) {
               type="button"
               onClick={() => setMobileMenuOpen((open) => !open)}
               className="min-w-[44px] h-10 flex items-center justify-center transition-colors touch-manipulation active:scale-95 text-primary hover:bg-primary/8"
-              aria-label={mobileMenuOpen ? (isAr ? 'إغلاق القائمة' : 'Close menu') : (isAr ? 'فتح القائمة' : 'Open menu')}
+              aria-label={
+                mobileMenuOpen
+                  ? tx(lang, { en: 'Close menu', ar: 'إغلاق القائمة', ur: 'مینو بند کریں', hi: 'मेनू बंद करें' })
+                  : tx(lang, { en: 'Open menu', ar: 'فتح القائمة', ur: 'مینو کھولیں', hi: 'मेनू खोलें' })
+              }
               aria-expanded={mobileMenuOpen}
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
@@ -168,7 +172,7 @@ export default function Header({ lang }: { lang: string }) {
             >
               {navItems.map((item) => (
                 <Link
-                  key={item.name}
+                  key={item.href}
                   href={`/${lang}${item.href}`}
                   onClick={() => setMobileMenuOpen(false)}
                   aria-current={isActive(item.href) ? 'page' : undefined}
@@ -176,7 +180,7 @@ export default function Header({ lang }: { lang: string }) {
                     'block px-5 py-4 min-h-[52px] text-[15px] font-semibold border-b border-primary/8 last:border-0',
                     'hover:bg-primary/4 transition-colors touch-manipulation',
                     isActive(item.href) ? 'text-primary bg-primary/5' : 'text-primary',
-                    isAr ? 'font-arabic' : 'font-display'
+                    display
                   )}
                 >
                   {item.name}
@@ -188,10 +192,17 @@ export default function Header({ lang }: { lang: string }) {
                 className={cn(
                   'block px-5 py-4 min-h-[52px] text-[15px] font-semibold border-b border-primary/8',
                   'hover:bg-primary/4 transition-colors touch-manipulation text-primary',
-                  isAr ? 'font-arabic' : 'font-display'
+                  display
                 )}
               >
-                {signedIn ? (isAr ? 'حسابي' : 'My account') : isAr ? 'تسجيل الدخول' : 'Sign in'}
+                {signedIn
+                  ? tx(lang, { en: 'My account', ar: 'حسابي', ur: 'میرا اکاؤنٹ', hi: 'मेरा खाता' })
+                  : tx(lang, {
+                      en: 'Sign in',
+                      ar: 'تسجيل الدخول',
+                      ur: 'سائن ان',
+                      hi: 'साइन इन',
+                    })}
               </Link>
               {!signedIn && (
                 <Link
@@ -200,10 +211,15 @@ export default function Header({ lang }: { lang: string }) {
                   className={cn(
                     'block px-5 py-4 min-h-[52px] text-[15px] font-semibold border-b border-primary/8',
                     'hover:bg-primary/4 transition-colors touch-manipulation text-primary',
-                    isAr ? 'font-arabic' : 'font-display'
+                    display
                   )}
                 >
-                  {isAr ? 'إنشاء حساب' : 'Create account'}
+                  {tx(lang, {
+                    en: 'Create account',
+                    ar: 'إنشاء حساب',
+                    ur: 'اکاؤنٹ بنائیں',
+                    hi: 'खाता बनाएँ',
+                  })}
                 </Link>
               )}
               <Link
@@ -211,15 +227,13 @@ export default function Header({ lang }: { lang: string }) {
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
                   'block w-full px-5 py-4 min-h-[52px] text-start text-[15px] font-semibold text-primary bg-secondary',
-                  isAr ? 'font-arabic' : 'font-display'
+                  display
                 )}
               >
-                {isAr ? 'اطلب عرض سعر' : 'Request a quote'}
+                {tx(lang, UI.cta.requestQuote)}
               </Link>
               <div className="p-4 border-t border-primary/8 flex items-center justify-between gap-3 bg-cream-deep">
-                <span className={cn('text-sm text-primary/50', isAr ? 'font-arabic' : 'font-sans')}>
-                  {isAr ? 'اللغة' : 'Language'}
-                </span>
+                <span className={cn('text-sm text-primary/50', font)}>{tx(lang, UI.cta.switchLanguage)}</span>
                 <LanguageSwitch lang={lang} variant="menu" />
               </div>
             </motion.div>

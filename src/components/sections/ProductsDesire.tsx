@@ -1,4 +1,5 @@
 'use client'
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -46,13 +47,13 @@ export default function ProductsDesire({ lang, products }: ProductsDesireProps) 
           <div className="mb-3 flex justify-center md:mb-4">
             <BotanicalMotif kind="date" className="h-8 w-6 opacity-45 md:h-9 md:w-7" />
           </div>
-          <p className={cn('mb-2.5 text-primary font-semibold md:mb-3', isAr ? 'font-arabic' : 'font-display')}>
+          <p className={cn('mb-2.5 text-primary font-semibold md:mb-3', localeDisplayClass(lang))}>
             {isAr ? 'المنتجات' : 'Our products'}
           </p>
           <h2
             className={cn(
               'text-[clamp(2rem,7vw,3.75rem)] font-medium text-primary leading-[1.12] tracking-tight text-balance',
-              isAr ? 'font-arabic' : 'font-display'
+              localeDisplayClass(lang)
             )}
           >
             {isAr ? 'من خير الجوار.' : 'Fresh from Khair Aljaar.'}
@@ -80,7 +81,7 @@ export default function ProductsDesire({ lang, products }: ProductsDesireProps) 
               className={cn(
                 'magnetic-cta inline-flex items-center justify-center gap-2 min-h-[52px] px-8 rounded-xl font-semibold',
                 'bg-secondary text-primary hover:bg-secondary-400',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {isAr ? 'كل المنتجات' : 'View all'}

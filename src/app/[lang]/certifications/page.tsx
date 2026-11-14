@@ -1,3 +1,4 @@
+import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
@@ -52,18 +53,18 @@ export default function CertificationsPage({ params: { lang } }: { params: { lan
       <section className="pt-14 md:pt-20 pb-16 md:pb-20 bg-canvas-soft">
         <Container size="large">
           <div className="max-w-3xl">
-            <p className={cn('text-primary font-semibold text-sm mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+            <p className={cn('text-primary font-semibold text-sm mb-3', localeFontClass(lang))}>
               {isAr ? 'الجودة' : 'Quality'}
             </p>
             <h1
               className={cn(
                 'text-4xl md:text-6xl font-bold text-dark tracking-tight mb-5 editorial-heading',
-                isAr ? 'font-arabic' : 'font-display'
+                localeDisplayClass(lang)
               )}
             >
               {isAr ? 'ثقة بلا ضوضاء.' : 'Quiet confidence.'}
             </h1>
-            <p className={cn('text-base md:text-lg text-gray-600 leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+            <p className={cn('text-base md:text-lg text-gray-600 leading-relaxed', localeFontClass(lang))}>
               {isAr
                 ? 'نظام جودة واضح من المزارع الشريكة إلى الشحنة — بتنسيق من جدة.'
                 : 'A clear quality system from partner farms to shipment — coordinated from Jeddah.'}
@@ -78,10 +79,10 @@ export default function CertificationsPage({ params: { lang } }: { params: { lan
                   <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-primary shadow-soft">
                     <Icon className="w-5 h-5" strokeWidth={1.75} />
                   </div>
-                  <h2 className={cn('text-lg font-bold text-dark mb-2', isAr ? 'font-arabic' : 'font-display')}>
+                  <h2 className={cn('text-lg font-bold text-dark mb-2', localeDisplayClass(lang))}>
                     {item.title}
                   </h2>
-                  <p className={cn('text-sm text-gray-600 leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-sm text-gray-600 leading-relaxed', localeFontClass(lang))}>
                     {item.desc}
                   </p>
                 </div>
@@ -97,12 +98,12 @@ export default function CertificationsPage({ params: { lang } }: { params: { lan
             <h2
               className={cn(
                 'text-2xl md:text-4xl font-bold text-dark tracking-tight mb-3 editorial-heading',
-                isAr ? 'font-arabic' : 'font-display'
+                localeDisplayClass(lang)
               )}
             >
               {isAr ? 'مسار الضمان' : 'How we assure quality'}
             </h2>
-            <p className={cn('text-gray-600', isAr ? 'font-arabic' : 'font-sans')}>
+            <p className={cn('text-gray-600', localeFontClass(lang))}>
               {isAr ? 'أربع مراحل بسيطة من الزراعة حتى الشحن.' : 'Four simple stages from farming to shipping.'}
             </p>
           </div>
@@ -112,7 +113,7 @@ export default function CertificationsPage({ params: { lang } }: { params: { lan
               href={`/${lang}/contact`}
               className={cn(
                 'inline-flex text-sm font-semibold text-primary hover:text-dark transition-colors',
-                isAr ? 'font-arabic' : 'font-sans'
+                localeFontClass(lang)
               )}
             >
               {isAr ? 'اطلب مستندات الجودة ←' : 'Request quality documents →'}
