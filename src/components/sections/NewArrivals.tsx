@@ -23,17 +23,22 @@ const DESKTOP_SPANS = [
   'lg:col-span-2',
 ]
 
+/** Single-row, double-width tiles lay out side by side so the photo keeps a near-square frame */
+const isWideSpan = (span: string) => span.includes('col-span-2') && !span.includes('row-span-2')
+
 function Tile({
   product,
   lang,
   index,
   hero,
+  wide,
   className,
 }: {
   product: Product
   lang: string
   index: number
   hero?: boolean
+  wide?: boolean
   className?: string
 }) {
   const isAr = lang === 'ar'
@@ -55,10 +60,17 @@ function Tile({
         href={`/${lang}/products/${product.slug}`}
         className={cn(
           'group flex h-full min-h-[22rem] flex-col overflow-hidden rounded-[1.75rem] border border-primary/10 bg-white lg:min-h-0',
+          wide && 'lg:flex-row',
           'shadow-[0_18px_44px_-28px_rgba(26,51,42,0.35)] transition-shadow duration-500 hover:shadow-[0_26px_60px_-28px_rgba(26,51,42,0.45)]'
         )}
       >
-        <div className={cn('relative min-h-0 flex-1 overflow-hidden', packshot ? 'bg-gradient-to-b from-cream-soft to-cream' : 'bg-cream')}>
+        <div
+          className={cn(
+            'relative min-h-0 flex-1 overflow-hidden',
+            wide && 'lg:w-[54%] lg:flex-none',
+            packshot ? 'bg-gradient-to-b from-cream-soft to-cream' : 'bg-cream'
+          )}
+        >
           <Image
             src={resolveProductImage(product.image, product.category.en, product.slug)}
             alt={title}
@@ -85,7 +97,13 @@ function Tile({
           {isOrchardImage(product.image) && <BrandStamp size={hero ? 'md' : 'sm'} />}
         </div>
 
-        <div className={cn('flex items-end justify-between gap-3 border-t border-primary/8 bg-white', hero ? 'p-5 md:p-7' : 'p-4 md:p-5')}>
+        <div
+          className={cn(
+            'flex items-end justify-between gap-3 border-t border-primary/8 bg-white',
+            hero ? 'p-5 md:p-7' : 'p-4 md:p-5',
+            wide && 'lg:flex-1 lg:flex-col lg:items-start lg:justify-center lg:gap-5 lg:border-s lg:border-t-0 lg:p-7'
+          )}
+        >
           <div className="min-w-0">
             <p
               className={cn(
@@ -104,10 +122,11 @@ function Tile({
             >
               {title}
             </h3>
-            {hero && (
+            {(hero || wide) && (
               <p
                 className={cn(
-                  'mt-2 hidden max-w-lg text-[15px] leading-relaxed text-primary/65 lg:block',
+                  'mt-2 hidden max-w-lg text-[15px] leading-relaxed text-primary/65',
+                  wide ? 'lg:line-clamp-3' : 'lg:block',
                   isAr ? 'font-arabic' : 'font-sans'
                 )}
               >
@@ -200,6 +219,7 @@ export default function NewArrivals({ lang, products }: { lang: string; products
               lang={lang}
               index={index}
               hero={index === 0}
+              wide={isWideSpan(DESKTOP_SPANS[index])}
               className={DESKTOP_SPANS[index]}
             />
           ))}
