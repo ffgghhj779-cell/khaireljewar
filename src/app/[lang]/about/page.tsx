@@ -43,7 +43,7 @@ const LEGAL = {
   latin: 'KHAIR EL JEWAR GROUP',
   form: { en: 'Limited liability company', ar: 'شركة ذات مسؤولية محدودة' },
   activity: { en: 'Wholesale for export', ar: 'البيع بالجملة للتصدير' },
-  since: { en: 'November 2024', ar: 'نوفمبر 2024' },
+  founded: '2011',
   exportRegister: '600027197',
   exportRegisterValid: { en: 'Valid to January 2030', ar: 'سارية حتى يناير 2030' },
   taxId: BRAND.legal.taxCard,
@@ -331,8 +331,8 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
     {
       q: { en: 'Who is Khair Aljaar?', ar: 'من هي خير الجوار؟' },
       a: {
-        en: `Khair El Jewar Group for Export (${LEGAL.latin}) is a food wholesale and export company. It started activity in November 2024, is listed in the Egyptian exporters' register (no. ${LEGAL.exportRegister}), and trades from Jeddah, Saudi Arabia.`,
-        ar: `خير الجوار جروب للتصدير شركة توريد وتصدير غذائي، بدأت نشاطها في نوفمبر 2024، ومقيدة في سجل المصدرين المصري برقم ${LEGAL.exportRegister}، ومركز تعاملها جدة في المملكة العربية السعودية.`,
+        en: `Khair El Jewar Group for Export (${LEGAL.latin}) is a food wholesale and export company, founded in ${LEGAL.founded}. It is listed in the Egyptian exporters' register (no. ${LEGAL.exportRegister}) and trades from Jeddah, Saudi Arabia.`,
+        ar: `خير الجوار جروب للتصدير شركة توريد وتصدير غذائي تأسست عام ${LEGAL.founded}، ومقيدة في سجل المصدرين المصري برقم ${LEGAL.exportRegister}، ومركز تعاملها جدة في المملكة العربية السعودية.`,
       },
     },
     {
@@ -427,7 +427,7 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
     [{ en: 'Latin name', ar: 'الاسم باللاتينية' }, LEGAL.latin],
     [{ en: 'Legal form', ar: 'الشكل القانوني' }, t(LEGAL.form)],
     [{ en: 'Activity', ar: 'النشاط' }, t(LEGAL.activity)],
-    [{ en: 'Active since', ar: 'بدء النشاط' }, t(LEGAL.since)],
+    [{ en: 'Founded', ar: 'سنة التأسيس' }, LEGAL.founded],
     [{ en: "Exporters' register", ar: 'سجل المصدرين' }, LEGAL.exportRegister],
     [{ en: 'Tax ID', ar: 'الرقم الضريبي' }, LEGAL.taxId],
     [{ en: 'Trading hub', ar: 'مركز التعامل' }, isAr ? 'جدة، السعودية' : 'Jeddah, Saudi Arabia'],
@@ -511,11 +511,11 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
 
   const timeline: { mark: string; title: Copy; body: Copy }[] = [
     {
-      mark: isAr ? '2024 · القاهرة' : '2024 · Cairo',
-      title: { en: 'Activity starts', ar: 'بدء النشاط' },
+      mark: isAr ? `${LEGAL.founded} · التأسيس` : `${LEGAL.founded} · Founded`,
+      title: { en: 'Khair Aljaar is founded', ar: 'تأسيس خير الجوار' },
       body: {
-        en: 'Khair El Jewar Group for Export starts trading: wholesale for export.',
-        ar: 'خير الجوار جروب للتصدير تبدأ نشاطها: البيع بالجملة للتصدير.',
+        en: 'The journey in food trade begins: wholesale supply, then export.',
+        ar: 'بداية الرحلة في تجارة الغذاء: التوريد بالجملة، ثم التصدير.',
       },
     },
     {
@@ -615,8 +615,8 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
             </p>
             <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-gray-600 sm:text-lg">
               {isAr
-                ? `خير الجوار جروب للتصدير شركة توريد وتصدير غذائي، بدأت نشاطها في 2024 ومقيدة في سجل المصدرين، ومركز تعاملها جدة في المملكة العربية السعودية. نورد ${productCount} صنفًا من الموالح والتمور والفواكه والخضروات والمجمدات والأرز لتجار الجملة والمستوردين والتجزئة والخدمات الغذائية.`
-                : `Khair El Jewar Group for Export is a food wholesale and export company, active since 2024, listed in the Egyptian exporters' register, and trading from Jeddah, Saudi Arabia. We supply ${productCount} lines of citrus, dates, fruits, vegetables, frozen produce and rice to wholesalers, importers, retail and food service.`}
+                ? `خير الجوار جروب للتصدير شركة توريد وتصدير غذائي تأسست عام ${LEGAL.founded}، مقيدة في سجل المصدرين، ومركز تعاملها جدة في المملكة العربية السعودية. نورد ${productCount} صنفًا من الموالح والتمور والفواكه والخضروات والمجمدات والأرز لتجار الجملة والمستوردين والتجزئة والخدمات الغذائية.`
+                : `Khair El Jewar Group for Export is a food wholesale and export company, founded in ${LEGAL.founded}, listed in the Egyptian exporters' register, and trading from Jeddah, Saudi Arabia. We supply ${productCount} lines of citrus, dates, fruits, vegetables, frozen produce and rice to wholesalers, importers, retail and food service.`}
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row">
               <a
@@ -638,10 +638,10 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
             </div>
             <dl className="mt-8 grid max-w-xl grid-cols-4 gap-2 sm:gap-3">
               {[
+                { v: LEGAL.founded, l: isAr ? 'سنة التأسيس' : 'founded' },
                 { v: String(productCount), l: isAr ? 'صنفًا' : 'product lines' },
                 { v: String(categories.length), l: isAr ? 'أقسام' : 'categories' },
                 { v: String(MARKETS.length), l: isAr ? 'مناطق تصدير' : 'export regions' },
-                { v: 'FOB', l: isAr ? 'جدة افتراضيًا' : 'Jeddah default' },
               ].map((s) => (
                 <div key={s.l} className="rounded-2xl border border-primary/10 bg-white px-2.5 py-3 shadow-sm sm:px-4 sm:py-4">
                   <dt className="sr-only">{s.l}</dt>
@@ -693,6 +693,7 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
         <Container size="large">
           <ul className="scrollbar-hide flex gap-4 overflow-x-auto whitespace-nowrap py-4 text-[13px] font-semibold sm:gap-7 sm:text-sm">
             {[
+              isAr ? `منذ ${LEGAL.founded}` : `Since ${LEGAL.founded}`,
               isAr ? `الرقم الضريبي ${LEGAL.taxId}` : `Tax ID ${LEGAL.taxId}`,
               isAr ? `سجل المصدرين ${LEGAL.exportRegister}` : `Exporters' register ${LEGAL.exportRegister}`,
               isAr ? 'FOB جدة افتراضيًا' : 'FOB Jeddah by default',
@@ -947,7 +948,7 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
           <SectionTitle
             isAr={isAr}
             eyebrow={isAr ? 'مسيرتنا' : 'Our journey'}
-            title={isAr ? 'من القاهرة إلى جدة،' : 'From Cairo to Jeddah,'}
+            title={isAr ? `منذ ${LEGAL.founded}،` : `Since ${LEGAL.founded},`}
             accent={isAr ? 'اتجاه واحد' : 'one direction'}
           />
           <ol className="scrollbar-hide -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 lg:grid-cols-6">
