@@ -2,21 +2,35 @@
 
 import { MOCK_PRODUCTS, type Product } from '@/lib/data/products'
 import { RICE_SLUGS } from '@/lib/data/riceCatalog'
+import { SEASON_ANCHORS } from '@/lib/data/seasonCatalog'
 import { createAnonClient } from '@/lib/supabase/anon'
 import { isSupabaseConfigured } from '@/lib/supabase/env'
 import { mapProductRow } from '@/lib/supabase/mappers'
 import type { ProductRow } from '@/lib/supabase/types'
 
-/** Kept in code so the gallery and Egyptian product name are not rewritten by the catalog mapper. */
-const LOCAL_CATALOG_SLUGS = RICE_SLUGS
+/** Kept in code so galleries and origin names are not rewritten by the catalog mapper. */
+const LOCAL_PRODUCTS = MOCK_PRODUCTS.filter((p) => RICE_SLUGS.has(p.slug) || p.slug in SEASON_ANCHORS)
+const LOCAL_CATALOG_SLUGS = new Set(LOCAL_PRODUCTS.map((p) => p.slug))
 
 function mergeLocalCatalog(products: Product[]): Product[] {
-  const local = MOCK_PRODUCTS.filter((p) => LOCAL_CATALOG_SLUGS.has(p.slug))
-  if (!local.length) return products
-  const rest = products.filter((p) => !LOCAL_CATALOG_SLUGS.has(p.slug))
-  const anchor = rest.findIndex((p) => p.slug === 'long-grain-rice')
-  if (anchor === -1) return [...rest, ...local]
-  return [...rest.slice(0, anchor + 1), ...local, ...rest.slice(anchor + 1)]
+  const list = products.filter((p) => !LOCAL_CATALOG_SLUGS.has(p.slug))
+  let riceAnchor = 'long-grain-rice'
+  for (const local of LOCAL_PRODUCTS) {
+    const after = SEASON_ANCHORS[local.slug] ?? riceAnchor
+    let index = list.findIndex((p) => p.slug === after)
+    if (index === -1) {
+      for (let i = list.length - 1; i >= 0; i--) {
+        if (list[i].category.en === local.category.en) {
+          index = i
+          break
+        }
+      }
+    }
+    if (index === -1) list.push(local)
+    else list.splice(index + 1, 0, local)
+    if (RICE_SLUGS.has(local.slug)) riceAnchor = local.slug
+  }
+  return list
 }
 
 /**

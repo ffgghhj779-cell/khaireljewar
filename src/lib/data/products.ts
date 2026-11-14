@@ -26,6 +26,10 @@ export interface Product {
   quoteOnly?: boolean
   /** Small label on the catalog card, such as exclusive agent or brand */
   badge?: { en: string; ar: string }
+  /** Shown in the home “New this season” showcase and the catalog “New” filter */
+  isNew?: boolean
+  /** Field and lifestyle photos fill the card; studio packshots stay contained */
+  imageFit?: 'contain' | 'cover'
   gallery?: {
     src: string
     alt: { en: string; ar: string }
@@ -36,6 +40,7 @@ export interface Product {
 /** Matches live catalog categories: https://khairaljewargroup.com/en/products */
 export const PRODUCT_CATEGORIES = [
   { id: 'All', en: 'All', ar: 'الكل' },
+  { id: 'New', en: 'New', ar: 'جديد' },
   { id: 'Citrus', en: 'Citrus', ar: 'الموالح' },
   { id: 'Dates', en: 'Dates', ar: 'التمور' },
   { id: 'Fruits', en: 'Fruits', ar: 'الفواكه' },
@@ -48,6 +53,7 @@ export const PRODUCT_CATEGORIES = [
 
 import { PRODUCT_SLUG_IMAGES } from '@/lib/constants/images'
 import { RICE_PRODUCTS } from '@/lib/data/riceCatalog'
+import { SEASON_PRODUCTS } from '@/lib/data/seasonCatalog'
 
 const IMG = PRODUCT_SLUG_IMAGES
 
@@ -419,6 +425,7 @@ export const MOCK_PRODUCTS: Product[] = [
     consumerUnit: { en: 'Bag 1kg', ar: 'كيس 1 كجم' },
   },
   ...RICE_PRODUCTS,
+  ...SEASON_PRODUCTS,
   {
     id: 'p-11',
     slug: 'white-sugar',

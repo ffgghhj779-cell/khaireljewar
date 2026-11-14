@@ -11,6 +11,7 @@ import { formatEgp, getConsumerUnit, getRetailPriceEgp } from '@/lib/commerce/pr
 import { buildPageMetadata, breadcrumbJsonLd, productJsonLd, productSearchCopy } from '@/lib/seo'
 import JsonLd from '@/components/seo/JsonLd'
 import { resolveProductImage, SECTION_IMAGES } from '@/lib/constants/images'
+import { GALLERY_EXTRAS } from '@/lib/data/seasonCatalog'
 import { COMPLIANCE_CERTIFICATES } from '@/lib/constants/brandAssets'
 import { cn } from '@/lib/utils/cn'
 import { ArrowLeft, MapPin, ShieldCheck, Snowflake, Package } from 'lucide-react'
@@ -35,7 +36,7 @@ export async function generateMetadata({
   const search = productSearchCopy({
     lang,
     name: isAr ? product.title.ar : product.title.en,
-    minOrder: product.minOrder,
+    minOrder: product.quoteOnly ? undefined : product.minOrder,
     unit: product.unit,
   })
   const image = resolveProductImage(product.image, product.category.en, product.slug)
@@ -67,28 +68,34 @@ export default async function SingleProductPage({
       : all.filter((p) => p.slug !== product.slug).slice(0, 3)
 
   const mainSrc = resolveProductImage(product.image, product.category.en, product.slug)
+  const toGalleryImage = (img: NonNullable<typeof product.gallery>[number]) => ({
+    src: img.src,
+    alt: isAr ? img.alt.ar : img.alt.en,
+    fit: img.fit ?? ('contain' as const),
+  })
+  const extras = GALLERY_EXTRAS[product.slug]
   const gallery = product.gallery?.length
-    ? product.gallery.map((img) => ({
-        src: img.src,
-        alt: isAr ? img.alt.ar : img.alt.en,
-        fit: img.fit ?? ('contain' as const),
-      }))
+    ? product.gallery.map(toGalleryImage)
     : [
         {
           src: mainSrc,
           alt: isAr ? product.title.ar : product.title.en,
-          fit: 'contain' as const,
+          fit: product.imageFit ?? ('contain' as const),
         },
-        {
-          src: SECTION_IMAGES.editorialBoard,
-          alt: isAr ? 'لوحة الحصاد' : 'Harvest board',
-          fit: 'cover' as const,
-        },
-        {
-          src: SECTION_IMAGES.hospitality,
-          alt: isAr ? 'ضيافة جدة' : 'Jeddah hospitality',
-          fit: 'cover' as const,
-        },
+        ...(extras?.length
+          ? extras.map(toGalleryImage)
+          : [
+              {
+                src: SECTION_IMAGES.editorialBoard,
+                alt: isAr ? 'لوحة الحصاد' : 'Harvest board',
+                fit: 'cover' as const,
+              },
+              {
+                src: SECTION_IMAGES.hospitality,
+                alt: isAr ? 'ضيافة جدة' : 'Jeddah hospitality',
+                fit: 'cover' as const,
+              },
+            ]),
       ]
 
   const unitLabel =
@@ -302,8 +309,8 @@ export default async function SingleProductPage({
                   </p>
                   <p className={cn('text-sm text-cream/70 mb-5 leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
                     {isAr
-                      ? 'أسعار العبوات الموضحة في المواصفات استرشادية. عرض السعر المكتوب هو اللي يثبت الصفقة.'
-                      : 'The pack prices in the specifications are indicative. The written quotation confirms the deal.'}
+                      ? 'السعر يتحدد حسب الكمية والعبوة والوجهة. عرض السعر المكتوب هو اللي يثبت الصفقة.'
+                      : 'Price depends on quantity, pack, and destination. The written quotation confirms the deal.'}
                   </p>
                   <Link
                     href={`/${lang}/contact`}
@@ -337,7 +344,13 @@ export default async function SingleProductPage({
                 </>
               )}
               <p className={cn('mt-4 text-xs text-cream/40', isAr ? 'font-arabic' : 'font-sans')}>
-                {isAr ? `حد أدنى للجملة: ${product.minOrder} ${unitLabel}` : `Wholesale MOQ: ${product.minOrder} ${unitLabel}`}
+                {product.quoteOnly
+                  ? isAr
+                    ? 'الكمية والحد الأدنى يتحددوا في عرض السعر'
+                    : 'Quantity and minimum order are set in the quote'
+                  : isAr
+                    ? `حد أدنى للجملة: ${product.minOrder} ${unitLabel}`
+                    : `Wholesale MOQ: ${product.minOrder} ${unitLabel}`}
               </p>
             </div>
           </Container>

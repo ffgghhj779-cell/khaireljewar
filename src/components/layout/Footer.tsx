@@ -29,6 +29,7 @@ export default function Footer({ lang }: { lang: string }) {
 
   const productLinks = [
     { label: isAr ? 'الكتالوج' : 'Full catalog', href: `/${lang}/products` },
+    { label: isAr ? 'وصل حديثاً' : 'New arrivals', href: `/${lang}/products?category=New` },
     { label: isAr ? 'الموالح' : 'Citrus', href: `/${lang}/products?category=Citrus` },
     { label: isAr ? 'التمور' : 'Dates', href: `/${lang}/products?category=Dates` },
     { label: isAr ? 'الفواكه' : 'Fruits', href: `/${lang}/products?category=Fruits` },

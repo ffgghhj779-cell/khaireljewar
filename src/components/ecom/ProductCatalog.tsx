@@ -66,7 +66,9 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
-      const matchesCategory = activeCategory === 'All' || product.category.en === activeCategory
+      const matchesCategory =
+        activeCategory === 'All' ||
+        (activeCategory === 'New' ? Boolean(product.isNew) : product.category.en === activeCategory)
       const q = deferredQuery.toLowerCase().trim()
       const matchesSearch =
         !q ||
@@ -145,6 +147,14 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
             </motion.button>
           ))}
         </div>
+
+        {activeCategory === 'New' && (
+          <p className={cn('mt-4 max-w-2xl text-sm leading-relaxed text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
+            {isAr
+              ? 'أحدث ما انضم للكتالوج: عجوة المدينة، فراولة وكيوي، فلفل أحمر، ومجمدات جديدة. السعر بعرض مكتوب.'
+              : 'The latest additions: Ajwa from Al Madinah, strawberries and kiwi, red peppers, and new frozen lines. Priced by written quote.'}
+          </p>
+        )}
 
         {activeCategory === 'Rice' && (
           <p className={cn('mt-4 max-w-2xl text-sm leading-relaxed text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>

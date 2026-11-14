@@ -29,7 +29,13 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
     product.unit === 'Containers' ? (isAr ? 'حاوية' : 'ctr') : isAr ? 'طن' : 'MT'
   const retailPrice = getRetailPriceEgp(product)
   const consumerUnit = getConsumerUnit(product)
-  const moq = `${product.minOrder} ${unitLabel}`
+  const moq = product.quoteOnly
+    ? isAr
+      ? 'الكمية بعرض السعر'
+      : 'Quantity on quote'
+    : isAr
+      ? `من ${product.minOrder} ${unitLabel}`
+      : `From ${product.minOrder} ${unitLabel}`
 
   return (
     <motion.div
@@ -56,14 +62,15 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
             lang={lang}
             priority={index < 1}
             variant="card"
-            fit="contain"
+            fit={product.imageFit ?? 'contain'}
             className="!aspect-auto absolute inset-0 rounded-none border-0 !bg-cream"
             sizes={compact ? '280px' : '(max-width: 768px) 45vw, (max-width: 1200px) 30vw, 280px'}
           />
           {product.badge && (
             <span
               className={cn(
-                'absolute top-2 start-2 z-[1] max-w-[46%] truncate rounded-full bg-white/95 px-2 py-0.5 text-[9px] font-bold leading-tight text-primary shadow-sm sm:top-2.5 sm:start-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
+                'absolute top-2 start-2 z-[1] max-w-[46%] truncate rounded-full px-2 py-0.5 text-[9px] font-bold leading-tight text-primary shadow-sm sm:top-2.5 sm:start-2.5 sm:px-2.5 sm:py-1 sm:text-[10px]',
+                product.isNew ? 'bg-secondary' : 'bg-white/95',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >
@@ -119,7 +126,7 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
             <li className="flex items-center gap-1.5 text-primary">
               <Tag className="h-3.5 w-3.5 shrink-0 text-farm" strokeWidth={2.4} aria-hidden />
               <span className={cn('text-[11px] font-semibold truncate', isAr ? 'font-arabic' : 'font-sans')}>
-                {isAr ? `من ${moq}` : `From ${moq}`}
+                {moq}
               </span>
             </li>
             {!compact && (

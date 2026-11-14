@@ -170,19 +170,24 @@ function minimumOrderLabel(minOrder: number, unit: 'MT' | 'Containers', lang: st
 export function productSearchCopy(input: {
   lang: string
   name: string
-  minOrder: number
+  /** Omit when the minimum is set in the quote */
+  minOrder?: number
   unit: 'MT' | 'Containers'
 }): { title: string; description: string } {
-  const order = minimumOrderLabel(input.minOrder, input.unit, input.lang)
+  const order = input.minOrder == null ? null : minimumOrderLabel(input.minOrder, input.unit, input.lang)
   if (input.lang === 'ar') {
     return {
       title: `${input.name} للتصدير`,
-      description: `${input.name} بالجملة من جدة إلى السعودية والخليج. الحد الأدنى ${order}. اطلب عرض سعر.`,
+      description: order
+        ? `${input.name} بالجملة من جدة إلى السعودية والخليج. الحد الأدنى ${order}. اطلب عرض سعر.`
+        : `${input.name} بالجملة من جدة إلى السعودية والخليج. الكمية تتحدد في عرض السعر. اطلب عرض سعر.`,
     }
   }
   return {
     title: `${input.name} Exporter`,
-    description: `${input.name} wholesale from Jeddah to Saudi Arabia and the GCC. Minimum order ${order}. Request a quote.`,
+    description: order
+      ? `${input.name} wholesale from Jeddah to Saudi Arabia and the GCC. Minimum order ${order}. Request a quote.`
+      : `${input.name} wholesale from Jeddah to Saudi Arabia and the GCC. Quantity is set in the quote. Request a quote.`,
   }
 }
 

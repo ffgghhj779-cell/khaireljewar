@@ -4,6 +4,7 @@ import HeroBrand from '@/components/sections/HeroBrand'
 import OriginStory from '@/components/sections/OriginStory'
 import BrandPackaging from '@/components/sections/BrandPackaging'
 import ProductsDesire from '@/components/sections/ProductsDesire'
+import NewArrivals from '@/components/sections/NewArrivals'
 import TrustQuiet from '@/components/sections/TrustQuiet'
 import TrustProofStrip from '@/components/sections/TrustProofStrip'
 import PartnerStrip from '@/components/sections/PartnerStrip'
@@ -46,6 +47,7 @@ export default async function Home({
       <HeroBrand lang={lang} />
       <PartnerStrip lang={lang} />
       <PartnerLogoMarquee lang={lang} />
+      <NewArrivals lang={lang} products={products} />
       <OriginStory lang={lang} />
       <BrandPackaging lang={lang} />
       <ProductsDesire lang={lang} products={products} />
