@@ -83,6 +83,14 @@ export function isValidImageUrl(url?: string | null): url is string {
   }
 }
 
+/** Bump when product photos are replaced in place — optimized images are browser-cached for 7 days */
+const PRODUCT_IMAGE_VERSION = '20261114'
+
+function withImageVersion(src: string): string {
+  if (!src.startsWith(`${BRAND_PRODUCTS}/`) || src.includes('?')) return src
+  return `${src}?v=${PRODUCT_IMAGE_VERSION}`
+}
+
 /** Resolve the best display URL for a product image */
 export function resolveProductImage(
   image?: string | null,
@@ -90,13 +98,12 @@ export function resolveProductImage(
   slug?: string
 ): string {
   // If an explicit image URL is stored in the DB (e.g. uploaded via bot), always prefer it
-  if (isValidImageUrl(image)) return image.trim()
+  if (isValidImageUrl(image)) return withImageVersion(image.trim())
 
   // Then fall back to curated slug shots
-  if (slug && PRODUCT_SLUG_IMAGES[slug]) return PRODUCT_SLUG_IMAGES[slug]
+  if (slug && PRODUCT_SLUG_IMAGES[slug]) return withImageVersion(PRODUCT_SLUG_IMAGES[slug])
 
-  if (categoryEn && CATEGORY_FALLBACKS[categoryEn]) return CATEGORY_FALLBACKS[categoryEn]
-  return PRODUCT_IMAGE_FALLBACK
+  return getCategoryFallback(categoryEn)
 }
 
 export function isProductImagePending(image?: string | null, slug?: string): boolean {
@@ -106,7 +113,7 @@ export function isProductImagePending(image?: string | null, slug?: string): boo
 }
 
 export function getCategoryFallback(categoryEn?: string): string {
-  if (categoryEn && CATEGORY_FALLBACKS[categoryEn]) return CATEGORY_FALLBACKS[categoryEn]
+  if (categoryEn && CATEGORY_FALLBACKS[categoryEn]) return withImageVersion(CATEGORY_FALLBACKS[categoryEn])
   return PRODUCT_IMAGE_FALLBACK
 }
 

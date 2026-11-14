@@ -7,6 +7,7 @@ import { ArrowUpRight, Sparkles } from 'lucide-react'
 import Container from '@/components/ui/Container'
 import type { Product } from '@/lib/data/products'
 import { BRAND_EASE, SCROLL_VIEWPORT_INSTANT } from '@/lib/constants/motion'
+import { resolveProductImage } from '@/lib/constants/images'
 import { useLightMotion } from '@/hooks/useLightMotion'
 import { cn } from '@/lib/utils/cn'
 
@@ -58,7 +59,7 @@ function Tile({
       >
         <div className={cn('relative min-h-0 flex-1 overflow-hidden', packshot ? 'bg-gradient-to-b from-cream-soft to-cream' : 'bg-cream')}>
           <Image
-            src={product.image}
+            src={resolveProductImage(product.image, product.category.en, product.slug)}
             alt={title}
             fill
             quality={82}

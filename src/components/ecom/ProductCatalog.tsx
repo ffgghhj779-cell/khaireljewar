@@ -3,9 +3,10 @@
 import { useCallback, useDeferredValue, useEffect, useMemo, useState, useTransition } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { PackageSearch, Search } from 'lucide-react'
+import { ChevronLeft, ChevronRight, PackageSearch, Search } from 'lucide-react'
 import { PRODUCT_CATEGORIES, type Product } from '@/lib/data/products'
 import ProductCard from '@/components/sections/ProductCard'
+import CategoryShowcaseBanner, { CATEGORY_SHOWCASES } from '@/components/ecom/CategoryShowcaseBanner'
 import EmptyState from '@/components/ui/EmptyState'
 import { ProductCardSkeleton } from '@/components/ui/Skeleton'
 import { BRAND } from '@/lib/constants/brand'
@@ -16,6 +17,9 @@ interface ProductCatalogProps {
   lang: string
   products: Product[]
 }
+
+const SECTION_IDS: readonly string[] = PRODUCT_CATEGORIES.map((c) => c.id).filter((id) => id !== 'All' && id !== 'New')
+const MOBILE_ROW_LIMIT = 10
 
 function normalizeCategory(raw: string | null): string {
   if (!raw) return 'All'
@@ -87,6 +91,33 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
     setSearchQuery('')
     syncUrl('All', '')
   }
+
+  const openCategory = (category: string) => {
+    setCategory(category)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const groupedView = activeCategory === 'All' && !deferredQuery.trim()
+
+  const groups = useMemo(() => {
+    const known = SECTION_IDS.map((id) => {
+      const meta = PRODUCT_CATEGORIES.find((c) => c.id === id)
+      return {
+        id,
+        label: { en: meta?.en ?? id, ar: meta?.ar ?? id },
+        items: products.filter((p) => p.category.en === id),
+      }
+    })
+    const rest = products.filter((p) => !SECTION_IDS.includes(p.category.en))
+    const restGroups = Array.from(new Set(rest.map((p) => p.category.en))).map((id) => {
+      const items = rest.filter((p) => p.category.en === id)
+      return { id, label: items[0].category, items }
+    })
+    return [...known, ...restGroups].filter((g) => g.items.length > 0)
+  }, [products])
+
+  const showActiveBanner = !groupedView && !deferredQuery.trim() && Boolean(CATEGORY_SHOWCASES[activeCategory])
+  const ViewAllIcon = isAr ? ChevronLeft : ChevronRight
 
   return (
     <>
@@ -185,11 +216,79 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4 md:gap-5"
+            className="mx-auto max-w-5xl"
           >
-            {filteredProducts.map((product, index) => (
-              <ProductCard key={product.id} product={product} lang={lang} index={index} />
-            ))}
+            {groupedView ? (
+              groups.map((group) => (
+                <section key={group.id} aria-label={isAr ? group.label.ar : group.label.en} className="mb-10 md:mb-16">
+                  <CategoryShowcaseBanner
+                    categoryId={group.id}
+                    products={products}
+                    lang={lang}
+                    primaryAction={{
+                      label: isAr ? 'اعرض القسم كامل' : 'View full section',
+                      onClick: () => openCategory(group.id),
+                    }}
+                  />
+                  <div className="mb-3 flex items-center justify-between gap-3 md:mb-5">
+                    <h2
+                      className={cn(
+                        'min-w-0 truncate text-xl font-bold text-dark md:text-2xl',
+                        isAr ? 'font-arabic-display' : 'font-display'
+                      )}
+                    >
+                      {isAr ? group.label.ar : group.label.en}
+                      <span className={cn('ms-2 text-sm font-semibold text-primary/45', isAr ? 'font-arabic' : 'font-sans')}>
+                        {group.items.length}
+                      </span>
+                    </h2>
+                    <button
+                      type="button"
+                      onClick={() => openCategory(group.id)}
+                      className={cn(
+                        'inline-flex min-h-[40px] shrink-0 items-center gap-1 rounded-full border border-primary/15 bg-white px-3.5 text-[13px] font-semibold text-primary transition-colors hover:border-primary/35 touch-manipulation',
+                        isAr ? 'font-arabic' : 'font-sans'
+                      )}
+                    >
+                      {isAr ? `عرض الكل (${group.items.length})` : `View all (${group.items.length})`}
+                      <ViewAllIcon className="h-4 w-4" aria-hidden />
+                    </button>
+                  </div>
+                  <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-4 pb-2 scrollbar-hide md:mx-0 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0 md:pb-0 xl:grid-cols-4">
+                    {group.items.map((product, index) => (
+                      <div
+                        key={product.id}
+                        className={cn(
+                          'w-[46%] shrink-0 snap-start md:w-auto',
+                          index >= MOBILE_ROW_LIMIT && 'max-md:hidden'
+                        )}
+                      >
+                        <ProductCard product={product} lang={lang} index={index} />
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              ))
+            ) : (
+              <>
+                {showActiveBanner && (
+                  <CategoryShowcaseBanner
+                    categoryId={activeCategory}
+                    products={products}
+                    lang={lang}
+                    primaryAction={{
+                      label: isAr ? 'كل الأقسام' : 'All sections',
+                      onClick: () => openCategory('All'),
+                    }}
+                  />
+                )}
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4 md:gap-5">
+                  {filteredProducts.map((product, index) => (
+                    <ProductCard key={product.id} product={product} lang={lang} index={index} />
+                  ))}
+                </div>
+              </>
+            )}
           </motion.div>
         </AnimatePresence>
       )}
