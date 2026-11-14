@@ -82,7 +82,6 @@ export default function ProductImage({
   const pending = isProductImagePending(src, slug)
   const resolvedSrc = resolveProductImage(src, categoryEn, slug)
   const styles = VARIANT_STYLES[variant]
-  const isBrandWebp = resolvedSrc.includes('/images/brand/') && resolvedSrc.endsWith('.webp')
   const isRemoteUpload = /^https?:\/\//i.test(resolvedSrc)
 
   const [displaySrc, setDisplaySrc] = useState(resolvedSrc)
@@ -143,9 +142,8 @@ export default function ProductImage({
             sizes={sizes ?? styles.sizes}
             priority={priority}
             quality={variant === 'thumb' ? IMAGE_QUALITY_THUMB : variant === 'card' ? 78 : IMAGE_QUALITY_PRODUCT}
-            unoptimized={isBrandWebp}
-            placeholder={isBrandWebp ? 'empty' : 'blur'}
-            blurDataURL={isBrandWebp ? undefined : IMAGE_BLUR_DATA_URL}
+            placeholder="blur"
+            blurDataURL={IMAGE_BLUR_DATA_URL}
             onError={handleError}
             className={cn(objectFit)}
           />

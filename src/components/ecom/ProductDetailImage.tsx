@@ -23,7 +23,6 @@ export default function ProductDetailImage({ src, alt, categoryEn, slug, lang }:
   const isAr = lang === 'ar'
   const pending = isProductImagePending(src, slug)
   const initialSrc = resolveProductImage(src, categoryEn, slug)
-  const isBrandWebp = initialSrc.includes('/images/brand/') && initialSrc.endsWith('.webp')
   const [displaySrc, setDisplaySrc] = useState(initialSrc)
   const [failed, setFailed] = useState(false)
 
@@ -59,7 +58,6 @@ export default function ProductDetailImage({ src, alt, categoryEn, slug, lang }:
       fill
       priority
       quality={IMAGE_QUALITY_PRODUCT}
-      unoptimized={isBrandWebp}
       sizes="(max-width: 1024px) 100vw, 50vw"
       onError={handleError}
       className="object-contain object-center p-8 md:p-12 bg-cream"

@@ -19,7 +19,7 @@ export default function PremiumImage({
     <Image
       {...props}
       quality={quality ?? IMAGE_QUALITY}
-      unoptimized={unoptimized || (typeof props.src === 'string' && props.src.endsWith('.webp') && props.src.includes('/images/brand/'))}
+      unoptimized={unoptimized || (typeof props.src === 'string' && props.src.endsWith('.svg'))}
       placeholder={withBlur ? placeholder ?? 'blur' : placeholder}
       blurDataURL={withBlur ? IMAGE_BLUR_DATA_URL : undefined}
       className={cn(className)}

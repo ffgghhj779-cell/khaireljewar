@@ -157,7 +157,7 @@ export const SECTION_IMAGES = {
   editorialBoard: '/images/brand/studio/editorial-board.webp',
   medjoolFeature: `${BRAND_PRODUCTS}/medjool-dates.webp`,
   mangoFeature: `${BRAND_PRODUCTS}/kent-mangoes.webp`,
-  heroReelPoster: '/images/brand/hero-reel/warehouse.png',
+  heroReelPoster: '/images/brand/hero-reel/warehouse.webp',
   heroVideoWebm: '/videos/hero.webm',
   heroVideoMp4: '/videos/hero.mp4',
   packTomatoes: '/images/brand/packaging/tomatoes-crate.webp',

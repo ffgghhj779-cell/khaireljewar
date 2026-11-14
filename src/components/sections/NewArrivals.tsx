@@ -61,7 +61,7 @@ function Tile({
           src={product.image}
           alt={title}
           fill
-          unoptimized
+          quality={82}
           priority={hero}
           sizes={hero ? '(max-width: 1024px) 80vw, 50vw' : '(max-width: 1024px) 80vw, 25vw'}
           className={cn(

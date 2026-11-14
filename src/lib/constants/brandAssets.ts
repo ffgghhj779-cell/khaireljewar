@@ -116,7 +116,7 @@ export const LOGISTICS_GALLERY: LogisticsPhoto[] = [
     id: 'lg-02',
     titleEn: 'Refrigerated export truck',
     titleAr: 'شاحنة مبردة للتصدير',
-    src: '/images/brand/hero-reel/warehouse.png',
+    src: '/images/brand/hero-reel/warehouse.webp',
     location: 'Jeddah Islamic Port corridor',
     tag: 'Port Ops',
     span: 1,
