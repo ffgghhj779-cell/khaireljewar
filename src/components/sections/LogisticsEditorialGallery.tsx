@@ -11,11 +11,11 @@ import Container from '@/components/ui/Container'
 import { cn } from '@/lib/utils/cn'
 
 const TAG_COLORS: Record<LogisticsPhoto['tag'], string> = {
-  'Cold Chain': 'bg-sky-900/80 text-sky-200 border-sky-700/50',
-  'Port Ops': 'bg-indigo-900/80 text-indigo-200 border-indigo-700/50',
-  'Warehouse': 'bg-amber-900/80 text-amber-200 border-amber-700/50',
-  'Transport': 'bg-emerald-900/80 text-emerald-200 border-emerald-700/50',
-  'Farm Gate': 'bg-lime-900/80 text-lime-200 border-lime-700/50',
+  'Cold Chain': 'bg-sky-50/95 text-sky-800 border-sky-200',
+  'Port Ops': 'bg-indigo-50/95 text-indigo-800 border-indigo-200',
+  'Warehouse': 'bg-amber-50/95 text-amber-800 border-amber-200',
+  'Transport': 'bg-emerald-50/95 text-emerald-800 border-emerald-200',
+  'Farm Gate': 'bg-lime-50/95 text-lime-800 border-lime-200',
 }
 
 export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
@@ -32,7 +32,7 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
     : LOGISTICS_GALLERY.filter((p) => p.tag === activeTag)
 
   return (
-    <section className="py-20 md:py-28 bg-dark relative overflow-x-clip">
+    <section className="py-20 md:py-28 bg-cream-soft relative overflow-x-clip">
       <Container size="large">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -41,13 +41,13 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10 md:mb-14"
         >
-          <p className={cn('text-secondary text-sm font-semibold mb-3', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-farm text-sm font-semibold mb-3', isAr ? 'font-arabic' : 'font-sans')}>
             {isAr ? 'الميدان' : 'In the field'}
           </p>
-          <h2 className={cn('text-3xl md:text-5xl font-bold text-white tracking-tight mb-4 editorial-heading', isAr ? 'font-arabic' : 'font-display')}>
+          <h2 className={cn('text-3xl md:text-5xl font-bold text-primary tracking-tight mb-4 editorial-heading', isAr ? 'font-arabic' : 'font-display')}>
             {isAr ? 'اللوجستيات كما هي.' : 'Logistics, as it happens.'}
           </h2>
-          <p className={cn('text-base text-white/55 max-w-xl leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('text-base text-primary/60 max-w-xl leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
             {isAr
               ? 'لحظات حقيقية من عمليات التصدير — الموانئ، المستودعات، والطريق.'
               : 'Real moments from export operations — ports, warehouses, and the road.'}
@@ -65,8 +65,8 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
               className={cn(
                 'px-3 py-1.5 rounded-lg text-[11px] font-bold border transition-all duration-200 touch-manipulation',
                 activeTag === tag
-                  ? 'bg-primary text-dark border-primary'
-                  : 'bg-white/5 text-white/60 border-white/10 hover:border-white/30'
+                  ? 'bg-secondary text-primary border-secondary'
+                  : 'bg-white text-primary/70 border-primary/12 hover:border-primary/30'
               )}
             >
               {tag}
@@ -105,7 +105,7 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
                   className="object-cover will-change-transform"
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-dark/85 via-dark/35 to-transparent opacity-100 md:opacity-60 md:group-hover:opacity-90 transition-opacity duration-400" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400" />
 
                 {/* Content — always visible on mobile */}
                 <div className="absolute inset-0 p-3 md:p-4 flex flex-col justify-end opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
@@ -141,7 +141,7 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setLightbox(null)}
-              className="fixed inset-0 bg-dark/90 backdrop-blur-lg z-[150]"
+              className="fixed inset-0 bg-cream/85 backdrop-blur-lg z-[150]"
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -158,7 +158,7 @@ export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
                 className="object-cover"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark/75 via-transparent to-dark/30" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
 
               <button
                 type="button"

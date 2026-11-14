@@ -109,7 +109,7 @@ export default function CartView({ lang }: { lang: string }) {
         })}
       </ul>
 
-      <aside className="h-fit rounded-2xl border border-primary/10 bg-primary p-6 text-cream">
+      <aside className="h-fit rounded-2xl border border-farm/25 bg-farm-soft p-6 text-primary">
         <h2 className={cn('text-lg font-semibold mb-4', isAr ? 'font-arabic' : 'font-display')}>
           {isAr ? 'ملخص الطلب' : 'Order summary'}
         </h2>
@@ -122,7 +122,7 @@ export default function CartView({ lang }: { lang: string }) {
             <span>{isAr ? 'الشحن' : 'Delivery'}</span>
             <span>{formatEgp(SHIPPING_FEE_EGP, lang)}</span>
           </div>
-          <div className="flex justify-between border-t border-cream/20 pt-3 text-base font-bold">
+          <div className="flex justify-between border-t border-primary/15 pt-3 text-base font-bold">
             <span>{isAr ? 'الإجمالي' : 'Total'}</span>
             <span>{formatEgp(total, lang)}</span>
           </div>
@@ -130,7 +130,7 @@ export default function CartView({ lang }: { lang: string }) {
         <Link
           href={`/${lang}/checkout`}
           className={cn(
-            'mt-6 flex w-full items-center justify-center rounded-xl bg-cream py-3.5 text-sm font-bold text-primary',
+            'mt-6 flex w-full items-center justify-center rounded-xl bg-secondary py-3.5 text-sm font-bold text-primary hover:bg-secondary-400',
             isAr ? 'font-arabic' : 'font-sans'
           )}
         >

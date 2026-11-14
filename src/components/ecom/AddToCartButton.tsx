@@ -16,7 +16,7 @@ export default function AddToCartButton({
 }: {
   product: Product
   lang: string
-  variant?: 'default' | 'onDark'
+  variant?: 'default' | 'accent'
 }) {
   const isAr = lang === 'ar'
   const addLine = useCartStore((s) => s.addLine)
@@ -45,10 +45,10 @@ export default function AddToCartButton({
         onClick={handleAdd}
         className={cn(
           'w-full mt-2 text-base font-semibold py-4 min-h-[52px] rounded-xl flex items-center justify-center gap-3 transition-colors duration-300 touch-manipulation',
-          variant === 'onDark'
+          variant === 'accent'
             ? added
               ? 'bg-farm text-cream'
-              : 'bg-cream text-primary hover:bg-white'
+              : 'bg-secondary text-primary hover:bg-secondary-400'
             : added
               ? 'bg-farm text-cream'
               : 'bg-primary hover:bg-primary-700 text-cream',

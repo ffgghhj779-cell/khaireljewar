@@ -154,11 +154,11 @@ export default function ExportMarketsPage({ params: { lang } }: { params: { lang
           ))}
         </div>
 
-        <div className="mt-14 rounded-3xl bg-primary px-8 py-10 md:px-12 md:py-12 text-center">
-          <h2 className={cn('text-2xl md:text-3xl font-medium text-cream mb-4', isAr ? 'font-arabic-display' : 'font-display')}>
+        <div className="mt-14 rounded-3xl border border-secondary/40 bg-secondary-50 px-8 py-10 md:px-12 md:py-12 text-center">
+          <h2 className={cn('text-2xl md:text-3xl font-medium text-primary mb-4', isAr ? 'font-arabic-display' : 'font-display')}>
             {isAr ? 'جاهزون لفتح مسار جديد.' : 'Ready to open a new lane.'}
           </h2>
-          <p className={cn('mx-auto mb-8 max-w-md text-cream/70', isAr ? 'font-arabic' : 'font-sans')}>
+          <p className={cn('mx-auto mb-8 max-w-md text-primary/70', isAr ? 'font-arabic' : 'font-sans')}>
             {isAr
               ? 'أخبرنا بالوجهة والكميات — ونرد بمسار تصدير واضح من جدة.'
               : 'Tell us destination and volumes — we will respond with a clear export path from Jeddah.'}
@@ -166,7 +166,7 @@ export default function ExportMarketsPage({ params: { lang } }: { params: { lang
           <Link
             href={`/${lang}/contact`}
             className={cn(
-              'inline-flex min-h-[52px] items-center rounded-xl bg-cream px-8 font-semibold text-primary hover:bg-white',
+              'inline-flex min-h-[52px] items-center rounded-xl bg-secondary px-8 font-semibold text-primary hover:bg-secondary-400',
               isAr ? 'font-arabic' : 'font-sans'
             )}
           >

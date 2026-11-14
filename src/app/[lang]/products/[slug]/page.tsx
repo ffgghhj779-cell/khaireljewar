@@ -298,16 +298,16 @@ export default async function SingleProductPage({
               </div>
             </div>
 
-            <div className="rounded-2xl bg-primary p-6 md:p-8 text-cream shadow-soft">
+            <div className="rounded-2xl border border-farm/25 bg-farm-soft p-6 md:p-8 text-primary shadow-soft">
               {product.quoteOnly ? (
                 <>
-                  <p className={cn('text-sm text-cream/65 mb-1', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-sm text-primary/60 mb-1', isAr ? 'font-arabic' : 'font-sans')}>
                     {isAr ? 'جملة' : 'Wholesale'}
                   </p>
                   <p className={cn('text-3xl font-bold mb-3', isAr ? 'font-arabic' : 'font-display')}>
                     {isAr ? 'السعر بعرض مكتوب' : 'Price by written quote'}
                   </p>
-                  <p className={cn('text-sm text-cream/70 mb-5 leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-sm text-primary/70 mb-5 leading-relaxed', isAr ? 'font-arabic' : 'font-sans')}>
                     {isAr
                       ? 'السعر يتحدد حسب الكمية والعبوة والوجهة. عرض السعر المكتوب هو اللي يثبت الصفقة.'
                       : 'Price depends on quantity, pack, and destination. The written quotation confirms the deal.'}
@@ -324,26 +324,26 @@ export default async function SingleProductPage({
                 </>
               ) : (
                 <>
-                  <p className={cn('text-sm text-cream/65 mb-1', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-sm text-primary/60 mb-1', isAr ? 'font-arabic' : 'font-sans')}>
                     {isAr ? 'سعر التجزئة (مصر)' : 'Retail price (Egypt)'}
                   </p>
                   <p className={cn('text-3xl font-bold mb-1', isAr ? 'font-arabic' : 'font-display')}>
                     {formatEgp(getRetailPriceEgp(product), lang)}
                   </p>
-                  <p className={cn('text-sm text-secondary mb-4', isAr ? 'font-arabic' : 'font-sans')}>
+                  <p className={cn('text-sm text-farm font-semibold mb-4', isAr ? 'font-arabic' : 'font-sans')}>
                     {isAr
                       ? `لكل ${getConsumerUnit(product).ar} · شحن ${formatEgp(49, lang)} داخل مصر`
                       : `Per ${getConsumerUnit(product).en} · ${formatEgp(49, lang)} shipping in Egypt`}
                   </p>
-                  <AddToCartButton lang={lang} product={product} variant="onDark" />
-                  <p className={cn('mt-4 text-xs text-cream/50', isAr ? 'font-arabic' : 'font-sans')}>
+                  <AddToCartButton lang={lang} product={product} variant="accent" />
+                  <p className={cn('mt-4 text-xs text-primary/55', isAr ? 'font-arabic' : 'font-sans')}>
                     {isAr
                       ? 'أضف للسلة ثم ادفع بالبطاقة أو المحفظة عبر Paymob.'
                       : 'Add to cart, then pay by card or wallet via Paymob.'}
                   </p>
                 </>
               )}
-              <p className={cn('mt-4 text-xs text-cream/40', isAr ? 'font-arabic' : 'font-sans')}>
+              <p className={cn('mt-4 text-xs text-primary/50', isAr ? 'font-arabic' : 'font-sans')}>
                 {product.quoteOnly
                   ? isAr
                     ? 'الكمية والحد الأدنى يتحددوا في عرض السعر'

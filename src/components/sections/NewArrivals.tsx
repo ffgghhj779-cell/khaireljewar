@@ -52,77 +52,69 @@ function Tile({
       <Link
         href={`/${lang}/products/${product.slug}`}
         className={cn(
-          'group relative flex h-full min-h-[22rem] overflow-hidden rounded-[1.75rem] ring-1 ring-cream/10',
-          'shadow-[0_24px_60px_-30px_rgba(0,0,0,0.65)] lg:min-h-0',
-          packshot ? 'bg-gradient-to-b from-cream to-cream-deep' : 'bg-primary-800'
+          'group flex h-full min-h-[22rem] flex-col overflow-hidden rounded-[1.75rem] border border-primary/10 bg-white lg:min-h-0',
+          'shadow-[0_18px_44px_-28px_rgba(26,51,42,0.35)] transition-shadow duration-500 hover:shadow-[0_26px_60px_-28px_rgba(26,51,42,0.45)]'
         )}
       >
-        <Image
-          src={product.image}
-          alt={title}
-          fill
-          quality={82}
-          priority={hero}
-          sizes={hero ? '(max-width: 1024px) 80vw, 50vw' : '(max-width: 1024px) 80vw, 25vw'}
-          className={cn(
-            'transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]',
-            packshot ? 'object-contain p-8 pb-28 md:p-10 md:pb-32' : 'object-cover',
-            hero && !packshot && 'object-[50%_70%]'
-          )}
-        />
-        <div
-          className={cn(
-            'pointer-events-none absolute inset-0',
-            packshot
-              ? 'bg-gradient-to-t from-primary/90 via-primary/10 to-transparent'
-              : 'bg-gradient-to-t from-primary-900/95 via-primary-900/25 to-transparent'
-          )}
-        />
-
-        <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4 md:p-5">
+        <div className={cn('relative min-h-0 flex-1 overflow-hidden', packshot ? 'bg-gradient-to-b from-cream-soft to-cream' : 'bg-cream')}>
+          <Image
+            src={product.image}
+            alt={title}
+            fill
+            quality={82}
+            priority={hero}
+            sizes={hero ? '(max-width: 1024px) 80vw, 50vw' : '(max-width: 1024px) 80vw, 25vw'}
+            className={cn(
+              'transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]',
+              packshot ? 'object-contain p-6 md:p-8' : 'object-cover',
+              hero && !packshot && 'object-[50%_70%]'
+            )}
+          />
           {badge && (
             <span
               className={cn(
-                'rounded-full bg-secondary px-3 py-1 text-[11px] font-bold text-primary shadow-sm',
+                'absolute top-4 start-4 rounded-full bg-secondary px-3 py-1 text-[11px] font-bold text-primary shadow-sm',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >
               {badge}
             </span>
           )}
-          <span className="ms-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-cream/90 text-primary opacity-90 shadow-sm transition-all duration-300 group-hover:bg-secondary group-hover:opacity-100">
-            <ArrowUpRight className={cn('h-4 w-4', isAr && '-scale-x-100')} />
-          </span>
         </div>
 
-        <div className="relative mt-auto w-full p-5 md:p-6">
-          <p
-            className={cn(
-              'mb-1.5 text-xs font-semibold text-secondary',
-              isAr ? 'font-arabic' : 'font-sans uppercase tracking-[0.14em]'
-            )}
-          >
-            {category}
-          </p>
-          <h3
-            className={cn(
-              'font-semibold leading-snug text-cream text-balance',
-              hero ? 'text-2xl md:text-4xl' : 'text-lg md:text-xl',
-              isAr ? 'font-arabic' : 'font-display'
-            )}
-          >
-            {title}
-          </h3>
-          {hero && (
+        <div className={cn('flex items-end justify-between gap-3 border-t border-primary/8 bg-white', hero ? 'p-5 md:p-7' : 'p-4 md:p-5')}>
+          <div className="min-w-0">
             <p
               className={cn(
-                'mt-3 hidden max-w-md text-base leading-relaxed text-cream/75 lg:block',
-                isAr ? 'font-arabic' : 'font-sans'
+                'mb-1 text-xs font-semibold text-farm',
+                isAr ? 'font-arabic' : 'font-sans uppercase tracking-[0.14em]'
               )}
             >
-              {isAr ? product.desc.ar : product.desc.en}
+              {category}
             </p>
-          )}
+            <h3
+              className={cn(
+                'font-semibold leading-snug text-primary text-balance',
+                hero ? 'text-2xl md:text-3xl' : 'text-base md:text-lg line-clamp-2',
+                isAr ? 'font-arabic' : 'font-display'
+              )}
+            >
+              {title}
+            </h3>
+            {hero && (
+              <p
+                className={cn(
+                  'mt-2 hidden max-w-lg text-[15px] leading-relaxed text-primary/65 lg:block',
+                  isAr ? 'font-arabic' : 'font-sans'
+                )}
+              >
+                {isAr ? product.desc.ar : product.desc.en}
+              </p>
+            )}
+          </div>
+          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-farm-soft text-primary transition-colors duration-300 group-hover:bg-secondary">
+            <ArrowUpRight className={cn('h-4 w-4', isAr && '-scale-x-100')} />
+          </span>
         </div>
       </Link>
     </motion.div>
@@ -136,12 +128,12 @@ export default function NewArrivals({ lang, products }: { lang: string; products
   if (!items.length) return null
 
   return (
-    <section className="relative overflow-hidden bg-primary py-16 md:py-28">
+    <section className="relative overflow-hidden bg-cream-soft py-16 md:py-28">
       <div
-        className="pointer-events-none absolute inset-0 opacity-60"
+        className="pointer-events-none absolute inset-0"
         style={{
           backgroundImage:
-            'radial-gradient(ellipse 50% 40% at 100% 0%, rgba(229,184,74,0.18), transparent 60%), radial-gradient(ellipse 45% 40% at 0% 100%, rgba(43,182,115,0.16), transparent 60%)',
+            'radial-gradient(ellipse 50% 40% at 100% 0%, rgba(229,184,74,0.14), transparent 60%), radial-gradient(ellipse 45% 40% at 0% 100%, rgba(43,182,115,0.10), transparent 60%)',
         }}
       />
 
@@ -156,22 +148,22 @@ export default function NewArrivals({ lang, products }: { lang: string; products
           <div className="max-w-2xl">
             <p
               className={cn(
-                'mb-3 inline-flex items-center gap-2 rounded-full border border-secondary/40 bg-secondary/10 px-3.5 py-1.5 text-sm font-semibold text-secondary',
+                'mb-3 inline-flex items-center gap-2 rounded-full border border-secondary/50 bg-secondary-50 px-3.5 py-1.5 text-sm font-semibold text-primary',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >
-              <Sparkles className="h-4 w-4" />
+              <Sparkles className="h-4 w-4 text-secondary-500" />
               {isAr ? 'وصل حديثاً' : 'Just arrived'}
             </p>
             <h2
               className={cn(
-                'text-[clamp(2rem,6vw,3.5rem)] font-medium leading-[1.1] tracking-tight text-cream text-balance',
+                'text-[clamp(2rem,6vw,3.5rem)] font-medium leading-[1.1] tracking-tight text-primary text-balance',
                 isAr ? 'font-arabic' : 'font-display'
               )}
             >
               {isAr ? 'جديد الموسم في خير الجوار.' : 'New this season at Khair Aljaar.'}
             </h2>
-            <p className={cn('mt-4 text-base leading-relaxed text-cream/70 md:text-lg', isAr ? 'font-arabic' : 'font-sans')}>
+            <p className={cn('mt-4 text-base leading-relaxed text-primary/65 md:text-lg', isAr ? 'font-arabic' : 'font-sans')}>
               {isAr
                 ? 'عجوة المدينة، فراولة وكيوي، فلفل أحمر، ومجمدات جديدة. كل منتج له صفحة بصوره ومواصفاته، والسعر بعرض مكتوب.'
                 : 'Ajwa from Al Madinah, strawberries and kiwi, red peppers, and new frozen lines. Each has its own page with photos and specs, priced by written quote.'}
@@ -189,7 +181,7 @@ export default function NewArrivals({ lang, products }: { lang: string; products
           </Link>
         </motion.div>
 
-        <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 scrollbar-hide lg:hidden">
+        <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 scrollbar-hide lg:hidden">
           {items.map((product, index) => (
             <div key={product.id} className="w-[78vw] max-w-[340px] shrink-0 snap-start">
               <Tile product={product} lang={lang} index={index} hero={index === 0} />
@@ -197,7 +189,7 @@ export default function NewArrivals({ lang, products }: { lang: string; products
           ))}
         </div>
 
-        <div className="hidden auto-rows-[17rem] grid-cols-4 gap-5 lg:grid">
+        <div className="hidden auto-rows-[19rem] grid-cols-4 gap-5 lg:grid">
           {items.slice(0, DESKTOP_SPANS.length).map((product, index) => (
             <Tile
               key={product.id}
