@@ -71,7 +71,7 @@ export default function HeroLivingBackdrop({ alt }: { alt: string }) {
   }, [mountVideo])
 
   return (
-    <div ref={rootRef} className="absolute inset-0 overflow-hidden bg-primary">
+    <div ref={rootRef} className="absolute inset-0 overflow-hidden bg-cream">
       <PremiumImage
         src={HERO_POSTER}
         alt={alt}
@@ -102,8 +102,14 @@ export default function HeroLivingBackdrop({ alt }: { alt: string }) {
         </video>
       )}
 
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/50 to-secondary/50" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/65 via-transparent to-primary/30" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            'linear-gradient(to top, rgba(247,244,236,0.97) 0%, rgba(247,244,236,0.88) 30%, rgba(247,244,236,0.45) 58%, rgba(247,244,236,0.08) 85%, rgba(247,244,236,0) 100%)',
+        }}
+        aria-hidden
+      />
     </div>
   )
 }

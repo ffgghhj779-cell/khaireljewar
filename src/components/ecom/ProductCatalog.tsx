@@ -138,7 +138,7 @@ export default function ProductCatalog({ lang, products }: ProductCatalogProps) 
               className={cn(
                 'shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-colors min-h-[40px]',
                 activeCategory === cat.id
-                  ? 'bg-primary text-cream'
+                  ? 'bg-secondary text-primary'
                   : 'bg-white text-gray-600 border border-dark/10 hover:border-primary/30',
                 isAr ? 'font-arabic' : 'font-sans'
               )}

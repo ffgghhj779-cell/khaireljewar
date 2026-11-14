@@ -32,7 +32,7 @@ export default function ProductStickyCta({ product, lang }: { product: Product; 
           <Link
             href={`/${lang}/contact`}
             className={cn(
-              'shrink-0 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-cream min-h-[44px] flex items-center touch-manipulation active:scale-[0.98]',
+              'shrink-0 rounded-xl bg-secondary text-primary hover:bg-secondary-400 px-4 py-3 text-sm font-semibold min-h-[44px] flex items-center touch-manipulation active:scale-[0.98]',
               isAr ? 'font-arabic' : 'font-sans'
             )}
           >
@@ -54,7 +54,7 @@ export default function ProductStickyCta({ product, lang }: { product: Product; 
             })
           }
           className={cn(
-            'shrink-0 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-cream min-h-[44px] flex items-center gap-2 touch-manipulation active:scale-[0.98]',
+            'shrink-0 rounded-xl bg-secondary text-primary hover:bg-secondary-400 px-4 py-3 text-sm font-semibold min-h-[44px] flex items-center gap-2 touch-manipulation active:scale-[0.98]',
             isAr ? 'font-arabic' : 'font-sans'
           )}
         >

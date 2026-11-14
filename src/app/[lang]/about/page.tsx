@@ -66,7 +66,7 @@ export default function AboutPage({ params: { lang } }: { params: { lang: string
                 <Link
                   href={`/${lang}/products`}
                   className={cn(
-                    'inline-flex items-center min-h-[48px] px-6 rounded-full bg-dark text-white font-semibold hover:bg-primary transition-colors',
+                    'inline-flex items-center min-h-[48px] px-6 rounded-full bg-secondary text-primary hover:bg-secondary-400 font-semibold transition-colors',
                     isAr ? 'font-arabic' : 'font-sans'
                   )}
                 >

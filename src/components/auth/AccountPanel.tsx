@@ -54,7 +54,7 @@ export default function AccountPanel({
           <Link
             href="/admin"
             className={cn(
-              'inline-flex flex-1 items-center justify-center rounded-xl bg-primary px-4 py-3 text-[14px] font-bold text-cream',
+              'inline-flex flex-1 items-center justify-center rounded-xl bg-secondary text-primary hover:bg-secondary-400 px-4 py-3 text-[14px] font-bold',
               isAr ? 'font-arabic' : 'font-sans'
             )}
           >

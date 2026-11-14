@@ -42,8 +42,8 @@ export default function LanguageSwitch({
         ],
         variant === 'menu' && [
           'min-h-[40px] px-4 rounded-full',
-          'text-white bg-dark border border-dark',
-          'hover:bg-primary active:scale-95',
+          'text-primary bg-white border border-primary/15',
+          'hover:border-primary/40 active:scale-95',
         ],
         targetLang === 'ar' ? 'font-arabic text-sm' : 'font-sans text-xs tracking-wide',
         className

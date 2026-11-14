@@ -82,7 +82,7 @@ export default function ColdChainStepper({ lang, activeStep = 3 }: ColdChainStep
               <div
                 className={cn(
                   'w-10 h-10 rounded-full flex items-center justify-center mb-4 relative z-10',
-                  isActive ? 'bg-primary text-white' : 'bg-gray-200 text-gray-400'
+                  isActive ? 'bg-secondary text-primary' : 'bg-gray-200 text-gray-400'
                 )}
               >
                 <step.icon className="w-5 h-5" strokeWidth={1.75} />

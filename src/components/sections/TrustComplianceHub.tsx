@@ -190,7 +190,7 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setActive(null)}
-              className="fixed inset-0 bg-dark/60 backdrop-blur-md z-[150]"
+              className="fixed inset-0 bg-cream/85 backdrop-blur-md z-[150]"
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.92, y: 24 }}
@@ -237,7 +237,7 @@ export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
                       href={active.downloadUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-dark text-white text-sm font-bold hover:bg-primary transition-colors"
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-secondary text-primary hover:bg-secondary-400 text-sm font-bold transition-colors"
                     >
                       <Download className="w-4 h-4" />
                       {isAr ? 'تحميل PDF' : 'Download PDF'}

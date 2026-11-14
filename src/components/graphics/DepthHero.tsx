@@ -36,11 +36,17 @@ export default function DepthHero({
   const imgScale = useTransform(scrollYProgress, [0, 1], [1.04, 1.1])
 
   return (
-    <section ref={ref} className={cn('relative overflow-hidden bg-dark', minHeightClass)}>
+    <section ref={ref} className={cn('relative overflow-hidden bg-cream', minHeightClass)}>
       <motion.div className="absolute inset-0" style={skip ? undefined : { y: imgY, scale: imgScale }}>
         <PremiumImage src={src} alt={alt} fill priority sizes="100vw" quality={88} className="object-cover" />
       </motion.div>
-      <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/40 to-dark/15" />
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            'linear-gradient(to top, rgba(247,244,236,0.97) 0%, rgba(247,244,236,0.86) 34%, rgba(247,244,236,0.4) 64%, rgba(247,244,236,0.05) 100%)',
+        }}
+      />
 
       <Container size="large" className={cn('relative z-10 flex items-end pb-14 md:pb-20', minHeightClass)}>
         <div className="max-w-3xl">
@@ -48,7 +54,7 @@ export default function DepthHero({
             initial={skip ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: BRAND_EASE }}
-            className={cn('text-white/70 text-sm font-medium mb-3', isAr ? 'font-arabic' : 'font-sans')}
+            className={cn('text-secondary-600 text-sm font-semibold mb-3', isAr ? 'font-arabic' : 'font-sans')}
           >
             {eyebrow}
           </motion.p>
@@ -57,7 +63,7 @@ export default function DepthHero({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.04, ease: BRAND_EASE }}
             className={cn(
-              'text-4xl md:text-6xl font-bold text-white tracking-tight editorial-heading mb-4',
+              'text-4xl md:text-6xl font-bold text-primary tracking-tight editorial-heading mb-4',
               isAr ? 'font-arabic' : 'font-display'
             )}
           >
@@ -68,7 +74,7 @@ export default function DepthHero({
               initial={skip ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.08, ease: BRAND_EASE }}
-              className={cn('text-white/70 text-base md:text-lg max-w-xl', isAr ? 'font-arabic' : 'font-sans')}
+              className={cn('text-primary/70 text-base md:text-lg max-w-xl', isAr ? 'font-arabic' : 'font-sans')}
             >
               {subtitle}
             </motion.p>

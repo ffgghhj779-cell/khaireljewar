@@ -20,10 +20,10 @@ export default function Button({
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2',
         'disabled:opacity-50 disabled:pointer-events-none touch-manipulation',
         'rounded-xl ease-luxury',
-        variant === 'primary' && 'bg-primary text-cream hover:bg-primary-700 shadow-soft',
+        variant === 'primary' && 'bg-secondary text-primary hover:bg-secondary-400 shadow-soft',
         variant === 'secondary' && 'bg-secondary text-primary hover:bg-secondary/90',
         variant === 'outline' &&
-          'border border-primary/20 bg-transparent text-primary hover:bg-primary hover:text-cream',
+          'border border-primary/20 bg-transparent text-primary hover:bg-primary/5',
         variant === 'ghost' && 'bg-transparent text-primary hover:bg-primary/8',
         size === 'sm' && 'h-9 px-4 text-sm',
         size === 'md' && 'h-11 px-6 text-[15px]',

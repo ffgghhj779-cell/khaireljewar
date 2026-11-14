@@ -51,7 +51,7 @@ export default function AddToCartButton({
               : 'bg-secondary text-primary hover:bg-secondary-400'
             : added
               ? 'bg-farm text-cream'
-              : 'bg-primary hover:bg-primary-700 text-cream',
+              : 'bg-secondary text-primary hover:bg-secondary-400',
           isAr ? 'font-arabic' : 'font-sans'
         )}
       >

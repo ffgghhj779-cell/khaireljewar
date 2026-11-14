@@ -31,7 +31,7 @@ export default function HeroBrand({ lang }: { lang: string }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: BRAND_EASE }}
           className={cn(
-            'mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-secondary sm:text-xs md:mb-3 md:text-sm',
+            'mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-secondary-600 sm:text-xs md:mb-3 md:text-sm',
             isAr ? 'font-arabic normal-case tracking-normal' : 'font-sans'
           )}
         >
@@ -43,7 +43,7 @@ export default function HeroBrand({ lang }: { lang: string }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.04, ease: BRAND_EASE }}
           className={cn(
-            'mb-2 max-w-[18ch] text-[clamp(2.35rem,9vw,5.5rem)] font-semibold leading-[1.05] tracking-tight text-cream text-balance md:mb-3',
+            'mb-2 max-w-[18ch] text-[clamp(2.35rem,9vw,5.5rem)] font-semibold leading-[1.05] tracking-tight text-primary text-balance md:mb-3',
             isAr ? 'font-arabic-display' : 'font-display'
           )}
         >
@@ -55,7 +55,7 @@ export default function HeroBrand({ lang }: { lang: string }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.08, ease: BRAND_EASE }}
           className={cn(
-            'mb-3 max-w-md text-[clamp(1.05rem,3.8vw,1.65rem)] font-medium leading-snug text-cream/92 text-balance md:mb-4',
+            'mb-3 max-w-md text-[clamp(1.05rem,3.8vw,1.65rem)] font-medium leading-snug text-primary/85 text-balance md:mb-4',
             isAr ? 'font-arabic' : 'font-display'
           )}
         >
@@ -67,7 +67,7 @@ export default function HeroBrand({ lang }: { lang: string }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.12, ease: BRAND_EASE }}
           className={cn(
-            'mb-6 max-w-sm text-[13px] leading-relaxed text-cream/75 sm:mb-8 sm:text-[15px] md:max-w-md md:text-base',
+            'mb-6 max-w-sm text-[13px] leading-relaxed text-primary/70 sm:mb-8 sm:text-[15px] md:max-w-md md:text-base',
             isAr ? 'font-arabic' : 'font-sans'
           )}
         >
@@ -95,8 +95,8 @@ export default function HeroBrand({ lang }: { lang: string }) {
             <Link
               href={`/${lang}/products`}
               className={cn(
-                'inline-flex min-h-[48px] items-center justify-center rounded-xl border border-cream/35 px-7 touch-manipulation',
-                'text-cream font-semibold active:bg-cream/10',
+                'inline-flex min-h-[48px] items-center justify-center rounded-xl border border-primary/20 bg-white/80 px-7 backdrop-blur-sm touch-manipulation',
+                'text-primary font-semibold hover:bg-white active:bg-white',
                 isAr ? 'font-arabic' : 'font-sans'
               )}
             >

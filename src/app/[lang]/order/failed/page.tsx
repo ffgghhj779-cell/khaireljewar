@@ -30,7 +30,7 @@ export default function OrderFailedPage({ params: { lang } }: { params: { lang: 
           <Link
             href={`/${lang}/checkout`}
             className={cn(
-              'inline-flex rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-cream',
+              'inline-flex rounded-xl bg-secondary text-primary hover:bg-secondary-400 px-6 py-3 text-sm font-semibold',
               isAr ? 'font-arabic' : 'font-sans'
             )}
           >

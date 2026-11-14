@@ -210,7 +210,7 @@ export default function Header({ lang }: { lang: string }) {
                 href={`/${lang}/contact`}
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
-                  'block w-full px-5 py-4 min-h-[52px] text-start text-[15px] font-semibold text-cream bg-primary',
+                  'block w-full px-5 py-4 min-h-[52px] text-start text-[15px] font-semibold text-primary bg-secondary',
                   isAr ? 'font-arabic' : 'font-display'
                 )}
               >

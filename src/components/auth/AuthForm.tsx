@@ -184,7 +184,7 @@ export default function AuthForm({ lang, mode }: Props) {
         type="submit"
         disabled={loading}
         className={cn(
-          'w-full rounded-xl bg-primary py-3.5 text-[14px] font-bold text-cream transition',
+          'w-full rounded-xl bg-secondary text-primary hover:bg-secondary-400 py-3.5 text-[14px] font-bold transition',
           'hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60',
           isAr ? 'font-arabic' : 'font-sans'
         )}

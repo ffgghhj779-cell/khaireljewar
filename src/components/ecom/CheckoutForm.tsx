@@ -235,7 +235,7 @@ export default function CheckoutForm({ lang }: { lang: string }) {
           type="submit"
           disabled={loading}
           className={cn(
-            'mb-2 w-full rounded-xl bg-primary py-4 text-sm font-bold text-cream disabled:opacity-60',
+            'mb-2 w-full rounded-xl bg-secondary text-primary hover:bg-secondary-400 py-4 text-sm font-bold disabled:opacity-60',
             isAr ? 'font-arabic' : 'font-sans'
           )}
         >

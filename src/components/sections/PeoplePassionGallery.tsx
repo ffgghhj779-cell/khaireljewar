@@ -102,7 +102,7 @@ export default function PeoplePassionGallery({ lang }: { lang: string }) {
                   blurDataURL={IMAGE_BLUR_DATA_URL}
                   className="object-cover will-change-transform group-hover:scale-[1.04] transition-transform duration-600"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark/70 via-dark/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-400" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-400" />
 
                 <div className="absolute bottom-0 inset-x-0 p-3 md:p-4">
                   <span className={cn('text-primary text-[9px] font-bold uppercase tracking-widest block mb-0.5', isAr ? 'font-ibm-arabic' : 'font-inter')}>
@@ -130,7 +130,7 @@ export default function PeoplePassionGallery({ lang }: { lang: string }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setLightbox(null)}
-              className="fixed inset-0 bg-dark/80 backdrop-blur-lg z-[150]"
+              className="fixed inset-0 bg-cream/85 backdrop-blur-lg z-[150]"
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
