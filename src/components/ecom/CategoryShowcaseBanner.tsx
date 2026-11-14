@@ -6,6 +6,7 @@ import { MessageCircle } from 'lucide-react'
 import type { Product } from '@/lib/data/products'
 import { BRAND } from '@/lib/constants/brand'
 import { isOrchardImage, resolveProductImage } from '@/lib/constants/images'
+import BrandStamp from '@/components/ui/BrandStamp'
 import { cn } from '@/lib/utils/cn'
 
 type Copy = { en: string; ar: string }
@@ -131,12 +132,10 @@ export default function CategoryShowcaseBanner({
             alt={heroTitle}
             fill
             sizes="(max-width: 1024px) 100vw, 480px"
-            className={cn(
-              'object-cover transition-transform duration-700 hover:scale-[1.03]',
-              isOrchardImage(hero.image) ? 'object-left-bottom' : 'object-center'
-            )}
+            className="object-cover object-center transition-transform duration-700 hover:scale-[1.03]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0C1812]/55 via-transparent to-transparent lg:bg-gradient-to-l lg:from-[#0C1812]/40" />
+          {isOrchardImage(hero.image) && <BrandStamp size="md" />}
         </Link>
 
         <div className={cn('relative flex min-w-0 flex-col justify-center gap-3 p-4 text-cream sm:gap-4 sm:p-8', font)}>

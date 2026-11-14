@@ -28,6 +28,7 @@ import {
   Truck,
 } from 'lucide-react'
 import Container from '@/components/ui/Container'
+import BrandStamp from '@/components/ui/BrandStamp'
 import JsonLd from '@/components/seo/JsonLd'
 import { BRAND } from '@/lib/constants/brand'
 import { isOrchardImage, resolveProductImage } from '@/lib/constants/images'
@@ -905,12 +906,10 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
                       alt={isAr ? c.ar : c.en}
                       fill
                       sizes="(max-width: 1024px) 50vw, 280px"
-                      className={cn(
-                        'object-cover transition-transform duration-700 group-hover:scale-105',
-                        isOrchardImage(c.hero.image) ? 'object-bottom' : 'object-center'
-                      )}
+                      className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                     />
                   )}
+                  {c.hero && isOrchardImage(c.hero.image) && <BrandStamp size="sm" />}
                   <span className="absolute top-2 start-2 rounded-full bg-primary/85 px-2 py-0.5 text-[10px] font-bold text-cream">
                     {isAr ? `${c.count} صنف` : `${c.count} ${c.count === 1 ? 'line' : 'lines'}`}
                   </span>

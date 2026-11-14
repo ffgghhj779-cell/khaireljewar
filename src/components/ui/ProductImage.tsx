@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from 'react'
 import Image from 'next/image'
 import { ImageIcon } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
+import BrandStamp from '@/components/ui/BrandStamp'
 import {
   IMAGE_BLUR_DATA_URL,
   resolveProductImage,
@@ -109,15 +110,10 @@ export default function ProductImage({
   }, [displaySrc, categoryEn, src])
 
   const showPendingOverlay = pending || failed
-  // Branded orchard shots carry the logo badge in the bottom-left corner; anchor crops there
-  const branded = isOrchardImage(displaySrc)
+  const branded = isOrchardImage(displaySrc) && variant !== 'thumb'
   const objectFit =
     fit === 'cover'
-      ? branded
-        ? variant === 'detail'
-          ? 'object-cover object-left-bottom'
-          : 'object-cover object-bottom'
-        : 'object-cover object-center'
+      ? 'object-cover object-center'
       : 'object-contain object-center p-2 sm:p-3 md:p-4'
 
   return (
@@ -142,20 +138,35 @@ export default function ProductImage({
             decoding="async"
           />
         ) : (
-          <Image
-            src={displaySrc}
-            alt={alt}
-            fill
-            sizes={sizes ?? styles.sizes}
-            priority={priority}
-            quality={variant === 'thumb' ? IMAGE_QUALITY_THUMB : variant === 'card' ? 78 : IMAGE_QUALITY_PRODUCT}
-            placeholder="blur"
-            blurDataURL={IMAGE_BLUR_DATA_URL}
-            onError={handleError}
-            className={cn(objectFit)}
-          />
+          <>
+            {/* Pack shots keep their full frame; a soft blurred copy fills the letterbox instead of flat cream */}
+            {fit === 'contain' && variant !== 'thumb' && (
+              <Image
+                src={displaySrc}
+                alt=""
+                aria-hidden
+                fill
+                sizes={sizes ?? styles.sizes}
+                quality={variant === 'card' ? 78 : IMAGE_QUALITY_PRODUCT}
+                className="scale-125 object-cover opacity-45 blur-2xl"
+              />
+            )}
+            <Image
+              src={displaySrc}
+              alt={alt}
+              fill
+              sizes={sizes ?? styles.sizes}
+              priority={priority}
+              quality={variant === 'thumb' ? IMAGE_QUALITY_THUMB : variant === 'card' ? 78 : IMAGE_QUALITY_PRODUCT}
+              placeholder="blur"
+              blurDataURL={IMAGE_BLUR_DATA_URL}
+              onError={handleError}
+              className={cn(objectFit, fit === 'contain' && 'drop-shadow-[0_10px_18px_rgba(12,24,18,0.18)]')}
+            />
+          </>
         )
       )}
+      {!showPendingOverlay && branded && <BrandStamp size={variant === 'detail' ? 'lg' : 'sm'} />}
       {showPendingOverlay && <PendingOverlay lang={lang} variant={variant} />}
     </div>
   )

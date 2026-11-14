@@ -8,6 +8,7 @@ import Container from '@/components/ui/Container'
 import type { Product } from '@/lib/data/products'
 import { BRAND_EASE, SCROLL_VIEWPORT_INSTANT } from '@/lib/constants/motion'
 import { isOrchardImage, resolveProductImage } from '@/lib/constants/images'
+import BrandStamp from '@/components/ui/BrandStamp'
 import { useLightMotion } from '@/hooks/useLightMotion'
 import { cn } from '@/lib/utils/cn'
 
@@ -68,7 +69,7 @@ function Tile({
             className={cn(
               'transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]',
               packshot ? 'object-contain p-6 md:p-8' : 'object-cover',
-              !packshot && (isOrchardImage(product.image) ? 'object-left-bottom' : hero && 'object-[50%_70%]')
+              hero && !packshot && !isOrchardImage(product.image) && 'object-[50%_70%]'
             )}
           />
           {badge && (
@@ -81,6 +82,7 @@ function Tile({
               {badge}
             </span>
           )}
+          {isOrchardImage(product.image) && <BrandStamp size={hero ? 'md' : 'sm'} />}
         </div>
 
         <div className={cn('flex items-end justify-between gap-3 border-t border-primary/8 bg-white', hero ? 'p-5 md:p-7' : 'p-4 md:p-5')}>

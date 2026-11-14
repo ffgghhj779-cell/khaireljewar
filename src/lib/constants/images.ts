@@ -84,7 +84,7 @@ export function isValidImageUrl(url?: string | null): url is string {
 }
 
 /** Bump when product photos are replaced in place — optimized images are browser-cached for 7 days */
-const PRODUCT_IMAGE_VERSION = '20261114b'
+const PRODUCT_IMAGE_VERSION = '20261114c'
 
 /**
  * Branded in-orchard photos (full-bleed scenes, shown with object-cover) mapped to the
