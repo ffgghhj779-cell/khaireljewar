@@ -9,7 +9,7 @@ import { BRAND_EASE, SCROLL_VIEWPORT_INSTANT } from '@/lib/constants/motion'
 import { cn } from '@/lib/utils/cn'
 
 export default function HomeCloser({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   return (
     <section className="relative z-0 overflow-hidden border-t border-secondary/35 bg-harvest py-12 md:py-40">

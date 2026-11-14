@@ -9,7 +9,7 @@ interface QualityStepperProps {
 }
 
 export default function QualityStepper({ lang }: QualityStepperProps) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   const steps = [
     {

@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils/cn'
 import { Leaf } from 'lucide-react'
 
 export default function AboutPreview({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   
   const content = {
     en: {

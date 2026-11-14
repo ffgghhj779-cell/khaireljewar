@@ -7,7 +7,7 @@ export async function generateMetadata({
 }: {
   params: { lang: string }
 }): Promise<Metadata> {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '/order/success',

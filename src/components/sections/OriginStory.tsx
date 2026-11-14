@@ -14,7 +14,7 @@ import { useLightMotion } from '@/hooks/useLightMotion'
 import { cn } from '@/lib/utils/cn'
 
 export default function OriginStory({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const lightMotion = useLightMotion()
 
   return (

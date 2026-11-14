@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, buildPageMetadata } from '@/lib/seo'
 import { cn } from '@/lib/utils/cn'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '/guides/incoterms',
@@ -19,7 +19,7 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
 }
 
 export default function IncotermsGuidePage({ params: { lang } }: { params: { lang: string } }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const terms = isAr
     ? [
         ['FOB جدة', 'التسليم على ظهر السفينة في جدة. هذا الشرط الافتراضي في عروض خير الجوار، إلا إذا نص العرض على غيره.'],

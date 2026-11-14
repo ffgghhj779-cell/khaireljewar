@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils/cn'
 
 export default function HeroIndustrial({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   return (
     <section className="relative w-full pt-16 pb-20 px-4 md:px-8 bg-[#050B14] overflow-hidden border-b border-white/5">

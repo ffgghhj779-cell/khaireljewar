@@ -98,7 +98,7 @@ export default function CategoryShowcaseBanner({
   const showcase = CATEGORY_SHOWCASES[categoryId]
   if (!showcase) return null
 
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const pool = products.filter((p) => p.category.en === categoryId && isLocalImage(p.image))
   if (pool.length === 0) return null
 

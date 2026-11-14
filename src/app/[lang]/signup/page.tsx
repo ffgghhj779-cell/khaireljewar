@@ -7,7 +7,7 @@ import { buildPageMetadata } from '@/lib/seo'
 import { isSupabaseConfigured } from '@/lib/supabase/env'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '/signup',
@@ -18,7 +18,7 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
 }
 
 export default async function SignupPage({ params: { lang } }: { params: { lang: string } }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   if (!isSupabaseConfigured()) {
     return (

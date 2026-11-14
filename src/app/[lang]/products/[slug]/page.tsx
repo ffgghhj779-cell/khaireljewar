@@ -33,7 +33,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const product = await getProductBySlug(slug)
   if (!product) return {}
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const search = productSearchCopy({
     lang,
     name: tx(lang, product.title),
@@ -55,7 +55,7 @@ export default async function SingleProductPage({
 }: {
   params: { lang: string; slug: string }
 }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const product = await getProductBySlug(slug)
   if (!product) return notFound()
 

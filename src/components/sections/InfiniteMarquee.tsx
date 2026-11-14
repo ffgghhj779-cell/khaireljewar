@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils/cn'
 
 export default function InfiniteMarquee({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const text = isAr
     ? ' • تصدير عالمي موثوق • جودة فاخرة من جدة • محاصيل معتمدة • لوجستيات متكاملة بدون مساومات '
     : ' • GLOBAL EXPORT EXCELLENCE • PREMIUM QUALITY FROM JEDDAH • TRUSTED SUPPLY CHAIN • NEIGHBORLY CARE '

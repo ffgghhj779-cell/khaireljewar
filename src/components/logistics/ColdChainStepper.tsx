@@ -12,7 +12,7 @@ interface ColdChainStepperProps {
 }
 
 export default function ColdChainStepper({ lang, activeStep = 3 }: ColdChainStepperProps) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   const steps = [
     {

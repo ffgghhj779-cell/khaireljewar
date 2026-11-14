@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils/cn'
 import { Snowflake, Ship, MapPinned } from 'lucide-react'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '/logistics',
@@ -24,7 +24,7 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
 }
 
 export default function LogisticsPage({ params: { lang } }: { params: { lang: string } }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   const pillars = [
     {

@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, buildPageMetadata } from '@/lib/seo'
 import { cn } from '@/lib/utils/cn'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '/guides/iqf',
@@ -19,7 +19,7 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
 }
 
 export default function IqfGuidePage({ params: { lang } }: { params: { lang: string } }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const points = isAr
     ? [
         ['ماذا يعني IQF', 'التجميد السريع الفردي: كل حبة أو قطعة تُجمّد وحدها، فلا تتكتل داخل الكرتونة.'],

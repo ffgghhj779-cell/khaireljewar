@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils/cn'
 import { resolveProductImage } from '@/lib/constants/images'
 
 export default function CartView({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const lines = useCartStore((s) => s.lines)
   const setQuantity = useCartStore((s) => s.setQuantity)
   const removeLine = useCartStore((s) => s.removeLine)

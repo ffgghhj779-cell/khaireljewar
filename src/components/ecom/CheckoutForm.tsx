@@ -14,7 +14,7 @@ import {
 import { cn } from '@/lib/utils/cn'
 
 export default function CheckoutForm({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const lines = useCartStore((s) => s.lines)
   const subtotal = useCartStore((s) => s.subtotalEgp())
   const clear = useCartStore((s) => s.clear)

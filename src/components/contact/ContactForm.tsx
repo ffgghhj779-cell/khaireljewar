@@ -15,7 +15,7 @@ const inputClass =
   'w-full border border-gray-200 rounded-2xl px-4 py-3.5 min-h-[48px] bg-canvas-soft/50 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 focus:bg-white touch-manipulation transition-all'
 
 export default function ContactForm({ lang }: ContactFormProps) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const searchParams = useSearchParams()
   const productSlug = searchParams.get('product')
   const defaultMessage = useMemo(() => {

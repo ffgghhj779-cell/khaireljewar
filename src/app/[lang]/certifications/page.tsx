@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils/cn'
 import { ShieldCheck, Leaf, FlaskConical, FileCheck } from 'lucide-react'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '/quality',
@@ -22,7 +22,7 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
 }
 
 export default function CertificationsPage({ params: { lang } }: { params: { lang: string } }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   const pillars = [
     {

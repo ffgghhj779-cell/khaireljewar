@@ -4,7 +4,7 @@ import { Truck, ShieldCheck, Leaf, RefreshCcw } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
 export default function StoreFeatures({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   const features = [
     {

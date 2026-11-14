@@ -5,7 +5,7 @@ import { Star, Quote } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
 export default function Testimonials({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   const reviews = [
     {

@@ -8,7 +8,7 @@ import { HOME_FAQ } from '@/lib/data/faq'
 import { cn } from '@/lib/utils/cn'
 
 export default function HomeFaq({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const items = HOME_FAQ[isAr ? 'ar' : 'en']
   const [open, setOpen] = useState<number | null>(0)
 

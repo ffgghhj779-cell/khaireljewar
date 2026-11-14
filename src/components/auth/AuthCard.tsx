@@ -14,7 +14,7 @@ export default function AuthCard({
   subtitle: string
   children: React.ReactNode
 }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   return (
     <div className="relative min-h-[70vh] bg-canvas-soft pb-24 pt-10 md:pt-14">

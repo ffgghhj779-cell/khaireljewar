@@ -5,7 +5,7 @@ import { Sprout, PackageSearch, Ship, FileCheck2 } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
 export default function ProcessTimeline({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   const steps = [
     {

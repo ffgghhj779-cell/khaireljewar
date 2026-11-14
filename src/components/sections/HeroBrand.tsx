@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils/cn'
 
 /** Full-bleed cinematic hero — living produce backdrop, brand-first copy, mustard CTA */
 export default function HeroBrand({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const reduceMotion = useReducedMotion()
   const skip = !!reduceMotion
 

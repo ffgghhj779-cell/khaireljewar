@@ -17,7 +17,7 @@ const MARKS = [
 ]
 
 export default function PartnerStrip({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const lightMotion = useLightMotion()
 
   return (

@@ -21,7 +21,7 @@ import { faqJsonLd, buildPageMetadata } from '@/lib/seo'
 import type { Metadata } from 'next'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '',

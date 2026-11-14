@@ -9,7 +9,7 @@ import JsonLd from '@/components/seo/JsonLd'
 import { cn } from '@/lib/utils/cn'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '/partners',
@@ -21,7 +21,7 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
 }
 
 export default function PartnersPage({ params: { lang } }: { params: { lang: string } }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   return (
     <div className="min-h-screen pb-0">

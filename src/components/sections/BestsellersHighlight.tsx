@@ -6,7 +6,7 @@ import { ShoppingCart, Star } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
 export default function BestsellersHighlight({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   const products = [
     {

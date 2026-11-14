@@ -6,7 +6,7 @@ import { buildPageMetadata } from '@/lib/seo'
 import { cn } from '@/lib/utils/cn'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '/order/failed',
@@ -17,7 +17,7 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
 }
 
 export default function OrderFailedPage({ params: { lang } }: { params: { lang: string } }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return (
     <div className="bg-cream min-h-screen pt-28 pb-24">
       <Container className="max-w-xl text-center">

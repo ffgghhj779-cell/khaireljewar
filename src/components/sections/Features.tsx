@@ -6,7 +6,7 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import { cn } from '@/lib/utils/cn'
 
 export default function Features({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   
   const content = {
     en: { title: 'Why Choose Us?', subtitle: 'The pillars of our export excellence' },

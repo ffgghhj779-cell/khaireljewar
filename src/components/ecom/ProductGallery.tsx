@@ -17,7 +17,7 @@ export default function ProductGallery({
   images: GalleryImage[]
   lang: string
 }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const [active, setActive] = useState(0)
   const current = images[active] ?? images[0]
 

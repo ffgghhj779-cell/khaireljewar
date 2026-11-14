@@ -21,7 +21,7 @@ interface ProductCardProps {
 
 /** Rich card — price, MOQ, packaging & season visible without opening PDP */
 export default function ProductCard({ product, lang, index = 0, compact = false }: ProductCardProps) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const lightMotion = useLightMotion()
   const title = tx(lang, product.title)
   const category = tx(lang, product.category)

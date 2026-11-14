@@ -6,7 +6,7 @@ import { buildPageMetadata } from '@/lib/seo'
 import { cn } from '@/lib/utils/cn'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '/privacy',
@@ -18,7 +18,7 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
 }
 
 export default function PrivacyPage({ params: { lang } }: { params: { lang: string } }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   return (
     <div className="min-h-screen py-14 md:py-20 pb-24 bg-canvas-soft">

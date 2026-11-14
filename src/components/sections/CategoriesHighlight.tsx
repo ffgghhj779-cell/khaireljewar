@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils/cn'
 import { ArrowUpRight } from 'lucide-react'
 
 export default function CategoriesHighlight({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   const categories = [
     {

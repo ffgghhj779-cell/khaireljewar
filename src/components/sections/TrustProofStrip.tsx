@@ -25,7 +25,7 @@ const PROOFS = {
 } as const
 
 export default function TrustProofStrip({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const lightMotion = useLightMotion()
   const items = PROOFS[isAr ? 'ar' : 'en']
 

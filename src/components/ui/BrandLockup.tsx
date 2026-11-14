@@ -21,7 +21,7 @@ export default function BrandLockup({
   variant = 'header',
   tone = 'dark',
 }: BrandLockupProps) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const onDark = tone === 'light'
 
   if (variant === 'footer') {

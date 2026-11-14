@@ -61,7 +61,7 @@ const SLIDES = {
 }
 
 export default function TrustQuiet({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const lightMotion = useLightMotion()
   const slides = SLIDES[isAr ? 'ar' : 'en']
   const [index, setIndex] = useState(0)

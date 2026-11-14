@@ -19,7 +19,7 @@ export default function AddToCartButton({
   lang: string
   variant?: 'default' | 'accent'
 }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const addLine = useCartStore((s) => s.addLine)
   const [added, setAdded] = useState(false)
   const unit = getConsumerUnit(product)

@@ -23,7 +23,7 @@ export default function OrderSuccessClient({
   orderRef: string
   methodHint?: string
 }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const [order, setOrder] = useState<OrderPayload | null>(null)
 
   useEffect(() => {

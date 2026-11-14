@@ -18,7 +18,7 @@ interface ProductsDesireProps {
 }
 
 export default function ProductsDesire({ lang, products }: ProductsDesireProps) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const lightMotion = useLightMotion()
   const items = products.slice(0, 12)
   const mobileItems = products.slice(0, 8)

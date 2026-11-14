@@ -6,7 +6,7 @@ import { useIsMobile } from '@/hooks/useIsMobile'
 import { cn } from '@/lib/utils/cn'
 
 export default function ParallaxBanner({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const isMobile = useIsMobile()
   const containerRef = useRef<HTMLDivElement>(null)
 

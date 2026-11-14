@@ -122,7 +122,7 @@ function PackFigure({
 }
 
 export default function BrandPackaging({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const lightMotion = useLightMotion()
   const rice = PACKS[0]
   const tomatoes = PACKS[1]

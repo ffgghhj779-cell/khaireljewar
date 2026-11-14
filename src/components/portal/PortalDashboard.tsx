@@ -17,7 +17,7 @@ interface PortalDashboardProps {
 }
 
 export default function PortalDashboard({ lang }: PortalDashboardProps) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const router = useRouter()
   const [loading, setLoading] = useState(true)
 

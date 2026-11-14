@@ -20,7 +20,7 @@ const TAG_COLORS: Record<LogisticsPhoto['tag'], string> = {
 }
 
 export default function LogisticsEditorialGallery({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const [lightbox, setLightbox] = useState<LogisticsPhoto | null>(null)
   const [activeTag, setActiveTag] = useState<LogisticsPhoto['tag'] | 'All'>('All')
 

@@ -31,7 +31,7 @@ function normalizeCategory(raw: string | null): string {
 }
 
 export default function ProductCatalog({ lang, products }: ProductCatalogProps) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()

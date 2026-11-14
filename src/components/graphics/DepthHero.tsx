@@ -27,7 +27,7 @@ export default function DepthHero({
   subtitle?: string
   minHeightClass?: string
 }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const light = useLightMotion()
   const reduce = useReducedMotion()
   const skip = light || !!reduce

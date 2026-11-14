@@ -26,7 +26,7 @@ export default function Hero({ lang }: { lang: string }) {
   }
 
   const t = content[lang as keyof typeof content] || content.ar
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   // Animation Variants
   const containerVars = {

@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils/cn'
 
 export default function CartButton({ lang }: { lang: string }) {
   const count = useCartStore((s) => s.itemCount())
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   return (
     <Link

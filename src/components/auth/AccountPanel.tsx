@@ -17,7 +17,7 @@ export default function AccountPanel({
   email: string
   profile: ProfileRow | null
 }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const isAdmin = profile?.role === 'admin'

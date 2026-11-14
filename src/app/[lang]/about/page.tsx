@@ -234,7 +234,7 @@ function txLang(lang: string, copy: Copy) {
 }
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '/about',
@@ -311,7 +311,7 @@ function SectionTitle({
 }
 
 export default async function AboutPage({ params: { lang } }: { params: { lang: string } }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const t = (copy: Copy) => tx(isAr, copy)
   const font = localeFontClass(lang)
   const Arrow = isAr ? ArrowLeft : ArrowRight

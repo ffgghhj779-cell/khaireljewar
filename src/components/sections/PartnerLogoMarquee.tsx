@@ -14,7 +14,7 @@ function LogoCard({
   lang: string
   delay: number
 }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const isRaster = /\.(png|jpe?g|webp)$/i.test(partner.logo)
 
   const inner = (
@@ -62,7 +62,7 @@ function LogoCard({
 }
 
 export default function PartnerLogoMarquee({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const loop = [...PARTNER_LOGOS, ...PARTNER_LOGOS]
 
   return (

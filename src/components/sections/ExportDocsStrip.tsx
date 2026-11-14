@@ -22,7 +22,7 @@ const DOCS = {
 
 /** B2B export documents strip — what partners can expect without opening a PDF */
 export default function ExportDocsStrip({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const items = DOCS[isAr ? 'ar' : 'en']
 
   return (

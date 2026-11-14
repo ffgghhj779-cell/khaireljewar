@@ -64,7 +64,7 @@ const PILLARS = {
 }
 
 export default function BrandMarquee({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const items = PILLARS[isAr ? 'ar' : 'en']
 
   return (

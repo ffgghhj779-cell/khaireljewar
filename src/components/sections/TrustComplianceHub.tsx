@@ -57,7 +57,7 @@ function VerificationStamp({ color }: { color: string }) {
 }
 
 export default function TrustComplianceHub({ lang }: TrustComplianceHubProps) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const [active, setActive] = useState<ComplianceCertificate | null>(null)
   const requestUrl = (cert: ComplianceCertificate) =>
     `https://wa.me/${BRAND.contact.phoneWa}?text=${encodeURIComponent(

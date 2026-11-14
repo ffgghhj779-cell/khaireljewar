@@ -47,7 +47,7 @@ const VARIANT_STYLES: Record<ProductImageVariant, { aspect: string; sizes: strin
 }
 
 function PendingOverlay({ lang, variant }: { lang: string; variant: ProductImageVariant }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const compact = variant === 'thumb'
 
   return (

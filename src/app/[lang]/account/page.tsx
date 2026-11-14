@@ -8,7 +8,7 @@ import { buildPageMetadata } from '@/lib/seo'
 import { cn } from '@/lib/utils/cn'
 
 export function generateMetadata({ params: { lang } }: { params: { lang: string } }): Metadata {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '/account',
@@ -19,7 +19,7 @@ export function generateMetadata({ params: { lang } }: { params: { lang: string 
 }
 
 export default async function AccountPage({ params: { lang } }: { params: { lang: string } }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const session = await getAuthSession()
   if (!session) redirect(`/${lang}/login`)
 

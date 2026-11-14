@@ -15,7 +15,7 @@ type Props = {
 }
 
 export default function AuthForm({ lang, mode }: Props) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

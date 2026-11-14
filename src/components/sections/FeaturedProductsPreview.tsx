@@ -9,7 +9,7 @@ import { MOCK_PRODUCTS } from '@/lib/data/products'
 import { cn } from '@/lib/utils/cn'
 
 export default function FeaturedProductsPreview({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   return (
     <section className="py-24 bg-white relative z-20">

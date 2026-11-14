@@ -8,7 +8,7 @@ const GOLD = '#D4A83A'
 
 /** Editorial SVG — Jeddah hub radiating to world lanes */
 export default function ExportRoutesDiagram({ lang, className }: { lang: string; className?: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const label = { textAnchor: 'middle' as const, fontFamily: 'DM Sans, Cairo, sans-serif' }
 
   return (

@@ -12,7 +12,7 @@ type Props = {
 }
 
 export default function OurPartners({ lang, hideTitle = false, className }: Props) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   return (
     <div className={cn('w-full', className)}>

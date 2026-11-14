@@ -25,7 +25,7 @@ const QUOTES = {
 }
 
 export default function PeoplePassionGallery({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const [lightbox, setLightbox] = useState<TeamPhoto | null>(null)
   const quotes = txList(lang, QUOTES)
 

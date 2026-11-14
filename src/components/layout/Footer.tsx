@@ -15,7 +15,7 @@ function FooterIcon({ children }: { children: ReactNode }) {
 }
 
 export default function Footer({ lang }: { lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
 
   const companyLinks = [
     { label: isAr ? 'من نحن' : 'About', href: `/${lang}/about` },

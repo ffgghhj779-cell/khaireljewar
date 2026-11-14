@@ -10,7 +10,7 @@ export async function generateMetadata({
 }: {
   params: { lang: string }
 }): Promise<Metadata> {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return buildPageMetadata({
     lang,
     path: '/checkout',
@@ -23,7 +23,7 @@ export async function generateMetadata({
 }
 
 export default function CheckoutPage({ params: { lang } }: { params: { lang: string } }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   return (
     <div className="min-h-screen bg-cream pb-[calc(10rem+env(safe-area-inset-bottom,0px))] pt-24 sm:pt-28 lg:pb-16">
       <Container>

@@ -9,7 +9,7 @@ import { getConsumerUnit, getRetailPriceEgp, formatEgp } from '@/lib/commerce/pr
 import { cn } from '@/lib/utils/cn'
 
 export default function ProductStickyCta({ product, lang }: { product: Product; lang: string }) {
-  const isAr = lang === 'ar'
+  const isAr = lang === 'ar' || lang === 'ur'
   const addLine = useCartStore((s) => s.addLine)
   const unit = getConsumerUnit(product)
   const price = getRetailPriceEgp(product)
