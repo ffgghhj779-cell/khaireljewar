@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { MessageCircle } from 'lucide-react'
 import type { Product } from '@/lib/data/products'
 import { BRAND } from '@/lib/constants/brand'
-import { resolveProductImage } from '@/lib/constants/images'
+import { isOrchardImage, resolveProductImage } from '@/lib/constants/images'
 import { cn } from '@/lib/utils/cn'
 
 type Copy = { en: string; ar: string }
@@ -131,7 +131,10 @@ export default function CategoryShowcaseBanner({
             alt={heroTitle}
             fill
             sizes="(max-width: 1024px) 100vw, 480px"
-            className="object-cover transition-transform duration-700 hover:scale-[1.03]"
+            className={cn(
+              'object-cover transition-transform duration-700 hover:scale-[1.03]',
+              isOrchardImage(hero.image) ? 'object-left-bottom' : 'object-center'
+            )}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0C1812]/55 via-transparent to-transparent lg:bg-gradient-to-l lg:from-[#0C1812]/40" />
         </Link>

@@ -1,6 +1,7 @@
 import type { Product } from '@/lib/data/products'
 
 const NEW = '/images/brand/products/new'
+const CLEAN = '/images/brand/products/clean'
 
 const STOCK = { en: 'In Stock', ar: 'متوفر' } as const
 const SEASONAL = { en: 'Seasonal', ar: 'موسمي' } as const
@@ -42,7 +43,10 @@ const SEASON_ITEMS: SeasonProduct[] = [
     },
     image: `${NEW}/ajwa-al-madinah.webp`,
     imageFit: 'cover',
-    gallery: [shot(`${NEW}/ajwa-al-madinah.webp`, 'Ajwa Al Madinah dates gift box', 'علبة تمر عجوة المدينة')],
+    gallery: [
+      shot(`${NEW}/ajwa-al-madinah.webp`, 'Ajwa dates on the palm', 'تمر العجوة على النخلة'),
+      shot(`${CLEAN}/ajwa-al-madinah-dates.webp`, 'Ajwa Al Madinah dates, close-up', 'تمر عجوة المدينة عن قرب'),
+    ],
     availability: STOCK,
     harvestSeason: YEAR,
     sizes: { en: 'Premium', ar: 'فاخر' },
@@ -68,7 +72,8 @@ const SEASON_ITEMS: SeasonProduct[] = [
     image: `${NEW}/fresh-strawberries.webp`,
     imageFit: 'cover',
     gallery: [
-      shot(`${NEW}/fresh-strawberries.webp`, 'Fresh strawberries in a punnet', 'فراولة طازجة في علبة'),
+      shot(`${NEW}/fresh-strawberries.webp`, 'Strawberries growing in the field', 'فراولة في الحقل'),
+      shot(`${CLEAN}/fresh-strawberries.webp`, 'Fresh strawberries, close-up', 'فراولة طازجة عن قرب'),
     ],
     availability: SEASONAL,
     harvestSeason: SEASONAL,
@@ -94,7 +99,10 @@ const SEASON_ITEMS: SeasonProduct[] = [
     },
     image: `${NEW}/fresh-kiwi.webp`,
     imageFit: 'cover',
-    gallery: [shot(`${NEW}/fresh-kiwi.webp`, 'Fresh kiwi and kiwi juice', 'كيوي طازج وعصير كيوي')],
+    gallery: [
+      shot(`${NEW}/fresh-kiwi.webp`, 'Kiwi on the vine', 'كيوي على الكرمة'),
+      shot(`${CLEAN}/fresh-kiwi.webp`, 'Fresh kiwi, close-up', 'كيوي طازج عن قرب'),
+    ],
     availability: SEASONAL,
     harvestSeason: SEASONAL,
     sizes: { en: 'Graded', ar: 'مفروز' },
@@ -119,7 +127,10 @@ const SEASON_ITEMS: SeasonProduct[] = [
     },
     image: `${NEW}/red-bell-peppers.webp`,
     imageFit: 'cover',
-    gallery: [shot(`${NEW}/red-bell-peppers.webp`, 'Red bell peppers in export cartons', 'فلفل رومي أحمر في كراتين تصدير')],
+    gallery: [
+      shot(`${NEW}/red-bell-peppers.webp`, 'Red bell peppers on the plant', 'فلفل رومي أحمر على النبات'),
+      shot(`${CLEAN}/red-bell-peppers.webp`, 'Red bell peppers, close-up', 'فلفل رومي أحمر عن قرب'),
+    ],
     availability: STOCK,
     harvestSeason: SEASONAL,
     sizes: { en: 'Graded', ar: 'مفروز' },
@@ -144,7 +155,10 @@ const SEASON_ITEMS: SeasonProduct[] = [
     },
     image: `${NEW}/red-chili-peppers.webp`,
     imageFit: 'cover',
-    gallery: [shot(`${NEW}/red-chili-peppers.webp`, 'Red chili peppers in a crate', 'فلفل أحمر حار في صندوق')],
+    gallery: [
+      shot(`${NEW}/red-chili-peppers.webp`, 'Red chili peppers on the plant', 'فلفل أحمر حار على النبات'),
+      shot(`${CLEAN}/fresh-red-chili-peppers.webp`, 'Red chili peppers, close-up', 'فلفل أحمر حار عن قرب'),
+    ],
     availability: STOCK,
     harvestSeason: SEASONAL,
     sizes: { en: 'Long', ar: 'طويل' },

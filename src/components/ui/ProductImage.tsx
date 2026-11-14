@@ -11,6 +11,7 @@ import {
   getCategoryFallback,
   IMAGE_QUALITY_PRODUCT,
   IMAGE_QUALITY_THUMB,
+  isOrchardImage,
 } from '@/lib/constants/images'
 
 type ProductImageVariant = 'card' | 'detail' | 'thumb'
@@ -108,9 +109,15 @@ export default function ProductImage({
   }, [displaySrc, categoryEn, src])
 
   const showPendingOverlay = pending || failed
+  // Branded orchard shots carry the logo badge in the bottom-left corner; anchor crops there
+  const branded = isOrchardImage(displaySrc)
   const objectFit =
     fit === 'cover'
-      ? 'object-cover object-center'
+      ? branded
+        ? variant === 'detail'
+          ? 'object-cover object-left-bottom'
+          : 'object-cover object-bottom'
+        : 'object-cover object-center'
       : 'object-contain object-center p-2 sm:p-3 md:p-4'
 
   return (

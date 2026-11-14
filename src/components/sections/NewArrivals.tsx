@@ -7,7 +7,7 @@ import { ArrowUpRight, Sparkles } from 'lucide-react'
 import Container from '@/components/ui/Container'
 import type { Product } from '@/lib/data/products'
 import { BRAND_EASE, SCROLL_VIEWPORT_INSTANT } from '@/lib/constants/motion'
-import { resolveProductImage } from '@/lib/constants/images'
+import { isOrchardImage, resolveProductImage } from '@/lib/constants/images'
 import { useLightMotion } from '@/hooks/useLightMotion'
 import { cn } from '@/lib/utils/cn'
 
@@ -68,7 +68,7 @@ function Tile({
             className={cn(
               'transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]',
               packshot ? 'object-contain p-6 md:p-8' : 'object-cover',
-              hero && !packshot && 'object-[50%_70%]'
+              !packshot && (isOrchardImage(product.image) ? 'object-left-bottom' : hero && 'object-[50%_70%]')
             )}
           />
           {badge && (

@@ -84,7 +84,50 @@ export function isValidImageUrl(url?: string | null): url is string {
 }
 
 /** Bump when product photos are replaced in place — optimized images are browser-cached for 7 days */
-const PRODUCT_IMAGE_VERSION = '20261114'
+const PRODUCT_IMAGE_VERSION = '20261114b'
+
+/**
+ * Branded in-orchard photos (full-bleed scenes, shown with object-cover) mapped to the
+ * clean produce-only shot kept as the second gallery photo.
+ */
+const ORCHARD_CLEAN_SHOTS: Record<string, string> = Object.fromEntries(
+  [
+    ['valencia-oranges', 'valencia-oranges'],
+    ['navel-oranges', 'navel-oranges'],
+    ['fresh-tangerines', 'fresh-tangerines'],
+    ['fresh-lemons', 'fresh-lemons'],
+    ['pomegranates', 'pomegranates'],
+    ['kent-mangoes', 'kent-mangoes'],
+    ['table-grapes', 'table-grapes'],
+    ['hass-avocados', 'hass-avocados'],
+    ['fresh-tomatoes', 'fresh-tomatoes'],
+    ['bell-peppers', 'bell-peppers'],
+    ['spunta-potatoes', 'spunta-potatoes'],
+    ['red-onions', 'red-onions'],
+    ['fresh-garlic', 'fresh-garlic'],
+    ['fresh-carrots', 'fresh-carrots'],
+    ['green-beans', 'green-beans'],
+    ['fresh-okra', 'fresh-okra'],
+    ['fresh-molokhia', 'fresh-molokhia'],
+    ['sweet-potatoes', 'sweet-potatoes'],
+    ['medjool-dates', 'medjool-dates'],
+    ['barhi-dates', 'barhi-dates'],
+    ['new/fresh-strawberries', 'fresh-strawberries'],
+    ['new/fresh-kiwi', 'fresh-kiwi'],
+    ['new/red-bell-peppers', 'red-bell-peppers'],
+    ['new/red-chili-peppers', 'fresh-red-chili-peppers'],
+    ['new/ajwa-al-madinah', 'ajwa-al-madinah-dates'],
+  ].map(([image, clean]) => [`${BRAND_PRODUCTS}/${image}.webp`, `${BRAND_PRODUCTS}/clean/${clean}.webp`])
+)
+
+export function isOrchardImage(src?: string | null): boolean {
+  return Boolean(src && ORCHARD_CLEAN_SHOTS[src.split('?')[0]])
+}
+
+export function cleanShotFor(src?: string | null): string | null {
+  const clean = src ? ORCHARD_CLEAN_SHOTS[src.split('?')[0]] : undefined
+  return clean ? withImageVersion(clean) : null
+}
 
 function withImageVersion(src: string): string {
   if (!src.startsWith(`${BRAND_PRODUCTS}/`) || src.includes('?')) return src

@@ -7,6 +7,7 @@ import type { Product } from '@/lib/data/products'
 import { BRAND_EASE, SCROLL_VIEWPORT_INSTANT } from '@/lib/constants/motion'
 import { useLightMotion } from '@/hooks/useLightMotion'
 import ProductImage from '@/components/ui/ProductImage'
+import { isOrchardImage } from '@/lib/constants/images'
 import { getConsumerUnit, getRetailPriceEgp, formatEgp } from '@/lib/commerce/pricing'
 import { cn } from '@/lib/utils/cn'
 
@@ -62,7 +63,7 @@ export default function ProductCard({ product, lang, index = 0, compact = false 
             lang={lang}
             priority={index < 1}
             variant="card"
-            fit={product.imageFit ?? 'contain'}
+            fit={product.imageFit ?? (isOrchardImage(product.image) ? 'cover' : 'contain')}
             className="!aspect-auto absolute inset-0 rounded-none border-0 !bg-cream"
             sizes={compact ? '280px' : '(max-width: 768px) 45vw, (max-width: 1200px) 30vw, 280px'}
           />

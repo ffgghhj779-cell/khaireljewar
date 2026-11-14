@@ -30,7 +30,7 @@ import {
 import Container from '@/components/ui/Container'
 import JsonLd from '@/components/seo/JsonLd'
 import { BRAND } from '@/lib/constants/brand'
-import { resolveProductImage } from '@/lib/constants/images'
+import { isOrchardImage, resolveProductImage } from '@/lib/constants/images'
 import { PRODUCT_CATEGORIES } from '@/lib/data/products'
 import { getProducts } from '@/lib/actions/products'
 import { breadcrumbJsonLd, buildPageMetadata } from '@/lib/seo'
@@ -905,7 +905,10 @@ export default async function AboutPage({ params: { lang } }: { params: { lang: 
                       alt={isAr ? c.ar : c.en}
                       fill
                       sizes="(max-width: 1024px) 50vw, 280px"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className={cn(
+                        'object-cover transition-transform duration-700 group-hover:scale-105',
+                        isOrchardImage(c.hero.image) ? 'object-bottom' : 'object-center'
+                      )}
                     />
                   )}
                   <span className="absolute top-2 start-2 rounded-full bg-primary/85 px-2 py-0.5 text-[10px] font-bold text-cream">

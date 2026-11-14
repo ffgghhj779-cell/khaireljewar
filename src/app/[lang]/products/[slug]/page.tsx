@@ -10,7 +10,7 @@ import AddToCartButton from '@/components/ecom/AddToCartButton'
 import { formatEgp, getConsumerUnit, getRetailPriceEgp } from '@/lib/commerce/pricing'
 import { buildPageMetadata, breadcrumbJsonLd, productJsonLd, productSearchCopy } from '@/lib/seo'
 import JsonLd from '@/components/seo/JsonLd'
-import { resolveProductImage, SECTION_IMAGES } from '@/lib/constants/images'
+import { cleanShotFor, resolveProductImage, SECTION_IMAGES } from '@/lib/constants/images'
 import { GALLERY_EXTRAS } from '@/lib/data/seasonCatalog'
 import { COMPLIANCE_CERTIFICATES } from '@/lib/constants/brandAssets'
 import { cn } from '@/lib/utils/cn'
@@ -74,17 +74,24 @@ export default async function SingleProductPage({
     fit: img.fit ?? ('contain' as const),
   })
   const extras = GALLERY_EXTRAS[product.slug]
+  const cleanShot = cleanShotFor(product.image)
+  const productTitle = isAr ? product.title.ar : product.title.en
   const gallery = product.gallery?.length
     ? product.gallery.map(toGalleryImage)
     : [
         {
           src: mainSrc,
-          alt: isAr ? product.title.ar : product.title.en,
-          fit: product.imageFit ?? ('contain' as const),
+          alt: productTitle,
+          fit: product.imageFit ?? (cleanShot ? ('cover' as const) : ('contain' as const)),
         },
+        ...(cleanShot
+          ? [{ src: cleanShot, alt: isAr ? `${productTitle} عن قرب` : `${productTitle}, close-up`, fit: 'cover' as const }]
+          : []),
         ...(extras?.length
           ? extras.map(toGalleryImage)
-          : [
+          : cleanShot
+            ? []
+            : [
               {
                 src: SECTION_IMAGES.editorialBoard,
                 alt: isAr ? 'لوحة الحصاد' : 'Harvest board',
