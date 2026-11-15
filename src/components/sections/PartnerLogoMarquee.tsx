@@ -63,7 +63,6 @@ function LogoCard({
 
 export default function PartnerLogoMarquee({ lang }: { lang: string }) {
   const isAr = lang === 'ar' || lang === 'ur'
-  const loop = [...PARTNER_LOGOS, ...PARTNER_LOGOS]
 
   return (
     <section className="relative z-0 overflow-hidden border-y border-farm/25 bg-farm-mist py-8 md:py-12">
@@ -74,21 +73,14 @@ export default function PartnerLogoMarquee({ lang }: { lang: string }) {
           isAr ? 'font-arabic normal-case tracking-normal text-sm' : 'font-sans'
         )}
       >
-        {isAr ? 'شركات المجموعة' : 'Group companies'}
+        {isAr ? 'شركاؤنا · شركات المجموعة' : 'Our partners · Group companies'}
       </p>
 
-      <div className="relative mx-auto hidden max-w-4xl grid-cols-3 justify-items-center gap-4 px-4 md:grid">
+      {/* Always side-by-side — no stacked partner blocks */}
+      <div className="relative mx-auto flex max-w-4xl flex-wrap items-stretch justify-center gap-3 px-4 sm:gap-4 md:grid md:grid-cols-3 md:justify-items-center md:gap-5">
         {PARTNER_LOGOS.map((partner, i) => (
           <LogoCard key={partner.id} partner={partner} lang={lang} delay={i * 0.35} />
         ))}
-      </div>
-
-      <div className="partner-logo-marquee relative md:hidden" dir="ltr">
-        <div className="partner-logo-marquee__track flex w-max gap-3 px-4">
-          {loop.map((partner, i) => (
-            <LogoCard key={`${partner.id}-${i}`} partner={partner} lang={lang} delay={(i % PARTNER_LOGOS.length) * 0.35} />
-          ))}
-        </div>
       </div>
     </section>
   )

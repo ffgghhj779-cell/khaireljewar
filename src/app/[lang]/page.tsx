@@ -5,10 +5,9 @@ import PartnerStrip from '@/components/sections/PartnerStrip'
 import NewArrivals from '@/components/sections/NewArrivals'
 import ProductsDesire from '@/components/sections/ProductsDesire'
 import ExportDocsStrip from '@/components/sections/ExportDocsStrip'
-import OurPartners from '@/components/sections/OurPartners'
+import PartnerLogoMarquee from '@/components/sections/PartnerLogoMarquee'
 import HomeFaq from '@/components/sections/HomeFaq'
 import HomeCloser from '@/components/sections/HomeCloser'
-import Container from '@/components/ui/Container'
 import { getProducts } from '@/lib/actions/products'
 import JsonLd from '@/components/seo/JsonLd'
 import { faqJsonLd, buildPageMetadata } from '@/lib/seo'
@@ -55,11 +54,9 @@ export default async function Home({
       <NewArrivals lang={locale} products={products} />
       <ProductsDesire lang={locale} products={products} />
       <ExportDocsStrip lang={locale} />
-      <section id="partners" className="scroll-mt-24 bg-canvas-soft py-12 md:py-16">
-        <Container size="large">
-          <OurPartners lang={locale} />
-        </Container>
-      </section>
+      <div id="partners" className="scroll-mt-24">
+        <PartnerLogoMarquee lang={locale} />
+      </div>
       <HomeFaq lang={locale} />
       <HomeCloser lang={locale} />
     </div>
