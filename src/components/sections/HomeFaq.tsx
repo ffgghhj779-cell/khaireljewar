@@ -1,11 +1,11 @@
 'use client'
-import { localeFontClass, localeDisplayClass } from '@/lib/i18n/localize'
 
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import Container from '@/components/ui/Container'
 import { HOME_FAQ } from '@/lib/data/faq'
 import { cn } from '@/lib/utils/cn'
+import { localeFontClass, localeDisplayClass, tx } from '@/lib/i18n/localize'
 
 export default function HomeFaq({ lang }: { lang: string }) {
   const isAr = lang === 'ar' || lang === 'ur'
@@ -13,11 +13,16 @@ export default function HomeFaq({ lang }: { lang: string }) {
   const [open, setOpen] = useState<number | null>(0)
 
   return (
-    <section className="relative z-0 bg-cream-soft py-10 md:py-16">
+    <section className="relative z-0 bg-cream-soft py-10 md:py-14">
       <Container size="large">
         <div className="mx-auto max-w-3xl">
           <p className={cn('mb-2 text-center text-sm font-semibold text-secondary-600', localeDisplayClass(lang))}>
-            {isAr ? 'أسئلة شائعة' : 'FAQ'}
+            {tx(lang, {
+              en: 'FAQ',
+              ar: 'أسئلة شائعة',
+              ur: 'عمومی سوالات',
+              hi: 'अक्सर पूछे जाने वाले प्रश्न',
+            })}
           </p>
           <h2
             className={cn(
@@ -25,7 +30,12 @@ export default function HomeFaq({ lang }: { lang: string }) {
               localeDisplayClass(lang)
             )}
           >
-            {isAr ? 'إجابات سريعة للشركاء.' : 'Quick answers for trading partners.'}
+            {tx(lang, {
+              en: 'Quick answers for trading partners.',
+              ar: 'إجابات سريعة للشركاء.',
+              ur: 'تجارتی شراکت داروں کے لیے فوری جوابات۔',
+              hi: 'ट्रेडिंग पार्टनर्स के लिए त्वरित उत्तर।',
+            })}
           </h2>
 
           <ul className="space-y-2">
@@ -56,9 +66,6 @@ export default function HomeFaq({ lang }: { lang: string }) {
                     >
                       {item.a}
                     </p>
-                  )}
-                  {!isOpen && (
-                    <p className="hidden">{item.a}</p>
                   )}
                 </li>
               )

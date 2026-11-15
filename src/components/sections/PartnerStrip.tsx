@@ -21,7 +21,7 @@ export default function PartnerStrip({ lang }: { lang: string }) {
   const lightMotion = useLightMotion()
 
   return (
-    <section className="relative z-0 overflow-hidden border-y border-secondary/25 bg-cream py-5 md:py-12">
+    <section className="relative z-0 overflow-hidden border-y border-secondary/25 bg-cream py-5 md:py-8">
       <div className="absolute inset-x-0 top-0 h-0.5 bg-secondary" aria-hidden />
       <motion.div
         initial={lightMotion ? { opacity: 0, y: 8 } : { opacity: 0, y: 10 }}

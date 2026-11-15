@@ -136,13 +136,13 @@ export default function Header({ lang }: { lang: string }) {
             </div>
           </div>
 
-          <div className="lg:hidden flex items-center h-10 rounded-xl overflow-hidden border border-farm/40 bg-farm-panel shrink-0">
+          <div className="lg:hidden flex items-center h-10 rounded-xl border border-farm/40 bg-farm-panel shrink-0 relative z-[120]">
             <LanguageSwitch lang={lang} variant="toolbar" showIcon />
             <div className="w-px h-4 bg-primary/20 shrink-0" aria-hidden />
             <button
               type="button"
               onClick={() => setMobileMenuOpen((open) => !open)}
-              className="min-w-[44px] h-10 flex items-center justify-center transition-colors touch-manipulation active:scale-95 text-primary hover:bg-primary/8"
+              className="min-w-[44px] h-10 flex items-center justify-center transition-colors touch-manipulation active:scale-95 text-primary hover:bg-primary/8 rounded-e-xl"
               aria-label={
                 mobileMenuOpen
                   ? tx(lang, { en: 'Close menu', ar: 'إغلاق القائمة', ur: 'مینو بند کریں', hi: 'मेनू बंद करें' })

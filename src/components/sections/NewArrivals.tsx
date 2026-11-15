@@ -150,7 +150,7 @@ export default function NewArrivals({ lang, products }: { lang: string; products
   if (!items.length) return null
 
   return (
-    <section className="relative overflow-hidden bg-cream-soft py-16 md:py-28">
+    <section className="relative overflow-hidden bg-cream-soft py-12 md:py-20">
       <div
         className="pointer-events-none absolute inset-0"
         style={{

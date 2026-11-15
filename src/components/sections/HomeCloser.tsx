@@ -12,7 +12,7 @@ export default function HomeCloser({ lang }: { lang: string }) {
   const isAr = lang === 'ar' || lang === 'ur'
 
   return (
-    <section className="relative z-0 overflow-hidden border-t border-secondary/35 bg-harvest py-12 md:py-40">
+    <section className="relative z-0 overflow-hidden border-t border-secondary/35 bg-harvest py-12 md:py-24">
       <div className="absolute inset-x-0 top-0 h-1 bg-secondary" aria-hidden />
       <div
         className="pointer-events-none absolute -top-16 start-1/2 hidden h-56 w-56 -translate-x-1/2 rounded-full bg-secondary/25 blur-3xl soft-breathe md:block"

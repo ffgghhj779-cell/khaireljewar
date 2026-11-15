@@ -24,7 +24,7 @@ export default function ProductsDesire({ lang, products }: ProductsDesireProps) 
   const mobileItems = products.slice(0, 8)
 
   return (
-    <section className="relative z-0 overflow-hidden bg-cream-soft py-12 md:py-32">
+    <section className="relative z-0 overflow-hidden bg-cream-soft py-12 md:py-20">
       <BotanicalMotif
         kind="orange"
         tone="soft"
@@ -42,7 +42,7 @@ export default function ProductsDesire({ lang, products }: ProductsDesireProps) 
           whileInView={lightMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={SCROLL_VIEWPORT_INSTANT}
           transition={{ duration: 0.5, ease: BRAND_EASE }}
-          className="mx-auto mb-10 max-w-2xl text-center md:mb-20"
+          className="mx-auto mb-8 max-w-2xl text-center md:mb-12"
         >
           <div className="mb-3 flex justify-center md:mb-4">
             <BotanicalMotif kind="date" className="h-8 w-6 opacity-45 md:h-9 md:w-7" />
