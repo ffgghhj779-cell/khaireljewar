@@ -102,12 +102,14 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(graphJsonLd()) }}
         />
-        <Header lang={locale} />
-        <main className="relative z-0 min-h-screen pt-[68px] md:pt-[88px]">{children}</main>
-        <SiteBio lang={locale} />
-        <Footer lang={locale} />
-        <MobileAppChrome lang={locale} />
-        <FloatingWhatsApp lang={locale} />
+        <div className="site-shell">
+          <Header lang={locale} />
+          <main className="relative z-0 min-h-screen pt-[68px] md:pt-[88px]">{children}</main>
+          <SiteBio lang={locale} />
+          <Footer lang={locale} />
+          <MobileAppChrome lang={locale} />
+          <FloatingWhatsApp lang={locale} />
+        </div>
       </body>
     </html>
   )

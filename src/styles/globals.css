@@ -30,7 +30,8 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     height: auto;
-    overflow-x: clip;
+    /* Keep overflow visible on root so fixed portals (language menu) are not clipped */
+    overflow-x: visible;
     overflow-y: auto;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
@@ -40,12 +41,18 @@
     @apply text-dark relative font-sans;
     min-height: 100%;
     height: auto;
-    overflow-x: clip;
+    overflow-x: visible;
     overflow-y: auto;
     touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
     -webkit-overflow-scrolling: touch;
     background-color: var(--color-canvas);
+  }
+
+  /* Clip horizontal bleed from marquees/galleries without trapping fixed overlays on body */
+  .site-shell {
+    overflow-x: clip;
+    max-width: 100%;
   }
 
   @media (min-width: 1024px) {

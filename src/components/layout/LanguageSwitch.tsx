@@ -61,11 +61,17 @@ export default function LanguageSwitch({
 
     const place = () => {
       const rect = buttonRef.current!.getBoundingClientRect()
-      const menuWidth = Math.max(216, rect.width)
+      const menuWidth = Math.min(Math.max(216, rect.width), window.innerWidth - 16)
       const gap = 8
+      // Prefer aligning under the trigger; clamp so the full menu stays on-screen
       let left = rtl ? rect.right - menuWidth : rect.left
       left = Math.min(Math.max(8, left), window.innerWidth - menuWidth - 8)
-      const top = Math.min(rect.bottom + gap, window.innerHeight - 8)
+      const estimatedHeight = 248
+      const below = rect.bottom + gap
+      const top =
+        below + estimatedHeight > window.innerHeight - 8
+          ? Math.max(8, rect.top - estimatedHeight - gap)
+          : below
       setPos({ top, left, width: menuWidth })
     }
 
